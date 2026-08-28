@@ -1,6 +1,8 @@
 # Evidence snapshot
 
-Snapshot completed: 2026-08-28 14:59 PDT
+Initial snapshot completed: 2026-08-28 14:59 PDT
+
+Follow-up evidence incorporated through: 2026-08-28 15:19 PDT
 
 ## Environment
 
@@ -34,6 +36,16 @@ Project V-Sync: disabled
 15:09:54  NVIDIA App records the subsequent AoE4 launch.
 15:11:37  NVIDIA backend detects the AoE4 session ending.
            User observed the top-right G-SYNC indicator during this run.
+15:13:50  NVIDIA records NVIDIA Profile Inspector running.
+           User deletes the exact-path Godot profile.
+15:15:04  Active DRS database written while applying the remaining
+           Godot Engine profile as Fixed Refresh in NVIDIA Control Panel.
+15:15:32  First Godot process starts; active DRS database and selector rewritten.
+15:15:35  Spawned Godot editor process starts.
+           User observes a roughly three-second blank on both displays.
+15:16:07  AoE4 process starts.
+           User observes no G-SYNC indicator.
+15:17:38  NVIDIA backend detects the AoE4 session ending.
 ```
 
 ## DRS files after reproduction
@@ -170,6 +182,102 @@ G-SYNC mode: fullscreen only (AoE4 profile)
 ```
 
 The successful indicator observation following only the global off/on cycle confirms that the earlier failure was recoverable live display/VRR state. No application-profile repair was required.
+
+## One-profile Fixed Refresh isolation test
+
+The user performed no other issue-related action between the verified recovery test and this sequence:
+
+```text
+Use NVIDIA Profile Inspector to delete the exact-path
+Godot_v4.6.3-stable_win64.exe profile.
+
+Use NVIDIA Control Panel to set the remaining Godot Engine profile's
+Monitor Technology to Fixed Refresh.
+
+Open Godot 4.6.3 and open the VsyncStutterTest project.
+Observe both monitors blank for roughly three seconds.
+Observe no G-SYNC indicator or behavior in the editor.
+Close Godot.
+
+Open AoE4.
+Observe no G-SYNC indicator.
+```
+
+User-supplied screenshots preserved as evidence:
+
+![Exact-path profile immediately before deletion](screenshots/npi-exact-path-profile-before-deletion.png)
+
+![Remaining Godot Engine profile set to Fixed Refresh](screenshots/nvcp-godot-engine-fixed-refresh.png)
+
+```text
+npi-exact-path-profile-before-deletion.png
+  original timestamp: 2026-08-28 15:14:26.891 PDT
+  SHA-256: 226CEC1437F48B157CFB84B8292BD3F3F2C100CD3A5C0D1383C64E4DF05B2782
+
+nvcp-godot-engine-fixed-refresh.png
+  original timestamp: 2026-08-28 15:15:19.690 PDT
+  SHA-256: DDE4FB212E9763731E57E4FFEBA2900A469B4B0A320FC94A63664516EE4ACE3D
+```
+
+Post-failure DRS identity and selection:
+
+```text
+Total profile count: 7958 (previously 7959)
+FindProfileByName("Godot_v4.6.3-stable_win64.exe"): not found
+FindApplicationByName(full path): Godot Engine
+FindApplicationByName(basename): Godot Engine
+Application association: godot_v4.6.3-stable_win64.exe
+```
+
+The only remaining Godot profile has nine explicit settings. Relevant values:
+
+```text
+VRR requested state (0x1094F1F7): disabled (0)
+G-SYNC application override (0x10A879CF): fixed refresh (4)
+G-SYNC mode (0x1194F158): fullscreen only (1)
+OpenGL threaded optimization (0x20C1221E): disabled (2)
+```
+
+Both full-path and basename lookups now fall through to the same basename profile. This proves deletion of the exact-path profile succeeded and eliminates dual-profile selection as a necessary condition.
+
+Active DRS file state after the test:
+
+```text
+nvdrsdb0.bin
+  last write: 2026-08-28 15:15:04.425 PDT
+  SHA-256: 3EFEF7CCDE83F00AC176B9D6ACCDE5D4445C49CA6CF9EE91CB3EAAA932C024FF
+
+nvdrsdb1.bin
+  last write: 2026-08-28 15:15:32.915 PDT
+  SHA-256: C54720A7DBE38AD5CFD4FFEB7C9B7D9BBA54C185604E52270F0AFD7C1F9DD56A
+
+nvdrssel.bin
+  last write: 2026-08-28 15:15:32.915 PDT
+  SHA-256: 4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A
+```
+
+NVIDIA process evidence:
+
+```text
+15:13:50.349  nvidiaProfileInspector process observed
+15:15:32.762  first Godot process observed
+15:15:35.244  second Godot/editor process observed
+15:16:07.714  first RelicCardinal/AoE4 process observed
+15:17:38.725  NVIDIA backend records Age of Empires IV ending
+```
+
+The AoE4 profile remains unchanged and G-SYNC-capable after the failed run:
+
+```text
+Selected profile: Age of Empires IV
+G-SYNC application override: allow (global profile)
+VRR requested state: fullscreen only (AoE4 profile)
+G-SYNC mode: fullscreen only (AoE4 profile)
+```
+
+No matching System or Application event was recorded from 15:13 through 15:19 for `Display`, `nvlddmkm`, display-related `Kernel-PnP`, `Kernel-Power`, WHEA, Application Error, or Windows Error Reporting. There was again no TDR/crash evidence.
+
+This test rules out the deleted exact-path profile, the two-profile split, and NVIDIA App profile creation as required causes. The remaining common factors are Fixed Refresh on the profile selected for Godot and the native-OpenGL project manager's DRS save/reload.
 
 ## Event and crash evidence
 

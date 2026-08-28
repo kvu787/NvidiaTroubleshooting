@@ -1,0 +1,56 @@
+Captured: 2026-08-28 15:19 PDT
+
+Godot target
+============
+
+Target full path: C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe
+Target basename used by ordinary DRS matching: Godot_v4.6.3-stable_win64.exe
+FindApplicationByName(full path) status: 0, matched appName="godot_v4.6.3-stable_win64.exe"
+FindApplicationByName(basename) status: 0, matched appName="godot_v4.6.3-stable_win64.exe"
+FindProfileByName("Godot_v4.6.3-stable_win64.exe") status: -163
+FindProfileByName("Godot_v4.6.3-stable_win64") status: -163
+GetNumProfiles status: 0, count=7958
+
+Profile 1:
+  discovered_by=application lookup by basename; application lookup by full path; profile-name scan starting with 'godot'
+  name="Godot Engine"
+  predefined=0
+  application_count=1
+  setting_count=9
+  applications (status=0, returned=1):
+    - appName="godot_v4.6.3-stable_win64.exe", userFriendlyName="", launcher="", fileInFolder="", predefined=0, isMetro=0, isCommandLine=0, commandLine=""
+  enumerated profile settings (status=0, returned=9):
+    - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x96861077 (2525368439)
+    - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0)
+    - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x60925292 (1620202130)
+    - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0)
+    - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0) (disabled)
+    - id=0x10A879CF, name="G-SYNC", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000004 (4) (fixed refresh)
+    - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000001 (1)
+    - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000001 (1) (fullscreen only)
+    - id=0x20C1221E, name="Threaded optimization", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000002 (2) (disabled)
+  effective relevant settings:
+    OpenGL threaded optimization: disabled (2), current profile
+    VRR requested state: disabled (0), current profile
+    G-SYNC application override: fixed refresh (4), current profile
+    G-SYNC mode: fullscreen only (1), current profile
+
+Age of Empires IV target
+========================
+
+Target full path: C:\Program Files (x86)\Steam\steamapps\common\Age of Empires IV\RelicCardinal.exe
+Target basename used by ordinary DRS matching: RelicCardinal.exe
+FindApplicationByName(full path) status: 0, matched appName="reliccardinal.exe"
+FindApplicationByName(basename) status: 0, matched appName="reliccardinal.exe"
+GetNumProfiles status: 0, count=7958
+
+Profile 1:
+  name="Age of Empires IV"
+  predefined=1
+  application_count=3
+  setting_count=17
+  applications include reliccardinal.exe
+  effective relevant settings:
+    VRR requested state: fullscreen only (1), current AoE4 profile
+    G-SYNC application override: allow (0), global profile
+    G-SYNC mode: fullscreen only (1), current AoE4 profile
