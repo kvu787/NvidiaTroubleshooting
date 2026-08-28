@@ -1,0 +1,23 @@
+Source:
+  C:\Users\k\AppData\Local\NVIDIA Corporation\NVIDIA App\NvBackend\backend.log
+
+Relevant post-launch lines:
+
+0828-13:34:09.430 15836[D]: Added DLSS_Override_No_OPS - 0 for - Age of Empires IV with CMSID - 100948211
+0828-13:34:09.431 15836[D]: Added DLSS_Override_No_OPS - 0 for - Godot_v4.6.3-stable_win64.exe with CMSID - 0
+0828-13:34:09.431 15836[D]: Added DLSS_Override_No_OPS - 0 for - Steam with CMSID - 103468802
+0828-13:34:11.868 15836[D]: Added DLSS_Override_No_OPS - 0 for - Age of Empires IV with CMSID - 100948211
+0828-13:34:11.868 15836[D]: Added DLSS_Override_No_OPS - 0 for - Godot_v4.6.3-stable_win64.exe with CMSID - 0
+0828-13:34:11.868 15836[D]: Added DLSS_Override_No_OPS - 0 for - Steam with CMSID - 103468802
+0828-13:34:27.302 8732[I]: GFE::ApplicationUsageCollector::OnGAUPoll Trying to associate GFE app with image: C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe
+0828-13:34:27.341 8732[D]: Installed driver type is not CRD
+0828-13:34:27.356 8732[I]: loading DRS settings
+0828-13:34:27.445 8732[I]: loaded DRS settings
+0828-13:34:27.445 8732[I]: ChooseClassificationResult: r.application is NULL.  Using DRS classificationResult for drsData.profileName=Godot_v4.6.3-stable_win64.exe
+0828-13:34:27.445 8732[I]: ChooseClassificationResult: cr=StatsShouldNotBeReported
+0828-13:35:27.515 8732[I]: GFE::ApplicationUsageCollector::OnGAUPoll Trying to associate GFE app with image: c:\users\k\program\godot_v4.6.3-stable_win64.exe\godot_v4.6.3-stable_win64.exe
+0828-13:35:27.535 8732[D]: Installed driver type is not CRD
+0828-13:35:27.549 8732[I]: loading DRS settings
+0828-13:35:27.640 8732[I]: loaded DRS settings
+0828-13:35:27.640 8732[I]: ChooseClassificationResult: r.application is NULL.  Using DRS classificationResult for drsData.profileName=Godot_v4.6.3-stable_win64.exe
+0828-13:35:27.640 8732[I]: ChooseClassificationResult: cr=StatsShouldNotBeReported
