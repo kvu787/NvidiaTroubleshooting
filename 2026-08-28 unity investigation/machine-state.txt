@@ -1,0 +1,107 @@
+=== SNAPSHOT ===
+Local time: 2026-08-28T14:28:04.0875674-07:00
+UTC time: 2026-08-28T21:28:04.0875674Z
+Computer: DESKTOP-E37L44C
+User: k
+PowerShell language mode: FullLanguage
+
+=== NVIDIA-SMI ===
+NVIDIA GeForce RTX 5070 Ti Laptop GPU, 616.56, 00000000:02:00.0, Enabled, [Requested functionality has been deprecated], 12227 MiB
+Fri Aug 28 14:28:06 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 616.56                 KMD Version: 616.56        CUDA UMD Version: 13.4     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 5070 ...  WDDM  |   00000000:02:00.0  On |                  N/A |
+| N/A   56C    P0             54W /  140W |    2885MiB /  12227MiB |     31%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            6224    C+G   ...t\Edge\Application\msedge.exe      N/A      |
+|    0   N/A  N/A           10740    C+G   C:\Windows\explorer.exe               N/A      |
+|    0   N/A  N/A           10844    C+G   ...indows\System32\ShellHost.exe      N/A      |
+|    0   N/A  N/A           11068    C+G   ...2txyewy\CrossDeviceResume.exe      N/A      |
+|    0   N/A  N/A           14144    C+G   ..._cw5n1h2txyewy\SearchHost.exe      N/A      |
+|    0   N/A  N/A           14152    C+G   ...y\StartMenuExperienceHost.exe      N/A      |
+|    0   N/A  N/A           14676    C+G   ...em32\ApplicationFrameHost.exe      N/A      |
+|    0   N/A  N/A           14928    C+G   ...t\Edge\Application\msedge.exe      N/A      |
+|    0   N/A  N/A           15148    C+G   ...mba6cd70vzyy\ArmouryCrate.exe      N/A      |
+|    0   N/A  N/A           15784    C+G   ...App_cw5n1h2txyewy\LockApp.exe      N/A      |
+|    0   N/A  N/A           16576    C+G   ...0.4129.107\msedgewebview2.exe      N/A      |
+|    0   N/A  N/A           19076    C+G   ...2p2nqsd0c76g0\app\ChatGPT.exe      N/A      |
+|    0   N/A  N/A           20372    C+G   ...5n1h2txyewy\TextInputHost.exe      N/A      |
+|    0   N/A  N/A           23516    C+G   ...2p2nqsd0c76g0\app\ChatGPT.exe      N/A      |
+|    0   N/A  N/A           23808    C+G   ...ms\Microsoft VS Code\Code.exe      N/A      |
+|    0   N/A  N/A           24352    C+G   ...xyewy\ShellExperienceHost.exe      N/A      |
+|    0   N/A  N/A           25616    C+G   ..._dt26b99r8h8gj\RtkUWP_RS5.exe      N/A      |
+|    0   N/A  N/A           25620    C+G   ...yb3d8bbwe\WindowsTerminal.exe      N/A      |
+|    0   N/A  N/A           29024    C+G   ...pp-4.0.699\RazerAppEngine.exe      N/A      |
+|    0   N/A  N/A           30224    C+G   ...2p2nqsd0c76g0\app\ChatGPT.exe      N/A      |
+|    0   N/A  N/A           30476    C+G   ...ntrolPanel\SystemSettings.exe      N/A      |
+|    0   N/A  N/A           32032    C+G   ...SnippingTool\SnippingTool.exe      N/A      |
+|    0   N/A  N/A           37400    C+G   ...64__8wekyb3d8bbwe\GameBar.exe      N/A      |
+|    0   N/A  N/A           37788    C+G   ... Empires IV\RelicCardinal.exe      N/A      |
++-----------------------------------------------------------------------------------------+
+
+=== VIDEO CONTROLLERS ===
+
+Name                 : Intel(R) Graphics
+DriverVersion        : 32.0.101.8424
+DriverDate           : 1/5/2026 4:00:00 PM
+PNPDeviceID          : PCI\VEN_8086&DEV_7D67&SUBSYS_3E881043&REV_06\3&11583659&0&10
+AdapterRAM           : 2147479552
+VideoModeDescription : 2560 x 1600 x 4294967296 colors
+CurrentRefreshRate   : 60
+
+Name                 : NVIDIA GeForce RTX 5070 Ti Laptop GPU
+DriverVersion        : 32.0.16.1656
+DriverDate           : 8/19/2026 5:00:00 PM
+PNPDeviceID          : PCI\VEN_10DE&DEV_2F58&SUBSYS_3E881043&REV_A1\50118ACEA42DB04800
+AdapterRAM           : 4293918720
+VideoModeDescription : 2560 x 1440 x 4294967296 colors
+CurrentRefreshRate   : 119
+
+=== INSTALLED UNITY PRODUCTS (UNINSTALL REGISTRY) ===
+Name=Unity 6000.3.21f1; Version=6000.3.21f1; Publisher=Unity Technologies ApS; Location=; Key=Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Unity 6000.3.21f1
+Name=Unity 6000.3.22f1; Version=6000.3.22f1; Publisher=Unity Technologies ApS; Location=; Key=Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Unity 6000.3.22f1
+Name=Unity 6000.3.23f1; Version=6000.3.23f1; Publisher=Unity Technologies ApS; Location=; Key=Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Unity 6000.3.23f1
+Name=Unity Hub 3.21.0; Version=3.21.0; Publisher=Unity Technologies Inc.; Location=; Key=Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Unity Technologies - Hub
+
+=== RUNNING UNITY-RELATED PROCESSES ===
+None
+
+=== NVIDIA COMPONENT VERSIONS ===
+Path=C:\Program Files\NVIDIA Corporation\NVIDIA app\CEF\NVIDIA app.exe; FileVersion=128.4.13.31; ProductVersion=11.0.8.299
+
+Name            : NVIDIACorp.NVIDIAControlPanel
+Version         : 8.1.969.0
+PackageFullName : NVIDIACorp.NVIDIAControlPanel_8.1.969.0_x64__56jybvy8sckqj
+InstallLocation : C:\Program Files\WindowsApps\NVIDIACorp.NVIDIAControlPanel_8.1.969.0_x64__56jybvy8sckqj
+
+=== DRS DATABASE FILES ===
+Path=C:\ProgramData\NVIDIA Corporation\Drs\nvdrsdb0.bin; Length=1922224; LastWriteTime=2026-08-28T14:25:55.6286289-07:00; SHA256=932FB989C4E941253E15B1B3E5F95D5354B925CFD990147C59F51604499A98CD
+Path=C:\ProgramData\NVIDIA Corporation\Drs\nvdrsdb1.bin; Length=1922224; LastWriteTime=2026-08-28T14:25:55.4277708-07:00; SHA256=7F5A0B3573E537025B6F84A45974A99B171DE6589FA620D92CE1A9AE75EB1516
+
+=== NVIDIA APP STATE FILES ===
+Path=C:\Users\k\AppData\Local\NVIDIA Corporation\NVIDIA App\NvBackend\ApplicationStorage.json; Length=3989; LastWriteTime=2026-08-28T14:26:46.3865345-07:00; SHA256=9AB4D74B19EA8786AF3AFD7806F65745AE3D720FB858CD51FEC534FD8936401D
+Path=C:\Users\k\AppData\Local\NVIDIA Corporation\NVIDIA App\NvBackend\backend.log; Length=1660726; LastWriteTime=2026-08-28T14:27:33.6424987-07:00; SHA256=unavailable (The process cannot access the file 'C:\Users\k\AppData\Local\NVIDIA Corporation\NVIDIA App\NvBackend\backend.log' because it is being used by another process.)
+
+=== WINDOWS GRAPHICS SCHEDULING ===
+
+
+ERROR: The system was unable to find the specified registry key or value.
+
+=== WINDOWS PER-APP GPU PREFERENCES ===
+
+HKEY_CURRENT_USER\Software\Microsoft\DirectX\UserGpuPreferences
+    C:\Program Files (x86)\ASUS\ArmouryDevice\asus_framework.exe    REG_SZ    GpuPreference=1; 
+    C:\WINDOWS\System32\ASUSACCI\ArmouryCrateKeyControl.exe    REG_SZ    GpuPreference=1;
+    C:\WINDOWS\System32\DriverStore\FileRepository\nvami.inf_amd64_734224edc3748001\Display.NvContainer\NVDisplay.Container.exe    REG_SZ    GpuPreference=1;

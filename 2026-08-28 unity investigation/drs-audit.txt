@@ -1,0 +1,855 @@
+Read-only NVAPI DRS audit
+Target executable count: 97
+Reference setting ID count: 875
+
+=== TARGET APPLICATION LOOKUPS ===
+target="C:\\Program Files\\Unity Hub\\resources\\app.asar.unpacked\\node_modules\\@unity\\hub-win-installer-launcher-win32-x64\\UnityHubHelper.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity Hub\\resources\\cli\\unity.exe"
+  full path: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+  basename: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+target="C:\\Program Files\\Unity Hub\\Uninstall Unity Hub.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity Hub\\Unity Hub.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity Hub\\UnityLicensingClient_V1\\Unity.Licensing.Client.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\BugReporter\\UnityBugReporter.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\il2cpp\\build\\deploy\\UnityLinker.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Tools\\DevicePortalTool.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_development_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_development_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_nondevelopment_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_nondevelopment_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_development_mono\\UnityCrashHandler32.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_development_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_nondevelopment_mono\\UnityCrashHandler32.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_nondevelopment_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_development_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_development_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_nondevelopment_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_nondevelopment_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Resources\\Licensing\\Client\\Unity.Licensing.Client.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Resources\\PackageManager\\Diagnostics\\bin\\UnityPackageManagerDiagnostics.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Resources\\PackageManager\\Server\\UnityPackageManager.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Tools\\BuildPipeline\\Compilation\\Unity.ILPP.Runner\\Unity.ILPP.Runner.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Tools\\BuildPipeline\\Compilation\\Unity.ILPP.Trigger\\Unity.ILPP.Trigger.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Tools\\JobProcess.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Tools\\LightBaker.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Tools\\UnityAutoQuitter.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Tools\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Tools\\UnityShaderCompiler.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Data\\Tools\\UnityYAMLMerge.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Uninstall.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\Unity.exe"
+  full path: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+  basename: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.21f1\\Editor\\UnityTroubleshooter.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\BugReporter\\UnityBugReporter.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\il2cpp\\build\\deploy\\UnityLinker.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Tools\\DevicePortalTool.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_development_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_development_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_nondevelopment_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_nondevelopment_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_development_mono\\UnityCrashHandler32.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_development_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_nondevelopment_mono\\UnityCrashHandler32.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_nondevelopment_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_development_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_development_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_nondevelopment_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_nondevelopment_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Resources\\Licensing\\Client\\Unity.Licensing.Client.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Resources\\PackageManager\\Diagnostics\\bin\\UnityPackageManagerDiagnostics.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Resources\\PackageManager\\Server\\UnityPackageManager.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Tools\\BuildPipeline\\Compilation\\Unity.ILPP.Runner\\Unity.ILPP.Runner.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Tools\\BuildPipeline\\Compilation\\Unity.ILPP.Trigger\\Unity.ILPP.Trigger.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Tools\\JobProcess.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Tools\\LightBaker.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Tools\\UnityAutoQuitter.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Tools\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Tools\\UnityShaderCompiler.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Data\\Tools\\UnityYAMLMerge.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Uninstall.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\Unity.exe"
+  full path: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+  basename: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.22f1\\Editor\\UnityTroubleshooter.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\BugReporter\\UnityBugReporter.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\il2cpp\\build\\deploy\\UnityLinker.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Tools\\DevicePortalTool.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_development_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_development_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_nondevelopment_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win_arm64_player_nondevelopment_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_development_mono\\UnityCrashHandler32.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_development_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_nondevelopment_mono\\UnityCrashHandler32.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win32_player_nondevelopment_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_development_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_development_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_nondevelopment_mono\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\PlaybackEngines\\windowsstandalonesupport\\Variations\\win64_player_nondevelopment_mono\\WindowsPlayer.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Resources\\Licensing\\Client\\Unity.Licensing.Client.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Resources\\PackageManager\\Diagnostics\\bin\\UnityPackageManagerDiagnostics.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Resources\\PackageManager\\Server\\UnityPackageManager.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Tools\\BuildPipeline\\Compilation\\Unity.ILPP.Runner\\Unity.ILPP.Runner.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Tools\\BuildPipeline\\Compilation\\Unity.ILPP.Trigger\\Unity.ILPP.Trigger.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Tools\\JobProcess.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Tools\\LightBaker.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Tools\\UnityAutoQuitter.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Tools\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Tools\\UnityShaderCompiler.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Data\\Tools\\UnityYAMLMerge.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Uninstall.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\Unity.exe"
+  full path: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+  basename: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+target="C:\\Program Files\\Unity\\Hub\\Editor\\6000.3.23f1\\Editor\\UnityTroubleshooter.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Users\\k\\AppData\\Local\\Unity\\bin\\unity.exe"
+  full path: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+  basename: status=0, profile_status=0, profile="Unity 3D", matched_app="unity.exe"
+target="C:\\Users\\k\\Repository\\Unity\\ZoomTracks_LowFpsInvestigation\\ZoomTracks\\MyBuildOutput\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Users\\k\\Repository\\Unity\\ZoomTracks_LowFpsInvestigation\\ZoomTracks\\MyBuildOutput\\ZoomTracks.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Users\\k\\Repository\\Unity\\ZoomTracks\\ZoomTracks\\MyBuildOutput\\UnityCrashHandler64.exe"
+  full path: status=-166
+  basename: status=-166
+target="C:\\Users\\k\\Repository\\Unity\\ZoomTracks\\ZoomTracks\\MyBuildOutput\\ZoomTracks.exe"
+  full path: status=-166
+  basename: status=-166
+
+=== TARGET-DERIVED PROFILE-NAME LOOKUPS ===
+candidate="DevicePortalTool", status=-163
+candidate="DevicePortalTool.exe", status=-163
+candidate="JobProcess", status=-163
+candidate="JobProcess.exe", status=-163
+candidate="LightBaker", status=-163
+candidate="LightBaker.exe", status=-163
+candidate="Uninstall", status=-163
+candidate="Uninstall Unity Hub", status=-163
+candidate="Uninstall Unity Hub.exe", status=-163
+candidate="Uninstall.exe", status=-163
+candidate="Unity", status=-163
+candidate="Unity Hub", status=-163
+candidate="Unity Hub.exe", status=-163
+candidate="Unity.ILPP.Runner", status=-163
+candidate="Unity.ILPP.Runner.exe", status=-163
+candidate="Unity.ILPP.Trigger", status=-163
+candidate="Unity.ILPP.Trigger.exe", status=-163
+candidate="Unity.Licensing.Client", status=-163
+candidate="Unity.Licensing.Client.exe", status=-163
+candidate="Unity.exe", status=-163
+candidate="UnityAutoQuitter", status=-163
+candidate="UnityAutoQuitter.exe", status=-163
+candidate="UnityBugReporter", status=-163
+candidate="UnityBugReporter.exe", status=-163
+candidate="UnityCrashHandler32", status=-163
+candidate="UnityCrashHandler32.exe", status=-163
+candidate="UnityCrashHandler64", status=-163
+candidate="UnityCrashHandler64.exe", status=-163
+candidate="UnityHubHelper", status=-163
+candidate="UnityHubHelper.exe", status=-163
+candidate="UnityLinker", status=-163
+candidate="UnityLinker.exe", status=-163
+candidate="UnityPackageManager", status=-163
+candidate="UnityPackageManager.exe", status=-163
+candidate="UnityPackageManagerDiagnostics", status=-163
+candidate="UnityPackageManagerDiagnostics.exe", status=-163
+candidate="UnityShaderCompiler", status=-163
+candidate="UnityShaderCompiler.exe", status=-163
+candidate="UnityTroubleshooter", status=-163
+candidate="UnityTroubleshooter.exe", status=-163
+candidate="UnityYAMLMerge", status=-163
+candidate="UnityYAMLMerge.exe", status=-163
+candidate="WindowsPlayer", status=-163
+candidate="WindowsPlayer.exe", status=-163
+candidate="ZoomTracks", status=-163
+candidate="ZoomTracks.exe", status=-163
+candidate="unity", status=-163
+candidate="unity.exe", status=-163
+
+=== ALL-PROFILE UNITY STRING SCAN ===
+GetNumProfiles status=0, count=7959
+
+=== MATCHED UNITY-RELATED DRS PROFILES ===
+matched profile count=16
+
+--- PROFILE ---
+profile="Assassin's Creed: Unity", predefined=1, app_count=3, explicit_setting_count=12
+reasons:
+  - profile name contains 'unity' or 'zoomtracks'
+applications: status=0, returned=3
+  - app="acump.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="acusp.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="acu.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=11
+  - id=0x00A06946, name="SLI Compatibility Bits Dx10 + Dx11", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x0A0010F5 (167776501), predefined=0x0A0010F5 (167776501), reference_group="08 - SLI and NVLINK", reference_description="multichip app compat value for DX10 apps"
+  - id=0x1033CEC2, name="NVIDIA predefined SLI mode on DirectX 10", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="08 - SLI and NVLINK", reference_description="Setting to indicate in the Control Panel which SLI mode is active by default on DirectX 10"
+  - id=0x1033DCD3, name="NVIDIA predefined number of GPUs to use on SLI rendering mode on DirectX 10", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="08 - SLI and NVLINK", reference_description="Indicates in the NVIDIA Control Panel how many GPUs should be used by default for DirectX 10 SLI operation."
+  - id=0x1034CB89, name="NVIDIA Predefined FXAA Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant FXAA_ALLOW_ID"
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x10D5C2DB, name="Ansel Behavior 3 10D5c2db", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Determines if Ansel is allowed to be loaded and activated offline without the need for any network checks."
+  - id=0x10ECDB82, name="Antialiasing - Behavior Flags", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00100005 (1048581), predefined=0x00100005 (1048581), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant AA_BEHAVIOR_FLAGS_ID"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A06946, name="SLI Compatibility Bits Dx10 + Dx11", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x0A0010F5 (167776501), predefined=0x0A0010F5 (167776501), reference_group="08 - SLI and NVLINK", reference_description="multichip app compat value for DX10 apps"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1033CEC2, name="NVIDIA predefined SLI mode on DirectX 10", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="08 - SLI and NVLINK", reference_description="Setting to indicate in the Control Panel which SLI mode is active by default on DirectX 10"
+  - id=0x1033DCD3, name="NVIDIA predefined number of GPUs to use on SLI rendering mode on DirectX 10", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="08 - SLI and NVLINK", reference_description="Indicates in the NVIDIA Control Panel how many GPUs should be used by default for DirectX 10 SLI operation."
+  - id=0x1034CB89, name="NVIDIA Predefined FXAA Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant FXAA_ALLOW_ID"
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x10D5C2DB, name="Ansel Behavior 3 10D5c2db", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Determines if Ansel is allowed to be loaded and activated offline without the need for any network checks."
+  - id=0x10ECDB82, name="Antialiasing - Behavior Flags", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00100005 (1048581), predefined=0x00100005 (1048581), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant AA_BEHAVIOR_FLAGS_ID"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known setting count=20
+
+--- PROFILE ---
+profile="island.unity3d", predefined=1, app_count=1, explicit_setting_count=0
+reasons:
+  - application metadata contains 'unity'
+  - profile name contains 'unity' or 'zoomtracks'
+applications: status=0, returned=1
+  - app="island.unity3d.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+effective known setting count=9
+
+--- PROFILE ---
+profile="Super Hero Squad", predefined=1, app_count=1, explicit_setting_count=0
+reasons:
+  - application metadata contains 'unity'
+applications: status=0, returned=1
+  - app="shs.unity3d.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+effective known setting count=9
+
+--- PROFILE ---
+profile="3rdpersonshooter.unity3d", predefined=1, app_count=1, explicit_setting_count=0
+reasons:
+  - application metadata contains 'unity'
+  - profile name contains 'unity' or 'zoomtracks'
+applications: status=0, returned=1
+  - app="3rdpersonshooter.unity3d.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+effective known setting count=9
+
+--- PROFILE ---
+profile="F1 2022", predefined=1, app_count=3, explicit_setting_count=12
+reasons:
+  - application metadata contains 'unity'
+applications: status=0, returned=3
+  - app="f1_22.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2022_vs2019_win64_steam_profile_dx12_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2022_vs2019_win64_steam_release_dx12_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=11
+  - id=0x000F00BA, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1)
+  - id=0x00C09D09, name="Rebar Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="06 - Rendering Features", reference_description="Controls Rebar Expr Modes."
+  - id=0x00CBE006, name="Experimental - LDC-to-LDG Translation Options", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="07 - System, Memory and Compute", reference_description="This regkey specifies LDC-to-LDG translation options (DXIL-only)"
+  - id=0x00E942FC, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1)
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x10BFAA5B, name="0x10BFAA5B (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x01000000 (16777216), predefined=0x01000000 (16777216), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x00C09D09, name="Rebar Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="06 - Rendering Features", reference_description="Controls Rebar Expr Modes."
+  - id=0x00CBE006, name="Experimental - LDC-to-LDG Translation Options", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="07 - System, Memory and Compute", reference_description="This regkey specifies LDC-to-LDG translation options (DXIL-only)"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x10BFAA5B, name="0x10BFAA5B (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x01000000 (16777216), predefined=0x01000000 (16777216), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known setting count=18
+
+--- PROFILE ---
+profile="F1 2012", predefined=1, app_count=3, explicit_setting_count=13
+reasons:
+  - application metadata contains 'unity'
+applications: status=0, returned=3
+  - app="f1_2012_game.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="game_unity_win_r.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2012.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=12
+  - id=0x002C7F45, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x000F0000 (983040), predefined=0x000F0000 (983040)
+  - id=0x00664339, name="NVIDIA Predefined Ambient Occlusion Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant AO_MODE_ACTIVE_ID"
+  - id=0x00A06746, name="SLI Specific Hacks Dx1x", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00002000 (8192), predefined=0x00002000 (8192), reference_group="08 - SLI and NVLINK", reference_description="multichip app specific hacks for single app"
+  - id=0x00A06946, name="SLI Compatibility Bits Dx10 + Dx11", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x021000F5 (34603253), predefined=0x021000F5 (34603253), reference_group="08 - SLI and NVLINK", reference_description="multichip app compat value for DX10 apps"
+  - id=0x1033CEC2, name="NVIDIA predefined SLI mode on DirectX 10", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="08 - SLI and NVLINK", reference_description="Setting to indicate in the Control Panel which SLI mode is active by default on DirectX 10"
+  - id=0x1033DCD3, name="NVIDIA predefined number of GPUs to use on SLI rendering mode on DirectX 10", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="08 - SLI and NVLINK", reference_description="Indicates in the NVIDIA Control Panel how many GPUs should be used by default for DirectX 10 SLI operation."
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x10ECDB82, name="Antialiasing - Behavior Flags", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant AA_BEHAVIOR_FLAGS_ID"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00664339, name="NVIDIA Predefined Ambient Occlusion Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant AO_MODE_ACTIVE_ID"
+  - id=0x00A06746, name="SLI Specific Hacks Dx1x", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00002000 (8192), predefined=0x00002000 (8192), reference_group="08 - SLI and NVLINK", reference_description="multichip app specific hacks for single app"
+  - id=0x00A06946, name="SLI Compatibility Bits Dx10 + Dx11", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x021000F5 (34603253), predefined=0x021000F5 (34603253), reference_group="08 - SLI and NVLINK", reference_description="multichip app compat value for DX10 apps"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1033CEC2, name="NVIDIA predefined SLI mode on DirectX 10", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="08 - SLI and NVLINK", reference_description="Setting to indicate in the Control Panel which SLI mode is active by default on DirectX 10"
+  - id=0x1033DCD3, name="NVIDIA predefined number of GPUs to use on SLI rendering mode on DirectX 10", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="08 - SLI and NVLINK", reference_description="Indicates in the NVIDIA Control Panel how many GPUs should be used by default for DirectX 10 SLI operation."
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x10ECDB82, name="Antialiasing - Behavior Flags", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant AA_BEHAVIOR_FLAGS_ID"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known setting count=20
+
+--- PROFILE ---
+profile="Invoke AI", predefined=1, app_count=1, explicit_setting_count=3
+reasons:
+  - application metadata contains 'unity'
+applications: status=0, returned=1
+  - app="invoke community edition.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=3
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+  - id=0x809D5F60, name="Experimental - NVIDIA App Overlay Flags", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x10000000 (268435456), predefined=0x10000000 (268435456), reference_group="06 - Rendering Features", reference_description="NVIDIA App Overlay (formerly ShadowPlay) flags. Bit0: if set, app is whitelisted for Desktop capture. 0x10000000 disables NVIDIA App statistics. Other bits are unused for now."
+  - id=0xB0CC0875, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0)
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+  - id=0x809D5F60, name="Experimental - NVIDIA App Overlay Flags", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x10000000 (268435456), predefined=0x10000000 (268435456), reference_group="06 - Rendering Features", reference_description="NVIDIA App Overlay (formerly ShadowPlay) flags. Bit0: if set, app is whitelisted for Desktop capture. 0x10000000 disables NVIDIA App statistics. Other bits are unused for now."
+effective known setting count=11
+
+--- PROFILE ---
+profile="webplayer.unity3d", predefined=1, app_count=1, explicit_setting_count=0
+reasons:
+  - application metadata contains 'unity'
+  - profile name contains 'unity' or 'zoomtracks'
+applications: status=0, returned=1
+  - app="webplayer.unity3d.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+effective known setting count=9
+
+--- PROFILE ---
+profile="flylikeabird3.unity3d", predefined=1, app_count=1, explicit_setting_count=0
+reasons:
+  - application metadata contains 'unity'
+  - profile name contains 'unity' or 'zoomtracks'
+applications: status=0, returned=1
+  - app="flylikeabird3.unity3d.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+effective known setting count=9
+
+--- PROFILE ---
+profile="AngryBots.unity3d", predefined=1, app_count=1, explicit_setting_count=0
+reasons:
+  - application metadata contains 'unity'
+  - profile name contains 'unity' or 'zoomtracks'
+applications: status=0, returned=1
+  - app="angrybots.unity3d.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+effective known setting count=9
+
+--- PROFILE ---
+profile="F1 23", predefined=1, app_count=4, explicit_setting_count=10
+reasons:
+  - application metadata contains 'unity'
+applications: status=0, returned=4
+  - app="f1_2023_vs2022_win64_steam_release_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2023_vs2022_win64_steam_debugopt_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2023_vs2022_win64_steam_profile_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_23.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=10
+  - id=0x000F00BA, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1)
+  - id=0x0069367A, name="0x0069367A (Unknown)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x00CBE006, name="Experimental - LDC-to-LDG Translation Options", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="07 - System, Memory and Compute", reference_description="This regkey specifies LDC-to-LDG translation options (DXIL-only)"
+  - id=0x10255BB7, name="0x10255BB7 (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x01000000 (16777216), predefined=0x01000000 (16777216), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x0069367A, name="0x0069367A (Unknown)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x00CBE006, name="Experimental - LDC-to-LDG Translation Options", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="07 - System, Memory and Compute", reference_description="This regkey specifies LDC-to-LDG translation options (DXIL-only)"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x10255BB7, name="0x10255BB7 (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x01000000 (16777216), predefined=0x01000000 (16777216), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known setting count=18
+
+--- PROFILE ---
+profile="Mechdyne getReal3D", predefined=1, app_count=4, explicit_setting_count=5
+reasons:
+  - application metadata contains 'unity'
+applications: status=0, returned=4
+  - app="getreal3dunitydaemon.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="getreal3dlauncher.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="mgxviewer.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="trackdsimulator.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=5
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x2027F0A8, name="OpenGL Lddm MT Vertical Sync Wait Method", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000003 (3), predefined=0x00000003 (3), reference_group="10 - OpenGL", reference_description="The vsync wait method for multi-threaded applications (wddm only)."
+  - id=0x205F7E3B, name="OpenGL App Claw", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="10 - OpenGL", reference_description="Enable the Workstation Performance Code, CLAW"
+  - id=0x20A3D20D, name="0x20A3D20D (OpenGL)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="10 - OpenGL", reference_description=""
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x2027F0A8, name="OpenGL Lddm MT Vertical Sync Wait Method", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000003 (3), predefined=0x00000003 (3), reference_group="10 - OpenGL", reference_description="The vsync wait method for multi-threaded applications (wddm only)."
+  - id=0x205F7E3B, name="OpenGL App Claw", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="10 - OpenGL", reference_description="Enable the Workstation Performance Code, CLAW"
+  - id=0x20A3D20D, name="0x20A3D20D (OpenGL)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="10 - OpenGL", reference_description=""
+effective known setting count=14
+
+--- PROFILE ---
+profile="XIII - Remake", predefined=1, app_count=1, explicit_setting_count=1
+reasons:
+  - application metadata contains 'unity'
+applications: status=0, returned=1
+  - app="xiii.exe", friendly="", launcher="", file_in_folder="xiii_data/plugins/unityfbxsdknative.dll", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=1
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known setting count=10
+
+--- PROFILE ---
+profile="F1 24", predefined=1, app_count=4, explicit_setting_count=11
+reasons:
+  - application metadata contains 'unity'
+applications: status=0, returned=4
+  - app="f1_2024_vs2022_win64_steam_release_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2024_vs2022_win64_steam_profile_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_24.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2024_vs2022_win64_steam_debugopt_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=11
+  - id=0x000F00BA, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1)
+  - id=0x0069367A, name="0x0069367A (Unknown)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x00C09D09, name="Rebar Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="06 - Rendering Features", reference_description="Controls Rebar Expr Modes."
+  - id=0x10255BB7, name="0x10255BB7 (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x10836D12, name="0x10836D12 (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000080 (128), predefined=0x00000080 (128), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x01000000 (16777216), predefined=0x01000000 (16777216), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+  - id=0xB0CC0875, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0)
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x0069367A, name="0x0069367A (Unknown)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x00C09D09, name="Rebar Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="06 - Rendering Features", reference_description="Controls Rebar Expr Modes."
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x10255BB7, name="0x10255BB7 (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x10836D12, name="0x10836D12 (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000080 (128), predefined=0x00000080 (128), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x01000000 (16777216), predefined=0x01000000 (16777216), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known setting count=18
+
+--- PROFILE ---
+profile="F1 25", predefined=1, app_count=5, explicit_setting_count=11
+reasons:
+  - application metadata contains 'unity'
+applications: status=0, returned=5
+  - app="f1_25.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2025_beta_vs2022_win64_steam_debugopt_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2025_beta_vs2022_win64_steam_profile_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2025_vs2022_win64_steam_profile_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+  - app="f1_2025_beta_vs2022_win64_steam_release_dx12_clang_unity.exe", friendly="", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=10
+  - id=0x001ABC0F, name="Experimental - The amount of VA space in bytes reserved for the shader heap", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x40000000 (1073741824), predefined=0x40000000 (1073741824), reference_group="06 - Rendering Features", reference_description="Sets the amount of VA space in bytes reserved for the shader heap (must be in multiple of 64kb). This is only on Win10+ for Dx1X & Dx12 ( Dx1X requires SHADER_HEAP_MULTIBLOCK_ENABLE ). There are separate default enums for DX11 and DX12 (DX12 requires additional space for DXR shaders) which should be selected at runtime"
+  - id=0x00C09D09, name="Rebar Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="06 - Rendering Features", reference_description="Controls Rebar Expr Modes."
+  - id=0x10255BB7, name="0x10255BB7 (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x1034CB89, name="NVIDIA Predefined FXAA Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant FXAA_ALLOW_ID"
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x01000000 (16777216), predefined=0x01000000 (16777216), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+  - id=0xB0CC0875, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4)
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x001ABC0F, name="Experimental - The amount of VA space in bytes reserved for the shader heap", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x40000000 (1073741824), predefined=0x40000000 (1073741824), reference_group="06 - Rendering Features", reference_description="Sets the amount of VA space in bytes reserved for the shader heap (must be in multiple of 64kb). This is only on Win10+ for Dx1X & Dx12 ( Dx1X requires SHADER_HEAP_MULTIBLOCK_ENABLE ). There are separate default enums for DX11 and DX12 (DX12 requires additional space for DXR shaders) which should be selected at runtime"
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x00C09D09, name="Rebar Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000002 (2), predefined=0x00000002 (2), reference_group="06 - Rendering Features", reference_description="Controls Rebar Expr Modes."
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x10255BB7, name="0x10255BB7 (Driver)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="11 - Unknown Driver Settings", reference_description=""
+  - id=0x1034CB89, name="NVIDIA Predefined FXAA Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant FXAA_ALLOW_ID"
+  - id=0x1035DB89, name="NVIDIA Predefined Ansel Usage", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="Controls whether Ansel is blocked for the associated application configuration."
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x105E2A1D, name="CPU Expr Modes", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000004 (4), predefined=0x00000004 (4), reference_group="06 - Rendering Features", reference_description="List of supported FreeStyle modes"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x10F9DC84, name="Shim Rendering Mode Options per application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x01000000 (16777216), predefined=0x01000000 (16777216), reference_group="01 - Compatibility", reference_description="Rendering Mode Options for shim layer per application"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+effective known setting count=18
+
+--- PROFILE ---
+profile="Unity 3D", predefined=1, app_count=1, explicit_setting_count=8
+reasons:
+  - application metadata contains 'unity'
+  - profile name contains 'unity' or 'zoomtracks'
+  - target lookup: C:\Program Files\Unity Hub\resources\cli\unity.exe (basename)
+  - target lookup: C:\Program Files\Unity Hub\resources\cli\unity.exe (full path)
+  - target lookup: C:\Program Files\Unity\Hub\Editor\6000.3.21f1\Editor\Unity.exe (basename)
+  - target lookup: C:\Program Files\Unity\Hub\Editor\6000.3.21f1\Editor\Unity.exe (full path)
+  - target lookup: C:\Program Files\Unity\Hub\Editor\6000.3.22f1\Editor\Unity.exe (basename)
+  - target lookup: C:\Program Files\Unity\Hub\Editor\6000.3.22f1\Editor\Unity.exe (full path)
+  - target lookup: C:\Program Files\Unity\Hub\Editor\6000.3.23f1\Editor\Unity.exe (basename)
+  - target lookup: C:\Program Files\Unity\Hub\Editor\6000.3.23f1\Editor\Unity.exe (full path)
+  - target lookup: C:\Users\k\AppData\Local\Unity\bin\unity.exe (basename)
+  - target lookup: C:\Users\k\AppData\Local\Unity\bin\unity.exe (full path)
+applications: status=0, returned=1
+  - app="unity.exe", friendly="Unity3D", launcher="", file_in_folder="", command_line="", predefined=1, metro=0, command_line_rule=0
+explicit settings: status=0, returned=8
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x205F7E3B, name="OpenGL App Claw", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="10 - OpenGL", reference_description="Enable the Workstation Performance Code, CLAW"
+  - id=0x20A3D20D, name="0x20A3D20D (OpenGL)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="10 - OpenGL", reference_description=""
+  - id=0x80303A19, name="Experimental - rxinput.dll Injection", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Decide whether to inject rxinput.dll or not"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+  - id=0x809D5F60, name="Experimental - NVIDIA App Overlay Flags", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="NVIDIA App Overlay (formerly ShadowPlay) flags. Bit0: if set, app is whitelisted for Desktop capture. 0x10000000 disables NVIDIA App statistics. Other bits are unused for now."
+  - id=0xB0CC0875, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0)
+effective known settings (all reference IDs for which NvAPI_DRS_GetSetting succeeds):
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed."
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000011 (17), predefined=0x00000011 (17), reference_group="01 - Compatibility", reference_description="Allow list for shim layer per application"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+  - id=0x205F7E3B, name="OpenGL App Claw", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="10 - OpenGL", reference_description="Enable the Workstation Performance Code, CLAW"
+  - id=0x20A3D20D, name="0x20A3D20D (OpenGL)", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="10 - OpenGL", reference_description=""
+  - id=0x80303A19, name="Experimental - rxinput.dll Injection", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000000 (0), predefined=0x00000000 (0), reference_group="01 - Compatibility", reference_description="Decide whether to inject rxinput.dll or not"
+  - id=0x80857A28, name="Vertical Sync Expr Behaviors", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="02 - Sync and Refresh", reference_description="Collect usage statistics"
+  - id=0x809D5F60, name="Experimental - NVIDIA App Overlay Flags", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, current=0x00000001 (1), predefined=0x00000001 (1), reference_group="06 - Rendering Features", reference_description="NVIDIA App Overlay (formerly ShadowPlay) flags. Bit0: if set, app is whitelisted for Desktop capture. 0x10000000 disables NVIDIA App statistics. Other bits are unused for now."
+effective known setting count=16
+
+=== GLOBAL/BASE DRS PROFILE ===
+GetBaseProfile status=0
+profile="Base Profile", predefined=1, app_count=0, explicit_setting_count=10
+explicit settings: status=0, returned=9
+  - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, current=0x96861077 (2525368439), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID"
+  - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID"
+  - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, current=0x60925292 (1620202130), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCMODE_ID"
+  - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID"
+  - id=0x1057EB71, name="Power management mode", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID"
+  - id=0x1094F157, name="Toggle the VRR global feature", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID"
+  - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID"
+  - id=0x10A879CF, name="G-SYNC", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, current=0x00000000 (0), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID"
+  - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, current=0x00000001 (1), reference_group="NVIDIA built-in setting", reference_description="NVIDIA Profile Inspector built-in constant VRR_MODE_ID"
+

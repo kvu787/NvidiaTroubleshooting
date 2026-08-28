@@ -1,0 +1,876 @@
+Id	Name	Group	Description
+0x002C74F1	3Dsmax Shim Layer Control	01 - Compatibility	3DSMax Shim Layer Control (D3D9 Vista/Win7)
+0x00B82343	App Compat Shim	01 - Compatibility	A shim for DX1x app bugs workarounds
+0x7051E5F5	Compat	01 - Compatibility	Controls the predefined driver behavior associated with "Compat". This setting is used for compatibility handling, application-specific workarounds, or executable matching behavior.
+0x109DB0D3	G-SYNC Compatibility	02 - Sync and Refresh	Controls the NVIDIA driver behavior associated with "G-SYNC Compatibility". This setting is used for compatibility handling, application-specific workarounds, or executable matching behavior.
+0x20B812C1	OpenGL App SET WGL Compatibility Hwnd Thread Mismatch	10 - OpenGL	Do accept opengl calls with HDCs created by another process than the current one
+0x203D3FC9	OpenGL GLS Compatibility	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL GLS Compatibility". This setting is used for compatibility handling, application-specific workarounds, or executable matching behavior.
+0x20D5FDC4	OpenGL Multisample Compatibility	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Multisample Compatibility". This setting is used for compatibility handling, application-specific workarounds, or executable matching behavior.
+0x10F9DC84	Shim Rendering Mode Options Per Application For Optimus	01 - Compatibility	Rendering Mode Options for shim layer per application
+0x0015F512	Async9 Present Mode	02 - Sync and Refresh	Enable or disable asynchronous presents when the multithreaded driver is used
+0x10835006	Background Application Max Frame Rate For Nvcpl	02 - Sync and Refresh	Background Application Max Frame Rate for NVCPL
+0x201F619F	Buffer Flipping Mode	02 - Sync and Refresh	Controls the NVIDIA driver behavior associated with "Buffer Flipping Mode". This setting affects presentation timing, frame pacing, refresh policy, or synchronization behavior.
+0x1083502F	Configure Dynamic FPS Feature Mode As Dynamic Frame Rate Limiter Mode	02 - Sync and Refresh	Controls the NVIDIA driver behavior associated with "Configure Dynamic FPS Feature Mode As Dynamic Frame Rate Limiter Mode". This setting affects presentation timing, frame pacing, refresh policy, or synchronization behavior.
+0x10834FEE	Frame Rate Limiter	02 - Sync and Refresh	Framerate Limiter parameters, bit 31 to enable and LOWBYTE set to frames/sec
+0x10834FFF	Frame Rate Limiter 2 Control	02 - Sync and Refresh	Framerate Limiter 2 controls (deprecated)
+0x1083500A	Frame Rate Limiter For Nvcpl	02 - Sync and Refresh	Framerate Limiter FPS only for NVCPL to maintain the previous slider value when the FRL_FPS is set to Disabled.
+0x10834F01	Frame Rate Monitor	02 - Sync and Refresh	FRM parameters (deprecated)
+0x10834F05	Frame Rate Monitor Control	02 - Sync and Refresh	FRM control parameters
+0x1083500F	Gfn's Frame Rate Limiter	02 - Sync and Refresh	GFN's Frame Rate Limiter
+0x10844F18	Height In Pixels Of Latency Flash Indicator	02 - Sync and Refresh	Height in pixels of latency flash indicator in PS_FramerateMonitor.
+0x00676635	Indicator Triple Buffering	02 - Sync and Refresh	Setting from which CPL will decide whether to show Triple Buffering as normal or greyed out
+0x00280880	Indicator Vertical Sync	02 - Sync and Refresh	Toggle Fullscreen Indicator on or off / Manage other indicator add-ons
+0x2027F0A8	OpenGL Lddm MT Vertical Sync Wait Method	10 - OpenGL	The vsync wait method for multi-threaded applications (wddm only).
+0x20EE02B2	OpenGL Tearing Free Swap Present	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Tearing Free Swap Present". This setting affects presentation timing, frame pacing, refresh policy, or synchronization behavior.
+0x0005F512	Present Mode Async Dx10	02 - Sync and Refresh	Force DX10 present to async or sync call
+0x10834F15	Screen Position By % Of Latency Flash Indicator 0X10834f15	02 - Sync and Refresh	Screen position by % of latency flash indicator in PS_FramerateMonitor. 0 = left edge, 100 = right edge.
+0x10834F16	Screen Position By % Of Latency Flash Indicator 0X10834f16	02 - Sync and Refresh	Screen position by % of latency flash indicator in PS_FramerateMonitor. 0 = top edge, 100 = bottom edge.
+0x10FDEC23	Vertical Sync Behavior Flags	02 - Sync and Refresh	Flags for altering how the driver interprets VSYNC
+0x80857A28	Vertical Sync Expr Behaviors	02 - Sync and Refresh	Collect usage statistics
+0x10834F17	Width In Pixels Of Latency Flash Indicator	02 - Sync and Refresh	Width in pixels of latency flash indicator in PS_FramerateMonitor.
+0x10D7162F	Antialiasing Combined Mode + Setting	06 - Rendering Features	Controls the predefined driver behavior associated with "Antialiasing Combined Mode + Setting". This setting affects image quality controls such as antialiasing, transparency sampling, or post-process sharpening.
+0x00666665	Indicator MFAA	06 - Rendering Features	Setting from which CPL will decide whether to show MFAA as normal or greyed out
+0x20992431	Prevent Antialiasing OpenGL	10 - OpenGL	Disable different AA override option in the control panel for application that cannot support it
+0x10F74257	Anisotropic Filtering Mode + Level	04 - Texture Filtering	Controls how the anisotropic filtering mode is applied
+0x10E30043	Anisotropic Filtering Mode + Setting	04 - Texture Filtering	Controls the predefined driver behavior associated with "Anisotropic Filtering Mode + Setting". This setting affects texture filtering quality, anisotropic filtering, or texture LOD selection.
+0x207C128B	OpenGL App Centroid Sample	10 - OpenGL	Disable centroid sampling G80 only
+0x20B36B5C	OpenGL Force Gamma Downsample	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Force Gamma Downsample". This setting affects texture filtering quality, anisotropic filtering, or texture LOD selection.
+0x01ABAC23	Enable NIS 2.0 KMD Notification	05 - Upscaling and Frame Generation	Controls the NVIDIA driver behavior associated with "Enable NIS 2.0 KMD Notification". This setting affects NVIDIA upscaling, frame generation, or reconstruction features.
+0x10C7D57E	NGX DLSS FG Override Reserved Key1	05 - Upscaling and Frame Generation	Controls the NVIDIA driver behavior associated with "NGX DLSS FG Override Reserved Key1". This setting affects NVIDIA upscaling, frame generation, or reconstruction features.
+0x10C7D519	NGX DLSS FG Override Reserved Key2	05 - Upscaling and Frame Generation	Controls the NVIDIA driver behavior associated with "NGX DLSS FG Override Reserved Key2". This setting affects NVIDIA upscaling, frame generation, or reconstruction features.
+0x10C7D86C	NGX DLSS RR Override Reserved Key1	05 - Upscaling and Frame Generation	Controls the NVIDIA driver behavior associated with "NGX DLSS RR Override Reserved Key1". This setting affects NVIDIA upscaling, frame generation, or reconstruction features.
+0x10C7D597	NGX DLSS RR Override Reserved Key2	05 - Upscaling and Frame Generation	Controls the NVIDIA driver behavior associated with "NGX DLSS RR Override Reserved Key2". This setting affects NVIDIA upscaling, frame generation, or reconstruction features.
+0x10C7D684	NGX DLSS SR Override Reserved Key1	05 - Upscaling and Frame Generation	Controls the NVIDIA driver behavior associated with "NGX DLSS SR Override Reserved Key1". This setting affects NVIDIA upscaling, frame generation, or reconstruction features.
+0x10C7D82C	NGX DLSS SR Override Reserved Key2	05 - Upscaling and Frame Generation	Controls the NVIDIA driver behavior associated with "NGX DLSS SR Override Reserved Key2". This setting affects NVIDIA upscaling, frame generation, or reconstruction features.
+0x00598949	NIS Allow	10 - OpenGL	Controls whether the Sharpen filter is allowed. OpenGL defaults to allowed, while DX9, DX11, and DX12 default to disabled. If the active application is designated to run on the discrete GPU through Optimus, sharpening is allowed.
+0x00ABAC31	NIS V2 Enable Nvapp Or Nvcp Required	05 - Upscaling and Frame Generation	Controls the NVIDIA driver behavior associated with "NIS V2 Enable Nvapp Or Nvcp Required". This setting affects NVIDIA upscaling, frame generation, or reconstruction features.
+0x00ABAC21	NIS V2 Mode Nvapp Or Nvcp Required	05 - Upscaling and Frame Generation	Controls the NVIDIA driver behavior associated with "NIS V2 Mode Nvapp Or Nvcp Required". This setting affects NVIDIA upscaling, frame generation, or reconstruction features.
+0x00ABAB21	NIS V2 Value Nvapp Or Nvcp Required	05 - Upscaling and Frame Generation	Defines the sharpening value for NIS2 DirScaler algorithm (Range 0-100).
+0x100D51F7	Ansel Behavior 2 100D51f7	06 - Rendering Features	Specifies denylisting combinations for Ansel. Set this per-game.
+0x10D5C2DB	Ansel Behavior 3 10D5c2db	06 - Rendering Features	Determines if Ansel is allowed to be loaded and activated offline without the need for any network checks.
+0x0085F725	Colorcompressenable	06 - Rendering Features	Controls the predefined driver behavior associated with "Colorcompressenable". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x70AC6888	Leftcolorfilter0	06 - Rendering Features	Controls the predefined driver behavior associated with "Leftcolorfilter0". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x7090B6CA	Leftcolorfilter1	06 - Rendering Features	Controls the predefined driver behavior associated with "Leftcolorfilter1". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x70DC4A12	Linecodecolor	06 - Rendering Features	Controls the predefined driver behavior associated with "Linecodecolor". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x206C7691	OpenGL App Hide Float Color IF NO TWO Sided	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL App Hide Float Color IF NO TWO Sided". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x20AB9B87	OpenGL Perf Strat Color Compression	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Perf Strat Color Compression". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x20A2DE5F	OpenGL SET Reduce Color Thresholds Unorm8	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL SET Reduce Color Thresholds Unorm8". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x70B9A2F7	Rightcolorfilter0	06 - Rendering Features	Controls the predefined driver behavior associated with "Rightcolorfilter0". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x70ACA0CC	Rightcolorfilter1	06 - Rendering Features	Controls the predefined driver behavior associated with "Rightcolorfilter1". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x1077A11A	RTX HDR Allow	06 - Rendering Features	Controls the predefined driver behavior associated with "RTX HDR Allow". This setting affects rendering features, post-processing, or image pipeline behavior.
+0x200083E1	OpenGL - Breakup drawElements with restart enabled into independent primitives in fall back cases	10 - OpenGL	Breakup drawElements with restart enabled into independent primitives in fall back cases
+0x2009C4A8	OpenGL - Default DX present policy for MSHybrid configurations	10 - OpenGL	Controls default DX present policy for MSHybrid configurations.  Note that disabling DX present here does not prevent it from getting enabled for some other reason (e.g. HDR).  RS2 is the first version that supports Win7-blit (providing effecient MSHybrid support).  RS4 is the first version with a fix for diagonal tearing bug 200050074.
+0x200EF1B9	0x200EF1B9 (OpenGL)	10 - OpenGL	
+0x20105454	OpenGL - VirtualProtect WriteWatch Heap Lock	10 - OpenGL	Controls heap locking for the OpenGL VirtualProtect WriteWatch performance strategy.
+0x201067FA	0x201067FA (OpenGL)	10 - OpenGL	
+0x201067FB	0x201067FB (OpenGL)	10 - OpenGL	
+0x2013EBAD	OpenGL - Unmapped Vulkan Allocation Vidmem Coercion	10 - OpenGL	Controls whether unmapped VK allocations will be coerced into vidmem
+0x2015DBE2	OpenGL - Bug 200558116 workaround	10 - OpenGL	Controls whether Bug 200558116 workaround is enabled
+0x2017A8C5	OpenGL - Vulkan Swapchain Workarounds	10 - OpenGL	Workarounds related to VkSwapchainKHR
+0x20182054	OpenGL - Zcull Subregion Update Skip	10 - OpenGL	Using a state and global swapcount for tracking, when the last surface swapcount equals the current state/global swapcount, skip zcull subregion update
+0x201ABBC8	OpenGL - Memory manager block size based on vram size	10 - OpenGL	Memory manager block size based on vram size
+0x201CB1CF	OpenGL - Hidden Extension List	10 - OpenGL	Hide OpenGL extensions specified by this string. Multiple extensions are space-separated.
+0x201F610A	OpenGL - Perf heuristic that disallows host memory demotion for high priority allocations	10 - OpenGL	Perf heuristic that disallows host memory demotion for high priority allocations
+0x201F7CE2	0x201F7CE2 (OpenGL)	10 - OpenGL	
+0x2023CD0E	OpenGL - Classic \named\ vertex attributes are subject to instancing divisors	10 - OpenGL	Controls whether or not classic \named\ vertex attributes are subject to instancing divisors.
+0x202419A3	OpenGL - SLI performance issue	10 - OpenGL	Workaround to fix SLI performance issue
+0x20244EA6	0x20244EA6 (OpenGL)	10 - OpenGL	
+0x20247E01	OpenGL - Vulkan Device Group Workarounds	10 - OpenGL	Workarounds related to device groups
+0x202486F4	OpenGL - Maximum Aliased Line Width	10 - OpenGL	Set maximum aliased line width
+0x202486F5	OpenGL - Maximum Smooth Line Width	10 - OpenGL	Set maximum smooth line width
+0x20255E39	OpenGL - Smooth AA Early Culling Optimization	10 - OpenGL	Enables or disables the optimization that uses a Geometry Shader in order to cull early smooth AA lines. Only works on cards with more than 1 GPC.
+0x202717DD	0x202717DD (OpenGL)	10 - OpenGL	
+0x2028CA3F	OpenGL - Maximum Trim Level	10 - OpenGL	Control which trim level is the highest allowed
+0x202D03A7	OpenGL - Normal copy or multicast copy without GPU storage	10 - OpenGL	Allow normal copy or multicast copy without GPU storage
+0x202D489F	OpenGL - SM Instruction Prefetch	10 - OpenGL	Control the SM instruction prefetch. This is the in SM prefetch of upcoming instructions.
+0x202ED4BA	OpenGL - ZCull Flags	10 - OpenGL	Controls OpenGL ZCull behavior flags for layered resources, context switching, and depth-format handling.
+0x20300FC8	OpenGL - SCG SM Count Limit	10 - OpenGL	Limits hardware to use only a fraction of the total SM count for SCG (simultaneous compute and graphics).  A value of 0x100 means to use all SMs.
+0x20301FD6	0x20301FD6 (OpenGL)	10 - OpenGL	
+0x2030B5CD	OpenGL - Shader Output Zero Initialization Flags	10 - OpenGL	Flags to forcibly enable zero-initialization of shader outputs for different shader stages.
+0x20313233	OpenGL - Absolute-Base pow Instruction	10 - OpenGL	Modify the pow instruction to take the absolute value of the base operand, so as to avoid undefined behavior on applications that pass a negative base by default.
+0x20324985	OpenGL - Windows 8 DX11 Layered Present	10 - OpenGL	Win8 OpenGL present layered on DX11
+0x20339C5C	OpenGL - Fullscreen Exclusive Validation for DPI-Unaware Apps	10 - OpenGL	Control full-screen exlusive mode validation for DPI-unaware applications
+0x2033F75B	0x2033F75B (OpenGL)	10 - OpenGL	
+0x2034DFE6	OpenGL - GLSL Compiler Options	10 - OpenGL	Extra options to pass to the GLSL compiler.
+0x20350A3C	0x20350A3C (OpenGL)	10 - OpenGL	
+0x20394A56	OpenGL - Disabled MSAA Depth Sampling Method	10 - OpenGL	Selects the depth (Z) sampling method used for multisample buffers when multisampling is disabled.
+0x203A0819	OpenGL - Multi-GPU Support Bits	10 - OpenGL	Controls OpenGL multi-GPU support flags and synchronization behavior.
+0x203BB0F7	OpenGL - vkQueueSubmit Control Flags	10 - OpenGL	Flags to control vkQueueSubmit operation
+0x204142DF	OpenGL - Windows 8+ Flipping Behavior	10 - OpenGL	Controls the flipping behaviour on Windows8+
+0x20439714	OpenGL - Bug 2548370 workaround	10 - OpenGL	Controls whether Bug 2548370 workaround is enabled
+0x2047516A	0x2047516A (OpenGL)	10 - OpenGL	
+0x2049A8BD	OpenGL - MAILBOX Presentation Flipping Method	10 - OpenGL	Flipping method to use for MAILBOX presentation
+0x204A5341	OpenGL - GPU Disconnect Message Box	10 - OpenGL	Controls WGL message-box behavior when the OpenGL GPU disconnect path is hit.
+0x204C0735	OpenGL - High UBO Descriptor Limits	10 - OpenGL	Enable higher UBO descriptor limits for Vulkan
+0x20505214	OpenGL - GPGPU Interop Client Control	10 - OpenGL	Enables and disables OpenGL interop per GPGPU interop client
+0x20523DCF	0x20523DCF (OpenGL)	10 - OpenGL	
+0x20554D4E	OpenGL - Override the buffer bound checking to avoid possible issues in application	10 - OpenGL	Override the buffer bound checking to avoid possible issues in application
+0x20559482	OpenGL - Activation of the reduction tracker perf strat	10 - OpenGL	Controls the activation of the reduction tracker perf strat
+0x20573880	OpenGL - TDR Delay	10 - OpenGL	Set the TDR delay value in seconds (0 is disabled)
+0x2058BC06	0x2058BC06 (OpenGL)	10 - OpenGL	
+0x205E09FA	OpenGL - Ignore window destroy while threads are being detached	10 - OpenGL	Ignore window destroy while threads are being detached. Resolves potential deadlocks.
+0x2062AF0C	0x2062AF0C (OpenGL)	10 - OpenGL	
+0x206DD7E6	OpenGL - Force Hardware Texture Creation	10 - OpenGL	Forces texture to HW during texture creation
+0x206F6E12	OpenGL - Ansel Vulkan Control Flags	10 - OpenGL	Flags to control Ansel in the Vulkan driver
+0x206F6E1B	0x206F6E1B (OpenGL)	10 - OpenGL	
+0x206F6E1C	0x206F6E1C (OpenGL)	10 - OpenGL	
+0x206F6E1D	0x206F6E1D (OpenGL)	10 - OpenGL	
+0x20743EA1	OpenGL - Host memory is allowed for tile pools	10 - OpenGL	Controls whether host memory is allowed for tile pools
+0x20784B74	0x20784B74 (OpenGL)	10 - OpenGL	
+0x20784B75	0x20784B75 (OpenGL)	10 - OpenGL	
+0x207AB856	0x207AB856 (OpenGL)	10 - OpenGL	
+0x207F057E	0x207F057E (OpenGL)	10 - OpenGL	
+0x2081E3F1	OpenGL - Async P2P Transfer Mode	10 - OpenGL	Controls mode used for Async P2P transfers
+0x2082C57D	OpenGL - VirtualProtect WriteWatch	10 - OpenGL	Controls the OpenGL VirtualProtect WriteWatch performance strategy.
+0x208845AC	OpenGL - Vulkan Present and Swapchain Behavior	10 - OpenGL	Control behavior of VkSwapchainKHR and VkQueuePresentKHR
+0x20886748	OpenGL - Lock to rated TDP under PS2.0	10 - OpenGL	Lock to rated TDP under PS2.0
+0x2089A332	OpenGL - ZCull Performance Strategy Mode	10 - OpenGL	Selects the ZCull mode used by the OpenGL performance strategy.
+0x208BB815	OpenGL - G-SYNC VSync Behavior Mode	10 - OpenGL	This is a debugging regkey to switch among three vsync behavior modes under Gsync setup
+0x208BB816	OpenGL - Heuristic for using pixbar in shaders	10 - OpenGL	Controls the heuristic for using pixbar in shaders
+0x208CF634	OpenGL - WAR for HW bug 972630	10 - OpenGL	Enable/Disable WAR for HW bug 972630 for experimentation.
+0x208F7167	OpenGL - AND the sampler and image descriptor handles with 0xFFF00000 and 0xFFFFF respectively before combining them	10 - OpenGL	AND the sampler and image descriptor handles with 0xFFF00000 and 0xFFFFF respectively before combining them.
+0x209200E8	OpenGL - BufferSubData Sysmem Copy Limit	10 - OpenGL	Max. size in bytes for using separate sysmem copy of user data to avoid a Sync.  Above this limit, we pass user ptr and force a Sync to avoid sysmem copy.  Currently only used for BufferSubData.
+0x2094BE8D	OpenGL - Memory Overallocation Behavior	10 - OpenGL	Controls driver behavior for memory overallocation.
+0x2094BE8E	OpenGL - Default Vulkan Robustness Behavior	10 - OpenGL	Controls default Vulkan robustness behavior.
+0x2095A39B	OpenGL - Remote Desktop OpenGL Usage	10 - OpenGL	Control use of OpenGL in Remote Desktop
+0x209765AF	Vulkan - Depth/Stencil Compute Copy Override	10 - OpenGL	Controls whether Vulkan depth/stencil image copies use a compute path to copy interleaved depth and stencil data together.
+0x209E7944	OpenGL - Bindless Residency Memory Limit	10 - OpenGL	Adds limits to memory made resident by bindless functions
+0x209E7D35	OpenGL - Maximal reconvergence in GLV on Volta+, using vote and warpsync	10 - OpenGL	Enables maximal reconvergence in GLV on Volta+, using vote and warpsync
+0x209E7D4A	0x209E7D4A (OpenGL)	10 - OpenGL	
+0x209E7D4B	0x209E7D4B (OpenGL)	10 - OpenGL	
+0x20A03B11	0x20A03B11 (OpenGL)	10 - OpenGL	
+0x20A3B123	OpenGL - Descriptor Push Root Table Usage	10 - OpenGL	Controls the use of the VPC/root table for pushing descriptors.
+0x20A3D20D	0x20A3D20D (OpenGL)	10 - OpenGL	
+0x20A4993D	OpenGL - Minimize VRAM paging by limiting buffer object VRAM use to memory available at application startup	10 - OpenGL	Minimize VRAM paging by limiting buffer object VRAM use to memory available at application startup
+0x20A67039	OpenGL - For VRAM sized memory blocks, table size required to represent all memory blocks	10 - OpenGL	For VRAM sized memory blocks, table size required to represent all memory blocks
+0x20A84C92	OpenGL - Window-Based Render GPU Selection	10 - OpenGL	Selects the default OpenGL render GPU from the window position for same-Quadro hardware configurations.
+0x20AB097B	OpenGL - WGL Abort Behavior	10 - OpenGL	Selects how WGL handles fatal abort paths.
+0x20ABF3FA	OpenGL - GDI over OpenGL Mixing	10 - OpenGL	Some applications render GDI on top OpenGL content. There is limited support for this with blit model, but with flip model (can be used by dxPresent path), mixing GDI and other rendering is not supported. In fact the first flip model present to a window permanently disables GDI rendering support for that window. Enabling mixing here prevents the dxPresent path from using flip model when possible (note that diagonal tearing is possible due to bug 200050074). Enabling this is not necessary for applications that use a SUPPORT_GDI pixelformat.
+0x20AC3D04	OpenGL - Constant Folding Pipeline Time Threshold	10 - OpenGL	Lower bound on the average amount of time (in us) that must be spent in a pipeline for the profiler to consider it worthwhile for constant folding
+0x20AC3D07	OpenGL - Maximum Pipeline Passes Per Second	10 - OpenGL	Maximum number of passes to process per second.
+0x20AFA115	OpenGL - vkCmdCopy Execution Path	10 - OpenGL	Controls if vkCmdCopy* functions use TWOD, PSHADER, or COMPUTE in this order where applicable
+0x20B07241	OpenGL - Depth Stencil Pixel Format	10 - OpenGL	Defines pixel format used for OGL depth stencil buffer
+0x20B0B348	OpenGL - Fragment Shader KIL Behavior	10 - OpenGL	Control the behavior of fragment shader KIL instructions.
+0x20B5F2B2	0x20B5F2B2 (OpenGL)	10 - OpenGL	
+0x20BA7E04	OpenGL - Oversubscription of the host-visible heap automatically retries in sysmem rather than failing the allocation	10 - OpenGL	Controls whether oversubscription of the host-visible heap automatically retries in sysmem rather than failing the allocation. For use as WAR for certain applications.
+0x20BABA5A	0x20BABA5A (OpenGL)	10 - OpenGL	
+0x20BAC892	0x20BAC892 (OpenGL)	10 - OpenGL	
+0x20BADA12	0x20BADA12 (OpenGL)	10 - OpenGL	
+0x20BAEFD5	OpenGL - Loader Count Increment	10 - OpenGL	Increment the loader count when creating the currently loaded module
+0x20BB558F	OpenGL - Applications that don't follow the GL 4.4 spec for fixed/non-fixed sample locations	10 - OpenGL	Work around for applications that don't follow the GL 4.4 spec for fixed/non-fixed sample locations, these can't be mixed.
+0x20BC1A2A	OpenGL - vkGetDeviceProcAddr Compatibility Behavior	10 - OpenGL	Compatibility setting that maintains old incorrect vkGetDeviceProcAddr behavior
+0x20BC1A2C	OpenGL - OCG Floating-Point Optimization Behavior	10 - OpenGL	Controls OCG floating point optimization behavior
+0x20BC1A2E	OpenGL - Undefined Layout Clear Behavior	10 - OpenGL	Controls clear behavior on layout transition from undefined layout
+0x20BC1A30	OpenGL - Barrier Deferral with Transfer Operations	10 - OpenGL	Controls deferral of barriers interleaved with transfer ops
+0x20BC1A34	OpenGL - Forced Compiler Options and Optimizations	10 - OpenGL	Control which compiler options/optimizations are force enabled/disabled.
+0x20BD092B	OpenGL - Async Blit State Handle Threshold	10 - OpenGL	Threshold of allocated state handles where we allow async blit to be initialized.
+0x20C07BC3	OpenGL - Pixels From Memory Downsample Usage	10 - OpenGL	Toggle the usage of Pixels From Memory(PFM) for downsamples.
+0x20C0BF93	OpenGL - Force Early-Z Without Fragment Shader	10 - OpenGL	Controls whether to force early-z for draw calls with no fragment shader. Potentially useful if an app is limited by transitions between early-z and late-z.
+0x20C0DEF0	OpenGL - Shader Constant Folding Control	10 - OpenGL	Control whether shader constant folding is enabled and for which stages
+0x20C0DEF1	OpenGL - Constant Folding Tracking Pass Count	10 - OpenGL	Number of tracking passes a uniform needs to keep the same value before being constant folded
+0x20C0DEF5	OpenGL - Constant Folding Validation Failure Threshold	10 - OpenGL	Minimum percentage of validation attempts that must fail before optimization is aborted and tracking begins again
+0x20C0DEF6	OpenGL - Constant Folding Uniform Count Threshold	10 - OpenGL	Minimum number of uniforms a shader must have for it to be analyzed for optimization
+0x20C0DEF8	OpenGL - Host-Visible Vidmem Exposure	10 - OpenGL	Controls whether the host-visible vidmem type and heap (DEVICE_LOCAL | HOST_VISIBLE | HOST_COHERENT) are exposed through the Vulkan API.
+0x20C17757	OpenGL - Dedicated Hardware State Per Context	10 - OpenGL	Controls whether GL is allowed to use dedicated HW state per context
+0x20C1DEF7	OpenGL - RTCore CTA Swizzle Optimization Disable	10 - OpenGL	Option to force-disable the RTCore CTA swizzle optimization.
+0x20C32AD3	OpenGL - Vulkan SCG Behavior Flags	10 - OpenGL	Flags Vulkan SCG behaviour
+0x20C6EA21	OpenGL - Dirty texture AFR after sharing with glTextureView - this is a temporary workaround for Catia NRE	10 - OpenGL	Dirty texture AFR after sharing with glTextureView - this is a temporary workaround for Catia NRE
+0x20C732A2	Vulkan - Expose Texture Dirty Tile Map Extension	10 - OpenGL	Controls exposure of the VK_NV_texture_dirty_tile_map extension.
+0x20C7A9D3	0x20C7A9D3 (OpenGL)	10 - OpenGL	
+0x20C82D63	OpenGL - Cached DMA Allocation Limit	10 - OpenGL	Set an upper limit on cached DMA allocations, expressed in percentage of the total amount of sysmem. This value will override OGL_MEMMGR_CACHED_ALLOC_LIMIT
+0x20CA3E21	0x20CA3E21 (OpenGL)	10 - OpenGL	
+0x20CC604B	0x20CC604B (OpenGL)	10 - OpenGL	
+0x20CD42DF	0x20CD42DF (OpenGL)	10 - OpenGL	
+0x20D0CE3C	0x20D0CE3C (OpenGL)	10 - OpenGL	
+0x20D0E23D	OpenGL - WSVA Tuning	10 - OpenGL	Provides fine tuning of WSVA
+0x20D377DD	OpenGL - VirtualProtectWriteWatch Early Unprotect	10 - OpenGL	In VirtualProtectWriteWatch, force and early unprotect
+0x20D377DE	OpenGL - VirtualProtectWriteWatch Rearming	10 - OpenGL	In VirtualProtectWriteWatch, allow rearming
+0x20D489F5	OpenGL - Assembly Temporary Zero Initialization Flags	10 - OpenGL	Flags to forcibly enable zero-initialization of assembly temporaries for different shader stages.
+0x20D518CB	OpenGL - SolidWorks 2015 Order Independent Transparency shader fix	10 - OpenGL	SolidWorks 2015 Order Independent Transparency shader fix
+0x20D518D1	OpenGL - LinkProgram Locking	10 - OpenGL	Whether to hold a lock around LinkProgram
+0x20D518D4	OpenGL - Use memory that favors GPU access for persistent mapped buffers even with READ_BIT set	10 - OpenGL	Use memory that favors GPU access for persistent mapped buffers even with READ_BIT set
+0x20D518D5	OpenGL - HEAP_VID Allocation Ratio	10 - OpenGL	A percentage ratio of memory that can be consumed by HEAP_VID-only allocations
+0x20D518D6	OpenGL - Knob to avoid memory fragmentation	10 - OpenGL	Knob to avoid memory fragmentation
+0x20D5B86D	OpenGL - Swap Group Control	10 - OpenGL	Controls OpenGL swap-group behavior, including WDDM barrier binding and fullscreen flipping policy.
+0x20D6CE25	OpenGL - Texture Host Copy Skip Flags	10 - OpenGL	Controls flags for skipping host-side texture copies during OpenGL texture allocation.
+0x20D8E777	OpenGL - Per-FBO Dummy Window	10 - OpenGL	Controls whether or not a dummy window is created for each FBO.
+0x20D95F5B	0x20D95F5B (OpenGL)	10 - OpenGL	
+0x20DEAB07	OpenGL - Initial size of the Vulkan texture heap	10 - OpenGL	Controls the initial size of the Vulkan texture heap.
+0x20DEEB05	OpenGL - Initial size of the Vulkan sampler heap	10 - OpenGL	Controls the initial size of the Vulkan sampler heap.
+0x20DEED5C	OpenGL - Forces the compiler to return old CG compatible GLSL types instead of newer GLSL types	10 - OpenGL	Forces the compiler to return old CG compatible GLSL types instead of newer GLSL types.
+0x20E1389A	OpenGL - Sysmem Heap Allocation Limit	10 - OpenGL	Set an upper limit on sysmem heap allocations, expressed in percentage of the total amount of sysmem. This value will override OGL_MEMMGR_SYS_HEAP_ALLOC_LIMIT
+0x20E19453	OpenGL - Default Render GPU Override	10 - OpenGL	Override the default render GPU. The value is a zero-based index in the EnumDisplayDevices iteration space (same index as global {gls,win}device array). Affects both win7 and winxp-MMB.
+0x20E803DF	OpenGL - Full-Power Clear Notification	10 - OpenGL	Notify RM at each clear that pstates should be pushed to full power for Optimus and MSHybrid
+0x20E92E6B	OpenGL - SDSR Tuning	10 - OpenGL	Provides fine tuning of SDSR
+0x20ED4F82	OpenGL - Clip Plane Edge Clipping	10 - OpenGL	Clips edges on a clip plane as opposed to drawing edges on a clip plane per spec
+0x20F12335	OpenGL - MapBufferRange Invalidate Masking	10 - OpenGL	Mask MAP_INVALIDATE_RANGE_BIT flag away from <access> parameter provided to MapBufferRange(). Default is no masking.
+0x20F12336	OpenGL - Disable the BlitFramebuffer clipping to scissor	10 - OpenGL	Disable the BlitFramebuffer clipping to scissor
+0x20F21052	OpenGL - Used for testing to force different sector promotion methods	10 - OpenGL	Used for testing to force different sector promotion methods.
+0x20F995AB	0x20F995AB (OpenGL)	10 - OpenGL	
+0x20FBF134	OpenGL - Affects driver teardown behavior when	10 - OpenGL	Affects driver teardown behavior when (lpReserved != NULL), which\nindicates that one or more thread may have been terminated prior to\nPROCESS_DETACH. In this case attempting to clean up has undefined\nresults, including the possibility of a hang or a crash.
+0x20FEAF0D	0x20FEAF0D (OpenGL)	10 - OpenGL	
+0xB0CAD70F	0xB0CAD70F (OpenGL)	10 - OpenGL	
+0x00211020	ACE Power Mode CPU Frequency	07 - System, Memory and Compute	Override CPU frequency for ACE power Mode, can be set differently for each game
+0x70C71508	Disableonoutofmemory	07 - System, Memory and Compute	Controls the predefined driver behavior associated with "Disableonoutofmemory". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x10C158AD	Indicator Compute Performance	07 - System, Memory and Compute	enable/disable forcing large page sizes to be 128KB on Maxwell under WDDM2
+0x00676869	Indicator GPU Power Mode	07 - System, Memory and Compute	Controls the NVIDIA driver behavior associated with "Indicator GPU Power Mode". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x10528AB2	Kepler L1 Cache WAR BUG	07 - System, Memory and Compute	Disable Kepler L1 cache WAR - see bug 986473
+0x00FE8CC0	MAX Renaming Memory	07 - System, Memory and Compute	Limit max amount of memory used for renaming on XP
+0x20F49AE8	OpenGL App Broken Nv3x Demos	10 - OpenGL	Hacks for broken NV3X demos on NV50 -- cap the number of exposed image units to 16 to avoid crashes, and clamp the position written by vertex programs because NV50 doesn't rasterize primitives with vertices at +/-INF
+0x205F7E3B	OpenGL App Claw	10 - OpenGL	Enable the Workstation Performance Code, CLAW
+0x20BD755C	OpenGL App Claw Optimize	10 - OpenGL	Enable the optimizing compile in CLAW
+0x20BD755B	OpenGL App Claw Statistics	10 - OpenGL	CLAW statistics bitfield
+0x20BD755A	OpenGL App Claw Threads	10 - OpenGL	CLAW threading
+0x20B3EDD5	OpenGL App Constant Optimize	10 - OpenGL	Optimize based on constant values
+0x2037F53A	OpenGL App Copypixel Frontbuffer Flush	10 - OpenGL	Forces a front buffer update on copy pixels, for broken applications using front buffer rendering without glFlush calls
+0x202FD652	OpenGL App Direct Pushbuffer	10 - OpenGL	Use direct pushbuffer, not cached pushbuffer
+0x20E5C972	OpenGL App Dlist Segmenting	10 - OpenGL	Enable splitting of large Display List (reduce memory peak consumption)
+0x201C3B92	OpenGL App DST Reduce	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL App DST Reduce". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x202DE437	OpenGL App Export OpenGL 1 2	10 - OpenGL	Some applications have problems with opengl 1.3 -> export opengl 1.2 only
+0x2040B347	OpenGL App Force FP Default Precision	10 - OpenGL	VC7.1 RT (mistakenly) clobbers the FP precision.  This emulates the behavior in newer runtimes, such as VC10.
+0x20359278	OpenGL App Hide GL3 ON G80 Plus	10 - OpenGL	When set, advertise OpenGL 2.1 for G80+ GPUs (instead of OpenGL 3.0)
+0x2084A0A0	OpenGL App Ignore Swap Hints	10 - OpenGL	Ignore all swap hint rects. (SDRC I-DEAS MS9 bug workaround)
+0x20696FC3	OpenGL App Lazy Vbum Vbos	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL App Lazy Vbum Vbos". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20BE92CB	OpenGL App Maximize Texture	10 - OpenGL	Maximize vidmem available for texture storage
+0x20852142	OpenGL App NO Generic Arrays IN FF	10 - OpenGL	WAR for apps that exploit old-style vertex array access bugs such as KOTOR2
+0x20335BCA	OpenGL App NO SW Fallback	10 - OpenGL	Don't fall back to SW buffers if HW buffer allocations fail
+0x20C42A03	OpenGL App NO TEX Rgba4 TO Rgba8 Mapping	10 - OpenGL	Avoid the remapping from the internal texture format GL_RGBA4 to GL_RGBA8 at the cost of not being able to use that texture as a render target but with the benefit to not having to convert it.
+0x2096FD59	OpenGL App Optimized Immediate Mode	10 - OpenGL	Fast immediate mode path enable
+0x203C136F	OpenGL App Proe 2000I2	10 - OpenGL	Workaround for Pro/E's wrong vertex array enables
+0x206BD8C7	OpenGL App Promote Shaders From 120 TO 130	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL App Promote Shaders From 120 TO 130". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20441369	OpenGL App Promote Shaders From 140 TO 150	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL App Promote Shaders From 140 TO 150". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x202FE114	OpenGL App Runtime Vertex Attrib Sourcing	10 - OpenGL	Post VAB generalizes the vertex shader to test the source of each vertex attribute used.  Allows enabled array state to change without requiring a new vertex shader
+0x20D489F4	OpenGL App Shader Assumes 0	10 - OpenGL	Flags to forcibly enable zero-initialization of assembly temporaries for different shader stages.
+0x20630BA7	OpenGL App Softimage	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL App Softimage". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20EBD7B8	OpenGL App Supportbits2	10 - OpenGL	Mix of application workarounds - Part 2
+0x20C618F9	OpenGL App TXL LOD WAR	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL App TXL LOD WAR". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x207DF8D1	OpenGL App USE Dx10 SAT	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL App USE Dx10 SAT". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20AF9927	OpenGL App USE Loop Enhance	10 - OpenGL	Replaces some application immediate mode loops with block copy of data
+0x20BAC7FA	OpenGL App USE Sddr	10 - OpenGL	Enable frame coherency assuming static data but with dynamic references
+0x2007B25E	OpenGL App Vbum Virtual Address XP Only	10 - OpenGL	XP only, virtual addresses are created for any VBUM addresses passed back to the user application. Disabled for performance
+0x20D59EDA	OpenGL App Vidmem Pushbuffer	10 - OpenGL	This app benefits greatly from vidmem pushbuffers
+0x20D377DC	OpenGL App Vpww Allow Late Alloced	10 - OpenGL	In VirtualProtectWriteWatch, allow late allocations
+0x20320CE4	OpenGL App Yield After Swap	10 - OpenGL	Call GL_YIELD in postSwapBuffers()
+0x203691BB	OpenGL Application KEY	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Application KEY". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20CBFFC4	OpenGL Avoid Validation ON POP Matrix Without Change	10 - OpenGL	Avoid unnecessary calls to validation on pop matrix where no change has occurred. Limited to app bit to reduce risk
+0x2045959A	OpenGL Check FOR Identity Matrix Math	10 - OpenGL	Add cycles to check for identity matrix math in some cases. Limited to app bit to reduce risk, quadro differentiator
+0x20F107CC	OpenGL Conformant Incomplete Textures	10 - OpenGL	Indicates whether incomplete textures should produce (0,0,0,0) matching D3D and our hardware, or (0,0,0,1) as per the OpenGL specification
+0x20A6EEBC	OpenGL Disable Workstation Optimizations	10 - OpenGL	Disables automatic enable of some workstation optimizations
+0x20FBBC2B	OpenGL Dispatch Control	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Dispatch Control". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x207A3A90	OpenGL Filter Pixelformat	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Filter Pixelformat". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x2027F1A8	OpenGL Force Flush Textures	10 - OpenGL	Force flushing textures after cooking them.
+0x20334278	OpenGL Force Nx6plusmode	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Force Nx6plusmode". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x206194D6	OpenGL Memory Pull Buffer Size	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Memory Pull Buffer Size". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x204B6CBF	OpenGL Multimon Buffer	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Multimon Buffer". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x208F3F2D	OpenGL Ocgcontrol Direct Nvir	10 - OpenGL	Controls OCG support for processing nvInst shaders.  Legacy support converts nvInst to a DAG; newer code converts it directly to NVIR (instruction list) form.
+0x203A0751	OpenGL Overlay Mergeblit Timer MS	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Overlay Mergeblit Timer MS". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x209A0EE9	OpenGL Override 2Xtex	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Override 2Xtex". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20AB9B86	OpenGL Perf Strat Depth Compression	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Perf Strat Depth Compression". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x203714A4	OpenGL Perf Strat Lddm Allocationtable Size	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Perf Strat Lddm Allocationtable Size". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20D38906	OpenGL Perf Strat Lddm Cmdbuffer Size	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Perf Strat Lddm Cmdbuffer Size". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20EA260C	OpenGL Perf Strat Lddm Patchlocationtable Size	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Perf Strat Lddm Patchlocationtable Size". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x201FEBD1	OpenGL PFD Adjust	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL PFD Adjust". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20E802AF	OpenGL P-State Boost AT Clear	10 - OpenGL	Notify RM at each clear that pstates should be pushed to full power
+0x20748292	OpenGL Quadro Worker Thread Creation	10 - OpenGL	Set this to 0 in order to prevent the creation of a suspended worker thread on Quadro
+0x20219263	OpenGL Render Quality Flags	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Render Quality Flags". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x201808AC	OpenGL Shader Warnings AS Errors	10 - OpenGL	Controls whether portability warnings of shaders without '#version' directives are treated as errors.
+0x20378242	OpenGL Shared Memory Usage Threshold	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Shared Memory Usage Threshold". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20D6CE24	OpenGL Skip Texture Host Copies	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Skip Texture Host Copies". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x205FB5AB	OpenGL SRV App Force OpenGL Geforce	10 - OpenGL	Enable GeForce optimizations on a Quadro
+0x208D973F	OpenGL SRV App Force Secondary Adapter	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL SRV App Force Secondary Adapter". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20570FC6	OpenGL SRV App Memory MAP NOT Required	10 - OpenGL	Disables the mapping of video memory to system memory, consumes too much in Vista
+0x20568533	OpenGL SRV App NO PFD Support GDI	10 - OpenGL	Final override for exporting PFD_SUPPORT_GDI. If this bit is set, PFD_SUPPORT_GDI will not be set, regardless of OGL_PfdAdjust or OGL_VistaControlFlags values
+0x2003FF01	OpenGL SRV App NON Fsaa Singlebuffer	10 - OpenGL	Do not use FSAA modes for single buffered clients ( this helps a lot with Studio Tools 10 which draws menues with OpenGL )
+0x20AF671D	OpenGL SRV App Noz16stencil	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL SRV App Noz16stencil". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x20F2E572	OpenGL Sysmem Texture Promotion	10 - OpenGL	Textures being promoted from Sysmem to Vidmem
+0x204CFF7B	OpenGL Texclamp	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Texclamp". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x209FD306	OpenGL Thread Control 2	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Thread Control 2". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x207A8C92	OpenGL Thread Optimization	10 - OpenGL	Set this to 0 in order to prevent the creation of a suspended worker thread on Quadro
+0x202DC432	OpenGL Thread Optimization Geforce	10 - OpenGL	Threaded optimizations for GeForce.
+0x20748F92	OpenGL Treat Depth24 AS Depth32	10 - OpenGL	For Quadro on Windows OSs only, set this to 1 in order to report depth 24 / stencil 0 formats as depth 32
+0x20D0DB0D	OpenGL VID Heap Reuse Ratio	10 - OpenGL	Control the amount of freed video memory the allocator reserves for reuse by future allocations. By default the allocator reserves up to 10% of the total VRAM. The units are in 1/1000ths of total heap. So 100 means 10%.
+0x10E3293A	Physx Enable	07 - System, Memory and Compute	Set for PhysX applications
+0x00AE785C	Powerthrottle	07 - System, Memory and Compute	Controls the NVIDIA driver behavior associated with "Powerthrottle". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x001D744C	Shader Cache Control Flags 0X1d744c	07 - System, Memory and Compute	Controls the NVIDIA driver behavior associated with "Shader Cache Control Flags 0X1d744c". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x00F4889B	Shader Cache Control Flags 0Xf4889b	07 - System, Memory and Compute	Flags for shader cache
+0x00F4889C	Shader Cache Control Flags For Automated Testing	07 - System, Memory and Compute	Controls the NVIDIA driver behavior associated with "Shader Cache Control Flags For Automated Testing". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x0013FEC2	Staging Cache Size	08 - SLI and NVLINK	Map() of staging buffer without DISCARD or NO_OVERWRITE is a problem unless we can map cached copy.  Smaller values can cause uncached maps to stall but larger values incur lots of memcpy() overhead.  Testing has found 8kb to be a sensible tradeoff (Outlook in sensitive to larger values). SLI uses a minimum value of 4mb.
+0x00DB3853	Sysmemcachedcopybehavior	07 - System, Memory and Compute	This key is changing sysmem cached copy behavior
+0x10F797A1	Tiled Cache Enable DX OpenGL	10 - OpenGL	Controls the predefined driver behavior associated with "Tiled Cache Enable DX OpenGL". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x10523DC0	Tiled Cache Enable DX OpenGL Pre 526.47	10 - OpenGL	enable/disable tiled cache
+0x20523DD1	Tiled Cache Enable Vulkan	07 - System, Memory and Compute	MAXWELL_TILEDCACHE override for Vulkan.
+0x1055F550	Tiled Cache Size	07 - System, Memory and Compute	Controls the predefined driver behavior associated with "Tiled Cache Size". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x104B6CA4	Tiledcache L2 Usage	07 - System, Memory and Compute	Controls the predefined driver behavior associated with "Tiledcache L2 Usage". This setting affects driver scheduling, memory policy, compute behavior, or system-level feature control.
+0x0078D9D9	Disable SLI Explicitly Set Through Nvapi	08 - SLI and NVLINK	Disable SLI (Explicitly set through NVAPI)
+0x1033DCD1	Number Of Gpus To Use On SLI Rendering Mode	08 - SLI and NVLINK	User visible exposed number of GPUs to use on SLI
+0x1033DCD2	Nvidia Predefined Number Of Gpus To Use On SLI Rendering Mode	08 - SLI and NVLINK	Indicates in the NVIDIA Control Panel how many GPUs should be used by default for SLI operation
+0x1033DCD3	Nvidia Predefined Number Of Gpus To Use On SLI Rendering Mode On Directx 10	08 - SLI and NVLINK	Indicates in the NVIDIA Control Panel how many GPUs should be used by default for DirectX 10 SLI operation.
+0x1033CEC1	Nvidia Predefined SLI Mode	08 - SLI and NVLINK	Setting to indicate in the Control Panel which SLI mode is active by default
+0x1033CEC2	Nvidia Predefined SLI Mode On Directx 10	08 - SLI and NVLINK	Setting to indicate in the Control Panel which SLI mode is active by default on DirectX 10
+0x00A06948	NVLINK SLI Mode	08 - SLI and NVLINK	multichip mode for DX10 apps for new gpus (like TU+)
+0x20873922	OpenGL SLI DL Control	10 - OpenGL	Optimise SLI downloads using P2P transfers
+0x2014CC70	OpenGL SLI Windowed AFR	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL SLI Windowed AFR". This setting affects multi-GPU rendering, workload distribution, or NVLINK/SLI behavior.
+0x00A0694B	SLI Broadcast Dx1x	08 - SLI and NVLINK	multichip app broadcast compat value for DX10 apps
+0x0095DEF9	SLI Broadcast DX9	08 - SLI and NVLINK	Additional MCCOMPAT flags for broadcast RTT
+0x20343843	SLI CFR Mode	08 - SLI and NVLINK	Controls CFR modes and options
+0x00A06946	SLI Compatibility Bits Dx10 + Dx11	08 - SLI and NVLINK	multichip app compat value for DX10 apps
+0x00A04746	SLI Compatibility Bits Dx12	08 - SLI and NVLINK	***DEPRECATED*** - IMPLICIT SLI NOT SUPPORTED ANY LONGER. multichip implicit SLI app compat value for DX12 apps
+0x1095DEF8	SLI Compatibility Bits DX9	08 - SLI and NVLINK	Controls the predefined driver behavior associated with "SLI Compatibility Bits DX9". This setting affects multi-GPU rendering, workload distribution, or NVLINK/SLI behavior.
+0x209746C1	SLI Compatibility Bits OpenGL	10 - OpenGL	Controls the predefined driver behavior associated with "SLI Compatibility Bits OpenGL". This setting affects multi-GPU rendering, workload distribution, or NVLINK/SLI behavior.
+0x009CFEC8	SLI Copy Engine	08 - SLI and NVLINK	Copy Engine Configuration for DX1x
+0x00A06746	SLI Specific Hacks Dx1x	08 - SLI and NVLINK	multichip app specific hacks for single app
+0x00A0674A	SLI Specific Hacks DX9	08 - SLI and NVLINK	multichip app specific hacks for single app in DX9
+0x00F713BC	Slimosaic Control	08 - SLI and NVLINK	Control strategies used to improve Mosaic and Surround performance
+0x701EB457	Stereo - Profile Enable	09 - Stereo	Enables or disables the NVIDIA stereo profile path.
+0x709D3AD2	Stereo - VR Support Flags	09 - Stereo	Flags related to VR Support
+0x70D76B8F	0x70D76B8F (Stereo)	09 - Stereo	
+0x709ADADC	2DD Notes	09 - Stereo	Controls the predefined driver behavior associated with "2DD Notes". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709ADADB	2Ddconvergence	09 - Stereo	Controls the predefined driver behavior associated with "2Ddconvergence". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709ADADA	2Ddhudsettings	09 - Stereo	Controls the predefined driver behavior associated with "2Ddhudsettings". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x702C7709	Allownonexclusivestereo	09 - Stereo	Controls the predefined driver behavior associated with "Allownonexclusivestereo". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70B5603F	API	09 - Stereo	Controls the predefined driver behavior associated with "API". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x702A0AB2	Autoconvergence	09 - Stereo	Controls the predefined driver behavior associated with "Autoconvergence". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70BF3C6B	Autoconvergenceadjustpace	09 - Stereo	Controls the predefined driver behavior associated with "Autoconvergenceadjustpace". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704D456E	Comments	09 - Stereo	Controls the predefined driver behavior associated with "Comments". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70729E58	Compareeyes	09 - Stereo	Controls the predefined driver behavior associated with "Compareeyes". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70EFB726	Comparefrom	09 - Stereo	Controls the predefined driver behavior associated with "Comparefrom". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70A7FC7F	Createstereodtafterpresentnum	09 - Stereo	Controls the predefined driver behavior associated with "Createstereodtafterpresentnum". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704C9A46	Cutofffardepthless	09 - Stereo	Controls the predefined driver behavior associated with "Cutofffardepthless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70FBC04D	Cutofffardepthmore	09 - Stereo	Controls the predefined driver behavior associated with "Cutofffardepthmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70D1BDB5	Cutoffneardepthless	09 - Stereo	Controls the predefined driver behavior associated with "Cutoffneardepthless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7020C991	Cutoffneardepthmore	09 - Stereo	Controls the predefined driver behavior associated with "Cutoffneardepthmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704B45C7	Cutoffstepless	09 - Stereo	Controls the predefined driver behavior associated with "Cutoffstepless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x700F2971	Cutoffstepmore	09 - Stereo	Controls the predefined driver behavior associated with "Cutoffstepmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x00161903	D3D Stereo Black List	09 - Stereo	Prohibit stereo shim in DX apps
+0x705FAFEC	Date Rel	09 - Stereo	Controls the predefined driver behavior associated with "Date Rel". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7042EEF1	Delayedstereodesktop	09 - Stereo	Controls the predefined driver behavior associated with "Delayedstereodesktop". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70C73BA2	Deleteconfig	09 - Stereo	Controls the predefined driver behavior associated with "Deleteconfig". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x703C4026	Developer	09 - Stereo	Controls the predefined driver behavior associated with "Developer". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704F5928	Developer Issues	09 - Stereo	Controls the predefined driver behavior associated with "Developer Issues". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709ADADD	Disable2dd	09 - Stereo	Controls the predefined driver behavior associated with "Disable2dd". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70175566	Discardhotkeys	09 - Stereo	Controls the predefined driver behavior associated with "Discardhotkeys". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70092D4A	Dx10dscbnumber	09 - Stereo	Controls the predefined driver behavior associated with "Dx10dscbnumber". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70F8E408	Dx10vscbnumber	09 - Stereo	Controls the predefined driver behavior associated with "Dx10vscbnumber". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x702B8C95	Enablece	09 - Stereo	Controls the predefined driver behavior associated with "Enablece". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70CB9168	Enableconsumerstereosupport	09 - Stereo	Controls the predefined driver behavior associated with "Enableconsumerstereosupport". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7096ECED	Enablepartialstereoblit	09 - Stereo	Controls the predefined driver behavior associated with "Enablepartialstereoblit". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70E46F2B	Enablestereocursor	09 - Stereo	Controls the predefined driver behavior associated with "Enablestereocursor". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x705FAED7	Favorsz	09 - Stereo	Controls the predefined driver behavior associated with "Favorsz". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70A1411A	Frustumadjustmode	09 - Stereo	Controls the predefined driver behavior associated with "Frustumadjustmode". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70C8D48E	Game	09 - Stereo	Controls the predefined driver behavior associated with "Game". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704A905A	Gameconfigs	09 - Stereo	Controls the predefined driver behavior associated with "Gameconfigs". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x702244B7	Gamespecific0	09 - Stereo	Controls the predefined driver behavior associated with "Gamespecific0". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70E8420C	Gammaadjustless	09 - Stereo	Controls the predefined driver behavior associated with "Gammaadjustless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x703F4521	Gammaadjustmore	09 - Stereo	Controls the predefined driver behavior associated with "Gammaadjustmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70B8A743	Glassesdelayminus	09 - Stereo	Controls the predefined driver behavior associated with "Glassesdelayminus". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x701FC5B4	Glassesdelayplus	09 - Stereo	Controls the predefined driver behavior associated with "Glassesdelayplus". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70057BB6	Glassesswitchdelay	09 - Stereo	Controls the predefined driver behavior associated with "Glassesswitchdelay". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7064F0C2	Ingamelasersight	09 - Stereo	Controls the predefined driver behavior associated with "Ingamelasersight". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x706139AD	Ingamelasersightdx9states	09 - Stereo	Controls the predefined driver behavior associated with "Ingamelasersightdx9states". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70B1C8CC	Interleavepattern0	09 - Stereo	Controls the predefined driver behavior associated with "Interleavepattern0". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7091A772	Interleavepattern1	09 - Stereo	Controls the predefined driver behavior associated with "Interleavepattern1". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7048B7DC	Laseradjustxminus	09 - Stereo	Controls the predefined driver behavior associated with "Laseradjustxminus". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70D8BAE6	Laseradjustxplus	09 - Stereo	Controls the predefined driver behavior associated with "Laseradjustxplus". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70FB9E1E	Laseradjustyminus	09 - Stereo	Controls the predefined driver behavior associated with "Laseradjustyminus". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7024EDA4	Laseradjustyplus	09 - Stereo	Controls the predefined driver behavior associated with "Laseradjustyplus". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7058B6E1	Lasersight	09 - Stereo	Controls the predefined driver behavior associated with "Lasersight". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7054837A	Lasersightenabled	09 - Stereo	Controls the predefined driver behavior associated with "Lasersightenabled". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x707AC50D	Lasersightfile	09 - Stereo	Controls the predefined driver behavior associated with "Lasersightfile". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70DA83C6	Lasersightindex	09 - Stereo	Controls the predefined driver behavior associated with "Lasersightindex". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7032243A	Lasersightproperty	09 - Stereo	Controls the predefined driver behavior associated with "Lasersightproperty". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70031B88	Lasersighttrigger	09 - Stereo	Controls the predefined driver behavior associated with "Lasersighttrigger". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7057E831	Stereo - Laser Sight X Offset	09 - Stereo	Adjusts the horizontal position of the stereo laser sight overlay.
+0x70225308	Stereo - Laser Sight Y Offset	09 - Stereo	Adjusts the vertical position of the stereo laser sight overlay.
+0x7014FCA2	Laserzadjust	09 - Stereo	Controls the predefined driver behavior associated with "Laserzadjust". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70D51CD1	Leftanaglyphfilter	09 - Stereo	Controls the predefined driver behavior associated with "Leftanaglyphfilter". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7032022C	Maxmonitorsize	09 - Stereo	Controls the predefined driver behavior associated with "Maxmonitorsize". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709E4A94	Maxvertexcount	09 - Stereo	Controls the predefined driver behavior associated with "Maxvertexcount". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70A8FC7F	Mediaplayer	09 - Stereo	Controls the predefined driver behavior associated with "Mediaplayer". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70BD11E0	Mixedtnl	09 - Stereo	Controls the predefined driver behavior associated with "Mixedtnl". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70969BB0	Modesetwarning	09 - Stereo	Controls the predefined driver behavior associated with "Modesetwarning". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7086EBE9	Monitorsize	09 - Stereo	Controls the predefined driver behavior associated with "Monitorsize". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7005AD16	Nolocksubstitute	09 - Stereo	Controls the predefined driver behavior associated with "Nolocksubstitute". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x20D324C5	OpenGL Consumer API Stereo Mode	10 - OpenGL	Controls the predefined driver behavior associated with "OpenGL Consumer API Stereo Mode". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70998683	P1sh0	09 - Stereo	Controls the predefined driver behavior associated with "P1sh0". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709794CC	Partialclearmode	09 - Stereo	Controls the predefined driver behavior associated with "Partialclearmode". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704CDE5A	PF Issues	09 - Stereo	Controls the predefined driver behavior associated with "PF Issues". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7046516E	Psh0	09 - Stereo	Controls the predefined driver behavior associated with "Psh0". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x706C7030	Publisher	09 - Stereo	Controls the predefined driver behavior associated with "Publisher". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7054FBF8	Pushbufsubstitutesize	09 - Stereo	Controls the predefined driver behavior associated with "Pushbufsubstitutesize". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7029432B	Rhw2ddetectionmin	09 - Stereo	Controls the predefined driver behavior associated with "Rhw2ddetectionmin". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709139AD	Rhwatscreenless	09 - Stereo	Controls the predefined driver behavior associated with "Rhwatscreenless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7066A22E	Rhwatscreenmore	09 - Stereo	Controls the predefined driver behavior associated with "Rhwatscreenmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70AB2E09	Rhwequalatscreen	09 - Stereo	Controls the predefined driver behavior associated with "Rhwequalatscreen". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x702C861A	Rhwgreateratscreen	09 - Stereo	Controls the predefined driver behavior associated with "Rhwgreateratscreen". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x706E1913	Rhwinf	09 - Stereo	Controls the predefined driver behavior associated with "Rhwinf". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70381472	Rhwlessatscreen	09 - Stereo	Controls the predefined driver behavior associated with "Rhwlessatscreen". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70B378A1	Rhwlessatscreenless	09 - Stereo	Controls the predefined driver behavior associated with "Rhwlessatscreenless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704E4BCA	Rhwlessatscreenmore	09 - Stereo	Controls the predefined driver behavior associated with "Rhwlessatscreenmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70A4995C	Rhwscr	09 - Stereo	Controls the predefined driver behavior associated with "Rhwscr". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70F4A930	Rightanaglyphfilter	09 - Stereo	Controls the predefined driver behavior associated with "Rightanaglyphfilter". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x701A8BE4	Runtimename	09 - Stereo	Controls the predefined driver behavior associated with "Runtimename". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70121853	Savestereoimage	09 - Stereo	Controls the predefined driver behavior associated with "Savestereoimage". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x706E0041	Sharpvpi	09 - Stereo	Controls the predefined driver behavior associated with "Sharpvpi". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708E5CB4	Showallviewertypes	09 - Stereo	Controls the predefined driver behavior associated with "Showallviewertypes". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7004E7A6	Snapshotquality	09 - Stereo	Controls the predefined driver behavior associated with "Snapshotquality". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7044D7A6	Startzbit	09 - Stereo	Controls the predefined driver behavior associated with "Startzbit". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x11E91A61	Stereo Display Mode	09 - Stereo	Display mode to use when stereo is enabled
+0x112493BD	Stereo Dongle Support	09 - Stereo	Control of the stereo dongle
+0x11AA9E99	Stereo Enable	09 - Stereo	Support of the stereo API for workstations
+0x70ED1DA7	Stereo Frustumadjustmode Dx10	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Frustumadjustmode Dx10". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7031A2E7	Stereo Lasersight Dx10	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Lasersight Dx10". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x102E048D	Stereo Mccompat	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Mccompat". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7077BACE	Stereo Stereoconvergence Dx10	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Stereoconvergence Dx10". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7084807E	Stereo Stereoconvergence Dx11	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Stereoconvergence Dx11". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704FCF5C	Stereo Stereocutoff Dx10	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Stereocutoff Dx10". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7053569A	Stereo Stereocutoff Dx11	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Stereocutoff Dx11". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704EF483	Stereo Stereocutoffdepthnear Dx10	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Stereocutoffdepthnear Dx10". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70E1518C	Stereo Stereotextureenable Dx10	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Stereotextureenable Dx10". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70C0125E	Stereo Stereotextureenable Dx11	09 - Stereo	Controls the predefined driver behavior associated with "Stereo Stereotextureenable Dx11". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x11333333	Stereo Swap Mode	09 - Stereo	Controls the NVIDIA driver behavior associated with "Stereo Swap Mode". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70538AB1	Stereoadjustenable	09 - Stereo	Controls the predefined driver behavior associated with "Stereoadjustenable". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70E5773B	Stereocolorkey	09 - Stereo	Controls the predefined driver behavior associated with "Stereocolorkey". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70A2000E	Stereocompatibility	09 - Stereo	Controls the predefined driver behavior associated with "Stereocompatibility". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708DB8C5	Stereo - Convergence	09 - Stereo	Sets the stereo convergence distance as a floating-point value.
+0x70D4ADD7	Stereoconvergenceadjustless	09 - Stereo	Controls the predefined driver behavior associated with "Stereoconvergenceadjustless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x701ED576	Stereoconvergenceadjustmore	09 - Stereo	Controls the predefined driver behavior associated with "Stereoconvergenceadjustmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70EFBB5B	Stereoconvergencemultiplier	09 - Stereo	Controls the predefined driver behavior associated with "Stereoconvergencemultiplier". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709A1DDF	Stereo - Cutoff Mode	09 - Stereo	Selects which stereo cutoff depth limit is used.
+0x70ADD220	Stereo - Cutoff Far Depth	09 - Stereo	Sets the far stereo cutoff depth as a floating-point value.
+0x7050E011	Stereo - Cutoff Near Depth	09 - Stereo	Sets the near stereo cutoff depth as a floating-point value.
+0x70AB30A7	Stereodefaulton	09 - Stereo	Controls the predefined driver behavior associated with "Stereodefaulton". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70DE5533	Stereodisableasync	09 - Stereo	Controls the predefined driver behavior associated with "Stereodisableasync". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70633BD9	Stereodisabletnl	09 - Stereo	Controls the predefined driver behavior associated with "Stereodisabletnl". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70D10D2B	Stereodx9	09 - Stereo	Controls the predefined driver behavior associated with "Stereodx9". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70B6D6ED	Stereoeasyzcheck	09 - Stereo	Controls the predefined driver behavior associated with "Stereoeasyzcheck". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70E5A749	Stereoepsilon	09 - Stereo	Controls the predefined driver behavior associated with "Stereoepsilon". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70AF6400	Stereofirsttime	09 - Stereo	Controls the predefined driver behavior associated with "Stereofirsttime". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x702442FC	Stereo - DX10 Compute Flags	09 - Stereo	Controls DX10 stereo compute handling flags.
+0x70AAE185	Stereoforcevsync	09 - Stereo	Controls the predefined driver behavior associated with "Stereoforcevsync". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70C8B5D1	Stereogamma	09 - Stereo	Controls the predefined driver behavior associated with "Stereogamma". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70E46F20	Stereohiddenprofile	09 - Stereo	Controls the predefined driver behavior associated with "Stereohiddenprofile". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70871A39	Stereohorizontaladjustless	09 - Stereo	Controls the predefined driver behavior associated with "Stereohorizontaladjustless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70062F07	Stereohorizontaladjustmore	09 - Stereo	Controls the predefined driver behavior associated with "Stereohorizontaladjustmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7097906C	Stereoimagetype	09 - Stereo	Controls the predefined driver behavior associated with "Stereoimagetype". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70077042	Stereolasersightcount	09 - Stereo	Controls the predefined driver behavior associated with "Stereolasersightcount". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70BC864D	Stereolasersightmaxcount	09 - Stereo	Controls the predefined driver behavior associated with "Stereolasersightmaxcount". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x707CFB97	Stereolcdpatterntype	09 - Stereo	Controls the predefined driver behavior associated with "Stereolcdpatterntype". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70E46F2A	Stereolinkdll	09 - Stereo	Controls the predefined driver behavior associated with "Stereolinkdll". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7052BDD0	Stereologshaders	09 - Stereo	Controls the predefined driver behavior associated with "Stereologshaders". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x707F4B45	Stereo - Memoization	09 - Stereo	Enables or disables stereo memoization.
+0x70CCB5F0	Stereomiscflags	09 - Stereo	Controls the predefined driver behavior associated with "Stereomiscflags". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x701BAA09	Stereomode	09 - Stereo	Controls the predefined driver behavior associated with "Stereomode". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70160EBF	Stereomsgverticaloffset	09 - Stereo	Controls the predefined driver behavior associated with "Stereomsgverticaloffset". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709DEA62	Stereonodepthoverride	09 - Stereo	Controls the predefined driver behavior associated with "Stereonodepthoverride". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709AA171	Stereonotsupported	09 - Stereo	Controls the predefined driver behavior associated with "Stereonotsupported". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x703564F6	Stereoorthoenable	09 - Stereo	Controls the predefined driver behavior associated with "Stereoorthoenable". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70F455AA	Stereoosdenable	09 - Stereo	Controls the predefined driver behavior associated with "Stereoosdenable". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70364596	Stereopointer	09 - Stereo	Controls the predefined driver behavior associated with "Stereopointer". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x702BA385	Stereorefreshdefaulton	09 - Stereo	Controls the predefined driver behavior associated with "Stereorefreshdefaulton". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70DED3C0	Stereorefreshrate	09 - Stereo	Controls the predefined driver behavior associated with "Stereorefreshrate". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70933C00	Stereoseparation	09 - Stereo	Controls the predefined driver behavior associated with "Stereoseparation". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x705D1E02	Stereoseparationadjustless	09 - Stereo	Controls the predefined driver behavior associated with "Stereoseparationadjustless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70AB8D32	Stereoseparationadjustmore	09 - Stereo	Controls the predefined driver behavior associated with "Stereoseparationadjustmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7082555B	Stereoseparationstep	09 - Stereo	Controls the predefined driver behavior associated with "Stereoseparationstep". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7044F8FB	Stereoshadermatrixcheck	09 - Stereo	Controls the predefined driver behavior associated with "Stereoshadermatrixcheck". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709BC378	Stereostrictlscheck	09 - Stereo	Controls the predefined driver behavior associated with "Stereostrictlscheck". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x706315AF	Stereosuggestsettings	09 - Stereo	Controls the predefined driver behavior associated with "Stereosuggestsettings". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70EDB381	Stereo - Texture Flags	09 - Stereo	Controls stereo texture allocation, separation, and depth-buffer handling flags.
+0x70D76B8B	Stereotoggle	09 - Stereo	Controls the predefined driver behavior associated with "Stereotoggle". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70D76B8C	Stereotogglemode	09 - Stereo	Controls the predefined driver behavior associated with "Stereotogglemode". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70C27E3C	Stereotransformationtype	09 - Stereo	Controls the predefined driver behavior associated with "Stereotransformationtype". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7017861C	Stereounsuggestsettings	09 - Stereo	Controls the predefined driver behavior associated with "Stereounsuggestsettings". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70E34A78	Stereo - Matrix Correction	09 - Stereo	Selects whether stereo matrix correction is used for halo-type rendering issues.
+0x703ACFC6	Stereoverticaladjustless	09 - Stereo	Controls the predefined driver behavior associated with "Stereoverticaladjustless". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7087FE61	Stereoverticaladjustmore	09 - Stereo	Controls the predefined driver behavior associated with "Stereoverticaladjustmore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x704915A1	Stereoviewer	09 - Stereo	Controls the predefined driver behavior associated with "Stereoviewer". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708F9EF7	Stereoviewertype	09 - Stereo	Controls the predefined driver behavior associated with "Stereoviewertype". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708DB8C6	Stereovrconvergencebias	09 - Stereo	Controls the predefined driver behavior associated with "Stereovrconvergencebias". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708DB8C8	Stereovrrefreshrateoverride	09 - Stereo	Controls the predefined driver behavior associated with "Stereovrrefreshrateoverride". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708DB8C9	Stereovrvsync	09 - Stereo	Controls the predefined driver behavior associated with "Stereovrvsync". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709B3484	Stereowindowedenable	09 - Stereo	Controls the predefined driver behavior associated with "Stereowindowedenable". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x709CC5E0	Style	09 - Stereo	Controls the predefined driver behavior associated with "Style". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70AD05C8	Time	09 - Stereo	Controls the predefined driver behavior associated with "Time". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70085DE3	Toggleautoconvergence	09 - Stereo	Controls the predefined driver behavior associated with "Toggleautoconvergence". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x703BC51E	Toggleautoconvergencerestore	09 - Stereo	Controls the predefined driver behavior associated with "Toggleautoconvergencerestore". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70B7BD1F	Togglelasersight	09 - Stereo	Controls the predefined driver behavior associated with "Togglelasersight". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70E6A3CF	V1sh0	09 - Stereo	Controls the predefined driver behavior associated with "V1sh0". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x7049C7EC	Value	09 - Stereo	Controls the predefined driver behavior associated with "Value". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7AF8	Vsh0	09 - Stereo	Controls the predefined driver behavior associated with "Vsh0". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7AF9	Vsh1	09 - Stereo	Controls the predefined driver behavior associated with "Vsh1". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7B02	Vsh10	09 - Stereo	Controls the predefined driver behavior associated with "Vsh10". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7AFA	Vsh2	09 - Stereo	Controls the predefined driver behavior associated with "Vsh2". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7AFB	Vsh3	09 - Stereo	Controls the predefined driver behavior associated with "Vsh3". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7AFC	Vsh4	09 - Stereo	Controls the predefined driver behavior associated with "Vsh4". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7AFD	Vsh5	09 - Stereo	Controls the predefined driver behavior associated with "Vsh5". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7AFE	Vsh6	09 - Stereo	Controls the predefined driver behavior associated with "Vsh6". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7AFF	Vsh7	09 - Stereo	Controls the predefined driver behavior associated with "Vsh7". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7B00	Vsh8	09 - Stereo	Controls the predefined driver behavior associated with "Vsh8". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x708B7B01	Vsh9	09 - Stereo	Controls the predefined driver behavior associated with "Vsh9". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x700A5654	Watchdog	09 - Stereo	Controls the predefined driver behavior associated with "Watchdog". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x700498B3	Writeconfig	09 - Stereo	Controls the predefined driver behavior associated with "Writeconfig". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70B17872	Zdirection	09 - Stereo	Controls the predefined driver behavior associated with "Zdirection". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x70FC13AD	Zinf	09 - Stereo	Controls the predefined driver behavior associated with "Zinf". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x707F0E69	Zscr	09 - Stereo	Controls the predefined driver behavior associated with "Zscr". This setting affects stereo rendering behavior or stereo-specific compatibility logic.
+0x206C28C4	Enable Overlay	10 - OpenGL	Controls the NVIDIA driver behavior associated with "Enable Overlay". This setting affects OpenGL-specific driver behavior or compatibility handling.
+0x209AE66F	Exported Overlay Pixel Types	10 - OpenGL	Controls the NVIDIA driver behavior associated with "Exported Overlay Pixel Types". This setting affects OpenGL-specific driver behavior or compatibility handling.
+0x20A29055	Unified Back Depth Buffer	10 - OpenGL	Controls the NVIDIA driver behavior associated with "Unified Back Depth Buffer". This setting affects OpenGL-specific driver behavior or compatibility handling.
+0x00031DFE	0x00031DFE (Unknown)	11 - Unknown Driver Settings	
+0x00035AED	Experimental - Way to choose CBV bind mechanism	07 - System, Memory and Compute	Way to choose CBV bind mechanism.
+0x0007E67D	0x0007E67D (Unknown)	11 - Unknown Driver Settings	
+0x000BC863	0x000BC863 (Unknown)	11 - Unknown Driver Settings	
+0x000C0584	0x000C0584 (Unknown)	11 - Unknown Driver Settings	
+0x000C0585	0x000C0585 (Unknown)	11 - Unknown Driver Settings	
+0x000EF432	0x000EF432 (Unknown)	11 - Unknown Driver Settings	
+0x00110999	Experimental - The number of bytes in ring buffer per D3D11 immediate context	07 - System, Memory and Compute	The number of bytes in ring buffer per D3D11 immediate context.
+0x0011099A	Aftermath - Forced Disable Flags Mask	07 - System, Memory and Compute	Masks NVIDIA Aftermath flags so selected flags are force-disabled after other flag selection logic runs.
+0x00120513	Experimental - The WAR, which means it will set NV_PGRAPH_PRI_GPCS_TC_FLUSH_CRETERION = 1(END_OF_CBE)	01 - Compatibility	ENABLE the WAR, which means it will set NV_PGRAPH_PRI_GPCS_TC_FLUSH_CRETERION = 1(END_OF_CBE).
+0x0012FA6F	Experimental - Specify the sysmem heap in which to allocate the pushbuffer	07 - System, Memory and Compute	Specify the sysmem heap in which to allocate the pushbuffer.
+0x00132A94	Experimental - Root Table Promotion Timing	07 - System, Memory and Compute	Controls when the we promote descriptor table entries to the root table
+0x00172ABF	0x00172ABF (Unknown)	11 - Unknown Driver Settings	
+0x00199FFF	Experimental - Shader Disk Cache Directory	06 - Rendering Features	If specified, shader disk cache will be stored in this directory
+0x001ABC0F	Experimental - The amount of VA space in bytes reserved for the shader heap	06 - Rendering Features	Sets the amount of VA space in bytes reserved for the shader heap (must be in multiple of 64kb). This is only on Win10+ for Dx1X & Dx12 ( Dx1X requires SHADER_HEAP_MULTIBLOCK_ENABLE ). There are separate default enums for DX11 and DX12 (DX12 requires additional space for DXR shaders) which should be selected at runtime
+0x001B026A	Experimental - Constant Tracking Volatility Threshold	07 - System, Memory and Compute	if our volatility factor exceeds this threshold, stop tracking the const
+0x001F0EDE	Experimental - Comma-separated list of scheduler names	06 - Rendering Features	Comma-separated list of scheduler names, corrseponding to the list of shader names specified by DXR_RAYGEN_SCHEDULER_OVERRIDE_PATTERNS. If fewer elements than pattern list, last entry is used for remaining patterns.
+0x0021F8D9	Experimental - Applies OCGknob RelaxConvBlockDef=1	07 - System, Memory and Compute	Applies OCGknob RelaxConvBlockDef=1. Applied only to TU10x+. Will be ignored if knobString or knobFile is specified.
+0x00225C2B	Experimental - BVH build batching options	06 - Rendering Features	BVH build batching options
+0x002533F7	Experimental - Assume stride-aligned root VA for [RW]StructuredBuffer (DXR only)	06 - Rendering Features	Assume stride-aligned root VA for [RW]StructuredBuffer (DXR only)
+0x002808D9	Experimental - Use driver created sync objs in InterChannelSync	01 - Compatibility	Use driver created sync objs in InterChannelSync, as a WAR for msaction bug 2867804 in Vibranium hws. Noop in 19577+ hws or in non-hws.
+0x00313537	Experimental - Max optional shader compilation threads allowed	06 - Rendering Features	Max optional shader compilation threads allowed
+0x0032147A	Experimental - Disable specific features for the perf strat	07 - System, Memory and Compute	Disable specific features for the perf strat
+0x00328423	0x00328423 (Unknown)	11 - Unknown Driver Settings	
+0x0032B134	0x0032B134 (Unknown)	11 - Unknown Driver Settings	
+0x0034FC24	0x0034FC24 (Unknown)	11 - Unknown Driver Settings	
+0x00367A46	Experimental - Disable all asserts in debug drivers	01 - Compatibility	Disable all asserts in debug drivers.
+0x003940A1	Experimental - Maxwell discard behavior controls	06 - Rendering Features	Maxwell discard behavior controls.
+0x003BA602	0x003BA602 (Unknown)	11 - Unknown Driver Settings	
+0x003DD400	Experimental - T$ always to avoid HW Bug 3123136	01 - Compatibility	Enables T$ always to avoid HW Bug 3123136
+0x004208BD	Experimental - Clear specific BVH build flags	06 - Rendering Features	Clear specific BVH build flags. Applied before DXR_BVH_BUILD_FLAG_FORCE_ENABLE_MASK.
+0x0043C7A2	0x0043C7A2 (Unknown)	11 - Unknown Driver Settings	
+0x0045AB1F	Experimental - Low latency mode settings	02 - Sync and Refresh	Low latency mode settings. Disabled by default (to enable set VSYNCMODE=VIRTUAL).  When enabled this provides a mode which is similar to 'vsync ON' - i.e, no tearing, but has fps/latency similar to 'vsync OFF'. The idea is to let the app render as fast it can and present the latest frame at vblank. The BLEND mode enables temporal supersampling using a exponential decay filter by making use of the additional rendered frames to smoothen out the animation.
+0x00473934	Experimental - Default Scheduler Override	07 - System, Memory and Compute	Override the default scheduler
+0x00473935	Experimental - DXR Shader Compile Flags	06 - Rendering Features	Extra flags passed to DXR shader compiles and pipeline creation
+0x00481376	0x00481376 (Unknown)	11 - Unknown Driver Settings	
+0x0049C741	Experimental - Deferred Barrier Execution	06 - Rendering Features	Defer barriers until needed.
+0x004A5CE5	0x004A5CE5 (Unknown)	11 - Unknown Driver Settings	
+0x00503F9A	Perf Strategy - Copy Tracker	06 - Rendering Features	Controls the performance-strategy copy tracker.
+0x0050A159	Experimental - Raygen Shader Inlining Mode	06 - Rendering Features	Mode for inlining other shaders into raygen shader when trace depth <= 1
+0x00524253	Experimental - AutoVRS VR-Only Mode	05 - Upscaling and Frame Generation	Defines whether to allow AutoVRS Perfstrat only for VR games or not
+0x00524621	Experimental - Regkey disables cache invalidates on subchannel switches on GA10x+	07 - System, Memory and Compute	Regkey disables cache invalidates on subchannel switches on GA10x+. Specify, which particular switches are affected. Also, specify if any caches need to be excluded from override
+0x00598888	Experimental - G-SYNC LCD Overdrive	02 - Sync and Refresh	Enable GSync LCD Overdrive.
+0x005B1407	0x005B1407 (Unknown)	11 - Unknown Driver Settings	
+0x005D35DE	Dispatch Helper - Flags	06 - Rendering Features	Configures dispatch-helper flags for core dispatch allocation and debug tracking behavior.
+0x005E3DFF	0x005E3DFF (Unknown)	11 - Unknown Driver Settings	
+0x005E46DC	0x005E46DC (Unknown)	11 - Unknown Driver Settings	
+0x005EC6EF	Experimental - Pipeline Module Recompilation Limit	06 - Rendering Features	Allow recompilation of modules at pipeline creation if there are at most this number of modules.
+0x005F69AB	WDDM v2 - Residency Flags	07 - System, Memory and Compute	Controls WDDM v2 residency binding, paging waits, and eviction behavior.
+0x00667432	Experimental - D3D12 Resource Binding Support	07 - System, Memory and Compute	D3D12 Resource Binding Support
+0x0069367A	0x0069367A (Unknown)	11 - Unknown Driver Settings	
+0x006B76AF	Experimental - CBC Compression Heuristic Flags	06 - Rendering Features	Flags to control cbc compression heuristic
+0x006DA690	Experimental - Default DSC Blitter Usage	06 - Rendering Features	use DSC as default blitter
+0x006EA049	Experimental - Raygen Scheduler Override Shader List	06 - Rendering Features	Comma-separated list of raygen shader names for which to override the scheduler selection. Wildcards allowed. Corresponds to shader list in DXR_RAYGEN_SCHEDULER_OVERRIDE_TYPES.
+0x006EA977	Experimental - Device Thread Queue Size	07 - System, Memory and Compute	Total size (bytes) of the queue used to pass operations to the device thread.
+0x00757CF8	Experimental - RT Instance Compile Limit	06 - Rendering Features	Maximum number of RT instances to compile per app shader
+0x0078EEE8	Experimental - Foreground Detection Policy	01 - Compatibility	Controls the way to  decide whether app is running in foreground
+0x0082703B	Experimental - DispatchRays Experimental Scheduler Memory	06 - Rendering Features	Bytes of memory to allocate for DXR DispatchRays when using some experimental schedulers
+0x00854CAB	Experimental - Sample Interleave Settings	06 - Rendering Features	additional settings for the sample interleave feature
+0x0085F726	Experimental - Buffer Compression Disable	06 - Rendering Features	This regkey disables compression for buffer resources. This includes DX12 heaps. Make sure to include this key when disabling all types of compression
+0x008D624B	Experimental - SLI Test Mode	08 - SLI and NVLINK	Enable a test sli mode, which renders the same content on all gpus
+0x008D624E	Experimental - Decoded Video Multi-GPU Availability	08 - SLI and NVLINK	Makes decoded video available on all GPUs
+0x008E7FC9	0x008E7FC9 (Unknown)	11 - Unknown Driver Settings	
+0x008F14F5	Perf Strategy - Load Balance Mode	06 - Rendering Features	Selects the performance-strategy load-balancing mode.
+0x0092D8B9	Constant Folding - GPU Pixel Shaders	06 - Rendering Features	Controls GPU-side constant folding for pixel shaders.
+0x0092D8BA	Constant Folding - GPU Vertex Shaders	06 - Rendering Features	Controls GPU-side constant folding for vertex shaders.
+0x0092D8BD	Constant Folding - GPU Ray Tracing Shaders	06 - Rendering Features	Controls GPU-side constant folding for ray tracing shaders.
+0x00939833	Experimental - Stencil ZBC Disable	06 - Rendering Features	DISABLE_STENCIL_ZBC for Dx12 apps
+0x009FD0F9	ZCull - Behavior Flags	06 - Rendering Features	Controls ZCull behavior flags for viewport regions, shader heuristics, and backing-store policy.
+0x009FD0FA	Experimental - ZF32+GREATER PRI Hack	06 - Rendering Features	Enable/disable the PRI hack used for the ZF32+GREATER depth state combination to make HW defaults better match
+0x009FD0FB	ZCull - Dirty Draw Validation	06 - Rendering Features	Controls validation for ZCull dirty-draw behavior.
+0x00A08746	Experimental - Multichip app specific hacks for single app	08 - SLI and NVLINK	multichip app specific hacks for single app
+0x00A1131F	Experimental - UAV Clear Serialization	06 - Rendering Features	Force serialize UAV Clear (when uses DSC)
+0x00A1232F	Experimental - Single-Node SCG Graphics Queue	08 - SLI and NVLINK	Enable single node SCG on DX12 graphics queue, GP10x and beyond only
+0x00A25F24	Experimental - Hardware Bug Workaround Flags	01 - Compatibility	Controls various HW bug WARs that may not be enabled by default
+0x00A25FC4	Experimental - Legacy Application SCG Enablement	08 - SLI and NVLINK	enables SCG for legacy apps
+0x00A34323	Experimental - Low-Priority 3D Channel Timeslice	07 - System, Memory and Compute	Set the timeslice value for the 3D channel to low priority.
+0x00A34F23	Experimental - DX12 Multiple VA Management Per Heap	07 - System, Memory and Compute	Controls the enablement of multiple VA management per heap for DX12 in WDDMv2.
+0x00A44B6D	0x00A44B6D (Unknown)	11 - Unknown Driver Settings	
+0x00A4F311	Constant Folding - Pixel Shader Control	06 - Rendering Features	Controls pixel-shader constant folding.
+0x00A80267	0x00A80267 (Unknown)	11 - Unknown Driver Settings	
+0x00A879FC	0x00A879FC (Unknown)	11 - Unknown Driver Settings	
+0x00A879FF	Experimental - OS Variable Refresh Rate Override	02 - Sync and Refresh	Explicit override for the operating system variable refresh rate state.
+0x00A89790	Experimental - Static Object Threshold	06 - Rendering Features	Threshold used to determine whether an object is treated as static. This value is divided by 1000.0 before being passed to the filter shader. It is stored as a DWORD because the DRS setting path does not expose floating-point values.
+0x00ACA319	0x00ACA319 (Unknown)	11 - Unknown Driver Settings	
+0x00ACBCC1	Experimental - DiscardResource Clear Conditions	06 - Rendering Features	In what situations should we issue a clear for DiscardResource for the purposes of tiled resources and aliasing
+0x00ACFCC0	Experimental - Heap Compression Support	06 - Rendering Features	Enable support for Compressing Heaps on TIER2 Turing+ Architecture only
+0x00ADA000	Experimental - DSR Apply Disable	05 - Upscaling and Frame Generation	Disallow DSR apply
+0x00AEFFEA	0x00AEFFEA (Unknown)	11 - Unknown Driver Settings	
+0x00B21C03	Experimental - Primary Surface Memory Compression	06 - Rendering Features	Controls the use of memory compression for primaries.
+0x00BADBE4	0x00BADBE4 (Unknown)	11 - Unknown Driver Settings	
+0x00BEFB7B	Experimental - Single-Node SCG Compute Queue	08 - SLI and NVLINK	Enable single-node driver SCG channel on compute queues
+0x00C09D1A	0x00C09D1A (Unknown)	11 - Unknown Driver Settings	
+0x00C36E12	0x00C36E12 (Unknown)	11 - Unknown Driver Settings	
+0x00C45376	0x00C45376 (Unknown)	11 - Unknown Driver Settings	
+0x00C96F61	Experimental - UMD Metering Control	07 - System, Memory and Compute	UMD metering control
+0x00CA0D60	Experimental - Invariant Constant Histogram Threshold	07 - System, Memory and Compute	Minimum number of histogram hits for invariant constants
+0x00CBE001	Experimental - Emulation Type Flags	07 - System, Memory and Compute	This regkey specifies the types of emulation to be done
+0x00CBE002	Experimental - Emulation Shader Stage Flags	06 - Rendering Features	This regkey specifies the shader stages to which emulation applies. Flags are BIT(DsiShaderType)
+0x00CBE005	Experimental - Convert-to-LDG Functionality Flags	07 - System, Memory and Compute	This regkey specifies enabled functionality used by convert-to-LDG
+0x00CBE006	Experimental - LDC-to-LDG Translation Options	07 - System, Memory and Compute	This regkey specifies LDC-to-LDG translation options (DXIL-only)
+0x00CC0F79	0x00CC0F79 (Unknown)	11 - Unknown Driver Settings	
+0x00CDF4EA	Experimental - Create HW Queue NoBroadcastWait	08 - SLI and NVLINK	Enable D3DDDI_CREATEHWQUEUEFLAGS NoBroadcastWait for single-node driver SCG channel
+0x00D153A5	Experimental - LMEM Per-SM Warp Throttling Limit	07 - System, Memory and Compute	If this is set to a value other than zero, the LMEM bytes per SM warp throttling limit will be overridden. Allocation granularity is 128Kb and will be rounded up/enforced by the driver.
+0x00D98F93	Experimental - Tex-Sampler Pair Resolve Method	06 - Rendering Features	Decides whether to use the MME program (default) or CPU to resolve tex-sampler pairs
+0x00DB2372	Experimental - DX12 Visibility Mask Ignore	07 - System, Memory and Compute	ignore DX12 API visibility mask and force full visibility
+0x00DB3859	Experimental - DX9 Host Staging Buffer Size	07 - System, Memory and Compute	This key is using for forcing size of host staging buffer on DX9
+0x00DB4772	Experimental - WDDM v2 SLI Control Bits	08 - SLI and NVLINK	Bits to control WDDMv2 aspects of SLI
+0x00DDA345	0x00DDA345 (Unknown)	11 - Unknown Driver Settings	
+0x00DE5C4D	Experimental - Descriptor Heap Read Timing	07 - System, Memory and Compute	Controls when the desc heap contents are read for some bind points
+0x00DE5C4E	Experimental - UpdateTileMappings Fence Batching	07 - System, Memory and Compute	Allows batching of fences when a run of UpdateTileMappings is called in sequence with no other CQ commands.
+0x00DEAD10	Experimental - SM Trap Handler and Dispatcher	07 - System, Memory and Compute	enable/disable SM's trap handler and dispatcher code
+0x00E3EA78	Experimental - Volatility Factor Multiplier	07 - System, Memory and Compute	how much to multiply the volatility factor by with each new update
+0x00E52AC0	0x00E52AC0 (Unknown)	11 - Unknown Driver Settings	
+0x00E86028	Fermi - Subtiling Performance Knob A	06 - Rendering Features	Controls Fermi subtile performance knob A.
+0x00E942FE	0x00E942FE (Unknown)	11 - Unknown Driver Settings	
+0x00ED0448	Experimental - PSO Library Flags	06 - Rendering Features	Flags that are used by PSO Library codepath
+0x00ED871B	Experimental - Dirty Tile Map Optimizations	06 - Rendering Features	enable/disable Dirty Tile Map opts
+0x00EFB71D	Experimental - TileMapKernel Behavior Flags	06 - Rendering Features	Flags used to control TileMapKernel/consumer shader behavior and code-generation. Please note SUQUERY_PER_THREAD_SUM and TILE_PER_THREAD_SUM are mutually exclusive.
+0x00F42AE1	Experimental - Sample Interleave Enabled Modes	06 - Rendering Features	Enabled Modes for sample interleave (MFAA)
+0x00F56ABE	0x00F56ABE (Unknown)	11 - Unknown Driver Settings	
+0x00F56BBE	0x00F56BBE (Unknown)	11 - Unknown Driver Settings	
+0x00FAF031	Experimental - Tracked Semaphore Dumping	07 - System, Memory and Compute	Controls functionality for dumping of various tracked semaphores
+0x00FBC00F	0x00FBC00F (Unknown)	11 - Unknown Driver Settings	
+0x00FC7620	Experimental - Generated Constant Expression Optimizations	07 - System, Memory and Compute	enable/disable generatedConstExpressions opts
+0x00FCACB0	Experimental - Pipelined Copy for Sync CE	07 - System, Memory and Compute	Enable Pipelined Copy for Sync CE aka Pipelined + Flush_Enable = False , supports DX12 only
+0x00FE3B5B	0x00FE3B5B (Unknown)	11 - Unknown Driver Settings	
+0x1005667D	0x1005667D (Driver)	11 - Unknown Driver Settings	
+0x1008DFB8	0x1008DFB8 (Driver)	11 - Unknown Driver Settings	
+0x101314CE	Driver - Ansel Depth Buffer Detection Tuning	07 - System, Memory and Compute	Toggle various settings useful for tuning how to identify Depth buffers in Ansel. More info: https://confluence.nvidia.com/display/NGX/Depth+Buffer+Detection+Design.
+0x10134FFE	0x10134FFE (Driver)	11 - Unknown Driver Settings	
+0x1018B187	0x1018B187 (Driver)	11 - Unknown Driver Settings	
+0x101FD0C1	Driver - Hudless Buffer Copy Draw Call	07 - System, Memory and Compute	Sets the draw call at which point the Hudless buffer will be copied, with the goal of selecting the last draw call before any HUD draws occur. More info: https://confluence.nvidia.com/display/NGX/Hudless+Buffer+Detection+Design.
+0x1023E630	0x1023E630 (Driver)	11 - Unknown Driver Settings	
+0x10255BA2	0x10255BA2 (Driver)	11 - Unknown Driver Settings	
+0x10255BA4	0x10255BA4 (Driver)	11 - Unknown Driver Settings	
+0x10255BA5	0x10255BA5 (Driver)	11 - Unknown Driver Settings	
+0x10255BA6	0x10255BA6 (Driver)	11 - Unknown Driver Settings	
+0x10255BB5	0x10255BB5 (Driver)	11 - Unknown Driver Settings	
+0x10255BB7	0x10255BB7 (Driver)	11 - Unknown Driver Settings	
+0x10284CD0	0x10284CD0 (Driver)	11 - Unknown Driver Settings	
+0x1033E150	0x1033E150 (Driver)	11 - Unknown Driver Settings	
+0x1041ABA0	0x1041ABA0 (Driver)	11 - Unknown Driver Settings	
+0x10432A02	0x10432A02 (Driver)	11 - Unknown Driver Settings	
+0x10477FE1	0x10477FE1 (Driver)	11 - Unknown Driver Settings	
+0x105C1BE0	0x105C1BE0 (Driver)	11 - Unknown Driver Settings	
+0x1066ED2B	0x1066ED2B (Driver)	11 - Unknown Driver Settings	
+0x1069F7CF	0x1069F7CF (Driver)	11 - Unknown Driver Settings	
+0x1075ACB3	0x1075ACB3 (Driver)	11 - Unknown Driver Settings	
+0x10795518	0x10795518 (Driver)	11 - Unknown Driver Settings	
+0x10795519	0x10795519 (Driver)	11 - Unknown Driver Settings	
+0x10828F18	0x10828F18 (Driver)	11 - Unknown Driver Settings	
+0x10834F06	Driver - FRM Override Parameters	07 - System, Memory and Compute	FRM override parameters
+0x10835025	0x10835025 (Driver)	11 - Unknown Driver Settings	
+0x10835058	0x10835058 (Driver)	11 - Unknown Driver Settings	
+0x10836D12	0x10836D12 (Driver)	11 - Unknown Driver Settings	
+0x108BB790	0x108BB790 (Driver)	11 - Unknown Driver Settings	
+0x108FA0E4	0x108FA0E4 (Driver)	11 - Unknown Driver Settings	
+0x108FDC1E	0x108FDC1E (Driver)	11 - Unknown Driver Settings	
+0x109B7DB3	0x109B7DB3 (Driver)	11 - Unknown Driver Settings	
+0x10AAA36C	Driver - Quadro Optimization Disable	07 - System, Memory and Compute	disable Quadro optimization features
+0x10AB9EF7	0x10AB9EF7 (Driver)	11 - Unknown Driver Settings	
+0x10AD7F3B	Driver - Ansel Hudless Buffer Detection Tuning	07 - System, Memory and Compute	Toggle various settings useful for tuning how to identify Hudless buffers in Ansel. More info: https://confluence.nvidia.com/display/NGX/Hudless+Buffer+Detection+Design.
+0x10BFAA5B	0x10BFAA5B (Driver)	11 - Unknown Driver Settings	
+0x10C41BB5	Driver - Hudless Buffer Heuristic Weights	07 - System, Memory and Compute	Key-value pair in the form 'string=uint32'. Each keyval pair delimited by comma. The weights can be used to fine-tune a game based on in-game heuristics for correctly finding the hudless buffer.
+0x10C498C8	0x10C498C8 (Driver)	11 - Unknown Driver Settings	
+0x10C4A7A1	0x10C4A7A1 (Driver)	11 - Unknown Driver Settings	
+0x10C8C88A	0x10C8C88A (Driver)	11 - Unknown Driver Settings	
+0x10D34DEA	0x10D34DEA (Driver)	11 - Unknown Driver Settings	
+0x10D949E1	0x10D949E1 (Driver)	11 - Unknown Driver Settings	
+0x10DC31A4	0x10DC31A4 (Driver)	11 - Unknown Driver Settings	
+0x10E74421	Driver - NvCamera Capture Blocked Buffers	07 - System, Memory and Compute	Specifies which buffers are blocked from being captured in NvCamera. Specify multiple buffers by or'ing them tegether with '|'.
+0x10F38AE4	0x10F38AE4 (Driver)	11 - Unknown Driver Settings	
+0x5019EB12	0x5019EB12 (Driver)	11 - Unknown Driver Settings	
+0x50243981	0x50243981 (Driver)	11 - Unknown Driver Settings	
+0x50306C59	Driver - NBody Kernel Const Argument Removal	07 - System, Memory and Compute	When enabled, check for nbody kernel which requires to remove const keyword from kernel arguments
+0x504EE927	Driver - Preferred WDDM Node Selection	07 - System, Memory and Compute	Select which Node to pick on WDDM assuming it is possible to use it
+0x504FDD7A	Driver - OpenCL PTXAS Option Detection	07 - System, Memory and Compute	When enabled, Check for kernel properties and set ptxas option accordingly for OpenCL kernel compilation.
+0x50528AB3	Driver - Kepler GK110B L1 Cache	07 - System, Memory and Compute	Enable/Disable Kepler GK110B L1 cache
+0x505A7B7C	Driver - OpenCL Constant-to-Global Argument Conversion	07 - System, Memory and Compute	When enabled, check for __constant kernel args and change that args to __global type
+0x505C8452	Driver - CILP Under Hardware Scheduling	07 - System, Memory and Compute	Enable/Disable the use of CILP when running in hardware scheduling
+0x50778991	Driver - CUDA Manual Clock Boosting	07 - System, Memory and Compute	Indicate if CUDA needs to manually do clock boosting using a side thread
+0x5079E70A	Driver - Extra Coproc Refcount on Turing+	07 - System, Memory and Compute	Enable/Disable the extra coproc refcount acquired by KMD on Turing+
+0x507D53AA	Driver - Hide CUDA Version in CL_PLATFORM_VERSION	07 - System, Memory and Compute	When enabled, driver removes cuda version information from the return value of clGetPlatformInfo for param_name CL_PLATFORM_VERSION.
+0x5096F1B2	Driver - OpenCL and CUDA Host Memory Overflow	07 - System, Memory and Compute	When enabled, openCL/CUDA allocations allowed to overflow to host memory.
+0x50BB93F8	Driver - Extra OpenCL Compiler Option	07 - System, Memory and Compute	When enabled, pass additional compiler option for OpenCL kernel compilation.
+0x50D06C22	0x50D06C22 (Driver)	11 - Unknown Driver Settings	
+0x50F05342	0x50F05342 (Driver)	11 - Unknown Driver Settings	
+0x50F3FEE2	0x50F3FEE2 (Driver)	11 - Unknown Driver Settings	
+0x80303A19	Experimental - rxinput.dll Injection	01 - Compatibility	Decide whether to inject rxinput.dll or not
+0x80303E0F	Experimental - Container Plugin Telemetry	07 - System, Memory and Compute	Decide whether to use container plugin to send telemetry data
+0x809D5F60	Experimental - NVIDIA App Overlay Flags	06 - Rendering Features	NVIDIA App Overlay (formerly ShadowPlay) flags. Bit0: if set, app is whitelisted for Desktop capture. 0x10000000 disables NVIDIA App statistics. Other bits are unused for now.
+0x90DE9159	Driver - NVIDIA App Overlay Shim Prohibition	07 - System, Memory and Compute	Prohibit NVIDIA App Overlay shim in DX apps
+0x00980881	Allow Deepdvc Feature When User Is Offline	06 - Rendering Features	Controls Allow Deepdvc Feature When User Is Offline.
+0x0005F511	Async10 Enable	07 - System, Memory and Compute	Enable DX10 Dual core optimization (multithreaded driver)
+0x005F5A32	Async10 Nvapi Mode	07 - System, Memory and Compute	Control NVAPI processing behaviour
+0x005F5A33	Async10 OOO Query Limit	07 - System, Memory and Compute	How many query getData calls are allowed before we consider it a gpu wait
+0x0092F4DE	Async9 Enable	07 - System, Memory and Compute	Enable DX9 Dual core optimization (multithreaded driver)
+0x00D5E9C6	Autovrs Allow	05 - Upscaling and Frame Generation	AutoVRS - App allowlisted status
+0x00D5E9C7	Autovrs Settings	05 - Upscaling and Frame Generation	AutoVRS - Configuration Options
+0x00F63A50	Avoid Host Remappers	07 - System, Memory and Compute	Try to avoid host remappers. If application is locking BL RT in vidmem, demote it to pitch so that lock won't require remapper.
+0x10115C89	Battery Boost	02 - Sync and Refresh	Enables the Battery Boost functionality, cap FPS for DC mode only
+0x00DC68B0	BM Offer Reclaim Dx1x	01 - Compatibility	DX10 - allowed in release configurations and explicit application overrides
+0x10D91A4C	Control Display Rearrangement	02 - Sync and Refresh	Displays rearrangement when crossed overall 16K resolution limit enabled or not
+0x105E2A1D	CPU Expr Modes	06 - Rendering Features	List of supported FreeStyle modes
+0x00DB3858	CPU To GPU Upload Buffer Size	07 - System, Memory and Compute	This key is using to set value of host staging buffer bank size, in bytes, mostly for early push. Total value is a (bank size) * 256
+0x10510E76	Cull Before Fetch	06 - Rendering Features	value for Cull Before Fetch (after Fermi)
+0x0067345E	D3d9 Control Bits	07 - System, Memory and Compute	Various control bits (DX9)
+0x0017FD6D	Disable Z16	06 - Rendering Features	Disable Z16 (replaces all Z16 requests with Z24X8)
+0x106D5CFF	Do Not Display This Profile In The Control Panel	01 - Compatibility	Indicates to the NVIDIA Control Panel that the associated configuration entry should not be displayed.
+0x00ABAB33	Dynamic Vibrance Intensity	05 - Upscaling and Frame Generation	Controls Dynamic Vibrance Intensity.
+0x00ABAB36	Dynamic Vibrance Saturation	05 - Upscaling and Frame Generation	Controls Dynamic Vibrance Saturation.
+0x10F9DC81	Enable Application For Optimus	01 - Compatibility	Allow list for shim layer per application
+0x10FADC84	Enable CE MS Hybrid	07 - System, Memory and Compute	Enable CE for tranfers on MS hybrid
+0x10835018	Enable Disable Dynamic FPS Feature	02 - Sync and Refresh	Controls Enable Disable Dynamic FPS Feature.
+0x1083501F	Enable Disable Dynamic FPS Feature Based On Nested Idle AND Framecomparison	02 - Sync and Refresh	Maximum buffer time in microseconds. Default 1500 (1.5ms)
+0x10835021	Enable Disable NV Framecomparator Feature	02 - Sync and Refresh	Controls Enable Disable NV Framecomparator Feature.
+0x10838021	Enable Disable NV Humanpresencedetector Feature	07 - System, Memory and Compute	Controls Enable Disable NV Humanpresencedetector Feature.
+0x00041807	Enable Gtx950 Specific Features	05 - Upscaling and Frame Generation	Enable GTX950 specific features. Currently used to enable FRM for GTX950
+0x104BC9A1	Exceptions To Blocking Apps	01 - Compatibility	Controls Exceptions To Blocking Apps.
+0x00F865E3	Fermi Force 1X TEX	06 - Rendering Features	If enabled, this regkey will force 1x Tex on 2x Tex parts.
+0x00837AAF	Fermi Gf110 Voltage Drop WAR	01 - Compatibility	Controls Fermi Gf110 Voltage Drop WAR.
+0x001208CB	Forceenabledccap	07 - System, Memory and Compute	Deferred context control flags
+0x1035DB89	Freestyle Filters Allow	06 - Rendering Features	Controls whether Ansel is blocked for the associated application configuration.
+0x1085DA8A	Freestyle Filters App Allow	06 - Rendering Features	Temporary allowlisting of apps allowed to enable Ansel
+0x00980896	Game Filters Enable	05 - Upscaling and Frame Generation	Controls Game Filters Enable.
+0x00846411	Kepler Apply ALD WAR	01 - Compatibility	Apply OCG shint ALD instruction WAR to prevent kepler HW hangs.
+0x007033AB	Kepler Clear SM Halfctl Ctrl Sctl CYA 6	06 - Rendering Features	This key enables the WAR for the livelock in bug 1171386, clearing NV_PGRAPH_PRI_GPCS_TPCS_SM_HALFCTL_CTRL_SCTL_CYA_6.
+0x0007FBB6	Large VA	07 - System, Memory and Compute	Forces a context to use large VA space
+0x00C63A79	Max GPU CMD Size	07 - System, Memory and Compute	Limit max number of pending command buffers (per context) in software queue. If key is set zero it will be ignored
+0x00DB3857	Mclinkinstanced Limit	08 - SLI and NVLINK	Threshold in megabytes for using of RT/ZB allocations as LinkInstanced (SLI DX9/10).
+0x103C2E03	Mcsfrloadbalance	08 - SLI and NVLINK	Controls Mcsfrloadbalance.
+0x100B8EDE	MS Ssaa Mode + Type	06 - Rendering Features	Controls MS Ssaa Mode + Type.
+0x0043ED70	MS Ssaa Transparency Mode	06 - Rendering Features	Transparency multisampling anti-aliasing modes.
+0x11112256	Overlay Indicator	06 - Rendering Features	NV private interface to adjust the behavior of the post processing engine
+0x10834FFE	Platform Boost	02 - Sync and Refresh	Enable AutoFL support.
+0x106044CE	PS Alphabeta	06 - Rendering Features	Set the behavior for Alpha/Beta performance strategy (static or dynamic)
+0x10842563	PS Alphabeta Fraction	06 - Rendering Features	Fixed Alpha fraction to use when PS_ALPHABETA is in static mode
+0x00313536	PS Async Shader Scheduler Flags	07 - System, Memory and Compute	Controls PS Async Shader Scheduler Flags.
+0x00159046	PS BM Defer Destroy Flags	07 - System, Memory and Compute	WDDM1.0+ DX9/DX10
+0x006D6197	PS Const Folding GPU	07 - System, Memory and Compute	controls new-style GPU-based const folding (dx12 only)
+0x00EA83C5	PS Dx10 Surface Placement Highest Priority Dx1x	07 - System, Memory and Compute	Normally, resources are capped at high priority.  This regkey allows selective use of maximum priority, equivalent to D3DDDI_ALLOCATIONPRIORITY_MAXIMUM for these buffers.
+0x00DB834A	PS Reduction Load Balanced	06 - Rendering Features	Reduction tracker load balancing.
+0x0090F680	PS Surface Placement Allow	06 - Rendering Features	Controls PS Surface Placement Allow.
+0x006BDD49	PS Surface Placement Highest Priority	07 - System, Memory and Compute	Normally, render targets and Z buffers use high priority.  This regkey allows selective use of maximum priority, equivalent to D3DDDI_ALLOCATIONPRIORITY_MAXIMUM for these buffers.
+0x009E7462	PS VB Promotion Flags	06 - Rendering Features	Controls promotion of dynamic buffers
+0x008F7215	Read Only DSV Earlyz Hazard WAR Enable	06 - Rendering Features	Track read-only DSVs as last having been bound to PS to catch WAR hazards between early-z and PS.
+0x00C09D09	Rebar Expr Modes	06 - Rendering Features	Controls Rebar Expr Modes.
+0x00BC6199	Shadermaxregallowed	06 - Rendering Features	Specifies max register allowed when compiling/optimizing a shader
+0x00666634	Silk Smoothness Mode	02 - Sync and Refresh	Setting from which CPL will decide whether to show SILK Smoothness as normal or greyed out
+0x00987251	Silk Smoothness Strength	02 - Sync and Refresh	Silk reduces stutters in games caused by variable CPU or GPU workloads
+0x00A9D3C5	Validate Params	01 - Compatibility	Enable parameter validation of different DX1x DDI functios
+0x00380880	Watermarking Indicator	06 - Rendering Features	Toggle AIC Watermarking Indicator on or off
+0x00390880	Watermarking Traceability	06 - Rendering Features	Controls Watermarking Traceability.
+0x10115C8A	Whisper Mode	02 - Sync and Refresh	Enables the Whisper Mode functionality, cap FPS for AC mode only
+0x10115C8B	Whisper Mode Application FPS	02 - Sync and Refresh	Override FPS for Whisper Mode, can be set differently for each application
+0x11D9DC84	WKS Feature Support Control	07 - System, Memory and Compute	NV private interface to enable/disable workstation features
+0x0019A002	Shader Cache - DLL Path	07 - System, Memory and Compute	Specifies the DLL path used for shader disk cache association.
+0x00B65E72	Performance Counters - DX9 Export Only	07 - System, Memory and Compute	Limits driver performance counter export to DirectX 9 workloads.
+0x00D74EF6	Shader Compiler - Offline Compile	06 - Rendering Features	Controls whether the driver may use the offline shader compiler path.
+0x00DB1337	iCafe - Logo Configuration	07 - System, Memory and Compute	Controls driver-side iCafe logo presentation behavior.
+0x10115C8C	Battery Boost - Application FPS Limit	02 - Sync and Refresh	Sets the Battery Boost frame-rate limit for the application.
+0x10115C8D	Power Management - External Quiet Mode	07 - System, Memory and Compute	Controls the external quiet-mode power policy.
+0x10354FF8	CUDA - Excluded GPUs	07 - System, Memory and Compute	Lists universal GPU identifiers that should be excluded from CUDA device selection.
+0x10444444	NVIDIA Image Scaling - Quality Upscaling	05 - Upscaling and Frame Generation	Controls NVIDIA Image Scaling quality upscaling.
+0x104554B6	Application Profile - Notification Timeout	07 - System, Memory and Compute	Selects how long application profile notifications remain visible.
+0x107AFC5B	Antialiasing - SLI AA	08 - SLI and NVLINK	Controls SLI antialiasing mode selection.
+0x10835016	Idle Application - Dynamic FPS Limit	02 - Sync and Refresh	Sets the dynamic frame-rate limit used when an application is considered idle.
+0x10835017	Idle Application - Threshold Time	02 - Sync and Refresh	Sets the time threshold in seconds before idle-application frame-rate limiting is applied.
+0x108F0841	Performance Counters - Export	07 - System, Memory and Compute	Controls whether driver performance counters are exported.
+0x1095F16F	Variable Refresh Rate - Overlay Indicator	02 - Sync and Refresh	Controls the on-screen indicator for variable refresh rate activity.
+0x1095F170	Latency Indicator - Auto Align	02 - Sync and Refresh	Controls automatic alignment for the latency flash indicator.
+0x10D1EF29	GPU Power - Maximum Limit	07 - System, Memory and Compute	Defines the maximum GPU power value exposed to Direct3D and OpenGL driver paths.
+0x10F9DC80	Optimus - Compatibility Flags	07 - System, Memory and Compute	Controls Optimus compatibility and application GPU-selection behavior.
+0x10F9DC82	Optimus - Maximum Resolution	07 - System, Memory and Compute	Limits the maximum resolution allowed for Optimus application handling.
+0x10F9DC83	Optimus - Maximum Antialiasing Level	03 - Antialiasing and Sharpening	Limits the maximum antialiasing level allowed for Optimus application handling.
+0x11AE435C	Stereo - Swap Eyes	09 - Stereo	Controls eye-order exchange for workstation stereo output.
+0x202888C1	OpenGL - Telemetry Monitor Level	10 - OpenGL	Selects the OpenGL telemetry monitor verbosity level.
+0x204D9A0C	OpenGL - Force Stereo	09 - Stereo	Controls forced OpenGL stereo rendering.
+0x206A6582	OpenGL - Default Swap Interval	10 - OpenGL	Selects the default OpenGL swap interval and force policy.
+0x206C4581	OpenGL - Default Swap Interval Fraction	10 - OpenGL	Selects the fractional scanline component for the OpenGL default swap interval.
+0x20655CFA	OpenGL - Default Swap Interval Sign	10 - OpenGL	Selects whether the OpenGL default swap interval fraction is applied as a positive or negative offset.
+0x2072C5A3	OpenGL - GDI Compatibility	10 - OpenGL	Selects OpenGL GDI compatibility preference.
+0x20797D6C	OpenGL - Texture Filtering Quality	04 - Texture Filtering	Selects the OpenGL quality/performance bias for texture filtering and related quality enhancements.
+0x208E55E3	OpenGL - Maximum Frames Allowed	02 - Sync and Refresh	Limits the number of OpenGL frames the driver may queue ahead.
+0x2092D3BE	OpenGL SLI - GPU Multicast	08 - SLI and NVLINK	Controls availability of the OpenGL GPU multicast path for SLI and Mosaic configurations.
+0x2097C2F6	OpenGL - Deep Color Scanout	10 - OpenGL	Controls OpenGL deep-color scanout support.
+0x209DF23E	OpenGL - Event Log Severity Threshold	10 - OpenGL	Selects the minimum OpenGL event severity written to the driver event log.
+0x20D0F3E6	OpenGL - Implicit GPU Affinity	10 - OpenGL	Controls implicit GPU affinity behavior for OpenGL contexts.
+0x10287051	SLI - Visual Indicator	08 - SLI and NVLINK	Controls the on-screen SLI split-frame rendering indicator.
+0x1033CED1	SLI - Rendering Mode	08 - SLI and NVLINK	Selects the active SLI rendering distribution mode.
+0x107CDDBC	Steam - Application ID	07 - System, Memory and Compute	Stores the Steam application identifier used for driver profile association.
+0x00AB8687	VAB - Default Data	06 - Rendering Features	Selects the default vertex attribute buffer data pattern used when API defaults are requested.
+0x10A879CE	Variable Refresh Rate - Control	02 - Sync and Refresh	Controls whether the variable refresh rate path is enabled.
+0x10111133	Virtual Reality - Pre-Rendered Frames	02 - Sync and Refresh	Sets the maximum number of frames the CPU may queue ahead for virtual reality rendering.
+0x00F63A49	Write TO Host Staging Buffer Size	07 - System, Memory and Compute	Set size of write staging buffer. If key is set to zero it will be ignored
+0x10ECDB82	AA BEHAVIOR FLAGS	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant AA_BEHAVIOR_FLAGS_ID
+0x10FC2D9C	AA MODE ALPHATOCOVERAGE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant AA_MODE_ALPHATOCOVERAGE_ID
+0x107D639D	AA MODE GAMMACORRECTION	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant AA_MODE_GAMMACORRECTION_ID
+0x10D773D2	AA MODE METHOD	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant AA_MODE_METHOD_ID
+0x10D48A85	AA MODE REPLAY	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant AA_MODE_REPLAY_ID
+0x107EFC5B	AA MODE SELECTOR	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant AA_MODE_SELECTOR_ID
+0x101E61A9	ANISO MODE LEVEL	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant ANISO_MODE_LEVEL_ID
+0x10D2BB16	ANISO MODE SELECTOR	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant ANISO_MODE_SELECTOR_ID
+0x1075D972	ANSEL ENABLE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant ANSEL_ENABLE_ID
+0x00664339	AO MODE ACTIVE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant AO_MODE_ACTIVE_ID
+0x00667329	AO MODE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant AO_MODE_ID
+0x00638E8F	AUTO LODBIASADJUST	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant AUTO_LODBIASADJUST_ID
+0x10835002	FRL FPS	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant FRL_FPS_ID
+0x1034CB89	FXAA ALLOW	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant FXAA_ALLOW_ID
+0x1074C972	FXAA ENABLE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant FXAA_ENABLE_ID
+0x1068FB9C	FXAA INDICATOR ENABLE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant FXAA_INDICATOR_ENABLE_ID
+0x00738E8F	LODBIASADJUST	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant LODBIASADJUST_ID
+0x0098C1AC	MAXWELL B SAMPLE INTERLEAVE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant MAXWELL_B_SAMPLE_INTERLEAVE_ID
+0x10E41DF4	NGX DLAA OVERRIDE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLAA_OVERRIDE_ID
+0x10E41E03	NGX DLSS FG OVERRIDE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_FG_OVERRIDE_ID
+0x10E41DF1	NGX DLSS FG OVERRIDE RENDER PRESET SELECTION	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_FG_OVERRIDE_RENDER_PRESET_SELECTION_ID
+0x10E41E04	NGX DLSS NR OVERRIDE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_NR_OVERRIDE_ID
+0x10E41DF8	NGX DLSS NR OVERRIDE RENDER PRESET SELECTION	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_NR_OVERRIDE_RENDER_PRESET_SELECTION_ID
+0x10E41E05	NGX DLSS NR SL OVERRIDE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_NR_SL_OVERRIDE_ID
+0x10AFB76C	NGX DLSS OVERRIDE OPTIMAL SETTINGS	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_OVERRIDE_OPTIMAL_SETTINGS_ID
+0x10BD9423	NGX DLSS RR MODE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_RR_MODE_ID
+0x10E41E02	NGX DLSS RR OVERRIDE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_RR_OVERRIDE_ID
+0x10E41DF7	NGX DLSS RR OVERRIDE RENDER PRESET SELECTION	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_RR_OVERRIDE_RENDER_PRESET_SELECTION_ID
+0x10C7D4A2	NGX DLSS RR OVERRIDE SCALING RATIO	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_RR_OVERRIDE_SCALING_RATIO_ID
+0x10AFB768	NGX DLSS SR MODE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_SR_MODE_ID
+0x10E41E01	NGX DLSS SR OVERRIDE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_SR_OVERRIDE_ID
+0x10E41DF3	NGX DLSS SR OVERRIDE RENDER PRESET SELECTION	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_SR_OVERRIDE_RENDER_PRESET_SELECTION_ID
+0x10E41DF5	NGX DLSS SR OVERRIDE SCALING RATIO	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSS_SR_OVERRIDE_SCALING_RATIO_ID
+0x10562D0F	NGX DLSSG DYNAMIC MULTI FRAME COUNT MAX	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSSG_DYNAMIC_MULTI_FRAME_COUNT_MAX_ID
+0x10CF4125	NGX DLSSG DYNAMIC TARGET FRAME RATE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSSG_DYNAMIC_TARGET_FRAME_RATE_ID
+0x10308298	NGX DLSSG MODE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSSG_MODE_ID
+0x104D6667	NGX DLSSG MULTI FRAME COUNT	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant NGX_DLSSG_MULTI_FRAME_COUNT_ID
+0x2089BF6C	OGL AA LINE GAMMA	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant OGL_AA_LINE_GAMMA_ID
+0x20D690F8	OGL CPL PREFER DXPRESENT	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant OGL_CPL_PREFER_DXPRESENT_ID
+0x20FF7493	OGL EXTENSION STRING VERSION	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant OGL_EXTENSION_STRING_VERSION_ID
+0x20C1221E	OGL THREAD CONTROL	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant OGL_THREAD_CONTROL_ID
+0x20FDD1F9	OGL TRIPLE BUFFER	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant OGL_TRIPLE_BUFFER_ID
+0x1094F16F	PHYSXINDICATOR	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PHYSXINDICATOR_ID
+0x1057EB71	PREFERRED PSTATE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PREFERRED_PSTATE_ID
+0x007BA09E	PRERENDERLIMIT	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PRERENDERLIMIT_ID
+0x103BCCB5	PREVENT UI AF OVERRIDE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PREVENT_UI_AF_OVERRIDE_ID
+0x00198FFF	PS SHADERDISKCACHE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PS_SHADERDISKCACHE_ID
+0x00AC8497	PS SHADERDISKCACHE MAX SIZE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PS_SHADERDISKCACHE_MAX_SIZE_ID
+0x00E73211	PS TEXFILTER ANISO OPTS2	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PS_TEXFILTER_ANISO_OPTS2_ID
+0x0084CD70	PS TEXFILTER BILINEAR IN ANISO	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PS_TEXFILTER_BILINEAR_IN_ANISO_ID
+0x002ECAF2	PS TEXFILTER DISABLE TRILIN SLOPE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PS_TEXFILTER_DISABLE_TRILIN_SLOPE_ID
+0x0019BB68	PS TEXFILTER NO NEG LODBIAS	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant PS_TEXFILTER_NO_NEG_LODBIAS_ID
+0x00CE2692	QUALITY ENHANCEMENT SUBSTITUTION	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant QUALITY_ENHANCEMENT_SUBSTITUTION_ID
+0x00CE2691	QUALITY ENHANCEMENTS	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant QUALITY_ENHANCEMENTS_ID
+0x0064B541	REFRESH RATE OVERRIDE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant REFRESH_RATE_OVERRIDE_ID
+0x10A879CF	VRR APP OVERRIDE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_ID
+0x10A879AC	VRR APP OVERRIDE REQUEST STATE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant VRR_APP_OVERRIDE_REQUEST_STATE_ID
+0x1194F158	VRR MODE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant VRR_MODE_ID
+0x1094F157	VRRFEATUREINDICATOR	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant VRRFEATUREINDICATOR_ID
+0x1094F1F7	VRRREQUESTSTATE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant VRRREQUESTSTATE_ID
+0x00A879CF	VSYNCMODE	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant VSYNCMODE_ID
+0x101AE763	VSYNCSMOOTHAFR	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant VSYNCSMOOTHAFR_ID
+0x005A375C	VSYNCTEARCONTROL	NVIDIA built-in setting	NVIDIA Profile Inspector built-in constant VSYNCTEARCONTROL_ID

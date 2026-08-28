@@ -1,0 +1,12 @@
+=== HKCU\Software\NVIDIA Corporation ===
+No Unity/ZoomTracks match.
+
+=== HKLM\SOFTWARE\NVIDIA Corporation ===
+No Unity/ZoomTracks match.
+
+=== HKLM\SOFTWARE\WOW6432Node\NVIDIA Corporation ===
+No Unity/ZoomTracks match.
+
+=== HKCU\Software\Microsoft\DirectX\UserGpuPreferences ===
+No Unity/ZoomTracks match.
+

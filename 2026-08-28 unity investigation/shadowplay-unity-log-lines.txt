@@ -1,0 +1,24 @@
+641:[28:11:43:19:118][E][Unity Hub:4904:17316] QueryShadowPlayDdiShimStatusIN
+642:[28:11:43:19:295][E][Unity Hub:4904:17316] QueryShadowPlayDdiShimStatusIN
+643:[28:11:43:19:441][E][Unity Hub:4904:17316] QueryShadowPlayDdiShimStatusIN
+644:[28:11:44:19:099][E][Unity:26276:20916] QueryShadowPlayDdiShimStatusIN
+645:[28:11:44:19:099][R][Unity:26276:20916] CAppSettings::ComputeAppSettings: m_uiIndex: 254 isGame: 1 isLauncher: 1 isAppBlackListed: 0 isEnableHook: 0  isFSDEnabled: 0 isMouseClipEnabled: 0 isDx9FOEnabled: 0 isCAEnabled: 0 m_bDX12ScreenshotWAR: 0 m_bShowHotkeyMessageDisabled: 0
+649:[28:11:44:38:900][E][Unity:26276:20916] QueryShadowPlayDdiShimStatusIN
+650:[28:11:44:41:478][E][Unity:28736:28740] QueryShadowPlayDdiShimStatusIN
+651:[28:11:44:41:478][R][Unity:28736:28740] CAppSettings::ComputeAppSettings: m_uiIndex: 254 isGame: 1 isLauncher: 1 isAppBlackListed: 0 isEnableHook: 0  isFSDEnabled: 0 isMouseClipEnabled: 0 isDx9FOEnabled: 0 isCAEnabled: 0 m_bDX12ScreenshotWAR: 0 m_bShowHotkeyMessageDisabled: 0
+652:[28:11:44:41:557][E][Unity:28708:28712] QueryShadowPlayDdiShimStatusIN
+653:[28:11:44:41:557][R][Unity:28708:28712] CAppSettings::ComputeAppSettings: m_uiIndex: 254 isGame: 1 isLauncher: 1 isAppBlackListed: 0 isEnableHook: 0  isFSDEnabled: 0 isMouseClipEnabled: 0 isDx9FOEnabled: 0 isCAEnabled: 0 m_bDX12ScreenshotWAR: 0 m_bShowHotkeyMessageDisabled: 0
+654:[28:11:46:41:736][E][Unity:22704:27724] QueryShadowPlayDdiShimStatusIN
+655:[28:11:46:41:736][R][Unity:22704:27724] CAppSettings::ComputeAppSettings: m_uiIndex: 254 isGame: 1 isLauncher: 1 isAppBlackListed: 0 isEnableHook: 0  isFSDEnabled: 0 isMouseClipEnabled: 0 isDx9FOEnabled: 0 isCAEnabled: 0 m_bDX12ScreenshotWAR: 0 m_bShowHotkeyMessageDisabled: 0
+656:[28:11:46:41:962][E][Unity:22704:27724] QueryShadowPlayDdiShimStatusIN
+657:[28:11:46:47:521][E][Unity:22704:27724] QueryShadowPlayDdiShimStatusIN
+797:[28:12:41:21:289][E][Unity Hub:33024:32620] QueryShadowPlayDdiShimStatusIN
+798:[28:12:41:21:487][E][Unity Hub:33024:32620] QueryShadowPlayDdiShimStatusIN
+799:[28:12:41:21:635][E][Unity Hub:33024:32620] QueryShadowPlayDdiShimStatusIN
+800:[28:12:41:33:788][E][Unity:33428:18628] QueryShadowPlayDdiShimStatusIN
+801:[28:12:41:33:788][R][Unity:33428:18628] CAppSettings::ComputeAppSettings: m_uiIndex: 254 isGame: 1 isLauncher: 1 isAppBlackListed: 0 isEnableHook: 0  isFSDEnabled: 0 isMouseClipEnabled: 0 isDx9FOEnabled: 0 isCAEnabled: 0 m_bDX12ScreenshotWAR: 0 m_bShowHotkeyMessageDisabled: 0
+802:[28:12:41:33:960][E][Unity:33428:18628] QueryShadowPlayDdiShimStatusIN
+803:[28:12:41:39:370][E][Unity:33428:18628] QueryShadowPlayDdiShimStatusIN
+806:[28:12:43:45:372][E][Unity Hub:33068:25364] QueryShadowPlayDdiShimStatusIN
+807:[28:12:43:45:562][E][Unity Hub:33068:25364] QueryShadowPlayDdiShimStatusIN
+808:[28:12:43:45:711][E][Unity Hub:33068:25364] QueryShadowPlayDdiShimStatusIN

@@ -1,0 +1,51 @@
+  <Fingerprint name='unity_editor'>
+    <DisplayName>Unity Editor</DisplayName>
+    <ChromaAppID>b541f17c-59ed-46a3-8cf8-cdb7603d4e62</ChromaAppID>
+    <IsCreativeApplication>true</IsCreativeApplication>
+    <Version name='fv-2019'>
+      <TelemetryType>1</TelemetryType>
+      <CMSID>100344011</CMSID>
+      <CMSVersion>1</CMSVersion>
+      <Distributor>Standalone</Distributor>
+      <Icon>unity.exe</Icon>
+      <DriverProfile>unity.exe</DriverProfile>
+      <Image>unity.exe</Image>
+      <Launch>unity.exe</Launch>
+      <IsAutomatable>0</IsAutomatable>
+      <IsStreamingSupported>0</IsStreamingSupported>
+      <Files>
+        <File name='unity.exe' version_regex='2019\.\d+\.\d+\.\d+' />
+      </Files>
+      <InstallDirRegValues>
+        <ValuePath view='64'>HKEY_CURRENT_USER\\SOFTWARE\\Unity Technologies\\Installer\\Unity\\Location x64</ValuePath>
+      </InstallDirRegValues>
+      <Disable_FG_Override>1</Disable_FG_Override>
+      <Disable_SR_Override>1</Disable_SR_Override>
+      <Disable_RR_Override>1</Disable_RR_Override>
+      <Disable_RR_Model_Override>1</Disable_RR_Model_Override>
+      <Disable_SR_Model_Override>1</Disable_SR_Model_Override>
+    </Version>
+    <Version name='fv-2018'>
+      <TelemetryType>1</TelemetryType>
+      <CMSID>100344011</CMSID>
+      <CMSVersion>1</CMSVersion>
+      <Distributor>Standalone</Distributor>
+      <Icon>unity.exe</Icon>
+      <DriverProfile>unity.exe</DriverProfile>
+      <Image>unity.exe</Image>
+      <Launch>unity.exe</Launch>
+      <IsAutomatable>0</IsAutomatable>
+      <IsStreamingSupported>0</IsStreamingSupported>
+      <Files>
+        <File name='unity.exe' version_regex='2018\.\d+\.\d+\.\d+' />
+      </Files>
+      <InstallDirRegValues>
+        <ValuePath view='64'>HKEY_CURRENT_USER\\SOFTWARE\\Unity Technologies\\Installer\\Unity\\Location x64</ValuePath>
+      </InstallDirRegValues>
+      <Disable_FG_Override>1</Disable_FG_Override>
+      <Disable_SR_Override>1</Disable_SR_Override>
+      <Disable_RR_Override>1</Disable_RR_Override>
+      <Disable_RR_Model_Override>1</Disable_RR_Model_Override>
+      <Disable_SR_Model_Override>1</Disable_SR_Model_Override>
+    </Version>
+  </Fingerprint>
