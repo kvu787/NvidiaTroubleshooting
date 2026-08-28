@@ -255,3 +255,35 @@ The pre-launch checkpoint is captured. NVIDIA App successfully created and persi
 NVIDIA App's logs independently show that the manual application add succeeded at 13:28:36, creation of the new DRS profile succeeded at 13:28:39, and the Monitor Technology write of value `4` succeeded at 13:28:50. Its application catalog now contains the manually added Godot entry. Both NVIDIA App and Godot were stopped when the final state was queried.
 
 The screenshot, exact application catalog, decoded DRS query, selected NVIDIA App log evidence, and file timestamps and hashes are preserved in the investigation folder. No setting was changed during capture. This is the comparison point to use after Godot has been opened, observed, and closed.
+
+---
+
+## User
+
+I opened a Godot 4.6.3 project, used the Godot editor interface for a bit, and then closed Godot.
+
+I observed:
+
+- a 2 or 3 second "blink" on both of my monitors as the Godot project was opened;
+- no G-SYNC indicator at the top right corner;
+- no choppy mouse movement; and
+- no issues in general.
+
+Investigate.
+
+## Assistant
+
+The NVIDIA App workaround succeeded. The post-launch driver state and NVIDIA logs agree with the observations: the exact-path NVIDIA App profile remained intact and was the profile NVIDIA's backend resolved for the running Godot executable.
+
+Godot also created its usual separate `Godot Engine` profile during startup. The two now coexist:
+
+- `Godot_v4.6.3-stable_win64.exe`, created by NVIDIA App, matches the exact full path and still has `0x10A879CF = 4` (Fixed Refresh), disabled VRR requested state, and disabled G-SYNC mode.
+- `Godot Engine`, created by Godot, matches only the basename and has fullscreen-only G-SYNC mode plus disabled OpenGL threaded optimization.
+
+The profile count increased from 7,958 to 7,959, but every decoded setting in NVIDIA App's profile is unchanged. At 13:34:27 and 13:35:27, NVIDIA's backend explicitly resolved the running full path to `Godot_v4.6.3-stable_win64.exe`, not `Godot Engine`. This, the absent indicator, and smooth pointer motion establish that Fixed Refresh won for this launch.
+
+The monitor blink is consistent with the display pipeline switching from the global G-SYNC state to this application's Fixed Refresh state. Godot also saved the new `Godot Engine` DRS profile at 13:34:09, so one launch cannot distinguish profile activation from first-run profile creation as the immediate trigger. There was no matching Windows System event for a display-driver crash, timeout, or hardware transition.
+
+The original defect is therefore narrower: NVIDIA App can create a working custom profile from a clean baseline, but it cannot reliably discover or adopt the differently named profile after Godot has created `Godot Engine` first. Once NVIDIA App's exact-path profile exists, Godot's later basename profile does not defeat it.
+
+All post-launch evidence and the detailed comparison are preserved in `godot-nvapp-postlaunch-findings.md` and its companion snapshot files. No NVIDIA setting was changed during investigation.
