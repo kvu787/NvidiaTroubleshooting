@@ -166,3 +166,49 @@ rendering_device/fallback_to_vulkan=false
 Then a D3D12 initialization failure aborts instead of reaching native OpenGL. On a successful D3D12 run, Godot still interacts normally with the NVIDIA driver: the D3D12 backend loads `D3D12.dll` and `DXGI.dll`, enumerates adapters, and creates a device in [`rendering_context_driver_d3d12.cpp`](https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/drivers/d3d12/rendering_context_driver_d3d12.cpp#L104-L165). NVIDIA will also read and apply the executable's existing profile. That is different from Godot editing NVIDIA Control Panel/DRS settings.
 
 So the precise claim is: successful D3D12 startup avoids Godot's known NVIDIA settings writer; the command alone does not guarantee that native OpenGL fallback can never reach it. Disabling OpenGL fallback supplies that guarantee for stock Godot 4.6.3's explicit NVAPI/DRS code path.
+
+---
+
+## User
+
+i still see a godot profile in the nvidia app (see screenshot) which i thought should have been removed at this point. what's going on?
+
+![NVIDIA App showing the Godot application row after exact-path DRS profile deletion](<../2026-08-28 godot aoe4 gsync investigation/screenshots/nvidia-app-godot-inventory-after-drs-profile-deletion.png>)
+
+## Assistant
+
+The deleted profile has not returned. The circled item is NVIDIA App's separate application-catalog row, not proof of a DRS profile with that name.
+
+A fresh read-only DRS query still reports:
+
+```text
+FindProfileByName("Godot_v4.6.3-stable_win64.exe"): not found
+Total DRS profiles: 7958
+Full-path executable lookup: Godot Engine
+Basename executable lookup: Godot Engine
+```
+
+NVIDIA App independently retains this object in its private `ApplicationStorage.json`:
+
+```text
+LocalId: 963528738
+DisplayName: Godot_v4.6.3-stable_win64.exe
+DetectedFiles: the exact Godot executable path
+IsManuallyAdded: true
+DriverProfile: empty
+LastLaunchTime: 2026-08-28 15:15:35 PDT
+```
+
+There are therefore three distinct objects:
+
+1. `Godot_v4.6.3-stable_win64.exe`, the exact-path DRS profile you deleted in Profile Inspector. It is still gone.
+2. `Godot Engine`, the basename DRS profile you deliberately retained and set to Fixed Refresh. It still exists and currently matches the executable.
+3. NVIDIA App application row `LocalId 963528738`, which was created when Godot was manually added to NVIDIA App. NPI does not edit NVIDIA App's application catalog, so this row survived.
+
+NVIDIA App's `2/2 Programs` count is counting accepted application-catalog rows, not DRS profiles. The empty `DriverProfile` field is particularly decisive: the visible row currently has no stored driver-profile name.
+
+Your screenshot also has AOE4 selected in the detail pane. It only shows that NVIDIA App rendered the Godot catalog row; it does not show NVIDIA App loading or recreating a Godot DRS profile. Merely opening NVIDIA App did not recreate it, as confirmed by the current DRS query.
+
+Be cautious about selecting or editing the Godot row during this controlled test. NVIDIA App may then run its profile-resolution/creation path again. If that behavior is tested, query DRS immediately afterward to determine whether it adopted `Godot Engine`, failed, or recreated an exact-path profile.
+
+I preserved the screenshot and added the catalog-versus-DRS comparison to the investigation.
