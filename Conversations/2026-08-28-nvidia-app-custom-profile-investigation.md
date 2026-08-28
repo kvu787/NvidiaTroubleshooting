@@ -230,3 +230,28 @@ Confirmed. There is no remaining custom NVIDIA profile or application associatio
 - NVIDIA App's separate application catalog still contains no Godot entry.
 
 The live DRS database changed at 13:24:27 PDT, consistent with the NPI deletion. This is now a clean baseline for the next step. Verification was read-only.
+
+---
+
+## User
+
+I created the Godot profile in NVIDIA App as shown in the screenshot, and then closed NVIDIA App. Record whatever state you need.
+
+Attached image:
+
+![Godot profile created in NVIDIA App with Monitor Technology set to Fixed Refresh](<../2026-08-28 gsync investigation/screenshots/godot-profile-created-nvapp-prelaunch.png>)
+
+## Assistant
+
+The pre-launch checkpoint is captured. NVIDIA App successfully created and persisted a user-defined DRS profile for the exact Godot executable, and the intended Fixed Refresh override is present in the live driver database.
+
+- Profile: `Godot_v4.6.3-stable_win64.exe`
+- Association: the exact full executable path, not a basename-wide match
+- `0x10A879CF = 4`: G-SYNC application override = Fixed Refresh
+- `0x1094F1F7 = 0`: VRR requested state = disabled
+- `0x1194F158 = 0`: G-SYNC mode setting = disabled
+- Total profiles: 7,958, up from the clean baseline of 7,957
+
+NVIDIA App's logs independently show that the manual application add succeeded at 13:28:36, creation of the new DRS profile succeeded at 13:28:39, and the Monitor Technology write of value `4` succeeded at 13:28:50. Its application catalog now contains the manually added Godot entry. Both NVIDIA App and Godot were stopped when the final state was queried.
+
+The screenshot, exact application catalog, decoded DRS query, selected NVIDIA App log evidence, and file timestamps and hashes are preserved in the investigation folder. No setting was changed during capture. This is the comparison point to use after Godot has been opened, observed, and closed.
