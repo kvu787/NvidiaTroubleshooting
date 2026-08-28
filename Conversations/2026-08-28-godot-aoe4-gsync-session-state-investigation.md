@@ -315,3 +315,59 @@ Therefore, using the explicit direct `--editor --path ... --rendering-driver d3d
 This guarantees the pre-launch state, not what NVIDIA or Godot might create during the next launch. The post-launch check should be run immediately after closing the directly launched editor, before opening NVIDIA App, NPI, or another Godot process. The expected unchanged result is 7957 profiles and a clean exhaustive `godot` audit.
 
 The baseline, DRS hashes, deletion logs, application-catalog hash, project configuration, and audit source are preserved in the investigation.
+
+---
+
+## User
+
+i did the following:
+1. open a command prompt window
+2. run this: `"C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe" --editor --path "C:\Users\k\Repository\Godot\VsyncStutterTest\Godot" --rendering-driver d3d12`
+3. the project opened without any monitor blinking
+4. i observed the gsync indicator in the top right
+5. i moved the mouse around and observed choppy movement
+6. i closed the godot editor window
+7. i waited for the command prompt window to return to the prompt, but it didn't do so after 10 seconds, so i clicked the windows UI "x" to close it
+
+continue the investigation
+
+## Assistant
+
+The bypass worked exactly as intended: the direct D3D12 editor launch did not create or edit any NVIDIA profile and did not rewrite DRS.
+
+The post-launch state is byte-for-byte identical to the clean baseline:
+
+```text
+DRS profiles: 7957
+Godot full-path association: absent
+Godot basename association: absent
+Known Godot profile names: absent
+Exhaustive Godot profile/application matches: 0
+DRS enumeration failures: 0
+NVIDIA App catalog Godot entries: 0
+```
+
+All three DRS timestamps and SHA-256 hashes are unchanged from before the launch. `ApplicationStorage.json` is also unchanged. NVIDIA's backend did see the running Godot executable at 15:55:42 and loaded DRS for normal classification, but its resolved profile name was empty and it performed no save. This is the clean distinction we wanted: the NVIDIA driver read its settings normally, while Godot did not mutate them.
+
+Your physical observations fit that state:
+
+- No monitor blank: the DRS save/reload transition did not happen.
+- G-SYNC indicator visible: with no Fixed Refresh Godot profile, the editor inherited G-SYNC behavior.
+- Choppy pointer movement: this reproduces the editor/VRR behavior that Godot's NVIDIA profile workaround was designed to suppress.
+
+This establishes that successful D3D12 startup with OpenGL and Vulkan fallback disabled bypasses Godot 4.6.3's native-OpenGL `_nvapi_setup_profile()` writer. It also verifies a practical tradeoff: the bypass avoids the dangerous global driver-profile reload, but leaves G-SYNC active in the editor, where you experience choppy interaction.
+
+The delayed command-prompt return is a separate observation. Project/editor metadata writes ended at 15:54:45. NVIDIA's periodic sampler still reported the Godot image at 15:55:42 but not at 15:56:42, and a direct check at 15:57:59 found no Godot process. There is no Application Hang, WER, TDR, `nvlddmkm`, display, or crash event. The one-minute NVIDIA sampling interval cannot establish the exact exit time, so this currently supports a shutdown linger but not a root cause. Closing the console may have terminated the lingering process.
+
+Godot also semantically preserved but textually rewrote `project.godot`: CRLF became LF and the two `fallback_to_*` keys swapped order while retaining the same `false` values. I left this project-owned change untouched.
+
+AoE4's stored profile remains G-SYNC-capable. The final physical check for this bypass run is now:
+
+1. do not open NVIDIA App, NPI, or Godot;
+2. open AoE4;
+3. observe whether the top-right G-SYNC indicator appears; and
+4. close AoE4.
+
+If it appears, the bypass avoided both profile mutation and the sticky live-VRR failure. If it does not, Fixed Refresh/profile activation is not required and the remaining defect is deeper in NVIDIA's application transition path.
+
+The post-launch hashes, exhaustive audit, NVIDIA process/classification lines, shutdown evidence, and updated conclusions are preserved in the investigation.
