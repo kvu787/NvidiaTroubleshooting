@@ -45,3 +45,34 @@ For immediate recovery, toggle global G-SYNC off and back on in NVIDIA App, or r
 If that avoids the blink and AoE4 G-SYNC works afterward, Godot's unconditional DRS save is the decisive trigger. If it still fails, merely selecting the exact-path Fixed Refresh profile is sufficient to trigger the NVIDIA bug.
 
 The complete analysis is in `2026-08-28 godot aoe4 gsync investigation/findings.md`; the timestamped snapshot is in `evidence.md`. Both the investigation and conversation record are committed, and the working tree is clean.
+
+---
+
+## User
+
+since the last prompt, i did the exact following and nothing else related to this issue:
+- open nvapp
+- disable gsync and apply
+- enable gsync and apply
+- close nvapp
+- open aoe4 and observe gsync top-right indicator
+- close aoe4
+
+add this data to your investigation
+
+## Assistant
+
+Added. This is a successful recovery confirmation, not merely another observation.
+
+NVIDIA's logs corroborate the sequence:
+
+- global G-SYNC was set to disabled at 15:09:34 and the API reported success;
+- it was set back to enabled at 15:09:43 and the API reported success;
+- NVIDIA App recorded the subsequent AoE4 launch at 15:09:54; and
+- NVIDIA's backend detected the AoE4 session ending at 15:11:37.
+
+Your observation that the G-SYNC indicator returned during that run proves that the global off/on cycle recovers the failed state. A fresh DRS query afterward still selects the ordinary `Age of Empires IV` profile with G-SYNC allowed and fullscreen-only VRR, so no AoE4 profile repair occurred.
+
+This materially strengthens the diagnosis: Godot did not permanently turn off G-SYNC or corrupt AoE4's profile. The driver had retained stale Fixed Refresh/runtime VRR state, and forcing one real global disable/enable transition reprogrammed the display path and cleared it. The remaining unresolved question is narrower: whether Godot's unconditional DRS save is required to create the stuck state or whether activating the exact-path Fixed Refresh profile alone is sufficient.
+
+I updated `findings.md`, `evidence.md`, and this conversation record with the exact sequence, timestamps, DRS writes, post-recovery AoE4 state, and revised confidence assessment. The changes are committed and the working tree is clean.
