@@ -1,0 +1,77 @@
+Clean NVIDIA/Godot baseline before direct D3D12 launch
+Captured: 2026-08-28 15:50 PDT
+
+User actions since the preceding snapshot:
+  1. Deleted the Godot profile/row from NVIDIA App.
+  2. Deleted the Godot profile from NVIDIA Profile Inspector.
+
+No Godot or NVIDIA Profile Inspector process was running during the audit.
+
+NVIDIA App deletion log:
+  2026-08-28 15:46:09.917
+    DeleteManualApplication success:1 for appId 963528738.
+  2026-08-28 15:46:09.922
+    Local id 963528738 successfully deleted from manual db.
+  2026-08-28 15:46:09.941
+    Removed DRS profile for Godot_v4.6.3-stable_win64.exe.
+  2026-08-28 15:46:09.942
+    Godot_v4.6.3-stable_win64.exe with localid 963528738 removed successfully.
+
+NVIDIA App application catalog:
+  Path:
+    C:\Users\k\AppData\Local\NVIDIA Corporation\NVIDIA App\NvBackend\ApplicationStorage.json
+  Last write: 2026-08-28 15:46:09.917 PDT
+  Length: 2766 bytes
+  SHA-256: 493A41D860F829C77351CBE535A664AA4B2B99D48D0F534B0B6BB43AD88441E5
+  Case-insensitive Godot occurrences: 0
+
+Specific DRS target query:
+  Target full path:
+    C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe
+  Target basename:
+    Godot_v4.6.3-stable_win64.exe
+  FindApplicationByName(full path): -166, NVAPI_EXECUTABLE_NOT_FOUND
+  FindApplicationByName(basename): -166, NVAPI_EXECUTABLE_NOT_FOUND
+  FindProfileByName("Godot_v4.6.3-stable_win64.exe"): -163, NVAPI_PROFILE_NOT_FOUND
+  FindProfileByName("Godot_v4.6.3-stable_win64"): -163, NVAPI_PROFILE_NOT_FOUND
+  Total profiles: 7957
+  Result: no target association or target-related profile name.
+
+Exhaustive DRS substring audit:
+  Search token: "godot" (case-insensitive)
+  Fields scanned:
+    profileName
+    appName
+    userFriendlyName
+    launcher
+    fileInFolder
+    commandLine
+  Total profiles reported: 7957
+  Profiles scanned: 7957
+  Matching profiles: 0
+  Matching applications: 0
+  Profile enumeration/info failures: 0
+  Application enumeration failures: 0
+  Result: CLEAN
+
+Profile-count transition:
+  Before NVIDIA App and NPI deletions: 7959
+  After both deletions: 7957
+
+DRS files:
+  nvdrsdb0.bin
+    last write: 2026-08-28 15:46:09 PDT
+    SHA-256: 8E5820DF6C9D6E0F5FFF07FFF189406146DA415DD93F4913CF7D88BDF4031181
+  nvdrsdb1.bin
+    last write: 2026-08-28 15:46:23 PDT
+    SHA-256: 8A239BE114F9568F83CF8C23A7EF853A9F0653ABFE610F35C7CC8B79D44B4F95
+  nvdrssel.bin
+    last write: 2026-08-28 15:46:23 PDT
+    SHA-256: 4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A
+
+Pre-launch invariant:
+  No NVIDIA App Godot application-catalog record exists.
+  No DRS profile name or application field contains "godot".
+  The known Godot executable has no full-path or basename DRS association.
+  Any post-launch deviation from these values is attributable to the test launch
+  or another action performed after this baseline.

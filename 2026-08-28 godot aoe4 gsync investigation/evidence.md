@@ -2,7 +2,7 @@
 
 Initial snapshot completed: 2026-08-28 14:59 PDT
 
-Follow-up evidence incorporated through: 2026-08-28 15:41 PDT
+Follow-up evidence incorporated through: 2026-08-28 15:50 PDT
 
 ## Environment
 
@@ -50,6 +50,12 @@ Project V-Sync: disabled
            NVIDIA App creates an empty DRS profile named after the executable,
            fails to associate the already-owned executable, and saves DRS.
 15:40:43  NVIDIA backend resolves the executable to Godot Engine.
+15:46:09  NVIDIA App successfully deletes manual Godot application 963528738
+           and removes the empty named DRS orphan.
+15:46:23  DRS write aligns with the user's deletion of the remaining
+           Godot Engine profile in NVIDIA Profile Inspector.
+15:50:25  Exhaustive read-only DRS scan finds no profile or application field
+           containing "godot" among all 7957 profiles, with no scan failures.
 ```
 
 ## DRS files after reproduction
@@ -437,6 +443,95 @@ ApplicationStorage.json
 ```
 
 AoE4 remains associated with `Age of Empires IV`, with VRR requested as fullscreen-only and the G-SYNC application override inherited as allow. Selecting the Godot row changed neither runtime association, but it did mutate persistent DRS and made NVIDIA App's selected-page values misleading.
+
+## Clean baseline before the bypass launch
+
+The user then performed exactly these issue-related actions:
+
+```text
+1. Delete the Godot profile/row from NVIDIA App.
+2. Delete the Godot profile from NVIDIA Profile Inspector.
+```
+
+NVIDIA App deletion evidence:
+
+```text
+15:46:09.917  DeleteManualApplication success:1 for appId 963528738
+15:46:09.922  Local id 963528738 successfully deleted from manual db
+15:46:09.941  Removed DRS profile for Godot_v4.6.3-stable_win64.exe
+15:46:09.942  Godot_v4.6.3-stable_win64.exe with localid 963528738
+                removed successfully
+```
+
+Current NVIDIA App catalog:
+
+```text
+C:\Users\k\AppData\Local\NVIDIA Corporation\NVIDIA App\NvBackend\ApplicationStorage.json
+  last write: 2026-08-28 15:46:09.917 PDT
+  length: 2766 bytes
+  SHA-256: 493A41D860F829C77351CBE535A664AA4B2B99D48D0F534B0B6BB43AD88441E5
+  case-insensitive "godot" occurrences: 0
+```
+
+Direct read-only DRS query after both deletions:
+
+```text
+Target full path:
+  C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe
+Target basename:
+  Godot_v4.6.3-stable_win64.exe
+
+FindApplicationByName(full path): -166, NVAPI_EXECUTABLE_NOT_FOUND
+FindApplicationByName(basename): -166, NVAPI_EXECUTABLE_NOT_FOUND
+FindProfileByName("Godot_v4.6.3-stable_win64.exe"): -163, NVAPI_PROFILE_NOT_FOUND
+FindProfileByName("Godot_v4.6.3-stable_win64"): -163, NVAPI_PROFILE_NOT_FOUND
+GetNumProfiles: 7957
+No DRS application association or target-related profile name was found.
+```
+
+The profile count was 7959 immediately before the actions and measured 7957 after both. NVIDIA App logged removal of its DRS profile and wrote DRS at 15:46:09; the second DRS write at 15:46:23 aligns with the user's subsequent NVIDIA Profile Inspector deletion. The inferred intermediate sequence is 7959 to 7958 to 7957, matching removal of the empty named orphan followed by removal of `Godot Engine`.
+
+DRS persistence at the clean baseline:
+
+```text
+nvdrsdb0.bin
+  last write: 2026-08-28 15:46:09 PDT
+  SHA-256: 8E5820DF6C9D6E0F5FFF07FFF189406146DA415DD93F4913CF7D88BDF4031181
+
+nvdrsdb1.bin
+  last write: 2026-08-28 15:46:23 PDT
+  SHA-256: 8A239BE114F9568F83CF8C23A7EF853A9F0653ABFE610F35C7CC8B79D44B4F95
+
+nvdrssel.bin
+  last write: 2026-08-28 15:46:23 PDT
+  SHA-256: 4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A
+```
+
+The direct query checks the known executable and profile identities. A second read-only audit then enumerated every DRS profile and every application record, searching case-insensitively for `godot` in profile names, `appName`, `userFriendlyName`, `launcher`, `fileInFolder`, and `commandLine`:
+
+```text
+Case-insensitive DRS substring audit
+Search token: "godot"
+Total profiles reported: 7957
+Profiles scanned: 7957
+Matching profiles: 0
+Matching applications: 0
+Profile enumeration/info failures: 0
+Application enumeration failures: 0
+Audit complete: CLEAN
+```
+
+The audit implementation is preserved in `drs-substring-audit.cpp` and used only NVAPI read/session/enumeration calls; it contains no save, create, set, or delete call. No Godot or NVIDIA Profile Inspector process was running when the baseline was captured.
+
+This establishes the pre-launch invariant for the intended bypass test:
+
+```text
+DRS profile count: 7957
+Any DRS profile/application field containing "godot": none
+Specific executable full-path association: none
+Specific executable basename association: none
+NVIDIA App application-catalog record: none
+```
 
 ## Event and crash evidence
 

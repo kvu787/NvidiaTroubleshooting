@@ -153,6 +153,42 @@ NVIDIA's separate backend independently logged `Profile name: Godot Engine` for 
 
 `ApplicationStorage.json` was not changed by the selection and still has an empty `DriverProfile` for manual application `LocalId 963528738`. AoE4's profile also remains unchanged and G-SYNC-capable. Selecting the row did not change which profile either executable will use, but it did recreate the named DRS artifact the user had deleted.
 
+### Clean pre-bypass-launch baseline
+
+The user subsequently deleted the Godot entry from NVIDIA App and then deleted the remaining Godot profile in NVIDIA Profile Inspector. The current state is clean in both NVIDIA identity stores.
+
+NVIDIA App successfully removed manual application `LocalId 963528738` at 15:46:09. Its current `ApplicationStorage.json` contains zero case-insensitive occurrences of `godot`. Deleting the row also removed the empty orphan profile created by the selection test. NVIDIA Profile Inspector then removed the remaining `Godot Engine` profile at 15:46:23.
+
+The DRS profile count confirms two removals overall. The intermediate count is inferred from NVIDIA App's successful profile-removal log and the two separate DRS writes:
+
+```text
+Before the two deletions: 7959
+Inferred after NVIDIA App deletion: 7958
+Measured after both deletions: 7957
+```
+
+Direct target lookups now return only not-found statuses:
+
+```text
+FindApplicationByName(full path): -166, NVAPI_EXECUTABLE_NOT_FOUND
+FindApplicationByName(basename): -166, NVAPI_EXECUTABLE_NOT_FOUND
+FindProfileByName("Godot_v4.6.3-stable_win64.exe"): -163, NVAPI_PROFILE_NOT_FOUND
+FindProfileByName("Godot_v4.6.3-stable_win64"): -163, NVAPI_PROFILE_NOT_FOUND
+```
+
+To rule out differently named profiles or other Godot executables, a read-only exhaustive scanner inspected all 7957 DRS profiles and every enumerated application record. It searched case-insensitively for `godot` in profile names and each application's `appName`, `userFriendlyName`, `launcher`, `fileInFolder`, and `commandLine` fields:
+
+```text
+Profiles scanned: 7957
+Matching profiles: 0
+Matching applications: 0
+Profile enumeration/info failures: 0
+Application enumeration failures: 0
+Audit complete: CLEAN
+```
+
+No Godot or NVIDIA Profile Inspector process was running during this audit. This is the required pre-launch baseline for the direct D3D12/no-OpenGL-fallback test: before that launch, NVIDIA has no persistent Godot application record, profile name, executable association, or other `godot`-containing DRS entry.
+
 ### Godot saved DRS again at the failure transition
 
 The active NVIDIA DRS files changed at exactly the project-open transition:
@@ -273,6 +309,8 @@ rendering_device/fallback_to_opengl3=false
 
 Optionally also set `rendering_device/fallback_to_vulkan=false` if the requirement is specifically D3D12-or-fail rather than merely no native-OpenGL fallback. With OpenGL fallback disabled, a D3D12/Vulkan failure aborts display-server initialization instead of entering the only Godot 4.6.3 Windows code path that references NVAPI or writes DRS.
 
+The clean baseline above is now established. It should be captured again immediately after the direct launch. A successful D3D12 startup with OpenGL fallback disabled should leave the DRS count at 7957 and the exhaustive `godot` audit clean. Any new matching profile or application association would prove that some profile-writing path was reached despite the intended bypass.
+
 This guarantee is narrowly about Godot's explicit NVIDIA settings mutation. A successful D3D12 editor necessarily loads `D3D12.dll` and `DXGI.dll`, creates a D3D12 device, and uses the NVIDIA display driver. NVIDIA may read and apply the executable's existing DRS profile as part of normal process/device initialization; that is not Godot editing the profile.
 
 Interpretation:
@@ -319,5 +357,6 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: duplicate profiles, exact-path matching, and NVIDIA App profile creation are not required.
 - High confidence: merely selecting the stale/manual NVIDIA App row recreates a named but empty, unassociated DRS profile because NVIDIA App saves a partial profile-creation transaction after `NvAPI_DRS_CreateApplication` fails.
 - High confidence: the Godot values displayed by NVIDIA App after that selection do not describe the profile selected for the executable at runtime.
+- High confidence: immediately before the planned bypass launch, all known and exhaustively scanned Godot entries are absent from DRS and NVIDIA App's application catalog.
 - Medium-high confidence: Godot's DRS reload while any matching Godot profile is Fixed Refresh creates that sticky state.
 - Remaining isolation: direct D3D12 launch is needed to separate the unconditional DRS save from Fixed Refresh profile activation alone.
