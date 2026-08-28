@@ -212,3 +212,55 @@ Your screenshot also has AOE4 selected in the detail pane. It only shows that NV
 Be cautious about selecting or editing the Godot row during this controlled test. NVIDIA App may then run its profile-resolution/creation path again. If that behavior is tested, query DRS immediately afterward to determine whether it adopted `Godot Engine`, failed, or recreated an exact-path profile.
 
 I preserved the screenshot and added the catalog-versus-DRS comparison to the investigation.
+
+---
+
+## User
+
+i selected the godot profile in nvapp and did nothing else. check state again.
+
+![NVIDIA App Godot row selected after DRS profile deletion](<../2026-08-28 godot aoe4 gsync investigation/screenshots/nvidia-app-godot-row-selected-after-drs-profile-deletion.png>)
+
+## Assistant
+
+Selecting the row recreated a DRS profile, but it is a broken empty orphan. It did not take ownership of the Godot executable and it is not the profile the driver will use for Godot.
+
+The before/after state is decisive:
+
+```text
+Before selecting the row:
+  total DRS profiles: 7958
+  Godot_v4.6.3-stable_win64.exe profile: absent
+
+After selecting the row:
+  total DRS profiles: 7959
+  Godot_v4.6.3-stable_win64.exe profile: present
+  application associations: 0
+  explicit settings: 0
+```
+
+NVIDIA App's own log explains the partial result:
+
+```text
+15:40:39.264  NvAPI_DRS_CreateApplication ... failed with code -167
+15:40:39.265  cannot create DRS app - Godot_v4.6.3-stable_win64.exe
+```
+
+`-167` is `NVAPI_EXECUTABLE_ALREADY_IN_USE`. The executable is already associated with the existing `Godot Engine` profile. NVIDIA App created the new profile first, failed while adding the executable, then nevertheless saved DRS at 15:40:39. That left a zero-application, zero-setting profile behind.
+
+This also explains the misleading values in the screenshot. NVIDIA App explicitly called `GetProfileInfo` for `ProfileName: Godot_v4.6.3-stable_win64.exe`, so the page shows the empty orphan's inherited globals, such as `Monitor Technology: Global - G-SYNC Compatible`. That is not the runtime profile selected for the executable.
+
+The actual matching state remains:
+
+```text
+Full-path executable lookup: Godot Engine
+Basename executable lookup: Godot Engine
+Godot Engine monitor technology: Fixed Refresh
+Godot Engine VRR requested state: disabled
+```
+
+NVIDIA's backend independently logged `Profile name: Godot Engine` for this exact executable at 15:40:43 and 15:40:49. AoE4 still resolves to `Age of Empires IV` with G-SYNC allowed and fullscreen-only VRR. `ApplicationStorage.json` also remained unchanged and still has an empty `DriverProfile` for the manual Godot row.
+
+So the corrected model is: the profile really was absent before the click; selecting the stale catalog row recreated its name in DRS, but association failed and left an orphan. The NVIDIA App page now does not reflect what the driver will apply to Godot.
+
+I preserved the screenshot and added the timestamped DRS comparison, NVIDIA logs, hashes, and current AoE4 state to the investigation.
