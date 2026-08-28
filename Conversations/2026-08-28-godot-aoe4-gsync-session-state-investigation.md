@@ -410,3 +410,43 @@ This proves that merely running the Godot D3D12 editor with G-SYNC active does n
 The strict causal split between Fixed Refresh profile activation alone and Godot's OpenGL DRS save/reload remains optional. Testing that would require deliberately recreating a Fixed Refresh Godot profile and carries a known risk of wedging VRR again; it is not required to validate the safe workflow.
 
 I added the physical observation, AoE4 launch timestamp, unchanged DRS hashes, current profile state, and final control conclusion to the investigation.
+
+---
+
+## User
+
+even with all the information and workarounds we've gathered, i can't get gsync to be disabled for godot editor while being enabled for other stuff like aoe4, except for explicitly enabling/disabling gsync in the nvidia app or nvcp which is cumbersome and causes a long monitor blink when you toggle gsync on/off.
+
+so, this core issue remains. record this. i may pick up this investigation later.
+
+## Assistant
+
+Recorded as the unresolved primary user goal.
+
+The successful D3D12 isolation is now explicitly classified as a partial workaround, not a complete solution. The current tradeoff is:
+
+```text
+Ordinary Godot path + per-app Fixed Refresh:
+  G-SYNC is disabled in Godot
+  but monitors blank and AoE4 G-SYNC becomes stuck afterward
+
+Clean direct D3D12 path with no Godot profile:
+  no blank, no profile mutation, and AoE4 G-SYNC works afterward
+  but G-SYNC remains active in Godot and pointer movement is choppy
+
+Global G-SYNC off/on:
+  provides manual control/recovery
+  but is cumbersome and causes a long monitor blank
+```
+
+No tested configuration currently provides all five required properties:
+
+1. G-SYNC disabled only for Godot;
+2. G-SYNC enabled for AoE4 and other intended applications;
+3. no manual global toggle between applications;
+4. no long monitor blank; and
+5. no sticky post-Godot VRR failure.
+
+I added this distinction to the main findings and evidence, and created `resume-here.md` as the investigation handoff. It records the clean state, proven paths, exact unresolved requirement, the separate shutdown-linger observation, and the most discriminating untested experiment: one Fixed Refresh Godot profile combined with only the direct D3D12/no-save launch. That experiment is marked risky and unproven, not recommended.
+
+The core issue remains open when this investigation is paused.
