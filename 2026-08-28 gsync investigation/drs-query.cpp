@@ -38,6 +38,16 @@ std::wstring basename(const std::wstring &path) {
     return separator == std::wstring::npos ? path : path.substr(separator + 1);
 }
 
+std::wstring stem(const std::wstring &filename) {
+    const auto dot = filename.find_last_of(L'.');
+    return dot == std::wstring::npos ? filename : filename.substr(0, dot);
+}
+
+std::wstring profile_scan_token(const std::wstring &filename_stem) {
+    const auto separator = filename_stem.find_first_of(L"_- ");
+    return separator == std::wstring::npos ? filename_stem : filename_stem.substr(0, separator);
+}
+
 std::string ascii_lower(std::string value) {
     std::transform(value.begin(), value.end(), value.begin(), [](unsigned char character) {
         return static_cast<char>(std::tolower(character));
@@ -151,6 +161,8 @@ int wmain(int argc, wchar_t **argv) {
 
     const std::wstring target_path = argv[1];
     const std::wstring target_basename = basename(target_path);
+    const std::wstring target_stem = stem(target_basename);
+    const std::wstring target_scan_token = profile_scan_token(target_stem);
 
     HMODULE nvapi = LoadLibraryW(L"nvapi64.dll");
     if (nvapi == nullptr) {
@@ -229,7 +241,7 @@ int wmain(int argc, wchar_t **argv) {
 
     const std::vector<std::wstring> candidate_profile_names = {
         target_basename,
-        L"Godot Engine",
+        target_stem,
     };
     for (const auto &profile_name : candidate_profile_names) {
         NvDRSProfileHandle profile = nullptr;
@@ -257,14 +269,15 @@ int wmain(int argc, wchar_t **argv) {
             if (get_profile_info(session, profile, &profile_info) != NVAPI_OK) {
                 continue;
             }
-            if (ascii_lower(utf8(profile_info.profileName)).find("godot") != std::string::npos) {
-                matched_profiles[profile].insert("profile-name scan containing 'godot'");
+            const std::string scan_token = ascii_lower(utf8(target_scan_token.c_str()));
+            if (!scan_token.empty() && ascii_lower(utf8(profile_info.profileName)).rfind(scan_token, 0) == 0) {
+                matched_profiles[profile].insert("profile-name scan starting with '" + scan_token + "'");
             }
         }
     }
 
     if (matched_profiles.empty()) {
-        std::cout << "No DRS application association or Godot-named profile was found.\n";
+        std::cout << "No DRS application association or target-related profile name was found.\n";
         destroy_session(session);
         unload();
         return 0;

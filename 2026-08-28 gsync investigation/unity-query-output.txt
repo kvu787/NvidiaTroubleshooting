@@ -1,0 +1,32 @@
+Target full path: C:\Program Files\Unity\Hub\Editor\6000.3.22f1\Editor\Unity.exe
+Target basename used by ordinary DRS matching: Unity.exe
+FindApplicationByName(full path) status: 0, matched appName="unity.exe"
+FindApplicationByName(basename) status: 0, matched appName="unity.exe"
+FindProfileByName("Unity.exe") status: -163
+FindProfileByName("Unity") status: -163
+GetNumProfiles status: 0, count=7957
+
+Profile 1:
+  discovered_by=application lookup by basename; application lookup by full path; profile-name scan starting with 'unity'
+  name="Unity 3D"
+  predefined=1
+  application_count=1
+  setting_count=8
+  applications (status=0, returned=1):
+    - appName="unity.exe", userFriendlyName="Unity3D", launcher="", fileInFolder="", predefined=1, isMetro=0, isCommandLine=0, commandLine=""
+  enumerated profile settings (status=0, returned=8):
+    - id=0x106D5CFF, name="Do not display this profile in the Control Panel", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, value=0x00000000 (0)
+    - id=0x10F9DC81, name="Enable application for Optimus", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, value=0x00000011 (17)
+    - id=0x205F7E3B, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, value=0x00000000 (0)
+    - id=0x20A3D20D, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, value=0x00000000 (0)
+    - id=0x80303A19, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, value=0x00000000 (0)
+    - id=0x80857A28, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, value=0x00000001 (1)
+    - id=0x809D5F60, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, value=0x00000001 (1)
+    - id=0xB0CC0875, name="", type=DWORD, location=current profile, current_predefined=1, predefined_valid=1, value=0x00000000 (0)
+  effective relevant settings:
+    OpenGL threaded optimization: not returned (status=-160)
+    VRR requested state: id=0x1094F1F7, name="VRR requested state", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, value=0x00000001 (1) (fullscreen only)
+    G-SYNC application override: id=0x10A879CF, name="G-SYNC", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0) (allow)
+    G-SYNC application override request state: not returned (status=-160)
+    G-SYNC mode: id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=global profile, current_predefined=0, predefined_valid=0, value=0x00000001 (1) (fullscreen only)
+    VSync/VRR control: not returned (status=-160)
