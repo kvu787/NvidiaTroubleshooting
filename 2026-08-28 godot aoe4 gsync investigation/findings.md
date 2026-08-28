@@ -189,6 +189,16 @@ Audit complete: CLEAN
 
 No Godot or NVIDIA Profile Inspector process was running during this audit. This is the required pre-launch baseline for the direct D3D12/no-OpenGL-fallback test: before that launch, NVIDIA has no persistent Godot application record, profile name, executable association, or other `godot`-containing DRS entry.
 
+The target project's current `[rendering]` configuration is also ready for a fail-closed bypass test:
+
+```ini
+rendering_device/driver.windows="d3d12"
+rendering_device/fallback_to_opengl3=false
+rendering_device/fallback_to_vulkan=false
+```
+
+With those settings and the explicit `--rendering-driver d3d12` command, this test will either initialize D3D12 or abort. It cannot silently fall back to native OpenGL, which is the Godot 4.6.3 path that calls `_nvapi_setup_profile()` and writes DRS.
+
 ### Godot saved DRS again at the failure transition
 
 The active NVIDIA DRS files changed at exactly the project-open transition:

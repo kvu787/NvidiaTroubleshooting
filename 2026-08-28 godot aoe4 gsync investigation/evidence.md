@@ -533,6 +533,18 @@ Specific executable basename association: none
 NVIDIA App application-catalog record: none
 ```
 
+The target project's current `project.godot` was checked read-only and already contains:
+
+```ini
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+rendering_device/fallback_to_opengl3=false
+rendering_device/fallback_to_vulkan=false
+```
+
+The intended direct editor launch is therefore D3D12-or-fail. Godot 4.6.3 cannot reach its native-OpenGL NVAPI profile writer through a rendering fallback in this configuration.
+
 ## Event and crash evidence
 
 ```text

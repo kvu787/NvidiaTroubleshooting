@@ -75,3 +75,13 @@ Pre-launch invariant:
   The known Godot executable has no full-path or basename DRS association.
   Any post-launch deviation from these values is attributable to the test launch
   or another action performed after this baseline.
+
+Target project rendering configuration:
+  rendering_device/driver.windows="d3d12"
+  rendering_device/fallback_to_opengl3=false
+  rendering_device/fallback_to_vulkan=false
+
+Launch-path consequence:
+  With the explicit --rendering-driver d3d12 argument, the editor must start
+  through D3D12 or fail. Native OpenGL fallback, and therefore Godot 4.6.3's
+  _nvapi_setup_profile/NvAPI_DRS_SaveSettings path, is disabled.
