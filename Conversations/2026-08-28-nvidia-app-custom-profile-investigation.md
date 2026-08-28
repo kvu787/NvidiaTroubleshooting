@@ -192,3 +192,23 @@ The controlled sequence should be:
 7. Take another read-only profile snapshot to determine whether Godot retained, replaced, or failed to modify the NVIDIA App-created profile.
 
 The pause is important because Godot's OpenGL startup code can create its own `Godot Engine` profile. Capturing the NVIDIA App state first separates NVIDIA App behavior from Godot's subsequent behavior.
+
+---
+
+## User
+
+I'm going to do this:
+
+1. Use NPI to delete the profile for Godot editor.
+2. Use NVIDIA App to create a profile for Godot editor that explicitly disables G-SYNC.
+3. Pause here and let you record state.
+4. Open Godot editor.
+5. Observe what happens.
+6. Close Godot editor.
+7. Report observations to you.
+
+## Assistant
+
+Yes. That sequence cleanly separates NVIDIA App's write from anything Godot does at startup.
+
+At step 3, take a pre-launch read-only snapshot of the DRS profile, NVIDIA App application storage, and relevant logs. After step 7, take the same post-launch snapshot and compare the two states. The comparison will show whether Godot retained, replaced, augmented, or failed to modify the NVIDIA App-created profile.
