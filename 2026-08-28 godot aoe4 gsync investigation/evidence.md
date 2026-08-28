@@ -2,7 +2,7 @@
 
 Initial snapshot completed: 2026-08-28 14:59 PDT
 
-Follow-up evidence incorporated through: 2026-08-28 15:19 PDT
+Follow-up evidence incorporated through: 2026-08-28 15:41 PDT
 
 ## Environment
 
@@ -46,6 +46,10 @@ Project V-Sync: disabled
 15:16:07  AoE4 process starts.
            User observes no G-SYNC indicator.
 15:17:38  NVIDIA backend detects the AoE4 session ending.
+15:40:39  User selects the surviving Godot row in NVIDIA App.
+           NVIDIA App creates an empty DRS profile named after the executable,
+           fails to associate the already-owned executable, and saves DRS.
+15:40:43  NVIDIA backend resolves the executable to Godot Engine.
 ```
 
 ## DRS files after reproduction
@@ -332,6 +336,107 @@ NVIDIA backend runtime resolution after the deletion:
 ```
 
 The screenshot and catalog record explain the apparent contradiction. NVIDIA App's Program Settings sidebar starts from its application inventory. NVIDIA Profile Inspector operates on DRS profiles. Deleting a DRS profile does not delete NVIDIA App `LocalId 963528738`, and that visible catalog row currently has no stored `DriverProfile` value. The screenshot has AoE4 selected in the detail pane, so no Godot profile load or edit is shown.
+
+## State after selecting the surviving NVIDIA App row
+
+The user then selected the Godot row and did nothing else. The selected page is preserved here:
+
+![NVIDIA App Godot row selected after DRS profile deletion](screenshots/nvidia-app-godot-row-selected-after-drs-profile-deletion.png)
+
+```text
+nvidia-app-godot-row-selected-after-drs-profile-deletion.png
+  original timestamp: 2026-08-28 15:41:23.556 PDT
+  SHA-256: 02275763A9CCBAC8BE74EC644CAE1BF400CCBE3F7AC4739AC2A9B816F73792FE
+```
+
+The screenshot shows NVIDIA App displaying inherited/global values for the selected row, including:
+
+```text
+Monitor Technology: Global - G-SYNC Compatible
+Max Frame Rate: Global - Off
+Low Latency Mode: Global - Off
+Power Management Mode: Global - Prefer maximum performance
+Vertical Sync: Global - Use 3D app setting
+```
+
+Immediate DRS comparison:
+
+| State | Before selecting row | After selecting row |
+|---|---:|---:|
+| Total profiles | 7958 | 7959 |
+| Named `Godot_v4.6.3-stable_win64.exe` profile | absent (`-163`) | present |
+| Applications in named profile | n/a | 0 |
+| Explicit settings in named profile | n/a | 0 |
+| Executable selected profile | `Godot Engine` | `Godot Engine` |
+
+Relevant query output after selection:
+
+```text
+FindApplicationByName(full path): Godot Engine
+FindApplicationByName(basename): Godot Engine
+FindProfileByName("Godot_v4.6.3-stable_win64.exe"): success
+GetNumProfiles: 7959
+
+Godot Engine
+  application_count: 1
+  application: godot_v4.6.3-stable_win64.exe
+  setting_count: 9
+  VRR requested state: disabled
+  G-SYNC application override: fixed refresh
+
+Godot_v4.6.3-stable_win64.exe
+  application_count: 0
+  setting_count: 0
+  effective VRR requested state: fullscreen only, inherited globally
+  effective G-SYNC application override: allow, inherited globally
+```
+
+NVIDIA App frontend and native logs identify the failed create-first path:
+
+```text
+15:40:39.264  NvAPI_DRS_CreateApplication for
+               C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\
+               Godot_v4.6.3-stable_win64.exe failed with code -167
+15:40:39.265  cannot create DRS app - Godot_v4.6.3-stable_win64.exe
+15:40:39.285  GetProfileInfo ProfileName=Godot_v4.6.3-stable_win64.exe,
+               ApplicationId=963528738
+```
+
+`-167` is `NVAPI_EXECUTABLE_ALREADY_IN_USE` (`nvapi.h`: "Application already exists in the other profile"). DRS proves that the other profile is `Godot Engine`. NVIDIA's backend resolved the same path correctly even while the frontend queried the orphan by name:
+
+```text
+15:40:43.518  Application path: <exact Godot path> Profile name: Godot Engine
+15:40:49.751  Application path: <exact Godot path> Profile name: Godot Engine
+```
+
+DRS files after the selection:
+
+```text
+nvdrsdb0.bin
+  last write: 2026-08-28 15:40:39 PDT
+  SHA-256: 5EDDCD0A170A4BBEB6025CBC9F2E6D39C766EAD9923D8FEA8A0CEE65729B8574
+
+nvdrsdb1.bin
+  last write: 2026-08-28 15:37:05 PDT
+  SHA-256: 3EB973C6BA085F7EF9DA8EF04A44828AFCCF4858F195A3E80619376178AA422A
+
+nvdrssel.bin
+  last write: 2026-08-28 15:40:39 PDT
+  SHA-256: 6E340B9CFFB37A989CA544E6BB780A2C78901D3FB33738768511A30617AFA01D
+```
+
+The 15:40:39 DRS save plus the profile-count increment show that NVIDIA App committed the profile object even though application creation failed. The new object is an orphan, not an exact-path application profile.
+
+NVIDIA App's catalog file did not change:
+
+```text
+ApplicationStorage.json
+  last write: 2026-08-28 15:16:08 PDT
+  SHA-256: C8BA9796A7620267DA40D47CADF7F6CA2333B6024F53609DD55DF2921CBA176D
+  Godot DriverProfile: empty
+```
+
+AoE4 remains associated with `Age of Empires IV`, with VRR requested as fullscreen-only and the G-SYNC application override inherited as allow. Selecting the Godot row changed neither runtime association, but it did mutate persistent DRS and made NVIDIA App's selected-page values misleading.
 
 ## Event and crash evidence
 

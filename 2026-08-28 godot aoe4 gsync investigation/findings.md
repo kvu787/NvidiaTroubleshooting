@@ -108,6 +108,51 @@ The remaining `Godot Engine` DRS profile is also intentional in the latest test:
 
 The screenshot has AoE4 selected, so it provides no evidence that NVIDIA App successfully loaded or recreated a Godot profile. Selecting or editing the stale/manual Godot row could cause NVIDIA App to run its profile resolution/creation path again; preserve the current state and query DRS afterward if that behavior is tested.
 
+### Selecting the NVIDIA App row creates an empty orphan profile
+
+The user then selected the Godot row in NVIDIA App and made no other issue-related change. This action was not read-only. A DRS query immediately afterward found:
+
+```text
+Before selection:
+  total profiles: 7958
+  profile named Godot_v4.6.3-stable_win64.exe: absent
+
+After selection:
+  total profiles: 7959
+  profile named Godot_v4.6.3-stable_win64.exe: present
+  application associations: 0
+  explicit settings: 0
+```
+
+The NVIDIA App log records the failed second half of the operation:
+
+```text
+15:40:39.264  NvAPI_DRS_CreateApplication for the exact Godot path failed with -167
+15:40:39.265  cannot create DRS app - Godot_v4.6.3-stable_win64.exe
+```
+
+NVAPI status `-167` is `NVAPI_EXECUTABLE_ALREADY_IN_USE`: the executable is already associated with another profile. The direct DRS query identifies that other profile as `Godot Engine`. The active DRS database and selector were nevertheless saved at 15:40:39, and the profile count increased by one. The resulting call sequence is therefore:
+
+1. NVIDIA App creates `Godot_v4.6.3-stable_win64.exe` as a profile;
+2. it tries to associate the exact executable path;
+3. DRS rejects that association because the executable basename is already owned by `Godot Engine`; and
+4. NVIDIA App saves the partial transaction, leaving a zero-application, zero-setting orphan.
+
+NVIDIA App then explicitly queries `ProfileName: Godot_v4.6.3-stable_win64.exe`. That explains the screenshot's inherited/global-looking values, including `Monitor Technology: Global - G-SYNC Compatible`. Those values belong to the empty orphan profile's global inheritance; they are not the settings selected for the executable at runtime.
+
+The runtime lookup remains unambiguous and unchanged:
+
+```text
+Full-path executable lookup: Godot Engine
+Basename executable lookup: Godot Engine
+Godot Engine G-SYNC application override: Fixed Refresh
+Godot Engine VRR requested state: disabled
+```
+
+NVIDIA's separate backend independently logged `Profile name: Godot Engine` for the same executable at 15:40:43 and 15:40:49. NVIDIA App is therefore internally inconsistent: its settings page is addressed to the newly created orphan by profile name, while executable-based driver/backend resolution selects `Godot Engine`.
+
+`ApplicationStorage.json` was not changed by the selection and still has an empty `DriverProfile` for manual application `LocalId 963528738`. AoE4's profile also remains unchanged and G-SYNC-capable. Selecting the row did not change which profile either executable will use, but it did recreate the named DRS artifact the user had deleted.
+
 ### Godot saved DRS again at the failure transition
 
 The active NVIDIA DRS files changed at exactly the project-open transition:
@@ -272,5 +317,7 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: the failed state is recoverable by reprogramming global G-SYNC off/on without repairing either application profile.
 - High confidence: the failure is a sticky NVIDIA runtime VRR state rather than persistent global or application-profile damage.
 - High confidence: duplicate profiles, exact-path matching, and NVIDIA App profile creation are not required.
+- High confidence: merely selecting the stale/manual NVIDIA App row recreates a named but empty, unassociated DRS profile because NVIDIA App saves a partial profile-creation transaction after `NvAPI_DRS_CreateApplication` fails.
+- High confidence: the Godot values displayed by NVIDIA App after that selection do not describe the profile selected for the executable at runtime.
 - Medium-high confidence: Godot's DRS reload while any matching Godot profile is Fixed Refresh creates that sticky state.
 - Remaining isolation: direct D3D12 launch is needed to separate the unconditional DRS save from Fixed Refresh profile activation alone.

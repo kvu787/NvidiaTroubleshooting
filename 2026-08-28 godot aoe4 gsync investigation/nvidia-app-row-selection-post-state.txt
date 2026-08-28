@@ -1,0 +1,86 @@
+NVIDIA App Godot-row selection: immediate post-state
+Collected: 2026-08-28 15:41 PDT
+
+User action since the preceding snapshot:
+  Selected Godot_v4.6.3-stable_win64.exe in NVIDIA App.
+  Made no other issue-related change.
+
+DRS before selection:
+  Total profiles: 7958
+  FindProfileByName("Godot_v4.6.3-stable_win64.exe"): -163 (not found)
+  Executable full-path lookup: Godot Engine
+  Executable basename lookup: Godot Engine
+
+DRS after selection:
+  Total profiles: 7959
+  FindProfileByName("Godot_v4.6.3-stable_win64.exe"): 0 (success)
+  Executable full-path lookup: Godot Engine
+  Executable basename lookup: Godot Engine
+
+Profile: Godot Engine
+  application_count: 1
+  application: godot_v4.6.3-stable_win64.exe
+  setting_count: 9
+  VRR requested state (0x1094F1F7): disabled (0), current profile
+  G-SYNC application override (0x10A879CF): fixed refresh (4), current profile
+  G-SYNC mode (0x1194F158): fullscreen only (1), current profile
+  OpenGL threaded optimization (0x20C1221E): disabled (2), current profile
+
+Profile: Godot_v4.6.3-stable_win64.exe
+  application_count: 0
+  setting_count: 0
+  VRR requested state: fullscreen only (1), inherited from global profile
+  G-SYNC application override: allow (0), inherited from global profile
+  G-SYNC mode: fullscreen only (1), inherited from global profile
+
+NVIDIA App native log:
+  2026-08-28 15:40:39.264
+    NvAPI_DRS_CreateApplication for the exact Godot path failed with code -167.
+  2026-08-28 15:40:39.265
+    cannot create DRS app - Godot_v4.6.3-stable_win64.exe
+
+NVAPI -167:
+  NVAPI_EXECUTABLE_ALREADY_IN_USE
+  Application already exists in the other profile.
+
+NVIDIA App frontend log:
+  2026-08-28 15:40:39.285
+    GetProfileInfo called with:
+      ProfileName: Godot_v4.6.3-stable_win64.exe
+      ApplicationId: 963528738
+      CmsId: 0
+
+NVIDIA backend executable resolution:
+  2026-08-28 15:40:43.518  Profile name: Godot Engine
+  2026-08-28 15:40:49.751  Profile name: Godot Engine
+
+DRS persistence after selection:
+  nvdrsdb0.bin
+    last write: 2026-08-28 15:40:39 PDT
+    SHA-256: 5EDDCD0A170A4BBEB6025CBC9F2E6D39C766EAD9923D8FEA8A0CEE65729B8574
+  nvdrsdb1.bin
+    last write: 2026-08-28 15:37:05 PDT
+    SHA-256: 3EB973C6BA085F7EF9DA8EF04A44828AFCCF4858F195A3E80619376178AA422A
+  nvdrssel.bin
+    last write: 2026-08-28 15:40:39 PDT
+    SHA-256: 6E340B9CFFB37A989CA544E6BB780A2C78901D3FB33738768511A30617AFA01D
+
+NVIDIA App catalog:
+  ApplicationStorage.json
+    last write: 2026-08-28 15:16:08 PDT
+    SHA-256: C8BA9796A7620267DA40D47CADF7F6CA2333B6024F53609DD55DF2921CBA176D
+    LocalId 963528738 DriverProfile: empty
+
+AoE4 post-selection DRS state:
+  Executable: RelicCardinal.exe
+  Selected profile: Age of Empires IV
+  VRR requested state: fullscreen only
+  G-SYNC application override: allow, inherited globally
+  G-SYNC mode: fullscreen only
+
+Interpretation:
+  Selecting the row caused NVIDIA App to create a profile named after the
+  executable. Association creation failed because the executable is already
+  associated with Godot Engine. NVIDIA App saved the partial transaction,
+  leaving an empty orphan. The selected-page values are the orphan's inherited
+  global values. Driver/runtime executable matching still selects Godot Engine.
