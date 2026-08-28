@@ -371,3 +371,42 @@ AoE4's stored profile remains G-SYNC-capable. The final physical check for this 
 If it appears, the bypass avoided both profile mutation and the sticky live-VRR failure. If it does not, Fixed Refresh/profile activation is not required and the remaining defect is deeper in NVIDIA's application transition path.
 
 The post-launch hashes, exhaustive audit, NVIDIA process/classification lines, shutdown evidence, and updated conclusions are preserved in the investigation.
+
+---
+
+## User
+
+i opened aoe4, observed the gsync indicator in the top right, and closed aoe4
+
+## Assistant
+
+That completes the control successfully. The direct D3D12 bypass preserved live G-SYNC for the next application.
+
+NVIDIA's catalog records the AoE4 launch at 16:02:57 PDT, and the backend processed its application record at 16:03:06. The physical top-right indicator is the decisive live-state result. Persistent state remains correct:
+
+```text
+DRS profiles: 7957
+Godot profile/application associations: none
+AoE4 selected profile: Age of Empires IV
+AoE4 G-SYNC override: allow
+AoE4 VRR mode: fullscreen only
+```
+
+All three DRS files retain the exact timestamps and SHA-256 hashes from before the Godot launch. NVIDIA App's catalog changed only to record AoE4's new `LastLaunchTimeISO`; it still contains zero `godot` occurrences.
+
+The end-to-end result is now:
+
+```text
+Ordinary project-manager path + Fixed Refresh Godot profile + Godot DRS save:
+  monitor blank -> editor fixed refresh -> AoE4 G-SYNC fails
+
+Clean direct D3D12/no-fallback path with no Godot profile:
+  no monitor blank -> editor G-SYNC active/choppy -> no DRS change
+  -> AoE4 G-SYNC activates normally
+```
+
+This proves that merely running the Godot D3D12 editor with G-SYNC active does not wedge VRR. The practical workaround is validated for all three relevant outcomes: it avoids NVIDIA profile mutation, avoids the dual-monitor blank, and preserves subsequent AoE4 G-SYNC.
+
+The strict causal split between Fixed Refresh profile activation alone and Godot's OpenGL DRS save/reload remains optional. Testing that would require deliberately recreating a Fixed Refresh Godot profile and carries a known risk of wedging VRR again; it is not required to validate the safe workflow.
+
+I added the physical observation, AoE4 launch timestamp, unchanged DRS hashes, current profile state, and final control conclusion to the investigation.
