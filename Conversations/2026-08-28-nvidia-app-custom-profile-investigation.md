@@ -212,3 +212,21 @@ I'm going to do this:
 Yes. That sequence cleanly separates NVIDIA App's write from anything Godot does at startup.
 
 At step 3, take a pre-launch read-only snapshot of the DRS profile, NVIDIA App application storage, and relevant logs. After step 7, take the same post-launch snapshot and compare the two states. The comparison will show whether Godot retained, replaced, augmented, or failed to modify the NVIDIA App-created profile.
+
+---
+
+## User
+
+I deleted the Godot profile in NPI. Verify that there is no more custom profile stuff for Godot.
+
+## Assistant
+
+Confirmed. There is no remaining custom NVIDIA profile or application association for the Godot editor.
+
+- Full-path and basename application lookups both return `-166` (`NVAPI_EXECUTABLE_NOT_FOUND`).
+- Both relevant profile-name lookups return `-163` (`NVAPI_PROFILE_NOT_FOUND`).
+- A profile scan finds no target-related profile.
+- The total DRS profile count dropped from 7,958 to 7,957.
+- NVIDIA App's separate application catalog still contains no Godot entry.
+
+The live DRS database changed at 13:24:27 PDT, consistent with the NPI deletion. This is now a clean baseline for the next step. Verification was read-only.
