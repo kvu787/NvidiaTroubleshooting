@@ -6,7 +6,7 @@ If necessary, you can refer to local copies of source repos in `C:\Users\k\Repos
 
 # Conversations
 
-Record and commit all conversations in the Conversations folder.
+Record and commit all conversations in a `Conversations` folder that is located at the root of this Git repo.
 Use one file per conversation.
 Prefix these commits with `[record]`.
 If I attach images to prompts, you must also save and record these in the conversation logs.
