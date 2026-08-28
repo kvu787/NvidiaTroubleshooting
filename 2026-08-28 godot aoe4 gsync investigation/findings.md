@@ -77,6 +77,37 @@ This is a single, basename-associated Fixed Refresh profile. The exact-path prof
 
 The apparently contradictory `G-SYNC mode: fullscreen only` line is a setting stored inside this application profile, not proof that Godot turned the base/global toggle on or off. Godot itself writes that value and disables OpenGL threaded optimization. NVIDIA Control Panel supplies the Fixed Refresh/VRR-disabled settings. Together they form the nine-setting `Godot Engine` profile seen after the test.
 
+### The NVIDIA App row is not the deleted profile
+
+After the exact-path DRS profile was deleted, NVIDIA App still displayed a sidebar row named `Godot_v4.6.3-stable_win64.exe`. A fresh comparison shows that this is NVIDIA App's separate manually-added application-catalog record, not a recreated DRS profile.
+
+NVIDIA App's `ApplicationStorage.json` still contains:
+
+```text
+LocalId: 963528738
+DisplayName: Godot_v4.6.3-stable_win64.exe
+DetectedFiles: C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe
+IsManuallyAdded: true
+IsFingerprintDetected: false
+DriverProfile: empty
+LastLaunchTime: 2026-08-28 15:15:35 PDT
+```
+
+At the same time, live DRS still reports:
+
+```text
+FindProfileByName("Godot_v4.6.3-stable_win64.exe"): not found
+Full-path executable lookup: Godot Engine
+Basename executable lookup: Godot Engine
+Total profiles: 7958
+```
+
+These are different identity stores. NVIDIA Profile Inspector deleted the driver profile but does not edit NVIDIA App's private application catalog. The NVIDIA App `2/2 Programs` count refers to accepted application-catalog rows, not to DRS profiles. Merely seeing the row therefore does not show that the exact-path profile returned.
+
+The remaining `Godot Engine` DRS profile is also intentional in the latest test: it was the "other" profile that the user retained and changed to Fixed Refresh. NVIDIA's backend resolved the running executable to `Godot Engine` at 15:15:38 and 15:16:38, agreeing with the direct DRS query.
+
+The screenshot has AoE4 selected, so it provides no evidence that NVIDIA App successfully loaded or recreated a Godot profile. Selecting or editing the stale/manual Godot row could cause NVIDIA App to run its profile resolution/creation path again; preserve the current state and query DRS afterward if that behavior is tested.
+
 ### Godot saved DRS again at the failure transition
 
 The active NVIDIA DRS files changed at exactly the project-open transition:

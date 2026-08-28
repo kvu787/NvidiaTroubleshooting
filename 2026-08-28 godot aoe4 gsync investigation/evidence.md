@@ -279,6 +279,60 @@ No matching System or Application event was recorded from 15:13 through 15:19 fo
 
 This test rules out the deleted exact-path profile, the two-profile split, and NVIDIA App profile creation as required causes. The remaining common factors are Fixed Refresh on the profile selected for Godot and the native-OpenGL project manager's DRS save/reload.
 
+## NVIDIA App row after exact-path DRS profile deletion
+
+The user observed that NVIDIA App continued to list `Godot_v4.6.3-stable_win64.exe` after the exact-path DRS profile was deleted in NVIDIA Profile Inspector.
+
+![NVIDIA App Godot inventory row after DRS profile deletion](screenshots/nvidia-app-godot-inventory-after-drs-profile-deletion.png)
+
+```text
+nvidia-app-godot-inventory-after-drs-profile-deletion.png
+  original timestamp: 2026-08-28 15:37:28.237 PDT
+  SHA-256: 985F505FD26D65AB85839B84900C05D418827B8408EF0784B2AD32606FF5B888
+```
+
+Current NVIDIA App application-catalog record:
+
+```text
+Source:
+  C:\Users\k\AppData\Local\NVIDIA Corporation\NVIDIA App\NvBackend\ApplicationStorage.json
+File last write:
+  2026-08-28 15:16:08 PDT
+
+LocalId: 963528738
+DisplayName: Godot_v4.6.3-stable_win64.exe
+ShortName: Godot_v4.6.3-stable_win64.exe
+InstallDirectory: C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe
+DetectedFiles:
+  C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe
+DriverProfile: <empty>
+IsManuallyAdded: true
+IsFingerprintDetected: false
+InitialTimeISO: 2026-08-28 13:28:36 PDT
+LastLaunchTimeISO: 2026-08-28 15:15:35 PDT
+```
+
+Simultaneous read-only DRS query:
+
+```text
+FindProfileByName("Godot_v4.6.3-stable_win64.exe"): -163, not found
+FindProfileByName("Godot_v4.6.3-stable_win64"): -163, not found
+GetNumProfiles: 7958
+Full-path lookup: Godot Engine
+Basename lookup: Godot Engine
+Godot Engine application association: godot_v4.6.3-stable_win64.exe
+Godot Engine G-SYNC application override: fixed refresh
+```
+
+NVIDIA backend runtime resolution after the deletion:
+
+```text
+15:15:38.465  DRS classification profileName=Godot Engine
+15:16:38.660  DRS classification profileName=Godot Engine
+```
+
+The screenshot and catalog record explain the apparent contradiction. NVIDIA App's Program Settings sidebar starts from its application inventory. NVIDIA Profile Inspector operates on DRS profiles. Deleting a DRS profile does not delete NVIDIA App `LocalId 963528738`, and that visible catalog row currently has no stored `DriverProfile` value. The screenshot has AoE4 selected in the detail pane, so no Godot profile load or edit is shown.
+
 ## Event and crash evidence
 
 ```text
