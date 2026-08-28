@@ -1,0 +1,8 @@
+Target full path: C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe
+Target basename used by ordinary DRS matching: Godot_v4.6.3-stable_win64.exe
+FindApplicationByName(full path) status: -166
+FindApplicationByName(basename) status: -166
+FindProfileByName("Godot_v4.6.3-stable_win64.exe") status: -163
+FindProfileByName("Godot_v4.6.3-stable_win64") status: -163
+GetNumProfiles status: 0, count=7957
+No DRS application association or target-related profile name was found.
