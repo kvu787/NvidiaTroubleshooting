@@ -352,3 +352,40 @@ The profile name does not match the process. Runtime matching uses the profile's
 `userFriendlyName` is display metadata, not unique. NVIDIA App's `LocalId` uniquely identifies its application-catalog row, not the DRS profile. NVIDIA App's display/short name is also not a DRS identifier. Setting IDs such as `0x10A879CF` identify setting types and are reused across profiles.
 
 The confusing part is that `Godot_v4.6.3-stable_win64.exe` appears in several namespaces: as one profile's unique `profileName`, as part of its full-path `appName`, as the other profile's basename `appName`, and as NVIDIA App's display name. Identical text across different fields does not mean identical identity. The detailed field mapping and NVAPI references are preserved in `godot-profile-identifiers.md`.
+
+---
+
+## User
+
+Explain the logic for which profile is selected when opening Godot editor.
+
+Explain why the "Godot-created profile" doesn't have an "NVIDIA App LocalId".
+Is a profile shown in NVIDIA App if-and-only-if the profile has an "NVIDIA App LocalId"?
+Is that something that the Godot Engine logic should have set?
+
+## Assistant
+
+When Godot opens, the NVIDIA driver selects a DRS application association by the process image, not by the human-readable profile name, creator, creation time, or NVIDIA App `LocalId`.
+
+For the tested executable there are two rules:
+
+- exact full path -> `Godot_v4.6.3-stable_win64.exe` profile;
+- basename only -> `Godot Engine` profile.
+
+The exact-path rule is selected for this installation path. NVIDIA documents that a fully qualified `NvAPI_DRS_FindApplicationByName` lookup returns the profile the driver will apply, and the live lookup returns the Fixed Refresh profile. NVIDIA's backend recorded the same resolution while Godot was running. If the exact-path profile were absent, or the same-named executable were launched from another folder, the basename `Godot Engine` rule would be the fallback.
+
+Only one application profile is selected and overlaid on the global profile; the two Godot profiles are not merged. Therefore Fixed Refresh comes from the exact-path profile, while the threaded-optimization setting in `Godot Engine` is not inherited into it.
+
+`LocalId` belongs to NVIDIA App's separate application catalog, not to DRS. `963528738` identifies the manually added Godot application row. Godot creates `Godot Engine` using public NVAPI DRS calls only, and DRS has no `LocalId` field or API. NVIDIA App does not import the newly created DRS profile into a second catalog row, so `Godot Engine` has no corresponding local catalog ID.
+
+The relationship is not if-and-only-if:
+
+- `Godot Engine` proves that a DRS profile can exist without a `LocalId`.
+- Steam has NVIDIA App `LocalId=1088017781` but is filtered out of the visible Program Settings list, proving that a `LocalId` is not sufficient for visibility.
+- During the earlier failed add, NVIDIA App created a local application record before successfully creating a new DRS profile, proving that a `LocalId` does not guarantee a corresponding profile.
+
+NVIDIA App displays accepted application-catalog rows, not all DRS profiles. In its current implementation, visible rows originate from catalog records and therefore have local IDs, but profiles themselves never own those IDs.
+
+Godot should not and cannot set a NVIDIA App `LocalId` through NVAPI. It is private NVIDIA App state. The correct fix is for NVIDIA App to enumerate or adopt existing DRS associations. Godot could separately reconsider creating a basename-wide DRS profile when an exact-path profile exists, but manufacturing a `LocalId` would be unsupported and would not fix NVIDIA App's one-row/one-profile model.
+
+The complete selection flow, counterexamples, and ownership analysis are preserved in `godot-profile-selection-and-localid.md`.
