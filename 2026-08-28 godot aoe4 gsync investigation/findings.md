@@ -184,7 +184,20 @@ Bypass the OpenGL project manager and start this D3D12 editor directly:
 "C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe" --editor --path "C:\Users\k\Repository\Godot\VsyncStutterTest\Godot" --rendering-driver d3d12
 ```
 
-This avoids the project manager's native-OpenGL initialization and therefore should avoid Godot's `_nvapi_setup_profile()`/`NvAPI_DRS_SaveSettings()` call. It does not remove the basename Fixed Refresh profile, so the editor should remain fixed-refresh. This workaround follows directly from the source path but has not yet been runtime-verified.
+If D3D12 initializes successfully, this bypasses the project manager's native-OpenGL initialization and therefore avoids Godot's `_nvapi_setup_profile()`/`NvAPI_DRS_SaveSettings()` call. It does not remove the basename Fixed Refresh profile, so NVIDIA's driver can still apply that profile to the process and the editor should remain fixed-refresh. This workaround follows directly from the source path but has not yet been runtime-verified.
+
+The command alone is not a fail-closed guarantee. Godot 4.6.3 defines `rendering/rendering_device/fallback_to_vulkan`, `fallback_to_d3d12`, and `fallback_to_opengl3` as `true`. On Windows, a requested D3D12 startup tries D3D12, may try Vulkan, and, if both RenderingDevice backends fail, may switch to native OpenGL. That native OpenGL fallback constructs `GLManagerNative_Windows`, whose `initialize()` calls `_nvapi_setup_profile()`.
+
+For a source-level guarantee that a failed D3D12 initialization cannot reach Godot's NVAPI DRS writer, set this project setting before the test:
+
+```ini
+[rendering]
+rendering_device/fallback_to_opengl3=false
+```
+
+Optionally also set `rendering_device/fallback_to_vulkan=false` if the requirement is specifically D3D12-or-fail rather than merely no native-OpenGL fallback. With OpenGL fallback disabled, a D3D12/Vulkan failure aborts display-server initialization instead of entering the only Godot 4.6.3 Windows code path that references NVAPI or writes DRS.
+
+This guarantee is narrowly about Godot's explicit NVIDIA settings mutation. A successful D3D12 editor necessarily loads `D3D12.dll` and `DXGI.dll`, creates a D3D12 device, and uses the NVIDIA display driver. NVIDIA may read and apply the executable's existing DRS profile as part of normal process/device initialization; that is not Godot editing the profile.
 
 Interpretation:
 
