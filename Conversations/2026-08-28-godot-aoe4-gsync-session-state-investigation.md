@@ -76,3 +76,55 @@ Your observation that the G-SYNC indicator returned during that run proves that 
 This materially strengthens the diagnosis: Godot did not permanently turn off G-SYNC or corrupt AoE4's profile. The driver had retained stale Fixed Refresh/runtime VRR state, and forcing one real global disable/enable transition reprogrammed the display path and cleared it. The remaining unresolved question is narrower: whether Godot's unconditional DRS save is required to create the stuck state or whether activating the exact-path Fixed Refresh profile alone is sufficient.
 
 I updated `findings.md`, `evidence.md`, and this conversation record with the exact sequence, timestamps, DRS writes, post-recovery AoE4 state, and revised confidence assessment. The changes are committed and the working tree is clean.
+
+---
+
+## User
+
+since the last prompt, i did the exact following and nothing else related to this issue:
+- use npi to delete the godot profile shown in the screenshot
+- use nvcp to turn gsync off for the other godot profile as shown in the screenshot
+- open godot 4.6.3 and open this project: "C:\Users\k\Repository\Godot\VsyncStutterTest\Godot"
+- as the godot project is opening, observe a 3 second long blink on both attached monitors
+- when the godot project is fully opened, observe no g-sync indicator at the top right
+- do some general usage of the godot editor and observe no gsync behavior
+- close godot editor
+- open aoe4 and observe no g-sync indicator at the top right
+
+continue your investigation
+
+Attached screenshots:
+
+![NVIDIA Profile Inspector exact-path profile before deletion](<../2026-08-28 godot aoe4 gsync investigation/screenshots/npi-exact-path-profile-before-deletion.png>)
+
+![NVIDIA Control Panel remaining Godot Engine profile set to Fixed Refresh](<../2026-08-28 godot aoe4 gsync investigation/screenshots/nvcp-godot-engine-fixed-refresh.png>)
+
+## Assistant
+
+This materially narrows the cause. The duplicate-profile arrangement is not required.
+
+The post-test DRS query confirms that your deletion succeeded:
+
+- the profile count fell from 7959 to 7958;
+- `Godot_v4.6.3-stable_win64.exe` no longer exists as a profile name;
+- both the executable's full-path and basename lookups now select the one remaining `Godot Engine` profile; and
+- that profile has VRR disabled and the G-SYNC application override set to Fixed Refresh.
+
+The timing also repeated the important correlation. NVIDIA first saw Godot at 15:15:32.762, and the active DRS database plus selector were rewritten at 15:15:32.915. The spawned editor process appeared at 15:15:35.244, aligning with your roughly three-second dual-monitor blank. AOE4 started at 15:16:07; afterward its DRS lookup still selected the normal `Age of Empires IV` profile with G-SYNC allowed and fullscreen-only VRR. Windows recorded no TDR, `nvlddmkm`, display-reset, hardware, or application-crash event in the interval.
+
+This rules out three candidates as necessary causes: the deleted exact-path profile, exact-path-versus-basename profile competition, and NVIDIA App-specific profile creation. The strongest remaining model is now:
+
+1. the sole profile selected for Godot is Fixed Refresh;
+2. Godot's native-OpenGL project-manager process runs its unconditional NVAPI DRS save;
+3. NVIDIA reloads/reapplies profile state and blanks both displays; and
+4. driver 616.56 leaves the runtime VRR path stuck in fixed refresh after Godot exits.
+
+The global off/on recovery remains valid. The next discriminating test is now cleaner: recover G-SYNC, confirm it in AOE4, then bypass the OpenGL project manager and launch the D3D12 editor directly:
+
+```text
+"C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe" --editor --path "C:\Users\k\Repository\Godot\VsyncStutterTest\Godot" --rendering-driver d3d12
+```
+
+If that produces no blank and AOE4 G-SYNC still works afterward, Godot's DRS save/reload is required. If it still produces the sticky failure, merely activating a Fixed Refresh Godot profile is sufficient. I did not launch this test because its decisive evidence is your physical observation of the monitor blank and G-SYNC indicator, and it deliberately risks leaving the current display session stuck again.
+
+I preserved both screenshots, hashes, the complete one-profile DRS snapshot, the process/DRS timeline, and the revised analysis in the investigation folder.
