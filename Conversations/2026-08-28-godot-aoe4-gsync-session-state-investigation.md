@@ -264,3 +264,54 @@ NVIDIA's backend independently logged `Profile name: Godot Engine` for this exac
 So the corrected model is: the profile really was absent before the click; selecting the stale catalog row recreated its name in DRS, but association failed and left an orphan. The NVIDIA App page now does not reflect what the driver will apply to Godot.
 
 I preserved the screenshot and added the timestamped DRS comparison, NVIDIA logs, hashes, and current AoE4 state to the investigation.
+
+---
+
+## User
+
+i've done the following:
+1. delete godot profile from nvapp
+2. delete godot profile from npi
+
+check to see if all godot nvidia profiles are gone now. we need to ensure this before trying to launch a godot project in a way that bypasses nvidia profile editing.
+
+## Assistant
+
+Yes. All Godot-related NVIDIA state is gone at this checkpoint.
+
+The direct DRS results are:
+
+```text
+Total profiles: 7957 (down from 7959)
+Full-path Godot application lookup: -166, executable not found
+Basename Godot application lookup: -166, executable not found
+Godot_v4.6.3-stable_win64.exe profile lookup: -163, profile not found
+Godot_v4.6.3-stable_win64 profile lookup: -163, profile not found
+```
+
+I also performed a broader audit rather than checking only those known names. A read-only NVAPI scanner enumerated all 7957 profiles and every application record, searching case-insensitively for `godot` in profile names, executable/application names, friendly names, launchers, folder restrictions, and command lines:
+
+```text
+Profiles scanned: 7957
+Matching profiles: 0
+Matching applications: 0
+Profile enumeration/info failures: 0
+Application enumeration failures: 0
+Audit complete: CLEAN
+```
+
+NVIDIA App's separate `ApplicationStorage.json` is clean too: it was rewritten at 15:46:09, contains zero `godot` occurrences, and its log confirms successful deletion of manual application `963528738` and removal of the named DRS profile. The second DRS write at 15:46:23 aligns with your subsequent NPI deletion. No Godot or NVIDIA Profile Inspector process was running during the audit.
+
+The target project is also already configured for a fail-closed launch:
+
+```ini
+rendering_device/driver.windows="d3d12"
+rendering_device/fallback_to_opengl3=false
+rendering_device/fallback_to_vulkan=false
+```
+
+Therefore, using the explicit direct `--editor --path ... --rendering-driver d3d12` command will either initialize D3D12 or fail; it cannot silently fall back to Godot 4.6.3's native-OpenGL NVAPI/DRS writer.
+
+This guarantees the pre-launch state, not what NVIDIA or Godot might create during the next launch. The post-launch check should be run immediately after closing the directly launched editor, before opening NVIDIA App, NPI, or another Godot process. The expected unchanged result is 7957 profiles and a clean exhaustive `godot` audit.
+
+The baseline, DRS hashes, deletion logs, application-catalog hash, project configuration, and audit source are preserved in the investigation.
