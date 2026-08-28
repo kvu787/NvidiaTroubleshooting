@@ -320,3 +320,35 @@ NVIDIA App therefore is not merging the two profiles or showing an alias. It exp
 This is the same architectural limitation behind the earlier defect: NVIDIA App starts from its scanned/manual application catalog and resolves one profile per entry instead of enumerating all DRS profiles and application associations. Its data model loses the one-to-many relationship represented by an exact-path profile and a basename profile for the same executable image.
 
 The visible Fixed Refresh setting confirms NVIDIA App is editing the correct working profile. The missing `Godot Engine` row does not affect this test's runtime result, because NVIDIA resolved the full executable path to the exact-path profile. The full mapping and screenshots are preserved in `two-godot-profiles-ui-explanation.md`.
+
+---
+
+## User
+
+Explain how these two different profiles for Godot are distinguished. What is the unique identifier or unique identifiers? Also, what are the human-readable identifiers for each, and are those used as unique identifiers in the architecture?
+
+## Assistant
+
+The profiles are distinguished at two levels: a unique DRS profile name and a separate application match record.
+
+The NVIDIA App-created profile has:
+
+- DRS `profileName`: `Godot_v4.6.3-stable_win64.exe`
+- DRS `appName`: the normalized exact full executable path
+- DRS `userFriendlyName`: the original Windows-style full path
+- NVIDIA App catalog `LocalId`: `963528738`
+
+The Godot-created profile has:
+
+- DRS `profileName`: `Godot Engine`
+- DRS `appName`: only `godot_v4.6.3-stable_win64.exe`
+- empty `userFriendlyName`
+- no NVIDIA App catalog entry or `LocalId`
+
+In public NVAPI DRS, `profileName` is both human-readable and the persistent unique profile key. `NVDRS_PROFILE` exposes no stable numeric ID or GUID. Creating a duplicate name returns `NVAPI_PROFILE_NAME_IN_USE`, and lookup is performed with `NvAPI_DRS_FindProfileByName`. NVAPI returns an opaque `NvDRSProfileHandle`, but that is a transient handle for the current session rather than a persistent identity.
+
+The profile name does not match the process. Runtime matching uses the profile's `NVDRS_APPLICATION` record. In this case `appName` distinguishes the rules: one is a full path and the other is a basename. Optional launcher, folder, and command-line fields can qualify other records, but all are empty here. A fully qualified lookup returns the exact-path NVIDIA App profile; a basename lookup returns `Godot Engine`.
+
+`userFriendlyName` is display metadata, not unique. NVIDIA App's `LocalId` uniquely identifies its application-catalog row, not the DRS profile. NVIDIA App's display/short name is also not a DRS identifier. Setting IDs such as `0x10A879CF` identify setting types and are reused across profiles.
+
+The confusing part is that `Godot_v4.6.3-stable_win64.exe` appears in several namespaces: as one profile's unique `profileName`, as part of its full-path `appName`, as the other profile's basename `appName`, and as NVIDIA App's display name. Identical text across different fields does not mean identical identity. The detailed field mapping and NVAPI references are preserved in `godot-profile-identifiers.md`.
