@@ -2,7 +2,7 @@
 
 Initial snapshot completed: 2026-08-28 14:59 PDT
 
-Follow-up evidence incorporated through: 2026-08-28 16:04 PDT
+Follow-up evidence incorporated through: 2026-08-28 16:19 PDT
 
 ## Environment
 
@@ -706,6 +706,36 @@ AoE4 LastLaunchTimeISO: 2026-08-28 23:02:57Z
 ```
 
 The physical indicator is the missing live-state proof. It confirms that the D3D12 editor session did not wedge VRR even though G-SYNC was active and pointer movement was choppy inside Godot. The verified bypass therefore preserves both persistent configuration and subsequent live G-SYNC operation.
+
+## User assessment at investigation pause
+
+At 16:19 PDT, the user explicitly recorded that the core practical issue remains unresolved. None of the tested approaches provides all of the following simultaneously:
+
+```text
+Godot editor: G-SYNC disabled
+AoE4/other intended applications: G-SYNC enabled
+No explicit global G-SYNC toggle between applications
+No long monitor blank
+No sticky post-Godot VRR failure
+```
+
+Observed tradeoffs at the pause point:
+
+```text
+Per-app Fixed Refresh + ordinary Godot path:
+  desired editor state
+  but DRS save/reload, monitor blank, and subsequent AoE4 G-SYNC failure
+
+Direct D3D12/no-fallback path with no Godot profile:
+  no DRS mutation, no monitor blank, and AoE4 G-SYNC works afterward
+  but G-SYNC remains active in Godot and pointer movement is choppy
+
+Global G-SYNC off/on:
+  verified recovery/manual control
+  but cumbersome and itself causes a long monitor blank
+```
+
+This is a user-facing usability requirement, not a contradiction in the technical findings. The D3D12 bypass is successful within its narrower scope, but the desired stable per-application G-SYNC policy has not been achieved.
 
 ## Event and crash evidence
 

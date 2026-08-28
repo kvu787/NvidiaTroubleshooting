@@ -22,6 +22,28 @@ The best classification is an NVIDIA 616.56 per-application VRR/profile-transiti
 
 The direct D3D12 bypass has now been runtime-verified from a completely clean Godot/NVIDIA baseline. With both rendering fallbacks disabled, the editor opened without a monitor blank, showed the G-SYNC indicator, and exhibited the user's choppy pointer movement. Afterward, every DRS file remained byte-for-byte identical to the pre-launch baseline, the profile count remained 7957, the exhaustive Godot audit remained clean, and NVIDIA App's private catalog remained free of Godot. The user then launched AoE4 and observed its G-SYNC indicator normally. This proves the direct D3D12 path avoids Godot's NVIDIA profile writer, the display blank associated with it, and the sticky live-VRR failure seen after the ordinary project-manager path. The choppy G-SYNC editor behavior is the tradeoff that Godot's profile-writing workaround was designed to suppress.
 
+### Unresolved primary user goal
+
+The investigation has not produced a usable configuration that satisfies the original requirement in full:
+
+1. G-SYNC disabled for the Godot editor;
+2. G-SYNC enabled for AoE4 and other intended applications;
+3. no manual global G-SYNC off/on cycle between applications;
+4. no long monitor blank; and
+5. no sticky live-VRR failure after Godot exits.
+
+The tested approaches split into incompatible partial outcomes:
+
+| Approach | Godot editor | AoE4 afterward | Side effect | Status |
+|---|---|---|---|---|
+| Ordinary project-manager launch with matching Fixed Refresh profile | G-SYNC disabled | G-SYNC fails to activate | Godot saves/reloads DRS; monitors blank; live VRR becomes stuck | Not acceptable |
+| Clean direct D3D12/no-fallback launch with no Godot profile | G-SYNC active; pointer is choppy | G-SYNC activates normally | No DRS mutation or monitor blank | Safe partial workaround, but does not meet editor requirement |
+| Explicit global G-SYNC off/on in NVIDIA App or NVIDIA Control Panel | Can force desired global state manually | Works after re-enable | Cumbersome and causes a long monitor blank | Recovery/manual toggle, not a per-app solution |
+
+Therefore the direct D3D12 procedure is a verified workaround for profile mutation and the sticky NVIDIA state, but it is not a solution to the core per-application requirement. Calling it a complete workaround would overstate the result.
+
+One potentially useful combination remains untested: create one Fixed Refresh Godot profile, then use only the verified direct D3D12/no-fallback launch so Godot itself never saves DRS. That experiment could determine whether profile activation alone is safe and, if so, might provide the desired per-app behavior. It could also reproduce the sticky failure, so it should be treated as a deliberate future isolation test rather than an established recommendation.
+
 ## Decisive evidence
 
 ### Persistent global and display state remained enabled
@@ -361,7 +383,7 @@ The clean baseline was captured again immediately after the direct launch. DRS r
 
 This guarantee is narrowly about Godot's explicit NVIDIA settings mutation. A successful D3D12 editor necessarily loads `D3D12.dll` and `DXGI.dll`, creates a D3D12 device, and uses the NVIDIA display driver. NVIDIA may read and apply the executable's existing DRS profile as part of normal process/device initialization; that is not Godot editing the profile.
 
-The AoE4 physical check after the clean bypass succeeded: the top-right G-SYNC indicator appeared. The direct launch is therefore a verified workaround for the profile mutation, monitor blank, and post-Godot loss of AoE4 G-SYNC in this environment.
+The AoE4 physical check after the clean bypass succeeded: the top-right G-SYNC indicator appeared. The direct launch is therefore a verified partial workaround for the profile mutation, monitor blank, and post-Godot loss of AoE4 G-SYNC in this environment. It leaves G-SYNC enabled and pointer movement choppy in the editor, so it does not solve the original per-app-control goal.
 
 ### Other practical options
 
@@ -410,3 +432,4 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - Medium-high confidence: Godot's DRS reload while any matching Godot profile is Fixed Refresh creates that sticky state.
 - Optional remaining isolation: combine a Fixed Refresh Godot profile with the verified direct D3D12/no-save launch to distinguish profile activation alone from the DRS save/reload. This would deliberately reintroduce risk and is not required to validate the workaround.
 - Separate remaining issue: reproduce the editor-window-close/process-linger behavior with process and verbose shutdown capture if it matters independently.
+- Primary unresolved requirement: find a stable per-application method that disables G-SYNC only for Godot while preserving G-SYNC elsewhere, without global toggling or monitor blanks.
