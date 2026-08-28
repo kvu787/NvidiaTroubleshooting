@@ -389,3 +389,29 @@ NVIDIA App displays accepted application-catalog rows, not all DRS profiles. In 
 Godot should not and cannot set a NVIDIA App `LocalId` through NVAPI. It is private NVIDIA App state. The correct fix is for NVIDIA App to enumerate or adopt existing DRS associations. Godot could separately reconsider creating a basename-wide DRS profile when an exact-path profile exists, but manufacturing a `LocalId` would be unsupported and would not fix NVIDIA App's one-row/one-profile model.
 
 The complete selection flow, counterexamples, and ownership analysis are preserved in `godot-profile-selection-and-localid.md`.
+
+---
+
+## User
+
+Okay, take into account everything we've discussed and investigated and list all bugs and workarounds.
+
+## Assistant
+
+The confirmed issues and best workarounds are:
+
+1. **Godot editor G-SYNC/choppy-pointer compatibility failure.** The Godot editor activated G-SYNC and pointer movement became choppy. Workaround: an exact-path profile with **Monitor Technology = Fixed Refresh**. This was verified: the indicator disappeared and mouse movement was smooth.
+2. **Godot's automatic profile does not suppress G-SYNC.** `Godot Engine` stores fullscreen-only mode and disabled threaded optimization, but not the Fixed Refresh application override. Workaround: do not rely on it for G-SYNC suppression; retain the exact-path Fixed Refresh profile.
+3. **NVIDIA App does not discover DRS-only profiles.** Its Program Settings list comes from its application catalog, so an existing `Godot Engine` profile can remain invisible. Workaround: create the NVIDIA App profile before first launching that executable, or remove the conflicting DRS profile using NPI/legacy NVCP and then create it in NVIDIA App.
+4. **NVIDIA App uses create-before-adopt ordering.** When `Godot Engine` exists first, manual add tries to create a new association/profile and hits `-167`/`-164` collisions before resolving the existing profile. Verified recovery: delete the conflicting profile, confirm a clean baseline, add the exact executable in NVIDIA App, set Fixed Refresh, and only then launch Godot.
+5. **NVIDIA App cannot expose both relevant DRS profiles.** NPI/NVCP show the exact-path and basename profiles; NVIDIA App shows only the profile attached to its one Godot catalog row. Workaround: keep NVIDIA App attached to the working exact-path profile and use NPI/NVCP only when the hidden profile must be inspected or changed. There is no complete NVIDIA App-only management workaround.
+6. **Official replacement parity gap.** The retiring/unsupported NVCP and third-party NPI expose valid DRS state that NVIDIA App cannot fully manage. Workaround: preserve the verified NVIDIA App-first state and report the discovery/adoption defects to NVIDIA.
+7. **Godot creates a duplicate basename-wide profile.** It creates `Godot Engine` even when a working exact-path profile applies. Workaround: leave both profiles in the current working state; exact-path matching wins. For a new Godot path/version, create its exact-path profile before first launch.
+8. **The two profiles' settings are not merged.** Fixed Refresh is selected, but Godot's disabled threaded-optimization setting is not inherited from the other profile. No failure was observed. Conditional workaround: if an OpenGL problem appears, add the threaded-optimization setting to the selected exact-path profile while preserving Fixed Refresh.
+9. **Monitor blink remains unresolved.** Both monitors blinked for two or three seconds during the first successful launch, with no driver-crash/TDR event. Diagnostic workaround: repeat the launch now that both profiles exist. A repeated blink implicates Fixed Refresh activation; no repeat implicates one-time Godot profile creation.
+
+The current working configuration should be retained: `Godot_v4.6.3-stable_win64.exe` matches the exact full path and supplies Fixed Refresh; `Godot Engine` remains as a broader basename profile but is not selected for the tested path.
+
+`LocalId` behavior, the two distinct profile identities, and NVIDIA App's program count are not themselves bugs. Godot should not set a `LocalId`, and manually editing NVIDIA App's private application storage is not a supported workaround.
+
+The complete severity-labeled inventory, recovery procedure, maintenance checklist, and upstream-reporting targets are recorded in `bugs-and-workarounds.md`.
