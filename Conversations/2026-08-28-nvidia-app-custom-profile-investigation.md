@@ -287,3 +287,36 @@ The monitor blink is consistent with the display pipeline switching from the glo
 The original defect is therefore narrower: NVIDIA App can create a working custom profile from a clean baseline, but it cannot reliably discover or adopt the differently named profile after Godot has created `Godot Engine` first. Once NVIDIA App's exact-path profile exists, Godot's later basename profile does not defeat it.
 
 All post-launch evidence and the detailed comparison are preserved in `godot-nvapp-postlaunch-findings.md` and its companion snapshot files. No NVIDIA setting was changed during investigation.
+
+---
+
+## User
+
+Based on my screenshots, it seems like NPI and NVCP are properly displaying these two different profiles, but NVIDIA App is not. Explain what's going on.
+
+Attached images:
+
+![NVIDIA Profile Inspector showing both modified Godot profiles](<../2026-08-28 gsync investigation/screenshots/two-godot-profiles-npi.png>)
+
+![NVIDIA App showing only its manually added Godot application](<../2026-08-28 gsync investigation/screenshots/two-godot-profiles-nvapp.png>)
+
+![NVIDIA Control Panel showing both Godot program-profile entries](<../2026-08-28 gsync investigation/screenshots/two-godot-profiles-nvcp.png>)
+
+## Assistant
+
+Yes. NPI and NVCP are showing the underlying driver-profile model correctly, while NVIDIA App is showing its separate application-catalog model.
+
+The driver database contains two distinct profiles:
+
+- `Godot_v4.6.3-stable_win64.exe`, created by NVIDIA App, associates the exact executable path and contains Fixed Refresh.
+- `Godot Engine`, created by Godot, associates only the executable basename and contains fullscreen-only G-SYNC mode plus disabled threaded optimization.
+
+NPI directly enumerates DRS profiles, so both profile names appear. NVCP also reads DRS directly, but presents their application associations; its dropdown shows the exact-path entry and the basename entry separately.
+
+NVIDIA App's `2/2 Programs` does not mean two driver profiles. It means two entries in NVIDIA App's own application list: the manually added Godot executable and Age of Empires IV. NVIDIA App has only one Godot catalog row. When selected, current logs show it calling `GetProfileInfo` specifically for `Godot_v4.6.3-stable_win64.exe` and local application ID `963528738`. It never requests `Godot Engine`.
+
+NVIDIA App therefore is not merging the two profiles or showing an alias. It exposes only the exact-path profile attached to its one Godot application row. The `Godot Engine` profile remains in DRS but cannot be selected, edited, or removed through NVIDIA App.
+
+This is the same architectural limitation behind the earlier defect: NVIDIA App starts from its scanned/manual application catalog and resolves one profile per entry instead of enumerating all DRS profiles and application associations. Its data model loses the one-to-many relationship represented by an exact-path profile and a basename profile for the same executable image.
+
+The visible Fixed Refresh setting confirms NVIDIA App is editing the correct working profile. The missing `Godot Engine` row does not affect this test's runtime result, because NVIDIA resolved the full executable path to the exact-path profile. The full mapping and screenshots are preserved in `two-godot-profiles-ui-explanation.md`.
