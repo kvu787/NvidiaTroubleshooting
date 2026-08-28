@@ -9,6 +9,7 @@ If necessary, you can refer to local copies of source repos in `C:\Users\k\Repos
 Record and commit all conversations in the Conversations folder.
 Use one file per conversation.
 Prefix these commits with `[record]`.
+If I attach images to prompts, you must also save and record these in the conversation logs.
 
 # Godot
 
