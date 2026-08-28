@@ -14,6 +14,8 @@ This explains the apparently contradictory observations:
 - No indicator in AoE4 afterward is the defect: the driver does not successfully transition back from the Godot fixed-refresh state.
 - The settings UI and DRS database still show G-SYNC enabled because the persistent configuration was not turned off.
 
+A subsequent recovery test confirmed this interpretation: disabling global G-SYNC, applying, enabling it again, and applying restored the G-SYNC indicator in AoE4 without any Godot or AoE4 profile edit.
+
 The best classification is an NVIDIA 616.56 per-application VRR/profile-transition bug exposed by Godot's unconditional NVAPI profile save. Godot's behavior is an important trigger and an avoidable integration problem, but the failure to restore G-SYNC for a later application is a driver failure.
 
 ## Decisive evidence
@@ -127,7 +129,33 @@ Steps 4 through 6 are directly established. Step 7 is established by the user's 
 
 ## Recovery
 
-The least ambiguous recovery is to toggle global G-SYNC off and back on in NVIDIA App, which reprograms the display state. Rebooting also rebuilds the display session. A Windows graphics-driver reset may recover it, but that has not been verified in this investigation.
+Global G-SYNC off/on in NVIDIA App is now a verified recovery.
+
+The user performed no other issue-related action between the failed AoE4 test and this sequence:
+
+1. opened NVIDIA App;
+2. disabled G-SYNC and applied;
+3. enabled G-SYNC and applied;
+4. closed NVIDIA App;
+5. opened AoE4 and observed the top-right G-SYNC indicator; and
+6. closed AoE4.
+
+NVIDIA's logs independently corroborate the control changes:
+
+```text
+15:09:34.521  Set global GsyncState=0, globalVRRMode=0
+15:09:37.814  SetGlobalGsyncState returned success (3528.9 ms)
+15:09:43.082  Set global GsyncState=1, globalVRRMode=1
+15:09:43.086  SetGlobalGsyncState returned success (233.4 ms)
+15:09:54      NVIDIA App records the subsequent AoE4 launch
+15:11:37.470 NVIDIA backend detects the AoE4 session ending
+```
+
+The DRS database writes at 15:09:34 and 15:09:43 align with the off and on applies. After the test, AoE4 still selected `Age of Empires IV` with G-SYNC allowed and fullscreen-only VRR; no AoE4-specific repair or profile change was needed.
+
+This recovery sharply strengthens the live-state diagnosis. Cycling the global setting forces the display/VRR path to be programmed through an actual disabled state and back to enabled, clearing the stale Fixed Refresh condition that merely launching AoE4 could not clear.
+
+Rebooting should also rebuild the display session but was not tested. A Windows graphics-driver reset may recover it, but that has not been verified in this investigation.
 
 Merely restarting AoE4 is not sufficient in the reported reproduction. Re-saving its existing profile is also unlikely to help because its stored settings are already correct.
 
@@ -150,7 +178,7 @@ Interpretation:
 
 ### Other practical options
 
-- After each affected Godot session, toggle global G-SYNC off/on before gaming.
+- After each affected Godot session, use the now-verified global G-SYNC off/on recovery before gaming.
 - Test another NVIDIA driver branch/version. The sticky failure was observed on Game Ready 616.56; no other version was tested here.
 - For a durable Godot-side fix, build Godot with the NVAPI profile setup removed or changed so it does not save DRS when the profile already has the desired values.
 - Removing the exact-path Fixed Refresh profile avoids this particular fixed-refresh transition, but it also restores the previously observed unwanted G-SYNC activation/choppy pointer behavior in the editor. It is therefore a tradeoff, not a complete fix.
@@ -181,5 +209,7 @@ The basename-wide profile creation and the separate NVIDIA App exact-path profil
 - High confidence: AoE4's profile was not changed and still allows G-SYNC.
 - High confidence: Godot rewrote DRS at the blink despite no semantic setting change.
 - High confidence: no TDR/display-driver crash was recorded.
-- Medium-high confidence: the failure is a sticky NVIDIA runtime VRR state after Godot's DRS reload while Fixed Refresh is active.
+- High confidence: the failed state is recoverable by reprogramming global G-SYNC off/on without repairing either application profile.
+- High confidence: the failure is a sticky NVIDIA runtime VRR state rather than persistent global or application-profile damage.
+- Medium-high confidence: Godot's DRS reload while Fixed Refresh is active creates that sticky state.
 - Remaining isolation: direct D3D12 launch is needed to separate the unconditional DRS save from exact-profile activation alone.

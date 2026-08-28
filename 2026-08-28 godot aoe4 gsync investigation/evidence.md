@@ -29,6 +29,11 @@ Project V-Sync: disabled
 14:51:36  NVIDIA backend records the AoE4 session ending.
 14:59:28  Read-only NVIDIA API query reports globalGsyncState=1,
            indicator=1, vrrMode=1, and both displays gsync enabled.
+15:09:34  User applies global G-SYNC disabled; NVIDIA API call succeeds.
+15:09:43  User applies global G-SYNC enabled; NVIDIA API call succeeds.
+15:09:54  NVIDIA App records the subsequent AoE4 launch.
+15:11:37  NVIDIA backend detects the AoE4 session ending.
+           User observed the top-right G-SYNC indicator during this run.
 ```
 
 ## DRS files after reproduction
@@ -109,6 +114,62 @@ Preferred refresh rate: highest available
 ```
 
 There is no fixed-refresh or G-SYNC-disabled AoE4 setting.
+
+## Verified recovery test
+
+User-supplied sequence, with no other issue-related action since the failed reproduction:
+
+```text
+Open NVIDIA App.
+Disable G-SYNC and apply.
+Enable G-SYNC and apply.
+Close NVIDIA App.
+Open AoE4 and observe the top-right G-SYNC indicator.
+Close AoE4.
+```
+
+Corroborating NVIDIA log records:
+
+```text
+2026-08-28 15:09:34.521
+  SetGsyncGlobalState: GsyncState=0, globalVRRMode=0
+
+2026-08-28 15:09:37.814
+  SetGlobalGsyncState successful
+  API duration: 3528.9 ms
+
+2026-08-28 15:09:43.082
+  SetGsyncGlobalState: GsyncState=1, globalVRRMode=1
+
+2026-08-28 15:09:43.086
+  SetGlobalGsyncState successful
+  API duration: 233.4 ms
+
+ApplicationStorage LastLaunchTimeISO for AoE4:
+  2026-08-28 22:09:54Z (15:09:54 PDT)
+
+2026-08-28 15:11:37.470
+  NVIDIA backend: Age of Empires IV finished execution
+```
+
+DRS writes:
+
+```text
+nvdrsdb0.bin  2026-08-28 15:09:34 PDT
+nvdrsdb1.bin  2026-08-28 15:09:43 PDT
+nvdrssel.bin  2026-08-28 15:09:43 PDT
+```
+
+Post-recovery AoE4 DRS query:
+
+```text
+Selected profile: Age of Empires IV
+G-SYNC application override: allow (global profile)
+VRR requested state: fullscreen only (AoE4 profile)
+G-SYNC mode: fullscreen only (AoE4 profile)
+```
+
+The successful indicator observation following only the global off/on cycle confirms that the earlier failure was recoverable live display/VRR state. No application-profile repair was required.
 
 ## Event and crash evidence
 
