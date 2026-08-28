@@ -163,3 +163,32 @@ Corrected the conversation boundary:
 - Kept the live profile investigation and all of its follow-up turns in this separate current-conversation record.
 - Preserved and linked this corrective screenshot in the current record.
 - Kept both records in the repository-root `Conversations` folder.
+
+---
+
+## User
+
+Okay, let's get back to the investigation.
+
+I'm going to do this:
+
+1. Use NPI to delete the profile for Godot editor.
+2. Use NVIDIA App to create a profile for Godot editor that explicitly disables G-SYNC.
+3. Open Godot editor.
+4. Observe what happens.
+
+## Assistant
+
+That is the right decisive test, with one important evidence checkpoint: pause after NVIDIA App creates and saves the profile, before opening Godot.
+
+The controlled sequence should be:
+
+1. In NVIDIA Profile Inspector, delete `Godot Engine`, apply the change, and close NPI.
+2. Do not open Godot yet.
+3. In NVIDIA App, manually add the exact editor executable and set **Monitor Technology** to **Fixed Refresh**, then apply/save it.
+4. Pause and report that step 3 is complete. A read-only DRS snapshot and NVIDIA App storage/log snapshot can then establish exactly what NVIDIA App created.
+5. Open the same Godot project using the same rendering backend as before.
+6. Record whether the G-SYNC indicator appears and whether mouse movement is choppy.
+7. Take another read-only profile snapshot to determine whether Godot retained, replaced, or failed to modify the NVIDIA App-created profile.
+
+The pause is important because Godot's OpenGL startup code can create its own `Godot Engine` profile. Capturing the NVIDIA App state first separates NVIDIA App behavior from Godot's subsequent behavior.
