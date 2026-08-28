@@ -1,0 +1,46 @@
+Sources:
+  C:\Users\k\AppData\Local\NVIDIA Corporation\NVIDIA App\CxNative_NVIDIA App.log
+  C:\Users\k\AppData\Local\NVIDIA Corporation\NVIDIA App\console.log
+
+NVIDIA App manual-catalog operation:
+
+2026-08-28T13:28:36.777[I] LocalGam c172   LocalGamesTasks.cpp:501  ExecuteAsync FindAndGetAppMetadata. isPresent:0 for image path:C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe.
+2026-08-28T13:28:36.779[I] LocalGam d080   LocalGamesTasks.cpp:442  ExecuteAsync AddManualApplication
+2026-08-28T13:28:36.787[I] LocalGam d080   LocalGamesTasks.cpp:457  ExecuteAsync AddManualApplication. success:1 for image path:C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe.
+
+NVIDIA App DRS-profile operation:
+
+2026-08-28 13:28:39.130 INFO  nvapp/Manage3dSettingsAPIService  New profile created in DRS {
+	"_return_code": 0,
+	"_return_status": "Success",
+	"_return_internal": 0
+}
+2026-08-28 13:28:39.130 INFO  nvapp/AppListService  DrsSubPath for Godot_v4.6.3-stable_win64.exe is empty
+2026-08-28 13:28:39.131 INFO  nvapp/AppListService  updating drs profile name = Godot_v4.6.3-stable_win64.exe for appIndex = 0
+
+NVIDIA App Fixed Refresh write:
+
+2026-08-28 13:28:50.221 INFO  nvapp/FeatureDynamicSettingIntegerUIComponent  Selected value is {
+	"selectedKeyOrValue": "NVCPLAPI_VALUE_MT_FIXED_REFRESH",
+	"displayValue": "Fixed Refresh"
+}
+2026-08-28 13:28:50.222 INFO  nvapp/ProgramSettingsService  Applying single setting value 4 for Godot_v4.6.3-stable_win64.exe
+2026-08-28 13:28:50.222 INFO  nvapp/Manage3dSettingsAPIService  Attempting SET for  {
+	"ProfileName": "Godot_v4.6.3-stable_win64.exe",
+	"ProfileSettingEnum": 617,
+	"ApplicationId": 963528738,
+	"CmsId": 0,
+	"SettingValue": {
+		"IntegerValue": 4,
+		"StringValue": "",
+		"SettingType": 0
+	}
+}
+2026-08-28 13:28:50.241 INFO  nvapp/ProgramSettingsService  SET api success for MonitorTechnology
+                        and profile Godot_v4.6.3-stable_win64.exe with value 4 with response  {
+	"_return_code": 0,
+	"_return_status": "Success",
+	"_return_internal": 0
+}
+2026-08-28 13:28:50.673 INFO  nvapp/Manage3dSettingsUtilService  Calling refreshAllProfileSettings for profile Godot_v4.6.3-stable_win64.exe
+2026-08-28 13:28:52.169 INFO  nvapp/Manage3dSettingsAPIService  Success calling GetProfileInfo API

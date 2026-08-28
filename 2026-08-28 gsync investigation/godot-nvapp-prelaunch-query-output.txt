@@ -1,0 +1,31 @@
+Target full path: C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe
+Target basename used by ordinary DRS matching: Godot_v4.6.3-stable_win64.exe
+FindApplicationByName(full path) status: 0, matched appName="c:/users/k/program/godot_v4.6.3-stable_win64.exe/godot_v4.6.3-stable_win64.exe"
+FindApplicationByName(basename) status: -166
+FindProfileByName("Godot_v4.6.3-stable_win64.exe") status: 0
+FindProfileByName("Godot_v4.6.3-stable_win64") status: -163
+GetNumProfiles status: 0, count=7958
+
+Profile 1:
+  discovered_by=application lookup by full path; exact profile-name lookup; profile-name scan starting with 'godot'
+  name="Godot_v4.6.3-stable_win64.exe"
+  predefined=0
+  application_count=1
+  setting_count=7
+  applications (status=0, returned=1):
+    - appName="c:/users/k/program/godot_v4.6.3-stable_win64.exe/godot_v4.6.3-stable_win64.exe", userFriendlyName="C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe", launcher="", fileInFolder="", predefined=0, isMetro=0, isCommandLine=0, commandLine=""
+  enumerated profile settings (status=0, returned=7):
+    - id=0x005A375C, name="Vertical Sync Tear Control", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x96861077 (2525368439)
+    - id=0x0064B541, name="Preferred refresh rate", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0)
+    - id=0x00A879CF, name="Vertical Sync", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x60925292 (1620202130)
+    - id=0x101AE763, name="Flag to control smooth AFR behavior", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0)
+    - id=0x1094F1F7, name="VRR requested state", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0) (disabled)
+    - id=0x10A879CF, name="G-SYNC", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000004 (4) (fixed refresh)
+    - id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0) (disabled)
+  effective relevant settings:
+    OpenGL threaded optimization: not returned (status=-160)
+    VRR requested state: id=0x1094F1F7, name="VRR requested state", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0) (disabled)
+    G-SYNC application override: id=0x10A879CF, name="G-SYNC", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000004 (4) (fixed refresh)
+    G-SYNC application override request state: not returned (status=-160)
+    G-SYNC mode: id=0x1194F158, name="Enable G-SYNC globally", type=DWORD, location=current profile, current_predefined=0, predefined_valid=0, value=0x00000000 (0) (disabled)
+    VSync/VRR control: not returned (status=-160)
