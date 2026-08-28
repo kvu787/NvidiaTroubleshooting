@@ -94,3 +94,43 @@ Interpretation:
   NVIDIA state changed. With no Fixed Refresh profile, G-SYNC activated in the
   editor and the user observed choppy pointer movement. The monitor blank was
   absent. The delayed process exit is a separate unresolved observation.
+
+Subsequent AoE4 physical validation:
+  User opened AoE4 without first opening NVIDIA App, NPI, or Godot.
+  User observed the top-right G-SYNC indicator.
+  User closed AoE4.
+
+AoE4 launch timestamp:
+  ApplicationStorage LastLaunchTimeISO: 2026-08-28 23:02:57Z
+  Local time: 2026-08-28 16:02:57 PDT
+
+Post-AoE4 DRS state:
+  Total profiles: 7957
+  Godot full-path association: absent
+  Godot basename association: absent
+  Godot profile names: absent
+  AoE4 selected profile: Age of Empires IV
+  AoE4 G-SYNC application override: allow, inherited globally
+  AoE4 VRR requested state: fullscreen only
+  AoE4 G-SYNC mode: fullscreen only
+
+Post-AoE4 DRS file state:
+  nvdrsdb0.bin
+    last write: 2026-08-28 15:46:09 PDT
+    SHA-256: 8E5820DF6C9D6E0F5FFF07FFF189406146DA415DD93F4913CF7D88BDF4031181
+  nvdrsdb1.bin
+    last write: 2026-08-28 15:46:23 PDT
+    SHA-256: 8A239BE114F9568F83CF8C23A7EF853A9F0653ABFE610F35C7CC8B79D44B4F95
+  nvdrssel.bin
+    last write: 2026-08-28 15:46:23 PDT
+    SHA-256: 4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A
+
+Post-AoE4 NVIDIA App catalog:
+  ApplicationStorage.json last write: 2026-08-28 16:03:06.649 PDT
+  SHA-256: CF9EC9DE207A512545B8715FD0F7DA9C57DF3EE662EDB8074AFF91592F330891
+  Case-insensitive Godot occurrences: 0
+
+Final control result:
+  The direct D3D12/no-fallback/no-Godot-profile launch avoided NVIDIA profile
+  mutation, the dual-monitor blank, and the sticky live-VRR failure. AoE4
+  activated G-SYNC normally afterward.

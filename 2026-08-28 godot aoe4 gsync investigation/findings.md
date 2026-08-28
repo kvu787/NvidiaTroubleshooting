@@ -20,7 +20,7 @@ A later one-profile isolation test made the trigger narrower. The exact-path NVI
 
 The best classification is an NVIDIA 616.56 per-application VRR/profile-transition bug exposed by Godot's unconditional NVAPI profile save. Godot's behavior is an important trigger and an avoidable integration problem, but the failure to restore G-SYNC for a later application is a driver failure.
 
-The direct D3D12 bypass has now been runtime-verified from a completely clean Godot/NVIDIA baseline. With both rendering fallbacks disabled, the editor opened without a monitor blank, showed the G-SYNC indicator, and exhibited the user's choppy pointer movement. Afterward, every DRS file remained byte-for-byte identical to the pre-launch baseline, the profile count remained 7957, the exhaustive Godot audit remained clean, and NVIDIA App's private catalog remained unchanged. This proves the direct D3D12 path avoids Godot's NVIDIA profile writer and the display blank associated with it. The choppy G-SYNC editor behavior is the tradeoff that Godot's profile-writing workaround was designed to suppress.
+The direct D3D12 bypass has now been runtime-verified from a completely clean Godot/NVIDIA baseline. With both rendering fallbacks disabled, the editor opened without a monitor blank, showed the G-SYNC indicator, and exhibited the user's choppy pointer movement. Afterward, every DRS file remained byte-for-byte identical to the pre-launch baseline, the profile count remained 7957, the exhaustive Godot audit remained clean, and NVIDIA App's private catalog remained free of Godot. The user then launched AoE4 and observed its G-SYNC indicator normally. This proves the direct D3D12 path avoids Godot's NVIDIA profile writer, the display blank associated with it, and the sticky live-VRR failure seen after the ordinary project-manager path. The choppy G-SYNC editor behavior is the tradeoff that Godot's profile-writing workaround was designed to suppress.
 
 ## Decisive evidence
 
@@ -233,6 +233,8 @@ The result establishes three points:
 
 The test changed two trigger inputs together: it removed Fixed Refresh profiles and bypassed the OpenGL DRS save. It therefore verifies the safe bypass but, by itself, does not distinguish which of those two inputs is strictly necessary for the earlier sticky NVIDIA state. The earlier tests establish that the combination is sufficient.
 
+The subsequent AoE4 validation completed the negative control. The user opened AoE4, observed the top-right G-SYNC indicator, and closed it. AoE4's persistent profile remained unchanged, both DRS database files and the selector retained the clean-baseline timestamps and hashes, and Godot remained absent from DRS and NVIDIA App's catalog. Therefore merely running the D3D12 Godot editor with G-SYNC active does not wedge the live VRR path.
+
 Closing the editor window did not return the command prompt within ten seconds, so the user closed the console window. NVIDIA's one-minute process sampler still listed the Godot image at 15:55:42 and no longer listed it at 15:56:42; a direct query at 15:57:59 found no Godot process. Project/editor metadata writes ended at 15:54:45. No Application Hang, WER, TDR, `nvlddmkm`, or display event was recorded. This is best treated as a separate, not-yet-isolated shutdown-linger observation rather than evidence of profile editing or a driver reset.
 
 ### Godot saved DRS again at the failure transition
@@ -359,7 +361,7 @@ The clean baseline was captured again immediately after the direct launch. DRS r
 
 This guarantee is narrowly about Godot's explicit NVIDIA settings mutation. A successful D3D12 editor necessarily loads `D3D12.dll` and `DXGI.dll`, creates a D3D12 device, and uses the NVIDIA display driver. NVIDIA may read and apply the executable's existing DRS profile as part of normal process/device initialization; that is not Godot editing the profile.
 
-The remaining physical check is AoE4 immediately after this clean bypass. Its stored profile is still unchanged and G-SYNC-capable, but the top-right indicator must be observed in-game to establish that the live VRR path also remained usable after the D3D12 editor session.
+The AoE4 physical check after the clean bypass succeeded: the top-right G-SYNC indicator appeared. The direct launch is therefore a verified workaround for the profile mutation, monitor blank, and post-Godot loss of AoE4 G-SYNC in this environment.
 
 ### Other practical options
 
@@ -404,6 +406,7 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: the direct D3D12/no-fallback launch does not create or edit a Godot NVIDIA profile and does not rewrite DRS.
 - High confidence: the direct D3D12/no-profile launch avoids the dual-monitor blank and permits G-SYNC to activate in the editor.
 - High confidence: active editor G-SYNC correlates with the user's choppy pointer movement, reproducing the behavior Godot's NVIDIA profile workaround targets.
+- High confidence: AoE4 G-SYNC remains usable after the direct D3D12 editor session; the bypass avoids the sticky live-VRR failure.
 - Medium-high confidence: Godot's DRS reload while any matching Godot profile is Fixed Refresh creates that sticky state.
-- Remaining physical check: launch AoE4 now and observe whether its G-SYNC indicator activates, without opening NVIDIA App, NPI, or Godot first.
+- Optional remaining isolation: combine a Fixed Refresh Godot profile with the verified direct D3D12/no-save launch to distinguish profile activation alone from the DRS save/reload. This would deliberately reintroduce risk and is not required to validate the workaround.
 - Separate remaining issue: reproduce the editor-window-close/process-linger behavior with process and verbose shutdown capture if it matters independently.

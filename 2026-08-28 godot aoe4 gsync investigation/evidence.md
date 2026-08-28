@@ -2,7 +2,7 @@
 
 Initial snapshot completed: 2026-08-28 14:59 PDT
 
-Follow-up evidence incorporated through: 2026-08-28 16:00 PDT
+Follow-up evidence incorporated through: 2026-08-28 16:04 PDT
 
 ## Environment
 
@@ -63,6 +63,10 @@ Project V-Sync: disabled
 15:56:42  NVIDIA's next process sample no longer lists Godot.
 15:57:59  Direct process/DRS query confirms no Godot process and an unchanged,
            clean 7957-profile DRS state.
+16:02:57  NVIDIA App catalog records the subsequent AoE4 launch.
+           User observes the top-right G-SYNC indicator and closes AoE4.
+16:03:06  NVIDIA backend processes AoE4 and reads DRS; DRS files remain
+           byte-for-byte identical to the clean baseline.
 ```
 
 ## DRS files after reproduction
@@ -649,6 +653,59 @@ User: command prompt had not returned ten seconds after closing the editor windo
 ```
 
 The NVIDIA sampler is periodic, so it does not prove the exact exit time. No System display/TDR event, Application Hang event, WER report, or Godot crash record exists for this interval. The process-linger observation is real from the user's prompt behavior but remains separate and not yet root-caused.
+
+## AoE4 validation after the direct bypass
+
+Without opening NVIDIA App, NVIDIA Profile Inspector, or Godot again, the user:
+
+```text
+1. opened AoE4;
+2. observed the top-right G-SYNC indicator; and
+3. closed AoE4.
+```
+
+NVIDIA App's catalog independently records `LastLaunchTimeISO` as 2026-08-28 23:02:57Z, or 16:02:57 PDT. NVIDIA's backend began processing the AoE4/Steam application records at 16:03:06 and loaded DRS for its normal runtime checks.
+
+Post-AoE4 persistent profile state:
+
+```text
+DRS profile count: 7957
+Godot full-path association: absent
+Godot basename association: absent
+Godot-related profile names: absent
+
+AoE4 selected profile: Age of Empires IV
+AoE4 G-SYNC application override: allow, inherited globally
+AoE4 VRR requested state: fullscreen only
+AoE4 G-SYNC mode: fullscreen only
+```
+
+The DRS files remain identical to both the pre-Godot and post-Godot snapshots:
+
+```text
+nvdrsdb0.bin
+  last write: 2026-08-28 15:46:09 PDT
+  SHA-256: 8E5820DF6C9D6E0F5FFF07FFF189406146DA415DD93F4913CF7D88BDF4031181
+
+nvdrsdb1.bin
+  last write: 2026-08-28 15:46:23 PDT
+  SHA-256: 8A239BE114F9568F83CF8C23A7EF853A9F0653ABFE610F35C7CC8B79D44B4F95
+
+nvdrssel.bin
+  last write: 2026-08-28 15:46:23 PDT
+  SHA-256: 4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A
+```
+
+`ApplicationStorage.json` changed only to record the ordinary AoE4 launch and remains free of any `godot` string:
+
+```text
+last write: 2026-08-28 16:03:06.649 PDT
+SHA-256: CF9EC9DE207A512545B8715FD0F7DA9C57DF3EE662EDB8074AFF91592F330891
+case-insensitive Godot occurrences: 0
+AoE4 LastLaunchTimeISO: 2026-08-28 23:02:57Z
+```
+
+The physical indicator is the missing live-state proof. It confirms that the D3D12 editor session did not wedge VRR even though G-SYNC was active and pointer movement was choppy inside Godot. The verified bypass therefore preserves both persistent configuration and subsequent live G-SYNC operation.
 
 ## Event and crash evidence
 
