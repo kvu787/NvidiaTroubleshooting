@@ -1,0 +1,96 @@
+Direct D3D12 editor bypass: post-launch state
+Captured: 2026-08-28 15:57-16:00 PDT
+
+User sequence:
+  1. Opened Command Prompt.
+  2. Ran the exact Godot executable with:
+       --editor
+       --path C:\Users\k\Repository\Godot\VsyncStutterTest\Godot
+       --rendering-driver d3d12
+  3. Editor opened with no monitor blink.
+  4. G-SYNC indicator was visible in the top-right.
+  5. Pointer movement was choppy.
+  6. Closed the editor window.
+  7. Prompt had not returned after ten seconds.
+  8. Closed the Command Prompt window using its Windows close button.
+
+Preconditions:
+  No NVIDIA App Godot catalog entry.
+  No Godot DRS profile or application association.
+  Total DRS profiles: 7957.
+  Project renderer: d3d12.
+  Vulkan fallback: false.
+  OpenGL fallback: false.
+
+Post-launch specific DRS query:
+  FindApplicationByName(full path): -166, NVAPI_EXECUTABLE_NOT_FOUND
+  FindApplicationByName(basename): -166, NVAPI_EXECUTABLE_NOT_FOUND
+  FindProfileByName("Godot_v4.6.3-stable_win64.exe"): -163, NVAPI_PROFILE_NOT_FOUND
+  FindProfileByName("Godot_v4.6.3-stable_win64"): -163, NVAPI_PROFILE_NOT_FOUND
+  Total DRS profiles: 7957
+  Result: no target association or related profile name.
+
+Post-launch exhaustive DRS substring audit:
+  Search token: "godot" (case-insensitive)
+  Profiles scanned: 7957
+  Matching profiles: 0
+  Matching applications: 0
+  Profile enumeration/info failures: 0
+  Application enumeration failures: 0
+  Result: CLEAN
+
+Post-launch DRS files:
+  nvdrsdb0.bin
+    last write: 2026-08-28 15:46:09 PDT
+    SHA-256: 8E5820DF6C9D6E0F5FFF07FFF189406146DA415DD93F4913CF7D88BDF4031181
+  nvdrsdb1.bin
+    last write: 2026-08-28 15:46:23 PDT
+    SHA-256: 8A239BE114F9568F83CF8C23A7EF853A9F0653ABFE610F35C7CC8B79D44B4F95
+  nvdrssel.bin
+    last write: 2026-08-28 15:46:23 PDT
+    SHA-256: 4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A
+
+The timestamps and hashes are identical to the clean pre-launch baseline.
+
+Post-launch NVIDIA App catalog:
+  ApplicationStorage.json
+    last write: 2026-08-28 15:46:09 PDT
+    SHA-256: 493A41D860F829C77351CBE535A664AA4B2B99D48D0F534B0B6BB43AD88441E5
+    case-insensitive Godot occurrences: 0
+
+NVIDIA backend evidence:
+  2026-08-28 15:55:42.530
+    Process sampler sees the exact Godot executable.
+  2026-08-28 15:55:42.564-15:55:42.658
+    Backend loads DRS settings.
+  2026-08-28 15:55:42.659
+    DRS classification profileName is empty.
+  2026-08-28 15:56:42
+    Next sampler iteration does not list Godot.
+
+Current process state at 15:57:59:
+  No Godot process found.
+
+AoE4 post-session stored profile state:
+  Selected profile: Age of Empires IV
+  G-SYNC application override: allow, inherited globally
+  VRR requested state: fullscreen only
+  G-SYNC mode: fullscreen only
+
+Windows fault evidence from the test interval:
+  No display/TDR/nvlddmkm event.
+  No Application Hang event.
+  No WER report.
+  No Godot crash record.
+
+Project-side writes:
+  project.godot was rewritten with LF line endings and the same fallback values
+  in reversed textual order.
+  .godot/editor metadata was updated through 15:54:45.
+
+Interpretation:
+  The fail-closed direct D3D12 launch bypassed Godot 4.6.3's native-OpenGL
+  NVAPI/DRS profile writer. The driver read DRS normally but no persistent
+  NVIDIA state changed. With no Fixed Refresh profile, G-SYNC activated in the
+  editor and the user observed choppy pointer movement. The monitor blank was
+  absent. The delayed process exit is a separate unresolved observation.

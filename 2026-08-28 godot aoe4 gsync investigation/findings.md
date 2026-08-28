@@ -20,6 +20,8 @@ A later one-profile isolation test made the trigger narrower. The exact-path NVI
 
 The best classification is an NVIDIA 616.56 per-application VRR/profile-transition bug exposed by Godot's unconditional NVAPI profile save. Godot's behavior is an important trigger and an avoidable integration problem, but the failure to restore G-SYNC for a later application is a driver failure.
 
+The direct D3D12 bypass has now been runtime-verified from a completely clean Godot/NVIDIA baseline. With both rendering fallbacks disabled, the editor opened without a monitor blank, showed the G-SYNC indicator, and exhibited the user's choppy pointer movement. Afterward, every DRS file remained byte-for-byte identical to the pre-launch baseline, the profile count remained 7957, the exhaustive Godot audit remained clean, and NVIDIA App's private catalog remained unchanged. This proves the direct D3D12 path avoids Godot's NVIDIA profile writer and the display blank associated with it. The choppy G-SYNC editor behavior is the tradeoff that Godot's profile-writing workaround was designed to suppress.
+
 ## Decisive evidence
 
 ### Persistent global and display state remained enabled
@@ -199,6 +201,40 @@ rendering_device/fallback_to_vulkan=false
 
 With those settings and the explicit `--rendering-driver d3d12` command, this test will either initialize D3D12 or abort. It cannot silently fall back to native OpenGL, which is the Godot 4.6.3 path that calls `_nvapi_setup_profile()` and writes DRS.
 
+### Direct D3D12 bypass result
+
+The user ran the direct editor command from the clean baseline and observed:
+
+```text
+Editor opened: yes
+Monitor blank/blink: none
+G-SYNC indicator: visible
+Pointer movement: choppy
+```
+
+The post-launch persistent state is exactly the clean baseline:
+
+```text
+DRS profile count: 7957
+Known Godot profile names: absent
+Known executable full-path and basename associations: absent
+Exhaustive case-insensitive Godot profile/application matches: 0
+DRS file timestamps and SHA-256 hashes: unchanged
+NVIDIA App catalog Godot matches: 0; file hash unchanged
+```
+
+NVIDIA's backend observed the running executable at 15:55:42 and classified it with an empty DRS profile name. It loaded DRS for classification but did not save it. This agrees with the direct NVAPI queries and raw file hashes.
+
+The result establishes three points:
+
+1. successful D3D12 startup with native-OpenGL fallback disabled does not reach Godot 4.6.3's `_nvapi_setup_profile()` path;
+2. the approximately three-second dual-monitor blank is absent when the Godot DRS save/reload and Fixed Refresh profile are both absent; and
+3. without the per-application suppression, the editor activates G-SYNC and reproduces the unstable/choppy interaction that motivated Godot's workaround.
+
+The test changed two trigger inputs together: it removed Fixed Refresh profiles and bypassed the OpenGL DRS save. It therefore verifies the safe bypass but, by itself, does not distinguish which of those two inputs is strictly necessary for the earlier sticky NVIDIA state. The earlier tests establish that the combination is sufficient.
+
+Closing the editor window did not return the command prompt within ten seconds, so the user closed the console window. NVIDIA's one-minute process sampler still listed the Godot image at 15:55:42 and no longer listed it at 15:56:42; a direct query at 15:57:59 found no Godot process. Project/editor metadata writes ended at 15:54:45. No Application Hang, WER, TDR, `nvlddmkm`, or display event was recorded. This is best treated as a separate, not-yet-isolated shutdown-linger observation rather than evidence of profile editing or a driver reset.
+
 ### Godot saved DRS again at the failure transition
 
 The active NVIDIA DRS files changed at exactly the project-open transition:
@@ -298,7 +334,7 @@ Merely restarting AoE4 is not sufficient in the reported reproduction. Re-saving
 
 ## Workarounds and isolation tests
 
-### Best low-risk isolation test
+### Verified low-risk D3D12 bypass
 
 Bypass the OpenGL project manager and start this D3D12 editor directly:
 
@@ -306,7 +342,7 @@ Bypass the OpenGL project manager and start this D3D12 editor directly:
 "C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe" --editor --path "C:\Users\k\Repository\Godot\VsyncStutterTest\Godot" --rendering-driver d3d12
 ```
 
-If D3D12 initializes successfully, this bypasses the project manager's native-OpenGL initialization and therefore avoids Godot's `_nvapi_setup_profile()`/`NvAPI_DRS_SaveSettings()` call. It does not remove the basename Fixed Refresh profile, so NVIDIA's driver can still apply that profile to the process and the editor should remain fixed-refresh. This workaround follows directly from the source path but has not yet been runtime-verified.
+The direct D3D12 launch has now been runtime-verified from a state with no Godot profile or application association. It bypassed the project manager's native-OpenGL initialization, avoided Godot's `_nvapi_setup_profile()`/`NvAPI_DRS_SaveSettings()` call, and left DRS byte-for-byte unchanged. Because no Fixed Refresh profile existed, the editor inherited G-SYNC behavior and the user observed the indicator and choppy pointer movement.
 
 The command alone is not a fail-closed guarantee. Godot 4.6.3 defines `rendering/rendering_device/fallback_to_vulkan`, `fallback_to_d3d12`, and `fallback_to_opengl3` as `true`. On Windows, a requested D3D12 startup tries D3D12, may try Vulkan, and, if both RenderingDevice backends fail, may switch to native OpenGL. That native OpenGL fallback constructs `GLManagerNative_Windows`, whose `initialize()` calls `_nvapi_setup_profile()`.
 
@@ -319,14 +355,11 @@ rendering_device/fallback_to_opengl3=false
 
 Optionally also set `rendering_device/fallback_to_vulkan=false` if the requirement is specifically D3D12-or-fail rather than merely no native-OpenGL fallback. With OpenGL fallback disabled, a D3D12/Vulkan failure aborts display-server initialization instead of entering the only Godot 4.6.3 Windows code path that references NVAPI or writes DRS.
 
-The clean baseline above is now established. It should be captured again immediately after the direct launch. A successful D3D12 startup with OpenGL fallback disabled should leave the DRS count at 7957 and the exhaustive `godot` audit clean. Any new matching profile or application association would prove that some profile-writing path was reached despite the intended bypass.
+The clean baseline was captured again immediately after the direct launch. DRS remained at 7957 profiles, the exhaustive `godot` audit remained clean, and all raw DRS hashes were identical.
 
 This guarantee is narrowly about Godot's explicit NVIDIA settings mutation. A successful D3D12 editor necessarily loads `D3D12.dll` and `DXGI.dll`, creates a D3D12 device, and uses the NVIDIA display driver. NVIDIA may read and apply the executable's existing DRS profile as part of normal process/device initialization; that is not Godot editing the profile.
 
-Interpretation:
-
-- no monitor blank and AoE4 G-SYNC works afterward: the unconditional Godot DRS save is the decisive trigger;
-- blank/sticky failure still occurs: selecting any Fixed Refresh Godot profile is sufficient to trigger the NVIDIA bug even without the OpenGL profile save.
+The remaining physical check is AoE4 immediately after this clean bypass. Its stored profile is still unchanged and G-SYNC-capable, but the top-right indicator must be observed in-game to establish that the live VRR path also remained usable after the D3D12 editor session.
 
 ### Other practical options
 
@@ -368,5 +401,9 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: merely selecting the stale/manual NVIDIA App row recreates a named but empty, unassociated DRS profile because NVIDIA App saves a partial profile-creation transaction after `NvAPI_DRS_CreateApplication` fails.
 - High confidence: the Godot values displayed by NVIDIA App after that selection do not describe the profile selected for the executable at runtime.
 - High confidence: immediately before the planned bypass launch, all known and exhaustively scanned Godot entries are absent from DRS and NVIDIA App's application catalog.
+- High confidence: the direct D3D12/no-fallback launch does not create or edit a Godot NVIDIA profile and does not rewrite DRS.
+- High confidence: the direct D3D12/no-profile launch avoids the dual-monitor blank and permits G-SYNC to activate in the editor.
+- High confidence: active editor G-SYNC correlates with the user's choppy pointer movement, reproducing the behavior Godot's NVIDIA profile workaround targets.
 - Medium-high confidence: Godot's DRS reload while any matching Godot profile is Fixed Refresh creates that sticky state.
-- Remaining isolation: direct D3D12 launch is needed to separate the unconditional DRS save from Fixed Refresh profile activation alone.
+- Remaining physical check: launch AoE4 now and observe whether its G-SYNC indicator activates, without opening NVIDIA App, NPI, or Godot first.
+- Separate remaining issue: reproduce the editor-window-close/process-linger behavior with process and verbose shutdown capture if it matters independently.

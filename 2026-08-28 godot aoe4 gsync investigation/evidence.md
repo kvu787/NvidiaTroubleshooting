@@ -2,7 +2,7 @@
 
 Initial snapshot completed: 2026-08-28 14:59 PDT
 
-Follow-up evidence incorporated through: 2026-08-28 15:50 PDT
+Follow-up evidence incorporated through: 2026-08-28 16:00 PDT
 
 ## Environment
 
@@ -56,6 +56,13 @@ Project V-Sync: disabled
            Godot Engine profile in NVIDIA Profile Inspector.
 15:50:25  Exhaustive read-only DRS scan finds no profile or application field
            containing "godot" among all 7957 profiles, with no scan failures.
+15:54:28  Direct D3D12 editor launch begins writing ordinary project metadata.
+15:54:45  Last editor/project metadata write from the direct session.
+15:55:42  NVIDIA backend process sampler observes the Godot executable and
+           resolves an empty DRS profile name; DRS is loaded read-only.
+15:56:42  NVIDIA's next process sample no longer lists Godot.
+15:57:59  Direct process/DRS query confirms no Godot process and an unchanged,
+           clean 7957-profile DRS state.
 ```
 
 ## DRS files after reproduction
@@ -544,6 +551,104 @@ rendering_device/fallback_to_vulkan=false
 ```
 
 The intended direct editor launch is therefore D3D12-or-fail. Godot 4.6.3 cannot reach its native-OpenGL NVAPI profile writer through a rendering fallback in this configuration.
+
+## Direct D3D12 bypass result
+
+User-supplied sequence, with no intervening NVIDIA App, NPI, or ordinary Godot project-manager launch:
+
+```text
+1. Open Command Prompt.
+2. Run the direct --editor --path ... --rendering-driver d3d12 command.
+3. Project opens without any monitor blink.
+4. Observe the G-SYNC indicator in the top-right.
+5. Move the pointer and observe choppy movement.
+6. Close the editor window.
+7. Wait ten seconds; the prompt does not return.
+8. Close the Command Prompt window with its Windows close button.
+```
+
+Post-launch direct target query:
+
+```text
+FindApplicationByName(full path): -166, NVAPI_EXECUTABLE_NOT_FOUND
+FindApplicationByName(basename): -166, NVAPI_EXECUTABLE_NOT_FOUND
+FindProfileByName("Godot_v4.6.3-stable_win64.exe"): -163, NVAPI_PROFILE_NOT_FOUND
+FindProfileByName("Godot_v4.6.3-stable_win64"): -163, NVAPI_PROFILE_NOT_FOUND
+GetNumProfiles: 7957
+No DRS application association or target-related profile name was found.
+```
+
+Post-launch exhaustive audit:
+
+```text
+Total profiles reported: 7957
+Profiles scanned: 7957
+Matching profiles: 0
+Matching applications: 0
+Profile enumeration/info failures: 0
+Application enumeration failures: 0
+Audit complete: CLEAN
+```
+
+Post-launch DRS file state is byte-for-byte identical to the pre-launch baseline:
+
+```text
+nvdrsdb0.bin
+  last write: 2026-08-28 15:46:09 PDT
+  SHA-256: 8E5820DF6C9D6E0F5FFF07FFF189406146DA415DD93F4913CF7D88BDF4031181
+
+nvdrsdb1.bin
+  last write: 2026-08-28 15:46:23 PDT
+  SHA-256: 8A239BE114F9568F83CF8C23A7EF853A9F0653ABFE610F35C7CC8B79D44B4F95
+
+nvdrssel.bin
+  last write: 2026-08-28 15:46:23 PDT
+  SHA-256: 4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A
+```
+
+NVIDIA App's private catalog is also byte-for-byte unchanged:
+
+```text
+ApplicationStorage.json
+  last write: 2026-08-28 15:46:09 PDT
+  SHA-256: 493A41D860F829C77351CBE535A664AA4B2B99D48D0F534B0B6BB43AD88441E5
+  case-insensitive Godot occurrences: 0
+```
+
+NVIDIA backend process/classification evidence:
+
+```text
+15:55:42.530  process sampler sees the exact Godot executable
+15:55:42.564  loading DRS settings
+15:55:42.658  loaded DRS settings
+15:55:42.659  DRS classification profileName=<empty>
+15:56:42      next sampler iteration contains no Godot image
+```
+
+This distinguishes normal driver/profile reading from profile mutation. NVIDIA noticed the D3D12 process and read DRS, but no profile matched, no application/catalog entry was created, and no DRS file changed.
+
+AoE4's persistent state remains unchanged after the direct session:
+
+```text
+Selected profile: Age of Empires IV
+G-SYNC application override: allow, inherited globally
+VRR requested state: fullscreen only
+G-SYNC mode: fullscreen only
+```
+
+The editor did perform ordinary project-side writes. It rewrote `project.godot` with LF line endings and reversed the order of the two fallback keys without changing their values, then updated `.godot/editor` metadata through 15:54:45. These are not NVIDIA-profile changes and have been left intact as user/project state.
+
+Shutdown evidence:
+
+```text
+User: command prompt had not returned ten seconds after closing the editor window.
+15:54:45  last project/editor metadata write
+15:55:42  NVIDIA sampler still reports Godot image
+15:56:42  NVIDIA sampler no longer reports Godot
+15:57:59  direct process query finds no Godot process
+```
+
+The NVIDIA sampler is periodic, so it does not prove the exact exit time. No System display/TDR event, Application Hang event, WER report, or Godot crash record exists for this interval. The process-linger observation is real from the user's prompt behavior but remains separate and not yet root-caused.
 
 ## Event and crash evidence
 
