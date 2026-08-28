@@ -22,22 +22,21 @@ do your all work in "C:\Users\k\Repository\NvidiaTroubleshooting\2026-08-28 godo
 
 ## Assistant
 
-Godot is not persistently switching off the global G-SYNC control. It is triggering a driver-state failure that has the same practical effect for the rest of the Windows session.
+Godot is not actually saving the global G-SYNC setting as off. It is leaving NVIDIA driver 616.56's live VRR path stuck in Fixed Refresh, which has the same practical effect for the rest of the Windows session.
 
-The decisive facts are:
+The decisive evidence after your reproduction is:
 
-- After the failure, NVIDIA's own live API still reports global G-SYNC enabled, the indicator enabled, fullscreen VRR mode selected, and G-SYNC enabled on both ASUS displays.
-- AoE4 still resolves to its normal NVIDIA profile with G-SYNC allowed. Nothing in its profile changed.
-- Both Godot profiles are also line-for-line unchanged from the earlier working snapshot.
-- Nevertheless, the active NVIDIA DRS database was rewritten at 14:49:19, exactly when the monitors blinked.
+- NVIDIA's live API reports `globalGsyncState=1`, indicator enabled, and G-SYNC enabled on both ASUS displays.
+- AoE4 still resolves to its normal profile with G-SYNC allowed; no AoE4 setting changed.
+- Both Godot profiles are line-for-line unchanged from the earlier working snapshot.
+- The active NVIDIA DRS database was nevertheless rewritten at 14:49:19, exactly at the monitor blink.
+- No TDR, `nvlddmkm`, display-reset event, LiveKernelReport, or WER crash was recorded.
 
-That rewrite comes from Godot itself. Godot's project manager defaults to native OpenGL even though this project uses D3D12. During native OpenGL initialization, Godot 4.6.3 finds/creates its `Godot Engine` NVIDIA profile, writes the fullscreen-only G-SYNC mode and threaded-optimization values, and calls `NvAPI_DRS_SaveSettings()` unconditionally. This happens even when the profile already contains the requested values.
+The trigger is the interaction between two Godot profiles. Your exact-path NVIDIA App profile forces Fixed Refresh. Separately, Godot's project manager starts in native OpenGL even though this project uses D3D12. Native OpenGL initialization finds/creates the basename `Godot Engine` profile, writes fullscreen-only G-SYNC plus threaded optimization, and calls `NvAPI_DRS_SaveSettings()` unconditionally—even when nothing changed. Godot intentionally added this path to suppress unstable windowed G-SYNC ([origin commit](https://github.com/godotengine/godot/commit/b8edc64379b3c4b5f2e7334468be65fd44a4980c)); it remains in the [4.6.3 source](https://github.com/godotengine/godot/blob/4.6.3-stable/platform/windows/gl_manager_windows_native.cpp).
 
-At the same time, this Godot executable matches the separate exact-path NVIDIA App profile that forces Fixed Refresh. The DRS save makes the driver reload/reapply profile state while that fixed-refresh profile is active. Driver 616.56 reconfigures the display pipeline—hence the three-second blank on both monitors—but then fails to transition the VRR presentation path back when Godot exits. AoE4 later gets the correct G-SYNC-allowed profile, yet G-SYNC does not engage because the live driver state is stuck.
+That save reloads/reapplies profile state while the exact-path Fixed Refresh profile is active. The driver reconfigures the display pipeline—hence the three-second blank—but then fails to transition VRR back after Godot exits. AoE4 receives the correct G-SYNC-allowed profile, yet G-SYNC does not engage because the live path is wedged. So “globally off” accurately describes the symptom, but not the saved configuration.
 
-So “globally off” accurately describes the symptom, but not the saved configuration. The configuration is still on; runtime VRR activation is wedged.
-
-For immediate recovery, toggle global G-SYNC off and back on in NVIDIA App, or reboot. The best low-risk isolation/workaround is to bypass Godot's OpenGL project manager and start the D3D12 editor directly:
+For immediate recovery, toggle global G-SYNC off and back on in NVIDIA App, or reboot. The best low-risk isolation test is to bypass the OpenGL project manager and launch this D3D12 editor directly:
 
 ```text
 "C:\Users\k\Program\Godot_v4.6.3-stable_win64.exe\Godot_v4.6.3-stable_win64.exe" --editor --path "C:\Users\k\Repository\Godot\VsyncStutterTest\Godot" --rendering-driver d3d12
@@ -45,4 +44,4 @@ For immediate recovery, toggle global G-SYNC off and back on in NVIDIA App, or r
 
 If that avoids the blink and AoE4 G-SYNC works afterward, Godot's unconditional DRS save is the decisive trigger. If it still fails, merely selecting the exact-path Fixed Refresh profile is sufficient to trigger the NVIDIA bug.
 
-The full findings and timestamped evidence are in `2026-08-28 godot aoe4 gsync investigation/findings.md` and `evidence.md`.
+The complete analysis is in `2026-08-28 godot aoe4 gsync investigation/findings.md`; the timestamped snapshot is in `evidence.md`. Both the investigation and conversation record are committed, and the working tree is clean.
