@@ -1133,3 +1133,51 @@ Interpretation:
 - If it does not blink, the earlier blank was a one-time cold transition after the topology/profile-state change.
 
 The current HDMI arrangement is already a strong workaround for the damaging part of the bug: it preserves both monitors and correct per-application G-SYNC switching. The remaining question is whether its first-launch blank can also be eliminated reliably.
+
+---
+
+## User
+
+i did the following:
+Keep all display, G-SYNC, refresh-rate, and OSD settings unchanged.
+Launch Godot and open the project. Record whether this setup launch blinks.
+Move the project editor to the laptop display and close Godot there, allowing it to save that placement.
+Launch Godot and open the project again.
+Report where the editor opens and whether either monitor blinks. Confirm Godot remains smooth without G-SYNC.
+Close Godot.
+Immediately run VsyncStutterTest.exe on the primary TB5/DisplayPort PA and report its indicator and smoothness.
+
+i observed no monitor blinking at any point.
+godot editor always ran smoothly and didn't display gsync indicator.
+vsyncstutter test ran smoothly and did display gsync indicator.
+
+## Assistant
+
+This completes the stable-use validation. The current configuration reliably provides the desired behavior:
+
+- both external monitors remain active;
+- Godot runs smoothly without G-SYNC;
+- later intended applications regain smooth G-SYNC immediately, without a global toggle; and
+- repeated Godot launches produce no monitor blank, including when the editor is persisted to the internal laptop display.
+
+The final 23:33 capture confirms primary target 8450 remains `displayInVrrMode=1`, the MediaSync-off HDMI target remains outside VRR mode, and the effective Godot profile remains VRR disabled plus Fixed Refresh. Godot again saved DRS on both launches—at 23:31:52 and 23:32:20—without a blank or sticky failure.
+
+Therefore neither editor window placement nor Godot's profile save is sufficient to cause the earlier isolated blank. That one blank is best classified as a transient first/cold transition after changing the physical topology or driver target state. It has not reproduced in stable use; recurrence after reboot or another hotplug remains untested.
+
+Validated workaround:
+
+```text
+Primary PA278QGV:
+  TB5/USB-C DisplayPort, 119.998 Hz, MediaSync on
+
+Secondary PA278QGV:
+  native HDMI, 59.951 Hz, MediaSync off
+
+Global G-SYNC:
+  on
+
+Godot profile:
+  VRR disabled, G-SYNC Fixed Refresh
+```
+
+I recommend preserving this configuration for normal work. No further test is needed to validate the workaround. If you later want to isolate the underlying cause more precisely, the least disruptive next test is raising the HDMI monitor to 120 Hz if Windows offers it. Otherwise, the closest comparison is primary 120 Hz plus secondary 60 Hz over the two TB5/DisplayPort routes—but that risks restoring the sticky failure and requiring the global G-SYNC recovery toggle.
