@@ -847,6 +847,8 @@ At 120/60 with internal eDP off, the first Unity run caused one open blink; the 
 
 Thus lowering HDMI does not solve the issue. It converts the 120/120 arm's repeated transient blanking with eventual recovery into the original sticky primary-target failure. Active internal eDP, not low aggregate scanout load, is the only tested stabilizer for clean Fixed Refresh transitions in DP+HDMI. Reconnect internal eDP without toggling G-SYNC to test topology-only recovery.
 
+At 00:35, reconnecting/extending internal eDP without toggling G-SYNC restored primary target 8450 from `displayInVrrMode=0` to `1`; all three targets then reported mode 1 and DRS remained unchanged. Windows simultaneously raised HDMI from 59.951 Hz to 119.998 Hz, so the recovery is attributable to display-topology/mode reconstruction rather than proven eDP activation alone. A neutral control should verify functional recovery before clone-mode testing.
+
 ## Event and crash evidence
 
 ```text

@@ -34,6 +34,8 @@ The 120/60 neutral control is also functionally healthy and leaves both external
 
 That Unity transition produces the damaging sticky failure. After one initial blink, `VsyncStutterTest.exe` loses its indicator and becomes choppy; a second Unity/control sequence remains failed. Primary target 8450 changes from `displayInVrrMode=1` to `0`, HDMI remains at `1`, and DRS is unchanged. Lowering HDMI therefore changes the failure from repeated transient blanking at 120/120 to persistent VRR loss at 120/60. It is not a workaround and disproves a simple high-load threshold model.
 
+Reconnecting/extending internal eDP recovers target 8450 from mode 0 to 1 without a global G-SYNC toggle or DRS change. Windows simultaneously returns HDMI from 60 Hz to 120 Hz, so this is a topology/mode-reconstruction recovery rather than a pure eDP-only proof. It nevertheless provides a faster recovery path and prepares the clone-mode workaround test.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -587,6 +589,7 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: internal-off 120/60 Unity changes primary target 8450 from VRR mode 1 to 0 without a DRS write, and later G-SYNC fails.
 - High confidence: the bug is not a simple high aggregate scanout-load threshold; 120/120 produces transient repeated blanks with recovery, while 120/60 produces sticky loss.
 - Leading conclusion: active internal eDP is the only tested stabilizer that prevents both manifestations in the DP+HDMI topology.
+- High confidence: Windows display reconstruction by reconnecting eDP restores the stuck primary to VRR mode without toggling global G-SYNC; HDMI refresh also changes during that operation.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.

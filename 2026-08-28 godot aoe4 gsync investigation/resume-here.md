@@ -56,6 +56,8 @@ The neutral control succeeded with smooth G-SYNC. At 00:29, both external target
 
 The 120/60 Unity transition reproduced sticky failure. The first Unity run blinked once; the later control was choppy without the indicator. A second Unity run did not blink, but its later control remained failed. At 00:33, primary target 8450 changed from `displayInVrrMode=1` to `0`; HDMI remains at 1 and DRS is unchanged. Low HDMI refresh is not a workaround. Internal-off 120/120 yields transient repeated blanks with recovery, while 120/60 yields sticky loss. Reconnect internal eDP without toggling G-SYNC and capture whether topology alone restores target 8450.
 
+The 00:35 reconnect capture shows target 8450 restored from mode 0 to 1 with no G-SYNC toggle and unchanged DRS. Windows simultaneously raised HDMI from 60 Hz to 120 Hz, so recovery is due to topology/mode reconstruction and cannot be attributed to eDP alone. All three targets now report VRR mode 1. Run the neutral control once, then test duplicate/clone mode if recovery is functional.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -105,7 +107,7 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
 3. topology, a healthy `VsyncStutterTest.exe` baseline, and the clean Unity transition are complete;
 4. the original Godot workflow and launch-placement isolation are complete; and
-5. the 120/60 Unity arm is failed and target 8450 is stuck outside VRR mode; reconnect internal eDP without toggling G-SYNC or opening another 3D application, then capture recovery.
+5. reconnecting eDP restored target 8450 at the API level without a G-SYNC toggle; run `VsyncStutterTest.exe` to verify functional recovery before configuring duplicate/clone mode.
 
 Both external PAs work at 119.998 Hz when internal eDP is active. With eDP off, 120/120 Unity causes severe transient blanking but later G-SYNC recovers, while 120/60 Unity causes sticky primary-VRR loss. The immediate action is topology-only recovery by reconnecting eDP. If confirmed, duplicate/clone mode may keep eDP active without exposing a third usable desktop, although it does not satisfy a literal requirement that the panel be disconnected. Dual-VRR eligibility, driver-branch specificity, and the need or sufficiency of Godot's DRS write remain resolved. Direct OSD-state detection has not been implemented.
 

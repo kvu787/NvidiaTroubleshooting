@@ -262,3 +262,30 @@ Lowering HDMI to 60 Hz does not provide a workaround. Instead, external mode cha
 This is not a simple “too much scanout bandwidth” threshold. Active internal eDP is the only tested state that prevents both failure forms in the mixed-route topology. External mode/resource allocation affects the manifestation, not whether the underlying transition path is fragile.
 
 The next action is recovery by reconnecting internal eDP without toggling global G-SYNC. This tests whether the active-path topology change alone restores target 8450 to VRR mode and prepares the practical duplicate/clone experiment.
+
+## Recovery by reconnecting internal eDP
+
+Captured: 2026-08-29 00:35 PDT
+
+The user reconnected/extended the internal panel in Windows without toggling G-SYNC and without opening another 3D application.
+
+The stuck primary recovered immediately at the API level:
+
+```text
+target 8450 primary TB5/DisplayPort:
+  before reconnect: displayInVrrMode=0
+  after reconnect:  displayInVrrMode=1
+
+target 8448 HDMI:
+  displayInVrrMode=1
+
+target 8449 internal eDP:
+  active, displayInVrrMode=1
+
+DRS timestamps and hashes:
+  unchanged
+```
+
+Windows also automatically changed the HDMI PA from 59.951 Hz back to 119.998 Hz as part of extending eDP. Therefore this proves that Windows display-topology/mode reconstruction can recover the stuck primary without a global G-SYNC toggle, but it does not isolate eDP activation from the simultaneous HDMI refresh-mode change.
+
+The resulting state matches the known healthy three-display 120/120 topology. Run `VsyncStutterTest.exe` once to functionally verify the API-level recovery. If healthy, the next practical experiment is clone/duplicate mode: keep eDP physically active but share a Windows source desktop with the HDMI PA, preventing a third hidden desktop space.

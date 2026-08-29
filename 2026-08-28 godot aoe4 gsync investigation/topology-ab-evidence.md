@@ -235,6 +235,8 @@ The neutral control succeeded and left both external targets queryable in VRR mo
 
 The 120/60 Unity transition then produced sticky failure: after one initial blink, both later neutral controls were choppy without the indicator. Primary target 8450 changed from `displayInVrrMode=1` to `0`; HDMI and DRS remained unchanged. Lower refresh does not solve the two-external-only problem. It changes the manifestation from 120/120 repeated transient blanks with recovery to 120/60 sticky VRR loss. Reconnect internal eDP without a global toggle to test topology-only recovery.
 
+Reconnecting/extending eDP restored primary target 8450 from mode 0 to 1 without a global G-SYNC toggle or DRS change. Windows also automatically returned HDMI from 60 Hz to 120 Hz, so the recovery is a combined topology/mode reconstruction. Functional control and duplicate/clone-mode testing are next.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.
