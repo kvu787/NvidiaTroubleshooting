@@ -807,6 +807,10 @@ Unity was then launched under Fixed Refresh in this one-active-external topology
 
 This proves two **active** external scanout heads are required. Physical connection or NVIDIA enumeration of the second PA is not sufficient.
 
+At 23:11, the physical-route A/B baseline was established with both PAs active: target 8450 remains on TB5/DisplayPort at 119.998 Hz, while the second PA appears as new HDMI target 8448 at 59.951 Hz. The internal panel remains active, and all three paths are owned by the RTX GPU. DRS timestamps and hashes are unchanged from 22:50:13.
+
+Unexpectedly, NVAPI reports HDMI target 8448 as `VRR possible=1`, `displayInVrrMode=1`, with a 20583-us Adaptive-Sync interval even though the user left MediaSync off in that PA's OSD. The earlier DP-connected OSD-off target 8452 reported non-VRR. This input/route discrepancy is preserved in `tb5-dp-plus-hdmi-baseline.md`; it does not invalidate the routing test, but means the HDMI arm has two NVIDIA-reported VRR-possible external targets.
+
 ## Event and crash evidence
 
 ```text

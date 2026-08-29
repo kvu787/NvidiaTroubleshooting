@@ -30,6 +30,8 @@ That pre-Unity control succeeded: `VsyncStutterTest.exe` showed the indicator an
 
 The Unity transition also succeeded cleanly in this topology: there was no monitor blink, Unity ran without G-SYNC as intended, and post-Unity `VsyncStutterTest.exe` still showed the indicator and ran smoothly. The 23:07 topology and DRS hashes remained unchanged. Two active external scanout heads are therefore required; the second PA's physical connection/power/enumeration is not sufficient.
 
+At 23:11, both external PAs were made active again using different routes. MediaSync-on target 8450 remains on TB5/DisplayPort at 119.998 Hz; the second PA is now HDMI target 8448 at 59.951 Hz. The internal panel remains active, all three paths are on the RTX GPU, and DRS is unchanged. Despite MediaSync remaining off in the HDMI PA's OSD, NVAPI reports target 8448 as VRR-possible and in VRR display mode. Establish a healthy `VsyncStutterTest.exe` control on target 8450 before opening Unity.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -77,7 +79,7 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 
 1. keep the MediaSync-on PA on one TB5/USB-C DisplayPort output;
 2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
-3. capture topology and establish a healthy `VsyncStutterTest.exe` baseline;
+3. topology is captured; establish a healthy `VsyncStutterTest.exe` baseline on target 8450;
 4. run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`; and
 5. continue using `VsyncStutterTest.exe` as the routine neutral G-SYNC control.
 

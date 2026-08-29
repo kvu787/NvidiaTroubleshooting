@@ -131,6 +131,8 @@ The user completed the central part of that plan: two external PAs still behaved
 
 The Unity-to-control transition, driver-level recovery, replacement-control validation, and active-head-count isolation are complete. The highest-value remaining test is two active external PAs with different physical routes: MediaSync-on PA via TB5/DisplayPort and the second PA via HDMI. This distinguishes the dual-TB5/DP route from any-two-active-external behavior.
 
+That routing baseline is now established. The TB5/DP PA is target 8450 at 119.998 Hz and the HDMI PA is new target 8448 at 59.951 Hz; both plus the internal panel are active directly on the RTX GPU. No DRS data changed. NVAPI unexpectedly advertises the OSD-MediaSync-off HDMI target as VRR-possible and in VRR display mode, unlike the same OSD-off PA on DisplayPort. The physical-route A/B remains valid, but the current arm is not a perfect mixed-VRR-capability match.
+
 - smooth TB5+HDMI would isolate the dual-TB5/USB-C display route;
 - poor TB5+HDMI would implicate the NVIDIA/Windows two-external-head path more generally; and
 - two PAs at 60 Hz remains a lower-priority bandwidth/link-allocation test.
