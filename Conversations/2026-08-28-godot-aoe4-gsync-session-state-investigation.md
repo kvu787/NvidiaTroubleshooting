@@ -1656,3 +1656,31 @@ Now run the neutral control:
 5. Close it and report the result.
 
 If it succeeds, the next test is `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe` in this exact clone topology.
+
+---
+
+## User
+
+i ran VsyncStutterTest and i ran smoothly and displayed the gsync indicator
+
+## Assistant
+
+The 2560x1440 clone topology has passed its neutral control:
+
+- `VsyncStutterTest.exe` ran smoothly with the G-SYNC indicator;
+- the two-source/three-target clone topology is unchanged;
+- all three targets remain in VRR mode 1; and
+- DRS timestamps and hashes remain unchanged.
+
+Now perform the decisive Unity transition:
+
+1. Keep the clone topology, resolution, refresh rates, G-SYNC, and OSD settings unchanged.
+2. Do not open Godot.
+3. Open the same Unity editor/project on the separate primary TB5/DisplayPort PA. If it opens elsewhere, note where before moving it.
+4. Observe whether either monitor blinks on open, during use, or on close. Confirm whether Unity remains smooth without the G-SYNC indicator.
+5. Close Unity.
+6. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the primary TB5/DisplayPort PA.
+7. Observe its G-SYNC indicator and animation smoothness, then close it.
+8. Report both Unity and `VsyncStutterTest.exe` results.
+
+This directly tests whether keeping eDP active as a cloned target is sufficient to stabilize the Fixed Refresh transition while eliminating the hidden third desktop.
