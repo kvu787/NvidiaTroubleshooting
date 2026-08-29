@@ -635,3 +635,39 @@ This proves the OSD MediaSync-off change reached NVIDIA. The poor two-external e
 The next step is to keep this exact state, avoid Godot and Unity, and launch AoE4 before either editor. Observe the G-SYNC indicator, actual motion smoothness, and—if available—the MediaSync-on monitor's live refresh indication. Close AoE4 and report those observations without making another issue-related change.
 
 Raw and interpreted evidence is saved in `two-external-mixed-mediasync-baseline.md`. Investigation commit: `8a2e9a2`.
+
+---
+
+## User
+
+Do not open Godot or Unity.
+Do not toggle G-SYNC.
+Open AoE4 on the MediaSync-on PA.
+Observe:- G-SYNC indicator present or absent;
+- actual motion smoothness;
+- live monitor refresh changes, if its OSD provides them.
+Close AoE4 and report the observations.
+
+i've done this. aoe4 runs with the top-right gsync indicator and gsync seems to work as expected.
+
+## Assistant
+
+Recorded as a successful pre-editor control. Two active external heads—one VRR-capable and one verified non-VRR—do not inherently break G-SYNC in AoE4. A read-only capture after AoE4 closed showed the same three active targets and unchanged per-display VRR capabilities.
+
+This makes the result application/presentation-path dependent:
+
+- AoE4: G-SYNC indicator present and behavior normal before either editor;
+- Unity/Godot editors: poor behavior with two external heads;
+- ordinary Godot profile transition: additionally associated with the display blank and sticky loss of later AoE4 G-SYNC.
+
+The next clean separation is Unity followed by AoE4, with the display state unchanged and no G-SYNC toggle:
+
+1. Do not open Godot.
+2. Open the same Unity editor/project that shows poor behavior on the MediaSync-on PA.
+3. Observe Unity, then close it.
+4. Immediately open AoE4 and observe indicator and smoothness.
+5. Close AoE4 and report both Unity and post-Unity AoE4 results.
+
+If AoE4 remains normal, Unity's failure is confined to its own editor/windowed presentation path and Godot's persistent post-exit problem remains tied to its DRS transition. If AoE4 loses G-SYNC after Unity, the persistent transition defect is broader than Godot.
+
+Investigation commit: `59323dd`.
