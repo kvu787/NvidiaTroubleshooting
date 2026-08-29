@@ -1593,3 +1593,37 @@ Then:
 4. Tell me when it is ready so I can capture how Windows and NVIDIA represent the clone paths before testing it.
 
 Windows may renumber or visually combine displays after applying the clone; that is expected. The intended end state is display 2 as the separate primary desktop and displays 1+3 sharing the other desktop.
+
+---
+
+## User
+
+yes, i was mistaken. you are correct.
+
+i did this:
+Choose Duplicate desktop on 1 and 3.
+Then click Apply and Keep changes. Don’t change refresh rates, G-SYNC, or OSD settings, and don’t open any 3D applications afterward. Tell me when ready so I can capture the resulting clone topology.
+
+ready.
+
+## Assistant
+
+The captured clone topology is exactly what we intended:
+
+- Windows has three active physical display paths but only two desktop sources.
+- Internal eDP and the HDMI PA share source ID 2 and `\\.\DISPLAY3`, proving they are cloned.
+- The primary TB5/DisplayPort PA remains separate on source ID 0 and `\\.\DISPLAY1`.
+- All three NVIDIA targets remain active, OS-visible, VRR-capable, and in VRR mode 1.
+- DRS timestamps and hashes are unchanged.
+
+One practical detail: Windows chose a 2560x1600 shared source, while the HDMI PA receives a 2560x1440 signal at 120 Hz. Check whether that copy looks acceptably scaled or letterboxed.
+
+Now establish the neutral control:
+
+1. Keep the clone topology, G-SYNC, refresh rates, and OSD settings unchanged.
+2. Do not open Godot or Unity.
+3. Run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the separate primary TB5/DisplayPort PA.
+4. Observe the G-SYNC indicator and animation smoothness.
+5. Close it and report the result. Also report whether the cloned HDMI desktop looks visually usable or is distorted, cropped, or letterboxed.
+
+If the neutral control succeeds, the decisive next step is the Unity Fixed Refresh transition in this clone topology.
