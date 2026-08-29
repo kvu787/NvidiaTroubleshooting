@@ -1916,3 +1916,51 @@ The shortest deterministic recovery sequence is:
 The expected working topology is three active physical targets but only two Windows desktop sources: the DP PA by itself, plus the HDMI PA cloned with active eDP. After a reboot, one two-second blank on the first Godot launch was observed; repeated blanks or post-Godot loss of G-SYNC are failures, not that benign cold-launch quirk.
 
 The guide includes exact target modes, DRS values, a full validation matrix, symptom-based diagnosis, and a compact checklist. It is committed in `0829c5d`.
+
+---
+
+## User
+
+my recovery attempt is failing here (see screenshot)
+
+help me troubleshoot
+
+Attached screenshot saved as `Conversations/Attachments/2026-08-28-gsync-investigation/recovery-guide-acceptance-failure.png`.
+
+## User
+
+post-Godot VsyncStutterTest.exe lost G-SYNC
+
+## Assistant
+
+We have now isolated the failure precisely. **Your recovery settings are correct, but Godot poisoned the NVIDIA driver's live VRR state again.**
+
+The post-failure capture shows:
+
+- Correct topology: one PA on TB5/DP at 120 Hz; the other on native HDMI at 120 Hz; eDP active at 240 Hz and cloned with HDMI using a 1440p source.
+- Correct Godot profile: `VRR requested state = disabled` and explicit `G-SYNC = Fixed Refresh`.
+- Correct neutral-test policy: `VsyncStutterTest.exe` still has no DRS association.
+- Failed live state: primary DP target 8452 is still `VRR possible=1`, but `displayInVrrMode=0`. HDMI and eDP remain at `1`.
+
+That last point exactly explains the missing indicator and choppy motion. This is the original sticky per-target NVIDIA failure, not a Godot-profile or refresh-rate mistake. The query used [NVIDIA's official NVAPI](https://github.com/NVIDIA/nvapi) definitions.
+
+This also corrects one part of the prior guide: the mixed DP+HDMI/eDP-clone topology is the **best known state**, but it is not deterministic. It can produce a stable allocation and did survive one reboot, yet the visible settings do not uniquely determine NVIDIA's private display-head allocation.
+
+One observable difference is worth testing next:
+
+- rebooted working capture: DP target 8452 was on Windows source ID 2; the clone used source ID 0;
+- current failed capture: DP target 8452 is on source ID 0; the clone uses source ID 2.
+
+That is a hypothesis, not proof. The next controlled arm is therefore connector/source allocation—not another profile edit.
+
+For now, do only this:
+
+1. Toggle global G-SYNC off and apply.
+2. Toggle it back on and apply.
+3. Do not open Godot or Unity.
+4. Run `VsyncStutterTest.exe` on the main DP PA and confirm that it is smooth with the indicator.
+5. Close it and tell me when ready.
+
+I will then capture whether target 8452 returned to `displayInVrrMode=1`. After that, the clean next A/B is moving the DP PA to the other TB5 port while leaving HDMI, eDP clone membership, refresh rates, profiles, and MediaSync unchanged.
+
+The full failed-state evidence is in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), and the corrected guide is in [last-known-good-state-guide.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/last-known-good-state-guide.md). Evidence commit: `5dac1a8`.
