@@ -851,6 +851,8 @@ At 00:35, reconnecting/extending internal eDP without toggling G-SYNC restored p
 
 At 00:38, the neutral control functionally confirmed recovery: `VsyncStutterTest.exe` ran smoothly on the primary PA and displayed the G-SYNC indicator. The post-control capture shows three active RTX paths, target 8450 TB5/DisplayPort at 119.998 Hz in VRR mode 1, target 8448 HDMI at 119.998 Hz in VRR mode 1, and internal target 8449 at approximately 240 Hz in VRR mode 1. DRS timestamps and hashes remain unchanged. Windows topology/mode reconstruction is therefore a verified recovery mechanism that does not require cycling global G-SYNC.
 
+Windows Display Settings then exposed both clone choices for selected display 1. The unchanged left-to-right layout maps display 2 to the primary TB5/DisplayPort PA, display 3 to the HDMI PA, and display 1 to internal eDP. `Duplicate desktop on 1 and 3` is therefore the intended clone topology; it should be applied before any further 3D application and captured as a new baseline.
+
 ## Event and crash evidence
 
 ```text

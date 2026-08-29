@@ -318,3 +318,17 @@ DRS timestamps and hashes: unchanged
 This closes the recovery test: Windows display-topology/mode reconstruction fully restored functional G-SYNC without toggling the global G-SYNC setting. Because reconnecting eDP also caused Windows to raise HDMI from approximately 60 Hz to 120 Hz, the experiment still does not distinguish eDP activation from the broader mode reconstruction.
 
 The next practical experiment is duplicate/clone mode. Clone the internal panel with the HDMI PA while leaving the primary TB5/DisplayPort PA as a separate extended desktop. This keeps the eDP scanout path active but removes the hidden third desktop space. It is a usability workaround test, not literal internal-panel disconnection.
+
+## Clone-option mapping
+
+Captured: 2026-08-29 PDT
+
+Before applying a duplicate mode, Windows Display Settings showed the unchanged physical layout from left to right as displays 2, 3, and 1. Matching that arrangement to the preceding source-position capture gives:
+
+```text
+Windows display 2: primary TB5/DisplayPort PA
+Windows display 3: secondary HDMI PA
+Windows display 1: internal laptop panel
+```
+
+With display 1 selected, Windows offers both `Duplicate desktop on 1 and 2` and `Duplicate desktop on 1 and 3`. Therefore the requested topology is available. Select `Duplicate desktop on 1 and 3`; this clones internal eDP with the HDMI PA and leaves the primary TB5/DisplayPort PA separate. Capture the resulting paths before opening any 3D application.

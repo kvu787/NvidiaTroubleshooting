@@ -111,6 +111,8 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 
 Both external PAs work at 119.998 Hz when internal eDP is active. With eDP off, 120/120 Unity causes severe transient blanking but later G-SYNC recovers, while 120/60 Unity causes sticky primary-VRR loss. Reconnecting eDP/topology reconstruction restores functional G-SYNC without a global toggle. The immediate action is duplicate/clone mode: duplicate internal eDP with the HDMI PA while keeping the primary TB5/DisplayPort PA extended separately. This may keep eDP active without exposing a third usable desktop, although it does not satisfy a literal requirement that the panel be disconnected. Dual-VRR eligibility, driver-branch specificity, and the need or sufficiency of Godot's DRS write remain resolved. Direct OSD-state detection has not been implemented.
 
+Windows offers the exact clone pair. The unchanged left-to-right layout maps display 2 to the primary TB5/DisplayPort PA, display 3 to the HDMI PA, and display 1 to internal eDP. Select `Duplicate desktop on 1 and 3`, apply it, and open no 3D application afterward. Capture the resulting source/target paths before functional testing.
+
 ## Per-display software possibility
 
 NVCP cannot independently enable only one of the two identical PA278QGVs. NVIDIA documents its display checkbox as applying to every connected display of the selected model.
