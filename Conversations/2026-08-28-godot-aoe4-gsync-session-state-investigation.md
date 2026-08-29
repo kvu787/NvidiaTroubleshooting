@@ -671,3 +671,67 @@ The next clean separation is Unity followed by AoE4, with the display state unch
 If AoE4 remains normal, Unity's failure is confined to its own editor/windowed presentation path and Godot's persistent post-exit problem remains tied to its DRS transition. If AoE4 loses G-SYNC after Unity, the persistent transition defect is broader than Godot.
 
 Investigation commit: `59323dd`.
+
+---
+
+## User
+
+i did this:
+Do not open Godot or toggle G-SYNC.
+Open the same Unity editor/project that demonstrates poor behavior on the MediaSync-on PA.
+Observe Unity, then close it.
+Immediately open AoE4.
+Observe its G-SYNC indicator and actual smoothness.
+Close AoE4 and report both results.
+
+for unity:
+after a 2-3 second monitor blink, unity seemed to work okay and did not show any gsync, as expected because the nvcp profile for unity editor disabled gsync
+
+for aoe4:
+the top-right gsync indicator was missing and the gameplay was clearly choppy
+
+also, i am switching from aoe4 to this simple 3d scene for testing gsync: "C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe"
+
+for vsyncstuttertest:
+the top-right gsync indicator was missing and the animation was clearly choppy
+
+## Assistant
+
+This is the decisive reproduction. The live read-only state and DRS audit show:
+
+```text
+Before Unity, target 8450:
+  VRR possible=1
+  displayInVrrMode=1
+  AoE4 G-SYNC worked
+
+After Unity, target 8450:
+  VRR possible=1
+  displayInVrrMode=0
+  AoE4 and VsyncStutterTest lacked G-SYNC and were choppy
+```
+
+Unity's current `Unity 3D` profile explicitly contains:
+
+```text
+VRR requested state: disabled
+G-SYNC application override: fixed refresh
+G-SYNC mode: disabled
+```
+
+Both DRS database files were last written at 22:11:41. The successful pre-Unity control was at 22:36 and the failed post-Unity capture at 22:43. Their post-test hashes are identical. Unity did not save or reload DRS during this test. Activation of the already-stored Fixed Refresh profile alone caused the monitor blank and sticky external VRR state.
+
+`VsyncStutterTest.exe` has no NVIDIA full-path association, basename association, or matching profile. Its failed result is therefore a clean inherited live/global-state control. It replaces AoE4 as the routine G-SYNC test from this point forward.
+
+The root-cause conclusion is revised:
+
+- not Godot-specific;
+- not dependent on Godot's profile writer;
+- reproduced by Fixed Refresh profile activation in Unity;
+- conditional on the two-external-head topology;
+- reproduced on NVIDIA 596.49 as well as the earlier Godot case on 616.56; and
+- directly visible as target 8450 remaining VRR-capable while becoming stuck outside VRR mode.
+
+The next action is one known recovery cycle: toggle global G-SYNC off/apply, then on/apply, without opening Unity, Godot, or `VsyncStutterTest.exe`, and report when ready. The read-only probe should then verify target 8450 returned to `displayInVrrMode=1` before establishing the neutral `VsyncStutterTest.exe` baseline.
+
+Investigation commit: `d1882d3`.
