@@ -2250,3 +2250,75 @@ If Godot accidentally enters primary DP and later G-SYNC fails:
 The remaining untested durability boundaries are sleep, hibernate, NVIDIA driver update/reset, and monitor power/hotplug. They do not need to be tested unless one becomes relevant to normal use.
 
 I updated the [recovery guide](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/last-known-good-state-guide.md), [placement evidence](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), and [root-cause synthesis](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/root-cause-synthesis.md). Evidence commit: `b945267`.
+
+---
+
+## User
+
+what are the precise specifications for the hdmi port and two thunderbolt 5 usb-c ports for this machine (2025 Asus ROG Strix G18 G815LR-IS97)
+
+## Assistant
+
+Here is the most precise defensible specification. ASUS publishes the connector classes and major features, but not every electrical limit people often infer from those names.
+
+| Property | Native HDMI | Each of the two USB-C ports |
+|---|---|---|
+| Physical connector | One full-size HDMI output | USB Type-C |
+| ASUS designation | **HDMI 2.1 FRL** | **Thunderbolt 5** |
+| Display | HDMI video + audio | DisplayPort output |
+| G-SYNC | Not explicitly promised for HDMI in ASUS's I/O table | Explicitly supported by ASUS |
+| Data | No USB/data function | TB5/USB; ASUS says up to 120 Gbit/s |
+| Charging into laptop | No | USB PD, **20 V / 5 A, up to 100 W** |
+| Published max display mode | Not stated | Not stated |
+
+ASUS's exact G815LR-IS97 page lists `1x HDMI 2.1 FRL` and `2x Thunderbolt 5 with support for DisplayPort / power delivery / G-SYNC (data speed up to 120Gbps)`. All are on the left edge. [ASUS exact SKU specifications](https://rog.asus.com/us/laptops/rog-strix/rog-strix-g18-2025/spec/?config=90NR0LC1-M00460), [ASUS G815 manual](https://dlcdnets.asus.com/pub/ASUS/GamingNB/G815LW/E24196_G815L_J_EM.pdf?model=ROG+Strix+G18%282025%29+G815)
+
+### HDMI: what `HDMI 2.1 FRL` does and does not tell us
+
+`FRL` means Fixed Rate Link, the newer signaling mode used for higher-bandwidth HDMI modes. HDMI 2.1 as a specification goes up to 48 Gbit/s and includes capabilities such as 4K120 and VRR, but that does not prove this laptop implements the maximum FRL6 rate or every optional feature. [HDMI Licensing Administrator's HDMI 2.1b overview](https://www.hdmi.org/spec/hdmi2_1/index.aspx)
+
+ASUS does **not** publish the G815LR port's:
+
+- actual FRL mode/rate: 24, 32, 40, or 48 Gbit/s;
+- maximum resolution/refresh/chroma/bit-depth table;
+- DSC implementation; or
+- explicit HDMI G-SYNC guarantee.
+
+Therefore, it would be inaccurate to restate this machine's specification as “48-Gbit/s HDMI,” “guaranteed 4K120,” or “guaranteed HDMI G-SYNC.” What we have actually measured is that the native-HDMI PA278QGV operates at 2560x1440/119.998 Hz and appears as a separate HDMI target owned by the RTX 5070 Ti.
+
+### Thunderbolt 5: the real meaning of 120 Gbit/s
+
+For a Thunderbolt 5 connection, the normal link is **80 Gbit/s transmit and 80 Gbit/s receive**. Bandwidth Boost can rebalance a display-heavy connection to **120 Gbit/s transmit and 40 Gbit/s receive**. It is not 120 Gbit/s simultaneously in both directions, and it is not 120 Gbit/s of application payload. TB5 also carries USB4 v2, PCIe, and DisplayPort traffic and is backward compatible with older Thunderbolt/USB devices. [Intel Thunderbolt 5 technology brief](https://www.intel.com/content/dam/www/central-libraries/us/en/documents/2023-09/thunderbolt-5-technology-brief.pdf)
+
+ASUS caps this laptop's USB-C charging input at **100 W**; the manual specifies a **20 V / 5 A** source. That is input to the notebook, not a claim that a port supplies 100 W to a peripheral, and the two inputs do not add to 200 W. [ASUS G815 product page](https://rog.asus.com/us/laptops/rog-strix/rog-strix-g18-2025/)
+
+### Are the two TB5 ports independent?
+
+They are two ports, but not two independent Thunderbolt controllers. This machine currently enumerates one Intel USB4 2.0 host-router complex (`8086:5780/5781/5782`) for the pair. That is consistent with Intel's **JHL9580 dual-port Barlow Ridge** host-controller design, which has a PCIe Gen 4 x4 host interface and supports DisplayPort 2.1 tunnel/re-drive. ASUS does not name the controller IC, so JHL9580 is a strong hardware inference, not an ASUS-confirmed bill-of-materials fact. [Intel JHL9580 specifications](https://www.intel.com/content/www/us/en/products/sku/225921/intel-jhl9580-thunderbolt-5-controller/specifications.html)
+
+This means:
+
+- both receptacles belong to one controller/root-router domain;
+- ASUS does not publish their simultaneous aggregate bandwidth;
+- that does not imply an automatic 40-Gbit/s-per-port split; and
+- “2 x 120 Gbit/s aggregate” is not a documented specification.
+
+### DisplayPort capability through USB-C
+
+Thunderbolt 5 and the probable JHL9580 support DisplayPort 2.1 transport, and the RTX 5070 Ti Laptop GPU supports DisplayPort 2.1b. But ASUS only says “support for DisplayPort”; it does not state DP 2.1, UHBR10/13.5/20, or a per-port/simultaneous maximum display matrix for this laptop. NVIDIA itself says to check the notebook manufacturer for the implementation. [NVIDIA laptop GPU comparison](https://www.nvidia.com/en-us/geforce/laptops/compare/)
+
+For your PA278QGV, the captured connection was:
+
+- four DP lanes;
+- HBR2, 5.4 Gbit/s per lane;
+- 8 bits per component;
+- 2560x1440 at 119.998 Hz; and
+- not MST.
+
+That is 21.6 Gbit/s raw / 17.28 Gbit/s DP payload. It describes this monitor/cable/mode, not the port ceiling.
+
+Also, your PA278QGV is not a Thunderbolt device. With a USB-C-to-DisplayPort cable it exposes no downstream USB4 router, so the display is using a DP path through a TB5-capable USB-C connector; it is **not** consuming an 80/120-Gbit/s Thunderbolt tunnel. The RTX GPU sees the two PAs as two distinct external-DP connector instances.
+
+This is directly relevant to the fault: native HDMI is a different target/transmitter route, whereas both USB-C monitor connections become external DP targets through the one dual-port TB5 domain. That is why “one DP PA + one native-HDMI PA” and “two DP PAs through TB5” are materially different hardware topologies, even at identical 1440p/120-Hz modes.
+
+I recorded the full documented/measured/unknown breakdown in [g815lr-display-port-specifications.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/g815lr-display-port-specifications.md), commit `1bd0ba2`.
