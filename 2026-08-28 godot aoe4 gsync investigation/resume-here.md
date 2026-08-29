@@ -14,7 +14,7 @@ Required end state:
 - No long monitor blank.
 - No sticky loss of G-SYNC after Godot exits.
 
-No tested two-external-monitor configuration meets all five requirements. A new physical-topology A/B shows that the same Fixed Refresh Godot profile works smoothly when only one PA278QGV is connected.
+TB5/DisplayPort plus native HDMI is now the first two-external-monitor candidate to meet all five requirements. The Unity Fixed Refresh transition is fully validated in this topology; exact Godot validation remains.
 
 Unity now proves the sticky failure is not Godot-specific. In the captured two-external mixed-MediaSync topology, AoE4 worked before Unity. Launching Unity under its explicit Fixed Refresh profile caused a two-to-three-second blink; after Unity closed, both AoE4 and unprofiled `VsyncStutterTest.exe` lacked G-SYNC and were choppy. Target 8450 remained `VRR possible=1` but changed from `displayInVrrMode=1` to `0`.
 
@@ -33,6 +33,10 @@ The Unity transition also succeeded cleanly in this topology: there was no monit
 At 23:11, both external PAs were made active again using different routes. MediaSync-on target 8450 remains on TB5/DisplayPort at 119.998 Hz; the second PA is now HDMI target 8448 at 59.951 Hz. The internal panel remains active, all three paths are on the RTX GPU, and DRS is unchanged. Despite MediaSync remaining off in the HDMI PA's OSD, NVAPI reports target 8448 as VRR-possible and in VRR display mode. Establish a healthy `VsyncStutterTest.exe` control on target 8450 before opening Unity.
 
 That control succeeded: `VsyncStutterTest.exe` showed the G-SYNC indicator and ran smoothly on target 8450. At 23:18, topology, NVAPI VRR-mode bits, and DRS hashes remained at baseline. The decisive next action is `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe` without changing anything else.
+
+The Unity transition also succeeded: no monitor blink, Unity behaved acceptably without G-SYNC, and the immediate `VsyncStutterTest.exe` control retained the indicator and smooth motion. At 23:20, target 8450 remained `displayInVrrMode=1`, topology remained unchanged, and DRS was byte-for-byte identical. This proves two active external heads are not sufficient. The successful arm changed both route and mode: the secondary moved from 119.998-Hz TB5/DisplayPort to 59.951-Hz HDMI. Route versus refresh/link load remains unresolved, but the configuration is a viable workaround candidate.
+
+The current `Godot Engine` DRS profile matches `godot_v4.6.3-stable_win64.exe` and explicitly sets VRR requested state disabled plus G-SYNC Fixed Refresh. The next action is the final exact Godot validation in the working TB5/DisplayPort-plus-HDMI topology.
 
 ## New leading result: external-monitor-count A/B
 
@@ -81,8 +85,8 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 
 1. keep the MediaSync-on PA on one TB5/USB-C DisplayPort output;
 2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
-3. topology and a healthy `VsyncStutterTest.exe` baseline on target 8450 are captured;
-4. now run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`; and
+3. topology, a healthy `VsyncStutterTest.exe` baseline, and the clean Unity transition are complete;
+4. run the original Godot 4.6.3 workflow without the explicit D3D12 bypass, then close Godot and run `VsyncStutterTest.exe`; and
 5. continue using `VsyncStutterTest.exe` as the routine neutral G-SYNC control.
 
 This sequence now focuses on active scanout-head count and, if necessary, the dual-TB5 route. Dual-VRR eligibility on the earlier DisplayPort topology, driver-branch specificity, and the need for Godot's DRS write have been resolved. Direct OSD-state detection has not been implemented; the current HDMI target also demonstrates that user-observed MediaSync state and NVIDIA's VRR classification may diverge.

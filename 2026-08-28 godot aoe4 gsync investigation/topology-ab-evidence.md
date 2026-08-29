@@ -209,19 +209,19 @@ A single defective TB5/USB-C port is now unlikely because target 8452 was smooth
 | D | two PAs | internal + both PAs | off | Isolate dual-VRR from dual-display topology |
 | E | two PAs | internal + one PA | off on inactive PA | Smooth; proves active external target count, not physical presence |
 | F | two PAs | internal + both PAs at 60 Hz | on | Lower-priority bandwidth/link-allocation test |
-| G | one PA on TB5/DP, one on HDMI | internal + both PAs | OSD off on HDMI PA; NVAPI still reports VRR possible | Route isolation; healthy functional control, Unity transition pending |
+| G | one PA on TB5/DP, one on HDMI | internal + both PAs | OSD off on HDMI PA; NVAPI still reports VRR possible | Smooth before and after Unity Fixed Refresh; isolates dual-TB5/DP route |
 
 Cases A-E are complete. Case E left both cables connected and monitors powered, but disabled the MediaSync-off PA in Windows. Unity Fixed Refresh caused no blink and the post-Unity `VsyncStutterTest.exe` control retained G-SYNC. This proves two active external scanout heads are required.
 
 ## Completed baseline and next step
 
-The active-head-count isolation is complete, and case G's topology/DRS and functional baselines are healthy. Run `Unity Fixed Refresh -> VsyncStutterTest.exe` on the MediaSync-on TB5/DP PA without changing topology or settings.
+The active-head-count isolation is complete. Case G remained healthy through `Unity Fixed Refresh -> VsyncStutterTest.exe`, with no blink, no sticky loss, unchanged DRS, and target 8450 still in VRR mode. Two active external heads are not sufficient. Case G changed both the secondary route and its refresh rate (119.998-Hz DisplayPort to 59.951-Hz HDMI), so route alone is not isolated. Validate the original Godot workflow in this working configuration next.
 
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.
-- If TB5+HDMI is smooth while two TB5 outputs are poor, the fault is specific to the dual USB-C/DisplayPort routing path.
-- If TB5+HDMI is also poor, the fault is the NVIDIA/Windows two-external-head path more generally.
+- TB5+HDMI at the current 120-Hz/60-Hz split is smooth while two 120-Hz TB5 outputs are poor, isolating a route/mode family but not route alone.
+- Later, test HDMI at 120 Hz if exposed, or both TB5/DisplayPort PAs at 60 Hz, to separate connector route from refresh/link load.
 - Unity has already separated profile activation from Godot's writer: an existing Fixed Refresh profile is sufficient.
 
 ## Authoritative references

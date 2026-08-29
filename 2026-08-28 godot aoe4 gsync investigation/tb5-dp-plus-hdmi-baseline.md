@@ -79,3 +79,35 @@ DRS timestamps and SHA-256 hashes: identical to the 23:11 baseline
 ```
 
 This proves the TB5/DisplayPort-plus-HDMI topology is healthy before Unity. The decisive next transition is `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe` on target 8450 without any intervening settings or topology change.
+
+## Unity transition result
+
+Unity produced no monitor blink, behaved acceptably, and did not show G-SYNC as intended by its Fixed Refresh profile. After Unity closed, `VsyncStutterTest.exe` still displayed the G-SYNC indicator and ran smoothly on target 8450.
+
+The 23:20 post-transition capture remained healthy and unchanged:
+
+```text
+Windows active paths: targets 8449 internal, 8450 TB5/DisplayPort PA, 8448 HDMI PA
+target 8450: VRR possible=1, displayInVrrMode=1
+target 8448: VRR possible=1, displayInVrrMode=1
+DRS timestamps and SHA-256 hashes: identical to the 23:11 and 23:18 baselines
+```
+
+This is decisive on one point: two active external NVIDIA scanout heads are necessary in the earlier failure arms but are not sufficient. Substituting native HDMI for the second TB5/USB-C DisplayPort route prevents both the Fixed Refresh launch blank and the sticky loss of later G-SYNC.
+
+It does not yet prove that connector route alone is causal. The move also changed the secondary PA from 119.998 Hz over DisplayPort to 59.951 Hz over HDMI, created a new target ID, and changed NVIDIA's VRR classification despite the unchanged OSD setting. The successful configuration may therefore depend on the HDMI driver path, lower secondary refresh/link load, or another route-associated mode-state difference. A future HDMI-at-120-Hz test, if available, or dual-TB5/DisplayPort-at-60-Hz test can separate those factors.
+
+## Godot pre-validation state
+
+A read-only DRS audit after the successful Unity transition finds exactly one matching profile:
+
+```text
+profile: Godot Engine
+application: godot_v4.6.3-stable_win64.exe
+VRR requested state: disabled
+G-SYNC application override: fixed refresh
+G-SYNC mode: fullscreen only
+OpenGL threaded optimization: disabled
+```
+
+This ensures the final Godot test will exercise the intended Fixed Refresh profile. Run the original Godot workflow without the explicit D3D12 bypass, close Godot, and immediately validate `VsyncStutterTest.exe` on target 8450.

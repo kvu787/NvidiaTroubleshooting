@@ -815,6 +815,10 @@ The user then directly rechecked the HDMI PA's OSD and confirmed `MediaSync=off`
 
 At 23:18, the pre-Unity functional control succeeded in the TB5/DisplayPort-plus-HDMI topology. `VsyncStutterTest.exe` ran smoothly on target 8450 and displayed the G-SYNC indicator. The post-control topology, target VRR-mode bits, DRS timestamps, and DRS hashes all match the 23:11 baseline.
 
+The Unity transition then succeeded cleanly. Unity caused no blink and ran without G-SYNC as intended. The immediate `VsyncStutterTest.exe` control retained its indicator and smooth motion. At 23:20, target 8450 remained `displayInVrrMode=1`, all paths were unchanged, and the DRS files were byte-for-byte identical to baseline. Therefore two active external heads are not sufficient. The working arm differs by both route and secondary mode: HDMI at 59.951 Hz versus TB5/DisplayPort at 119.998 Hz. It isolates a route/mode family, not connector route alone.
+
+A read-only pre-Godot DRS audit confirms `godot_v4.6.3-stable_win64.exe` is associated with the existing `Godot Engine` profile, which explicitly sets VRR requested state disabled and G-SYNC Fixed Refresh. The routed-display workaround is ready for an exact Godot validation.
+
 ## Event and crash evidence
 
 ```text

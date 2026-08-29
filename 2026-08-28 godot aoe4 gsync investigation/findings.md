@@ -6,7 +6,7 @@ Investigation date: 2026-08-28 PDT
 
 Opening the Godot project is not persistently turning off the NVIDIA global G-SYNC setting, and it is not changing the later control application's profile.
 
-The failure is a live NVIDIA driver-state problem caused by activation/deactivation of a Fixed Refresh application profile in the two-external-head topology. Both Godot and Unity reproduce a two-to-three-second monitor blank when launched under Fixed Refresh, after which the VRR-capable PA remains stuck outside VRR mode even though persistent global G-SYNC remains enabled.
+The failure is a live NVIDIA driver-state problem caused by activation/deactivation of a Fixed Refresh application profile in the tested dual-TB5/USB-C DisplayPort, dual-119.998-Hz topology. Both Godot and Unity reproduce a two-to-three-second monitor blank in that topology, after which the VRR-capable PA remains stuck outside VRR mode even though persistent global G-SYNC remains enabled.
 
 Unity is the decisive control. Its current `Unity 3D` profile explicitly requests VRR disabled and Fixed Refresh. Unity reproduced the blank and left both AoE4 and the unprofiled `VsyncStutterTest.exe` without G-SYNC. The NVIDIA DRS databases were last written about 25 minutes before the Unity test, proving no application-side DRS save/reload was required. Merely activating the already-stored Fixed Refresh profile is sufficient.
 
@@ -14,7 +14,7 @@ The subsequent global G-SYNC off/on recovery restored target 8450 from `displayI
 
 After recovery, unprofiled `VsyncStutterTest.exe` displayed the G-SYNC indicator and ran smoothly; the post-control API state remained correct. It is now a validated replacement for AoE4 in the remaining tests.
 
-The active-head-count isolation is decisive. With both PA cables connected and both monitors powered, but MediaSync-off target 8452 disabled in Windows, Unity Fixed Refresh caused no monitor blink and did not poison the later `VsyncStutterTest.exe` control. DRS remained unchanged. Therefore two active external scanout heads are necessary; mere physical connection, EDID presence, or NVIDIA enumeration of the second PA is not sufficient.
+The active-head-count and route/mode isolations are decisive. With both PA cables connected and both monitors powered, but MediaSync-off target 8452 disabled in Windows, Unity Fixed Refresh caused no blink or sticky failure. With both external PAs active but the second moved from 119.998-Hz TB5/DisplayPort to 59.951-Hz native HDMI, Unity likewise caused no blink or sticky failure. Therefore two active external heads alone are not sufficient. Route alone is not yet isolated because the HDMI move also reduced the secondary refresh/link load and changed its NVIDIA target/mode state.
 
 This explains the apparently contradictory observations:
 
@@ -26,7 +26,7 @@ A subsequent recovery test confirmed this interpretation: disabling global G-SYN
 
 A later one-profile isolation test made the trigger narrower. The exact-path NVIDIA App profile was deleted, and the remaining basename `Godot Engine` profile was set to Fixed Refresh in NVIDIA Control Panel. Godot still produced the same three-second blank, and AoE4 still failed to activate G-SYNC afterward. Therefore duplicate profiles, exact-path matching, and the NVIDIA App-created profile are not required. The subsequent Unity control narrowed this further: an existing Fixed Refresh profile can trigger the failure without any DRS write.
 
-The best classification is an NVIDIA multi-display VRR/profile-transition bug. Godot's unconditional NVAPI profile writer exposed the problem but is not necessary for it. The original reproduction used driver 616.56; Unity has now reproduced the failure on driver 596.49. The failure to restore G-SYNC for a later application is therefore a driver/display-path failure across both tested driver branches.
+The best classification is an NVIDIA multi-display VRR/profile-transition bug specific to the tested dual external DisplayPort-over-USB-C, high-refresh state. Godot's unconditional NVAPI profile writer exposed the problem but is not necessary for it. The original reproduction used driver 616.56; Unity reproduced the failure on driver 596.49. The failure to restore G-SYNC for a later application is therefore a driver/display-path failure across both tested driver branches.
 
 The direct D3D12 bypass has now been runtime-verified from a completely clean Godot/NVIDIA baseline. With both rendering fallbacks disabled, the editor opened without a monitor blank, showed the G-SYNC indicator, and exhibited the user's choppy pointer movement. Afterward, every DRS file remained byte-for-byte identical to the pre-launch baseline, the profile count remained 7957, the exhaustive Godot audit remained clean, and NVIDIA App's private catalog remained free of Godot. The user then launched AoE4 and observed its G-SYNC indicator normally. This proves the direct D3D12 path avoids both Godot's profile writer and Fixed Refresh profile activation; the Unity control shows the latter is the necessary distinction for the blank/sticky failure. The choppy G-SYNC editor behavior is the tradeoff that Godot's profile workaround was designed to suppress.
 
@@ -135,9 +135,10 @@ That routing baseline is now established. The TB5/DP PA is target 8450 at 119.99
 
 The pre-Unity functional control in this topology is healthy: `VsyncStutterTest.exe` shows the G-SYNC indicator and runs smoothly on target 8450. A 23:18 capture confirms all display paths, VRR-mode bits, and DRS hashes remain at baseline. The Unity-to-control transition can now distinguish the dual-TB5/DP route from any two-active-external topology without a preexisting G-SYNC failure.
 
-- smooth TB5+HDMI would isolate the dual-TB5/USB-C display route;
-- poor TB5+HDMI would implicate the NVIDIA/Windows two-external-head path more generally; and
-- two PAs at 60 Hz remains a lower-priority bandwidth/link-allocation test.
+That transition remained healthy. Unity caused no blink and ran without G-SYNC; the immediate neutral control retained G-SYNC and smooth motion. The 23:20 post-state is unchanged and target 8450 remains in VRR display mode. Therefore two active external heads are not sufficient. One PA at 119.998 Hz on TB5/DisplayPort plus the second at 59.951 Hz on native HDMI is the first two-external-monitor workaround candidate that preserves the desired profile transition in Unity. Exact Godot validation remains. Because both route and refresh changed, route alone is not yet proven causal.
+
+- TB5+HDMI with the HDMI PA at 59.951 Hz is smooth and isolates a route/mode family; and
+- HDMI at 120 Hz, if available, or both TB5/DisplayPort PAs at 60 Hz is the later test that can separate route from refresh/link load.
 
 NVIDIA's public support article for mixed-monitor VRR says multiple monitors may be connected but no more than one should have G-SYNC enabled. NVIDIA's setup help also describes its display enablement as applying to every connected display of the selected model. Both PAs have the same model/EDID, and the earlier NVIDIA App capture reported G-SYNC enabled on both. Those documents originally made dual enabled PA278QGVs the leading hypothesis. The MediaSync-off test now points more broadly to two active external heads. NVAPI measures NVIDIA's per-target state, not the monitor's OSD setting; the older support article is not proof of the exact 2026 driver defect.
 
@@ -555,7 +556,8 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: the current one-external state has the internal panel plus one PA active; this is not a generic single-display configuration.
 - High confidence: both external PA targets being active is a necessary condition in every reported bad arm; the internal panel is neither necessary for failure nor sufficient to cause it.
 - High confidence: the inactive second PA may remain cabled, powered, and physically enumerated without triggering the bug; active scanout, not presence, is required.
-- High confidence: the narrower trigger is two active external display heads, not two NVIDIA-reported VRR-capable external targets; after the user confirmed MediaSync off, NVAPI reported the second DisplayPort target as non-VRR in the bad topology.
+- High confidence: two active external display heads are necessary in the bad arms but not sufficient; TB5/DisplayPort plus HDMI is smooth through the same Unity Fixed Refresh transition.
+- High confidence: the tested bad state has both external PAs active at 119.998 Hz through the laptop's two TB5/USB-C DisplayPort outputs, while the working two-external arm has the secondary at 59.951 Hz over HDMI. Route versus refresh/link load remains unresolved.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.
