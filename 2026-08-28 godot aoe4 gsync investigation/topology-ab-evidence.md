@@ -217,6 +217,8 @@ Cases A-E are complete. Case E left both cables connected and monitors powered, 
 
 The active-head-count isolation is complete. Case G remained healthy through `Unity Fixed Refresh -> VsyncStutterTest.exe`, with no blink, no sticky loss, unchanged DRS, and target 8450 still in VRR mode. Two active external heads are not sufficient. Case G changed both the secondary route and its refresh rate (119.998-Hz DisplayPort to 59.951-Hz HDMI), so route alone is not isolated. Validate the original Godot workflow in this working configuration next.
 
+The Godot workflow then preserved correct per-application switching twice. The first project editor opened on the internal panel and caused a two-second blank; the second opened on the primary PA and caused none. Both later neutral controls retained G-SYNC. Godot saved DRS during both launches, so its save is not sufficient for the blank or sticky failure. Case G now needs a controlled internal-panel window-placement repetition, not another uncontrolled Godot launch.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

@@ -111,3 +111,49 @@ OpenGL threaded optimization: disabled
 ```
 
 This ensures the final Godot test will exercise the intended Fixed Refresh profile. Run the original Godot workflow without the explicit D3D12 bypass, close Godot, and immediately validate `VsyncStutterTest.exe` on target 8450.
+
+## Godot validation result
+
+The user performed the original Godot workflow twice without changing G-SYNC, topology, refresh rates, or OSD settings.
+
+First sequence:
+
+- Godot 4.6.3 opened the project editor on the internal laptop display rather than the primary TB5/DisplayPort PA;
+- the monitors blanked for about two seconds;
+- the user moved the editor to the primary PA and closed Godot; and
+- the immediate `VsyncStutterTest.exe` control on the primary PA displayed the G-SYNC indicator and ran smoothly.
+
+Second sequence:
+
+- the project editor opened on the primary TB5/DisplayPort PA;
+- there was no reported monitor blank;
+- Godot showed no G-SYNC indicator and editor usage was smooth;
+- after Godot closed, the immediate `VsyncStutterTest.exe` control again displayed the indicator and ran smoothly.
+
+The 23:28 post-test capture shows:
+
+```text
+target 8450, primary TB5/DisplayPort PA:
+  VRR possible=1, displayInVrrMode=1
+
+target 8448, MediaSync-off HDMI PA:
+  VRR possible=1, displayInVrrMode=0
+
+target 8449, internal panel:
+  VRR possible=1, displayInVrrMode=1
+
+all three Windows paths unchanged
+```
+
+The primary target therefore remains healthy after both Godot Fixed Refresh transitions. The HDMI target changed from `displayInVrrMode=1` in the pre-Godot baseline to `0`, which is consistent with its user-confirmed OSD MediaSync-off state but does not alter the working primary control.
+
+Godot did rewrite DRS during both launches:
+
+```text
+nvdrsdb0.bin last write: 23:24:38
+nvdrsdb1.bin last write: 23:25:09
+```
+
+The two database hashes changed, while a read-only query shows the effective Godot profile is semantically unchanged: VRR requested state disabled, G-SYNC Fixed Refresh, fullscreen-only G-SYNC mode, and threaded optimization disabled. The two distinct timestamps closely match the two launches and are consistent with Godot 4.6.3's unconditional `NvAPI_DRS_SaveSettings()` path.
+
+This proves the DRS save alone is not sufficient for either outcome: the second save caused no reported blank, and neither save caused sticky loss of later G-SYNC. The remaining first-launch blank is confounded with launch-display placement and cold/warm transition state. Deliberately persisting the editor on the internal display and reopening it is the next direct isolation.

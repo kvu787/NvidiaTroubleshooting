@@ -819,6 +819,10 @@ The Unity transition then succeeded cleanly. Unity caused no blink and ran witho
 
 A read-only pre-Godot DRS audit confirms `godot_v4.6.3-stable_win64.exe` is associated with the existing `Godot Engine` profile, which explicitly sets VRR requested state disabled and G-SYNC Fixed Refresh. The routed-display workaround is ready for an exact Godot validation.
 
+The exact Godot workflow then succeeded on its essential behavior twice: Godot used Fixed Refresh/smooth editor behavior, and each immediate `VsyncStutterTest.exe` control retained smooth G-SYNC. The first Godot project editor opened on the internal panel and produced a two-second blank before being moved to the primary PA; the second opened on the primary PA and produced no blank. At 23:28, primary target 8450 remains `displayInVrrMode=1`, while HDMI target 8448 changed to `displayInVrrMode=0`; topology is unchanged.
+
+DRS was rewritten at 23:24:38 and 23:25:09, closely matching the two Godot launches, and both database hashes changed. The effective `Godot Engine` profile settings remain semantically unchanged. Because the second save did not blank and neither save poisoned later G-SYNC, `NvAPI_DRS_SaveSettings()` alone is not sufficient. Launch-display placement versus a one-time cold transition remains the first-blank confound.
+
 ## Event and crash evidence
 
 ```text
