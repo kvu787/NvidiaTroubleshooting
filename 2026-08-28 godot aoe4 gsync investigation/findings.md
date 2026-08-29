@@ -18,6 +18,8 @@ The active-head-count and route/mode isolations are decisive. With both PA cable
 
 The exact Godot workflow is now validated twice in the working route/mode family. Godot runs smoothly without G-SYNC, and the later neutral application restores smooth G-SYNC without a global toggle. The first project-editor launch opened on the internal panel and produced a two-second blank; the second opened on the primary PA and produced no blank. Neither caused sticky failure. This meets the central per-application switching requirement but leaves the no-blank requirement conditional until launch-display placement versus cold-start state is isolated.
 
+That placement isolation is now complete. Two additional Godot launches, including one deliberately persisted to the internal panel, produced no blank. Godot saved DRS on both and remained smooth without G-SYNC; the later neutral control retained G-SYNC. Window placement and `NvAPI_DRS_SaveSettings()` are therefore each ruled out as sufficient for the isolated first blank. In stable use, the working route/mode family meets the full practical goal. A first transition after reboot, hotplug, or topology reconstruction may still blank and has not been tested.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -140,6 +142,8 @@ The pre-Unity functional control in this topology is healthy: `VsyncStutterTest.
 That transition remained healthy. Unity caused no blink and ran without G-SYNC; the immediate neutral control retained G-SYNC and smooth motion. The 23:20 post-state is unchanged and target 8450 remains in VRR display mode. Therefore two active external heads are not sufficient. One PA at 119.998 Hz on TB5/DisplayPort plus the second at 59.951 Hz on native HDMI is the first two-external-monitor workaround candidate that preserves the desired profile transition in Unity. Exact Godot validation remains. Because both route and refresh changed, route alone is not yet proven causal.
 
 Godot validation substantially upgrades that candidate. Two successive Godot-to-control transitions preserved correct per-application behavior and later G-SYNC. Godot rewrote DRS on both launches but retained the same effective profile; the second launch did not blank. Thus Godot's unconditional save is neither sufficient for the blank nor for sticky G-SYNC loss. The remaining two-second first blank occurred only when the project editor opened on the internal laptop panel, while the no-blank second launch opened on the primary PA. A controlled window-placement repetition is required before calling the no-blank requirement fully solved.
+
+The controlled repetition then produced no blank with the editor persisted to the internal panel. This rules out window placement as sufficient and validates repeated no-blank operation in the stable configuration. The earlier single blank remains best treated as a transient cold transition after the route/topology change, subject to later reboot/hotplug testing.
 
 - TB5+HDMI with the HDMI PA at 59.951 Hz is smooth and isolates a route/mode family; and
 - HDMI at 120 Hz, if available, or both TB5/DisplayPort PAs at 60 Hz is the later test that can separate route from refresh/link load.
@@ -565,7 +569,10 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.
-- High confidence: Godot's DRS save is also not sufficient for the blank or sticky failure; it saved on both routed-topology launches, but only the internal-panel launch blanked and neither poisoned later G-SYNC.
+- High confidence: Godot's DRS save is also not sufficient for the blank or sticky failure; it saved across four routed-topology launches, only the initial cold/topology transition blanked, and none poisoned later G-SYNC.
+- High confidence: internal-panel launch placement is not sufficient for the blank; a deliberate repeated internal-panel launch did not blank.
+- High confidence: the stable 120-Hz TB5/DisplayPort primary plus 60-Hz HDMI secondary configuration preserves smooth Fixed Refresh Godot and later smooth G-SYNC without manual global toggles.
+- Unresolved: whether the earlier single blank recurs after reboot/hotplug, and whether HDMI routing or the secondary's lower refresh/link load is the decisive difference from the bad topology.
 - High confidence: AoE4 G-SYNC works normally before either editor in the mixed-MediaSync two-external topology, so that topology does not globally break VRR for all presentation paths.
 - High confidence: after Unity Fixed Refresh, target 8450 remains VRR-capable but changes from `displayInVrrMode=1` to `0`; this is direct API evidence of the sticky live state.
 - High confidence: `VsyncStutterTest.exe` has no DRS association yet loses G-SYNC after the Unity transition, proving the failure propagates through inherited live/global state.

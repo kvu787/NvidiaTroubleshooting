@@ -823,6 +823,10 @@ The exact Godot workflow then succeeded on its essential behavior twice: Godot u
 
 DRS was rewritten at 23:24:38 and 23:25:09, closely matching the two Godot launches, and both database hashes changed. The effective `Godot Engine` profile settings remain semantically unchanged. Because the second save did not blank and neither save poisoned later G-SYNC, `NvAPI_DRS_SaveSettings()` alone is not sufficient. Launch-display placement versus a one-time cold transition remains the first-blank confound.
 
+The controlled placement repetition rules out launch display as sufficient. The user persisted Godot on the internal panel and performed two further launches; neither blanked, Godot remained smooth without G-SYNC, and the later neutral control retained smooth G-SYNC. DRS saved again at 23:31:52 and 23:32:20 without changing effective settings. At 23:33, target 8450 remains `displayInVrrMode=1`, HDMI target 8448 remains at `0`, and all paths are unchanged.
+
+The earlier single blank is therefore a transient cold/first transition after topology/target-state changes, not a repeatable window-placement or DRS-save effect in the current evidence. The stable TB5/DisplayPort-primary-at-120-Hz plus HDMI-secondary-at-60-Hz configuration is a validated practical workaround. Reboot/hotplug recurrence and route versus refresh/load remain untested.
+
 ## Event and crash evidence
 
 ```text

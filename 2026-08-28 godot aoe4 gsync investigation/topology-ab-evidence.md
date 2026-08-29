@@ -219,6 +219,8 @@ The active-head-count isolation is complete. Case G remained healthy through `Un
 
 The Godot workflow then preserved correct per-application switching twice. The first project editor opened on the internal panel and caused a two-second blank; the second opened on the primary PA and caused none. Both later neutral controls retained G-SYNC. Godot saved DRS during both launches, so its save is not sufficient for the blank or sticky failure. Case G now needs a controlled internal-panel window-placement repetition, not another uncontrolled Godot launch.
 
+That controlled repetition is complete. Two further Godot launches, including a deliberately persisted internal-panel launch, produced no blank; Godot remained smooth without G-SYNC and the later control retained smooth G-SYNC. Case G is a validated stable-use workaround. The isolated earlier blank is not explained by launch placement or the repeated DRS save and is best classified as an unreproduced first/cold topology transition.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

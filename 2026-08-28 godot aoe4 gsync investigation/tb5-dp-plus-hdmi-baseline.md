@@ -157,3 +157,68 @@ nvdrsdb1.bin last write: 23:25:09
 The two database hashes changed, while a read-only query shows the effective Godot profile is semantically unchanged: VRR requested state disabled, G-SYNC Fixed Refresh, fullscreen-only G-SYNC mode, and threaded optimization disabled. The two distinct timestamps closely match the two launches and are consistent with Godot 4.6.3's unconditional `NvAPI_DRS_SaveSettings()` path.
 
 This proves the DRS save alone is not sufficient for either outcome: the second save caused no reported blank, and neither save caused sticky loss of later G-SYNC. The remaining first-launch blank is confounded with launch-display placement and cold/warm transition state. Deliberately persisting the editor on the internal display and reopening it is the next direct isolation.
+
+## Launch-display placement isolation
+
+The user then deliberately persisted the project-editor window on the internal laptop display and reopened Godot, without changing any display, G-SYNC, refresh-rate, or OSD setting.
+
+Across both the setup launch and the deliberately internal-display follow-up launch:
+
+- no monitor blank occurred at any point;
+- Godot remained smooth and showed no G-SYNC indicator; and
+- the immediate `VsyncStutterTest.exe` control on the primary PA remained smooth and showed the G-SYNC indicator.
+
+The 23:33 final capture remains correct:
+
+```text
+target 8450, primary TB5/DisplayPort PA:
+  VRR possible=1, displayInVrrMode=1
+
+target 8448, MediaSync-off HDMI PA:
+  VRR possible=1, displayInVrrMode=0
+
+target 8449, internal panel:
+  VRR possible=1, displayInVrrMode=1
+
+all three Windows paths unchanged
+Godot effective profile: VRR disabled, G-SYNC Fixed Refresh
+```
+
+Godot again saved DRS on both launches:
+
+```text
+nvdrsdb1.bin last write: 23:31:52
+nvdrsdb0.bin last write: 23:32:20
+```
+
+The raw database and one-byte selector hashes changed as the stores alternated, but the effective profile settings remained identical. Repeated save-without-blank evidence now includes launches whose editor window was persisted to both the primary PA and the internal panel.
+
+Window placement is therefore ruled out as a sufficient cause. The earlier isolated two-second blank is best classified as a transient first/cold transition after the physical topology and driver-target state changed; its exact cause is not isolated, and recurrence after reboot or another hotplug has not been tested.
+
+## Validated practical configuration
+
+In stable use, the following configuration meets the core goal:
+
+```text
+Primary PA278QGV:
+  TB5/USB-C DisplayPort route
+  119.998 Hz
+  OSD MediaSync on
+
+Secondary PA278QGV:
+  native HDMI route
+  59.951 Hz
+  OSD MediaSync off
+
+Internal panel:
+  active
+
+Global G-SYNC:
+  on
+
+Godot profile:
+  VRR requested state disabled
+  G-SYNC Fixed Refresh
+```
+
+Godot is smooth without G-SYNC, later intended applications regain G-SYNC without a global toggle, both external monitors remain active, and repeated stable-state launches do not blank. Route versus secondary refresh/link load remains unresolved because the working arm changed both. The least disruptive future root-cause test is HDMI at 120 Hz if Windows exposes it; otherwise, a 120-Hz primary plus 60-Hz secondary over the two TB5/DisplayPort routes would be the closest comparison but risks restoring the bad state.
