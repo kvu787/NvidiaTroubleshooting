@@ -1,5 +1,7 @@
 # Resume point: validated clone workaround; reboot durability pending
 
+For the current ranked causal explanation across all three investigation directories, read `root-cause-synthesis.md` first.
+
 Last updated: 2026-08-29 PDT
 
 ## Status

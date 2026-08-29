@@ -2,6 +2,8 @@
 
 Investigation date: 2026-08-28 PDT
 
+> **Current canonical diagnosis:** See `root-cause-synthesis.md`. This file is a chronological evidence narrative and retains some superseded interim conclusions, including the earlier “Unresolved primary user goal” section. The current 2560x1440 internal-eDP-plus-HDMI clone topology has satisfied the full workflow repeatedly within one session; reboot persistence remains untested.
+
 ## Conclusion
 
 Opening the Godot project is not persistently turning off the NVIDIA global G-SYNC setting, and it is not changing the later control application's profile.
