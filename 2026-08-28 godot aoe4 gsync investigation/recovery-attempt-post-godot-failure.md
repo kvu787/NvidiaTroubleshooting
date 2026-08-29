@@ -136,3 +136,30 @@ All targets remained `displayInVrrMode=1`, and the nine-setting Godot profile re
 This means the two physical TB5 jacks do not map one-to-one to persistent NVIDIA connector IDs when only one external DP target is active. The driver assigned the moved display back to target 8452/connector instance 1/source 0. Earlier simultaneous dual-TB5 operation still enumerated two logical connectors, but a single-DP hotplug does not let us select connector 0 merely by moving the cable.
 
 The move nevertheless changed the physical jack while preserving every public state field, making the next runtime transition a clean physical-jack A/B. Run a neutral pre-control, one ordinary Godot Fixed Refresh transition, and an immediate neutral post-control without any intervening change. If the failure repeats, physical jack alone is ruled out. If it succeeds, a hidden route difference exists below the public connector/source representation.
+
+## Other-TB5-port runtime result
+
+The neutral pre-control was smooth and showed the G-SYNC indicator.
+
+Godot then opened on the secondary native-HDMI-plus-eDP clone smoothly, without a monitor blank. When the user moved the running editor window onto the primary DP PA, both monitors underwent a roughly three-second blank. Godot remained smooth without the G-SYNC indicator afterward and was closed. The immediate neutral control was choppy and did not show the indicator.
+
+The preserved failed-state capture again reports:
+
+```text
+target 8448, HDMI PA:     possible=1, displayInVrrMode=1
+target 8449, internal:    possible=1, displayInVrrMode=1
+target 8452, primary DP:  possible=1, displayInVrrMode=0
+```
+
+Topology, timings, clone membership, and the nine-setting Godot Fixed Refresh profile are unchanged. No matching display-driver reset event was found.
+
+This result rules out the physical TB5 jack as a sufficient discriminator under the current single-DP logical assignment. More importantly, it localizes the runtime transition more narrowly than process launch or exit: the editor was initially harmless on the HDMI clone, and the disruptive transition occurred when the Fixed Refresh Godot window entered the G-SYNC-capable primary DP target.
+
+The strongest next A/B is placement-only:
+
+1. recover global G-SYNC and verify the neutral control;
+2. launch Godot on the HDMI clone;
+3. keep the editor entirely on that clone and close it there; and
+4. immediately retest the neutral application on primary DP.
+
+If later G-SYNC remains healthy, crossing a Fixed Refresh editor surface onto the VRR primary is necessary in this current allocation. If failure still occurs, launch/exit processing can poison the DP target even without presenting the editor on it.
