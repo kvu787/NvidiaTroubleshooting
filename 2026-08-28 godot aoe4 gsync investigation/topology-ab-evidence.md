@@ -30,11 +30,11 @@ This is more discriminating than the original A/B:
 
 - The internal panel is not required for the failure: case 2 fails without it.
 - Two active displays in total are not sufficient: case 2 has two external displays and fails, while case 3 has one external plus the internal display and succeeds.
-- Two OSD-enabled Adaptive-Sync monitors are not required: cases 1 and 2 fail with MediaSync off on one PA, and NVAPI verified that target as non-VRR in the failing state.
+- Two NVIDIA-reported VRR-capable external targets are not required: cases 1 and 2 fail with MediaSync off on one PA, and NVAPI independently reported that DisplayPort target as non-VRR in the failing state. NVAPI did not read the OSD setting itself.
 - The common tested condition is two active external PA display paths.
 - Unity and Godot show the same topology-dependent editor result. Unity's existing Fixed Refresh profile also reproduced the monitor blank and sticky loss of later G-SYNC without writing DRS. Therefore neither the poor editor behavior nor the persistent transition failure is specific to Godot's profile writer or rendering engine.
 
-The requested bad-topology baseline was captured at 22:30 PDT after the MediaSync-off PA was reconnected/power-cycled and before Godot opened. NVAPI identifies target 8450 as VRR-capable (`possible=1`, `displayInVrrMode=1`, maximum interval 20583 us) and target 8452 as non-VRR (`possible=0`, `displayInVrrMode=0`, maximum interval 0). The OSD change therefore reached the driver. Two VRR-enabled external targets are conclusively not required for the reported poor editor behavior.
+The requested bad-topology baseline was captured at 22:30 PDT after the user confirmed MediaSync off, reconnected/power-cycled that PA, and before Godot opened. NVAPI identifies target 8450 as VRR-capable (`possible=1`, `displayInVrrMode=1`, maximum interval 20583 us) and target 8452 as non-VRR (`possible=0`, `displayInVrrMode=0`, maximum interval 0). This shows the driver's classification was consistent with the user-observed OSD setting on DisplayPort, but it is not a direct OSD read. Two NVIDIA-reported VRR-capable external targets are conclusively not required for the reported poor editor behavior.
 
 AoE4 was then tested before either editor, without toggling G-SYNC. It showed the G-SYNC indicator and behaved normally. The 22:36 post-AoE probes showed unchanged topology/capabilities. Therefore two active external heads do not globally break G-SYNC; they interact poorly with the tested editor presentation paths and/or later application transitions.
 

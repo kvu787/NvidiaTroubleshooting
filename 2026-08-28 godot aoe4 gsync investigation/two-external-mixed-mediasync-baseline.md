@@ -30,11 +30,11 @@ NVIDIA NVAPI reports:
 
 The idle desktop had no active VRR request on any display (`requested=0`, `enabled=0`), which is expected without a presenting VRR application.
 
-The OSD-off PA is target 8452. `VRR possible=0`, `displayInVrrMode=0`, and a zero maximum Adaptive-Sync frame interval prove that the OSD MediaSync change reached the NVIDIA driver. `Adaptive-Sync disabled override=0` does not contradict that result: the panel stopped advertising VRR capability, while NVIDIA did not add a separate driver override.
+The user identified target 8452 as the OSD-off PA. `VRR possible=0`, `displayInVrrMode=0`, and a zero maximum Adaptive-Sync frame interval show that NVIDIA treated that DisplayPort target as non-VRR after the OSD change. This is driver-side corroboration, not a direct read of the monitor's OSD setting. `Adaptive-Sync disabled override=0` does not contradict that result: no separate NVIDIA software override was active.
 
 ## Interpretation
 
-This closes the earlier MediaSync-verification caveat. The user's poor Unity/Godot editor behavior with this topology cannot require two VRR-enabled external monitors: only target 8450 is VRR-capable, while target 8452 is a fixed-refresh external display.
+This closes the driver-capability caveat for that DisplayPort topology. The user's poor Unity/Godot editor behavior cannot require two NVIDIA-reported VRR-capable external monitors: only target 8450 was reported VRR-capable, while target 8452 was reported as a fixed-refresh external display.
 
 Combined with the user's case 2, which remains poor with the internal panel disabled, the strongest common condition is two active external display heads. The remaining immediate question is whether AoE4 is already poor in this pre-Godot/pre-Unity state or becomes poor only after an editor/profile transition.
 

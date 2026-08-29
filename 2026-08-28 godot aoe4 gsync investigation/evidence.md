@@ -811,6 +811,8 @@ At 23:11, the physical-route A/B baseline was established with both PAs active: 
 
 Unexpectedly, NVAPI reports HDMI target 8448 as `VRR possible=1`, `displayInVrrMode=1`, with a 20583-us Adaptive-Sync interval even though the user left MediaSync off in that PA's OSD. The earlier DP-connected OSD-off target 8452 reported non-VRR. This input/route discrepancy is preserved in `tb5-dp-plus-hdmi-baseline.md`; it does not invalidate the routing test, but means the HDMI arm has two NVIDIA-reported VRR-possible external targets.
 
+The user then directly rechecked the HDMI PA's OSD and confirmed `MediaSync=off`. The read-only probes do not read that OSD setting. Earlier wording that NVAPI “verified MediaSync off” has been corrected: NVAPI independently reports NVIDIA's driver-side VRR classification/state, which was consistent with the user-observed OSD setting on DisplayPort but now diverges on HDMI.
+
 ## Event and crash evidence
 
 ```text

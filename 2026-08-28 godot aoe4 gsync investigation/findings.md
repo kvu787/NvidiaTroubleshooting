@@ -73,7 +73,7 @@ OpenGL threaded optimization: disabled
 
 Therefore the smooth arm is not explained by the Fixed Refresh profile being absent. The second external display path is a necessary condition in the user's A/B.
 
-A follow-up matrix narrows this further. Two external PAs behave poorly both with the internal panel active and with it disabled, even when OSD MediaSync is off on one external PA. One MediaSync-enabled external PA plus the internal panel behaves smoothly. The same result occurs in both the Godot editor and Unity editor. Therefore the leading condition is **two active external display heads**, not the internal panel, not merely two active displays in total, not two VRR-enabled panels, and not a Godot-specific editor implementation. NVAPI verified the OSD-off target as non-VRR in the failing topology.
+A follow-up matrix narrows this further. Two external PAs behave poorly both with the internal panel active and with it disabled, even when OSD MediaSync is off on one external PA. One MediaSync-enabled external PA plus the internal panel behaves smoothly. The same result occurs in both the Godot editor and Unity editor. Therefore the leading condition is **two active external display heads**, not the internal panel, not merely two active displays in total, not two NVIDIA-reported VRR-capable external targets, and not a Godot-specific editor implementation. After the user confirmed the OSD setting, NVAPI independently reported that DisplayPort target as non-VRR; it did not directly read MediaSync from the monitor.
 
 Unity's matching behavior resolves what was previously entangled. Editor motion/smoothness is broadly topology-dependent, and launching either editor under a Fixed Refresh profile can produce the monitor blank and sticky loss of later G-SYNC. Godot is not the root cause; its profile writer is one way the Fixed Refresh configuration is established, not a required trigger.
 
@@ -137,7 +137,7 @@ That routing baseline is now established. The TB5/DP PA is target 8450 at 119.99
 - poor TB5+HDMI would implicate the NVIDIA/Windows two-external-head path more generally; and
 - two PAs at 60 Hz remains a lower-priority bandwidth/link-allocation test.
 
-NVIDIA's public support article for mixed-monitor VRR says multiple monitors may be connected but no more than one should have G-SYNC enabled. NVIDIA's setup help also describes its display enablement as applying to every connected display of the selected model. Both PAs have the same model/EDID, and the earlier NVIDIA App capture reported G-SYNC enabled on both. Those documents originally made dual enabled PA278QGVs the leading hypothesis. The MediaSync-off test now points more broadly to two active external heads, subject to verifying the OSD-off state in NVAPI; the older support article is not proof of the exact 2026 driver defect.
+NVIDIA's public support article for mixed-monitor VRR says multiple monitors may be connected but no more than one should have G-SYNC enabled. NVIDIA's setup help also describes its display enablement as applying to every connected display of the selected model. Both PAs have the same model/EDID, and the earlier NVIDIA App capture reported G-SYNC enabled on both. Those documents originally made dual enabled PA278QGVs the leading hypothesis. The MediaSync-off test now points more broadly to two active external heads. NVAPI measures NVIDIA's per-target state, not the monitor's OSD setting; the older support article is not proof of the exact 2026 driver defect.
 
 ### Per-display software control
 
@@ -553,7 +553,7 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: the current one-external state has the internal panel plus one PA active; this is not a generic single-display configuration.
 - High confidence: both external PA targets being active is a necessary condition in every reported bad arm; the internal panel is neither necessary for failure nor sufficient to cause it.
 - High confidence: the inactive second PA may remain cabled, powered, and physically enumerated without triggering the bug; active scanout, not presence, is required.
-- High confidence: the narrower trigger is two active external display heads, not two VRR-enabled monitors; NVAPI verified the second external PA is non-VRR in the bad topology.
+- High confidence: the narrower trigger is two active external display heads, not two NVIDIA-reported VRR-capable external targets; after the user confirmed MediaSync off, NVAPI reported the second DisplayPort target as non-VRR in the bad topology.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.

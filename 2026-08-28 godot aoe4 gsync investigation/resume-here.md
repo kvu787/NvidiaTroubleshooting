@@ -54,11 +54,11 @@ Windows/NVAPI topology:
 
 Current NVIDIA driver: 596.49 (`r596_25`), installed at 16:30:31 PDT. The original Godot investigation used 616.56. Unity has now reproduced the same two-external Fixed Refresh transition failure on 596.49, so the underlying defect crosses both tested branches.
 
-Follow-up results now point more narrowly to two active external display heads. Two external PAs are poor with the internal panel either active or disabled and with one PA's OSD MediaSync off. One external PA plus the internal panel is smooth. This exact topology-dependent result occurs in both Unity editor and Godot editor. Thus the internal panel, total active-display count, dual-VRR eligibility, and a Godot-specific implementation are not the trigger. NVAPI verified the OSD-off PA as non-VRR in the failing topology.
+Follow-up results now point more narrowly to two active external display heads. Two external PAs are poor with the internal panel either active or disabled and with one PA's OSD MediaSync off. One external PA plus the internal panel is smooth. This exact topology-dependent result occurs in both Unity editor and Godot editor. Thus the internal panel, total active-display count, dual-VRR eligibility, and a Godot-specific implementation are not the trigger. After the user confirmed the OSD state, NVAPI independently reported that DisplayPort target as non-VRR; it did not directly read MediaSync from the monitor.
 
 Treat editor smoothness and the Fixed Refresh transition as related driver/topology behavior. Unity establishes both that poor editor behavior exists without Godot and that an already-stored Fixed Refresh profile can cause the same monitor blank and sticky failure to restore later G-SYNC. Godot's DRS writer is an avoidable integration behavior, but it is not necessary for the driver failure.
 
-The 22:30 pre-Godot baseline closes the OSD-verification caveat: target 8450 is VRR-capable, while the MediaSync-off target 8452 reports `VRR possible=0`, `displayInVrrMode=0`, and a zero Adaptive-Sync interval. Both remain active external heads. Dual external VRR capability is therefore ruled out as a necessary condition.
+The 22:30 pre-Godot baseline closes the NVIDIA-capability caveat for the DisplayPort topology: target 8450 is VRR-capable, while user-confirmed MediaSync-off target 8452 reports `VRR possible=0`, `displayInVrrMode=0`, and a zero Adaptive-Sync interval. Both remain active external heads. Dual external NVIDIA-reported VRR capability is therefore ruled out as a necessary condition.
 
 AoE4 works normally in this exact state before either editor opens: the indicator appears and G-SYNC behaves as expected. A 22:36 post-AoE capture is unchanged. Therefore dual external heads do not globally break G-SYNC. The current separation is editor/windowed presentation behavior versus persistent state poisoning after an editor exits.
 
@@ -83,7 +83,7 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 4. run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`; and
 5. continue using `VsyncStutterTest.exe` as the routine neutral G-SYNC control.
 
-This sequence now focuses on active scanout-head count and, if necessary, the dual-TB5 route. OSD/driver capability caching, dual-VRR eligibility, driver-branch specificity, and the need for Godot's DRS write have been resolved.
+This sequence now focuses on active scanout-head count and, if necessary, the dual-TB5 route. Dual-VRR eligibility on the earlier DisplayPort topology, driver-branch specificity, and the need for Godot's DRS write have been resolved. Direct OSD-state detection has not been implemented; the current HDMI target also demonstrates that user-observed MediaSync state and NVIDIA's VRR classification may diverge.
 
 ## Per-display software possibility
 

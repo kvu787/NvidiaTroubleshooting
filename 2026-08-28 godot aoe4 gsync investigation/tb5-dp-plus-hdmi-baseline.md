@@ -47,6 +47,8 @@ target 8450, TB5/DisplayPort PA:
 
 The HDMI result is unexpected: the user left MediaSync off in that PA's OSD, but NVIDIA reports target 8448 as VRR-possible and in its VRR display mode. In the earlier dual-DisplayPort topology, the MediaSync-off PA target 8452 reported `possible=0`, `displayInVrrMode=0`, and a zero Adaptive-Sync interval. Preserve this as an observed input/route or driver-state difference; do not infer that the user's OSD setting was changed.
 
+The user subsequently rechecked the HDMI PA's OSD and confirmed `MediaSync=off`. The current probes cannot directly read that OSD control. `NvAPI_Disp_GetVRRInfo` reports NVIDIA's assessment of the target, while `NvAPI_DISP_GetAdaptiveSyncData` reports NVIDIA's per-display Adaptive-Sync state. In particular, its `bDisableAdaptiveSync` and `maxFrameInterval` fields are paired with an NVAPI setter and are not documented as a raw monitor-OSD query. Therefore the OSD observation and the NVIDIA state must be recorded as two distinct facts.
+
 This does not invalidate the physical-route A/B. It means the new arm tests TB5/DisplayPort plus HDMI with two NVIDIA-reported VRR-possible external targets, rather than reproducing the earlier mixed-capability state exactly.
 
 ## DRS baseline
