@@ -38,9 +38,11 @@ Windows/NVAPI topology:
 
 Current NVIDIA driver: 596.49 (`r596_25`), installed at 16:30:31 PDT. The original investigation used 616.56. The current smooth arm is confirmed on 596.49; capture the failing two-external arm on the same driver before calling this conclusively cross-branch.
 
-Leading hypothesis: two identical PA278QGV Adaptive-Sync targets are active. NVIDIA's published mixed-monitor guidance says no more than one display should have G-SYNC enabled, while NVIDIA's setup help applies enablement to all connected displays of a selected model. Earlier evidence reported both PAs enabled.
+Follow-up results now point more narrowly to two active external display heads. Two external PAs are poor with the internal panel either active or disabled and with one PA's OSD MediaSync off. One external PA plus the internal panel is smooth. Thus the internal panel, total active-display count, and probably dual-VRR eligibility are not the trigger. The OSD result remains provisional until NVAPI captures the MediaSync-off PA in the failing topology.
 
-Next test, in order:
+The current smooth capture uses external target 8450/connector 0; the earlier smooth capture used target 8452/connector 1. Each external port works individually, making a single bad port unlikely.
+
+Superseded test plan, retained for history:
 
 1. connect and enable both PAs;
 2. turn Adaptive-Sync off in the secondary PA's OSD only;
@@ -50,6 +52,17 @@ Next test, in order:
 6. separately verify that each physical TB5/USB-C port works smoothly with exactly one PA.
 
 If step 4 succeeds, leaving Adaptive-Sync disabled on the secondary PA is the first plausible stable workaround that keeps both monitors connected and avoids per-session global G-SYNC toggling.
+
+The user completed that MediaSync test and it did not succeed. Current next test, in order:
+
+1. return to two active external PAs with MediaSync off on one, then power-cycle/reconnect that PA;
+2. before Godot, capture `display-topology-query.cpp` and `nvapi-vrr-query.cpp` to verify whether the driver sees Adaptive-Sync as disabled;
+3. recover G-SYNC once and test AoE4 before Godot, recording indicator and smoothness;
+4. leave both PAs connected but disable one in Windows and repeat the baseline;
+5. if two active external heads remain the condition, test one PA over HDMI plus one over a TB5/USB-C DisplayPort output; and
+6. only then repeat the ordinary Fixed Refresh Godot transition.
+
+This sequence distinguishes OSD/driver capability caching, active scanout-head count, the dual-TB5 route, any-two-external NVIDIA behavior, and Godot's extra transition. It is more useful than another global G-SYNC toggle or profile edit.
 
 ## Per-display software possibility
 

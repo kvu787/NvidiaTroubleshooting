@@ -16,9 +16,28 @@ Reproduces the documented G-SYNC problems:
 
 This is interpreted as the same Godot/AoE4 sequence documented in `findings.md`, with external monitor topology as the changed variable.
 
-## Current one-external-monitor state
+## Follow-up MediaSync/internal-panel matrix
 
-The current hardware query was taken after target 8450 was removed at 19:05:51 PDT, leaving target 8452 connected.
+The user then reported three additional configurations. This table interprets cases 1 and 2 as two external PAs, one with OSD MediaSync on and one with it off, and case 3 as one external PA with MediaSync on. Correct this interpretation if that is not what was physically connected.
+
+| Case | Active external PAs | OSD MediaSync | Internal panel | Result |
+|---|---:|---|---|---|
+| 1 | 2 | one on, one off | connected/active | poor |
+| 2 | 2 | one on, one off | disconnected/disabled | poor |
+| 3 | 1 | on | connected/active | smooth |
+
+This is more discriminating than the original A/B:
+
+- The internal panel is not required for the failure: case 2 fails without it.
+- Two active displays in total are not sufficient: case 2 has two external displays and fails, while case 3 has one external plus the internal display and succeeds.
+- Two OSD-enabled Adaptive-Sync monitors are probably not required: cases 1 and 2 fail with MediaSync off on one PA. This deduction remains provisional until the failing state is captured and NVAPI verifies that the OSD-off monitor no longer reports VRR possible or reports Adaptive-Sync disabled.
+- The common tested condition is two active external PA display paths.
+
+At 19:59 PDT, after case 3, the read-only probes showed the internal target 8449 plus external target 8450/connector instance 0. Both were in VRR-capable display modes; neither had an active VRR request at the idle desktop. The earlier smooth capture used external target 8452/connector instance 1. Thus each external connector has now appeared in a smooth one-external configuration, which makes a single defective port unlikely.
+
+## Earlier one-external-monitor state
+
+This hardware query was taken after target 8450 was removed at 19:05:51 PDT, leaving target 8452 connected. A later good-state capture at 19:59 reversed the external target: 8450 was active and 8452 absent.
 
 ### Software and platform
 
@@ -161,7 +180,7 @@ High confidence:
 
 Leading but not yet proven:
 
-- the failure requires two identical external Adaptive-Sync/G-SYNC-eligible targets, rather than merely two physical display cables; and
+- the failure requires two active external scanout/display heads, not two VRR-enabled monitors and not merely two active displays in total; and
 - the sticky state occurs during simultaneous reprogramming/hotplug churn across the two external DP targets.
 
 Remaining version confounder:
@@ -170,9 +189,10 @@ Remaining version confounder:
 
 Lower-probability alternatives:
 
-- aggregate link allocation or a Type-C port-mux/Intel display-driver interaction;
-- one specific TB5/USB-C port is defective; or
-- Windows primary/secondary assignment, rather than monitor count, is the hidden variable.
+- aggregate link allocation or a Type-C port-mux/Intel display-driver interaction; or
+- Windows primary/secondary assignment, rather than external target count, is the hidden variable.
+
+A single defective TB5/USB-C port is now unlikely because target 8452 was smooth as the lone external display in the earlier capture and target 8450 is smooth as the lone external display in the current capture.
 
 ## Minimal next A/B matrix
 
@@ -186,6 +206,22 @@ Lower-probability alternatives:
 | F | two PAs | internal + both PAs at 60 Hz | on | Lower-priority bandwidth/link-allocation test |
 
 For each case capture `display-topology-query.cpp` and `nvapi-vrr-query.cpp` before Godot, while Godot is open, and after Godot closes; then test the AoE4 indicator. Do not change DRS between cases.
+
+## Revised next step
+
+The next capture should be the failing two-external state with one PA's MediaSync off. After changing the OSD setting, power-cycle or reconnect that PA so the display capability is re-enumerated, but do not launch Godot yet. Then:
+
+1. run both read-only probes and verify whether the OSD-off display reports `VRR possible=0` or `Adaptive-Sync disabled=1`;
+2. recover G-SYNC once, launch AoE4 before Godot, and record indicator plus subjective/monitor-refresh behavior;
+3. disable one PA in Windows while leaving both physically connected, rerun the probes, and repeat the baseline; and
+4. if two active external PAs alone are bad, connect one PA by the laptop's HDMI output and the other by one TB5/USB-C DisplayPort output.
+
+Interpretation:
+
+- If Windows-disabling one PA fixes it, active external scanout-head count is the trigger rather than cable presence.
+- If TB5+HDMI is smooth while two TB5 outputs are poor, the fault is specific to the dual USB-C/DisplayPort routing path.
+- If TB5+HDMI is also poor, the fault is the NVIDIA/Windows two-external-head path more generally.
+- Only after the pre-Godot AoE4 baseline is known should the Fixed Refresh Godot transition be repeated; this separates a topology-only G-SYNC quality problem from Godot's known sticky post-transition problem.
 
 ## Authoritative references
 
