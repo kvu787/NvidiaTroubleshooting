@@ -849,6 +849,8 @@ Thus lowering HDMI does not solve the issue. It converts the 120/120 arm's repea
 
 At 00:35, reconnecting/extending internal eDP without toggling G-SYNC restored primary target 8450 from `displayInVrrMode=0` to `1`; all three targets then reported mode 1 and DRS remained unchanged. Windows simultaneously raised HDMI from 59.951 Hz to 119.998 Hz, so the recovery is attributable to display-topology/mode reconstruction rather than proven eDP activation alone. A neutral control should verify functional recovery before clone-mode testing.
 
+At 00:38, the neutral control functionally confirmed recovery: `VsyncStutterTest.exe` ran smoothly on the primary PA and displayed the G-SYNC indicator. The post-control capture shows three active RTX paths, target 8450 TB5/DisplayPort at 119.998 Hz in VRR mode 1, target 8448 HDMI at 119.998 Hz in VRR mode 1, and internal target 8449 at approximately 240 Hz in VRR mode 1. DRS timestamps and hashes remain unchanged. Windows topology/mode reconstruction is therefore a verified recovery mechanism that does not require cycling global G-SYNC.
+
 ## Event and crash evidence
 
 ```text

@@ -289,3 +289,32 @@ DRS timestamps and hashes:
 Windows also automatically changed the HDMI PA from 59.951 Hz back to 119.998 Hz as part of extending eDP. Therefore this proves that Windows display-topology/mode reconstruction can recover the stuck primary without a global G-SYNC toggle, but it does not isolate eDP activation from the simultaneous HDMI refresh-mode change.
 
 The resulting state matches the known healthy three-display 120/120 topology. Run `VsyncStutterTest.exe` once to functionally verify the API-level recovery. If healthy, the next practical experiment is clone/duplicate mode: keep eDP physically active but share a Windows source desktop with the HDMI PA, preventing a third hidden desktop space.
+
+## Functional recovery confirmation
+
+Captured: 2026-08-29 00:38 PDT
+
+The user ran `VsyncStutterTest.exe` on the primary PA without changing the recovered three-display state. It ran smoothly and displayed the top-right G-SYNC indicator.
+
+The post-control capture confirms the API state remains healthy:
+
+```text
+target 8450 primary TB5/DisplayPort, 119.998 Hz:
+  possible=1
+  displayInVrrMode=1
+
+target 8448 HDMI, 119.998 Hz:
+  possible=1
+  displayInVrrMode=1
+
+target 8449 internal eDP, approximately 240 Hz:
+  possible=1
+  displayInVrrMode=1
+
+active paths: 3
+DRS timestamps and hashes: unchanged
+```
+
+This closes the recovery test: Windows display-topology/mode reconstruction fully restored functional G-SYNC without toggling the global G-SYNC setting. Because reconnecting eDP also caused Windows to raise HDMI from approximately 60 Hz to 120 Hz, the experiment still does not distinguish eDP activation from the broader mode reconstruction.
+
+The next practical experiment is duplicate/clone mode. Clone the internal panel with the HDMI PA while leaving the primary TB5/DisplayPort PA as a separate extended desktop. This keeps the eDP scanout path active but removes the hidden third desktop space. It is a usability workaround test, not literal internal-panel disconnection.

@@ -36,6 +36,8 @@ That Unity transition produces the damaging sticky failure. After one initial bl
 
 Reconnecting/extending internal eDP recovers target 8450 from mode 0 to 1 without a global G-SYNC toggle or DRS change. Windows simultaneously returns HDMI from 60 Hz to 120 Hz, so this is a topology/mode-reconstruction recovery rather than a pure eDP-only proof. It nevertheless provides a faster recovery path and prepares the clone-mode workaround test.
 
+The subsequent neutral control confirms that this is a complete functional recovery, not merely an API-bit change. `VsyncStutterTest.exe` runs smoothly with the indicator, target 8450 remains in VRR mode 1, all three active targets report VRR mode 1, and DRS remains unchanged. The next workaround experiment is to duplicate the hidden internal panel with the HDMI PA while leaving the primary TB5/DisplayPort PA extended separately. That should retain an active eDP path without exposing a third Windows desktop, although it does not literally disconnect or power down the internal panel.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -590,6 +592,7 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: the bug is not a simple high aggregate scanout-load threshold; 120/120 produces transient repeated blanks with recovery, while 120/60 produces sticky loss.
 - Leading conclusion: active internal eDP is the only tested stabilizer that prevents both manifestations in the DP+HDMI topology.
 - High confidence: Windows display reconstruction by reconnecting eDP restores the stuck primary to VRR mode without toggling global G-SYNC; HDMI refresh also changes during that operation.
+- High confidence: the reconstruction recovery is functional, not merely an NVAPI-state change; the later neutral control is smooth with the indicator and target 8450 remains in VRR mode 1.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.

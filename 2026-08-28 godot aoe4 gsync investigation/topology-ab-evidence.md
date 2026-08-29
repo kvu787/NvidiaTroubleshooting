@@ -237,6 +237,8 @@ The 120/60 Unity transition then produced sticky failure: after one initial blin
 
 Reconnecting/extending eDP restored primary target 8450 from mode 0 to 1 without a global G-SYNC toggle or DRS change. Windows also automatically returned HDMI from 60 Hz to 120 Hz, so the recovery is a combined topology/mode reconstruction. Functional control and duplicate/clone-mode testing are next.
 
+The 00:38 functional control completed successfully: `VsyncStutterTest.exe` ran smoothly with the G-SYNC indicator on target 8450. All three targets remained in VRR mode 1 and DRS remained unchanged. Topology/mode reconstruction is therefore a confirmed functional recovery path. Duplicate internal eDP with the HDMI PA next, leaving primary TB5/DisplayPort extended separately, to test whether an active eDP path can coexist with only two usable Windows desktop spaces.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.
