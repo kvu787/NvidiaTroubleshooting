@@ -44,6 +44,8 @@ The initial 2560x1600 clone source letterboxed the HDMI PA. Changing only the cl
 
 The neutral control in that 1440p clone state succeeds with smooth G-SYNC and the indicator on the separate primary DP PA. The post-control topology, all three VRR-mode bits, and DRS remain unchanged. Clone mode is therefore a viable neutral-use topology; whether active internal eDP still stabilizes a Fixed Refresh editor transition when it shares a source with HDMI remains the decisive test.
 
+The Unity transition answers that question affirmatively. Unity Fixed Refresh opens, runs, and closes with zero monitor blinks; the immediate neutral control restores smooth G-SYNC and the indicator. The later capture retains all three targets in VRR mode 1 and unchanged DRS. Therefore the stabilizing condition is not a separate extended eDP desktop: internal eDP may be cloned with HDMI as long as it remains an active target. This is the first tested configuration that combines two usable external desktop spaces, no hidden third desktop, editor Fixed Refresh, later application G-SYNC, and no transition blank. Exact Godot project-manager validation remains pending.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -600,6 +602,8 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: Windows display reconstruction by reconnecting eDP restores the stuck primary to VRR mode without toggling global G-SYNC; HDMI refresh also changes during that operation.
 - High confidence: the reconstruction recovery is functional, not merely an NVAPI-state change; the later neutral control is smooth with the indicator and target 8450 remains in VRR mode 1.
 - High confidence: duplicating internal eDP with the HDMI PA retains three active physical NVIDIA targets but produces only two Windows desktop sources; the primary DP PA remains separate and all targets initially remain in VRR mode 1.
+- High confidence: in the 1440p eDP+HDMI clone topology, Unity Fixed Refresh transitions with zero blinking and the immediate neutral application regains smooth G-SYNC; all targets remain in VRR mode 1 and DRS remains unchanged.
+- High confidence: eDP does not require its own extended desktop source to provide the observed stabilization; remaining active as a cloned target is sufficient for the Unity control.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.

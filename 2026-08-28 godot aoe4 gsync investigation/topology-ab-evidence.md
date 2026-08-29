@@ -245,6 +245,8 @@ The 2560x1600 clone source letterboxed HDMI. Changing only duplicated display 1|
 
 The 1440p clone neutral control succeeds: `VsyncStutterTest.exe` is smooth with the G-SYNC indicator on the separate primary DP PA. The 00:54 capture retains the same two source IDs and three target paths; all targets remain in VRR mode 1 and DRS is unchanged. The clone topology is ready for the Unity Fixed Refresh transition.
 
+The Unity Fixed Refresh transition also succeeds completely in the 1440p clone topology. Unity opens, runs smoothly without G-SYNC, and closes with zero blinking; the immediate neutral control is smooth with the indicator. The 00:57 capture retains the two-source/three-target clone arrangement, VRR mode 1 on every target, and unchanged DRS. Active eDP stabilizes the transition even without a separate extended desktop source. Ordinary Godot project-manager validation is the remaining exact-workflow test.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

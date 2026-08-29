@@ -142,3 +142,27 @@ DRS timestamps and SHA-256 hashes: unchanged
 ```
 
 The 1440p clone mode therefore preserves functional G-SYNC before an editor transition. The decisive next sequence is Unity Fixed Refresh, followed immediately by the same neutral control.
+
+## Unity Fixed Refresh transition
+
+Captured: 2026-08-29 00:57 PDT
+
+In the unchanged 1440p clone topology, the user opened the same Unity project on the separate primary TB5/DisplayPort PA. Unity opened, ran smoothly without a G-SYNC indicator as intended by its Fixed Refresh profile, and closed with zero monitor blinks. The immediate `VsyncStutterTest.exe` control then ran smoothly and displayed the G-SYNC indicator.
+
+The post-transition capture remains identical to the baseline:
+
+```text
+Windows paths: three target paths, two source IDs
+clone source 2: 2560x1440, internal eDP plus HDMI
+separate source 0: 2560x1440, primary TB5/DisplayPort PA
+
+target 8448 HDMI:       displayInVrrMode=1
+target 8449 internal:   displayInVrrMode=1
+target 8450 primary DP: displayInVrrMode=1
+
+DRS timestamps and SHA-256 hashes: unchanged
+```
+
+This is the decisive workaround result. The internal eDP target does not need its own extended desktop source to stabilize the NVIDIA Fixed Refresh transition; it only needs to remain an active scanout target in the tested configuration. Cloning it with HDMI eliminates the unusable hidden third desktop while retaining correct `Fixed Refresh editor -> G-SYNC application` switching and eliminating transition blanks.
+
+Unity isolates the NVIDIA transition, but the exact original workflow still needs one final validation: ordinary Godot 4.6.3 project-manager launch, project open, close, and immediate neutral control in this unchanged clone topology.

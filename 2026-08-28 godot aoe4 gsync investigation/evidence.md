@@ -859,6 +859,8 @@ At 00:50, after observing HDMI letterboxing, the user changed only the duplicate
 
 At 00:54, the neutral clone control succeeded: `VsyncStutterTest.exe` ran smoothly with the G-SYNC indicator on the separate primary DP PA. The later capture still has three target paths, two source IDs, the 1440p eDP+HDMI clone, and the separate 1440p primary DP source. Targets 8448, 8449, and 8450 all remain in VRR mode 1, and DRS remains unchanged. The clone topology itself and the neutral presentation path are healthy; proceed to the Unity Fixed Refresh transition.
 
+At 00:57, the clone-mode Unity transition succeeded completely. Unity opened, ran smoothly without the G-SYNC indicator, and closed with zero monitor blinks. The immediate neutral control ran smoothly with the indicator. The post-transition capture retains the same three target paths/two sources, all three targets remain in VRR mode 1, and DRS is byte-for-byte unchanged. This proves that active eDP stabilizes the transition even when cloned with HDMI rather than extended as a hidden third desktop. Validate the ordinary Godot project-manager workflow next.
+
 ## Event and crash evidence
 
 ```text
