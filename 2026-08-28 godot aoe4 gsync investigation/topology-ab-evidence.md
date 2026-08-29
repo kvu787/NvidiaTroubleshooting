@@ -209,13 +209,13 @@ A single defective TB5/USB-C port is now unlikely because target 8452 was smooth
 | D | two PAs | internal + both PAs | off | Isolate dual-VRR from dual-display topology |
 | E | two PAs | internal + one PA | off on inactive PA | Smooth; proves active external target count, not physical presence |
 | F | two PAs | internal + both PAs at 60 Hz | on | Lower-priority bandwidth/link-allocation test |
-| G | one PA on TB5/DP, one on HDMI | internal + both PAs | OSD off on HDMI PA; NVAPI still reports VRR possible | Route isolation; baseline captured, functional control pending |
+| G | one PA on TB5/DP, one on HDMI | internal + both PAs | OSD off on HDMI PA; NVAPI still reports VRR possible | Route isolation; healthy functional control, Unity transition pending |
 
 Cases A-E are complete. Case E left both cables connected and monitors powered, but disabled the MediaSync-off PA in Windows. Unity Fixed Refresh caused no blink and the post-Unity `VsyncStutterTest.exe` control retained G-SYNC. This proves two active external scanout heads are required.
 
 ## Completed baseline and next step
 
-The active-head-count isolation is complete, and case G's topology/DRS baseline is captured. Establish a healthy `VsyncStutterTest.exe` baseline on the MediaSync-on TB5/DP PA, then run `Unity Fixed Refresh -> VsyncStutterTest.exe`.
+The active-head-count isolation is complete, and case G's topology/DRS and functional baselines are healthy. Run `Unity Fixed Refresh -> VsyncStutterTest.exe` on the MediaSync-on TB5/DP PA without changing topology or settings.
 
 Interpretation:
 

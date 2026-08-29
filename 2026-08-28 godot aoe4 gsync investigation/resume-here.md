@@ -32,6 +32,8 @@ The Unity transition also succeeded cleanly in this topology: there was no monit
 
 At 23:11, both external PAs were made active again using different routes. MediaSync-on target 8450 remains on TB5/DisplayPort at 119.998 Hz; the second PA is now HDMI target 8448 at 59.951 Hz. The internal panel remains active, all three paths are on the RTX GPU, and DRS is unchanged. Despite MediaSync remaining off in the HDMI PA's OSD, NVAPI reports target 8448 as VRR-possible and in VRR display mode. Establish a healthy `VsyncStutterTest.exe` control on target 8450 before opening Unity.
 
+That control succeeded: `VsyncStutterTest.exe` showed the G-SYNC indicator and ran smoothly on target 8450. At 23:18, topology, NVAPI VRR-mode bits, and DRS hashes remained at baseline. The decisive next action is `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe` without changing anything else.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -79,8 +81,8 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 
 1. keep the MediaSync-on PA on one TB5/USB-C DisplayPort output;
 2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
-3. topology is captured; establish a healthy `VsyncStutterTest.exe` baseline on target 8450;
-4. run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`; and
+3. topology and a healthy `VsyncStutterTest.exe` baseline on target 8450 are captured;
+4. now run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`; and
 5. continue using `VsyncStutterTest.exe` as the routine neutral G-SYNC control.
 
 This sequence now focuses on active scanout-head count and, if necessary, the dual-TB5 route. Dual-VRR eligibility on the earlier DisplayPort topology, driver-branch specificity, and the need for Godot's DRS write have been resolved. Direct OSD-state detection has not been implemented; the current HDMI target also demonstrates that user-observed MediaSync state and NVIDIA's VRR classification may diverge.

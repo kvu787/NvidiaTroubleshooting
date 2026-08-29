@@ -813,6 +813,8 @@ Unexpectedly, NVAPI reports HDMI target 8448 as `VRR possible=1`, `displayInVrrM
 
 The user then directly rechecked the HDMI PA's OSD and confirmed `MediaSync=off`. The read-only probes do not read that OSD setting. Earlier wording that NVAPI “verified MediaSync off” has been corrected: NVAPI independently reports NVIDIA's driver-side VRR classification/state, which was consistent with the user-observed OSD setting on DisplayPort but now diverges on HDMI.
 
+At 23:18, the pre-Unity functional control succeeded in the TB5/DisplayPort-plus-HDMI topology. `VsyncStutterTest.exe` ran smoothly on target 8450 and displayed the G-SYNC indicator. The post-control topology, target VRR-mode bits, DRS timestamps, and DRS hashes all match the 23:11 baseline.
+
 ## Event and crash evidence
 
 ```text

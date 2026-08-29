@@ -64,3 +64,18 @@ nvdrssel.bin  last write 22:50:13  SHA-256 4BF5122F344554C53BDE2EBB8CD2B7E3D1600
 ## Next action
 
 Establish a functional pre-Unity baseline by running `VsyncStutterTest.exe` on target 8450, the MediaSync-on TB5/DisplayPort PA. If the G-SYNC indicator is present and animation is smooth, proceed to the same Unity Fixed Refresh transition without changing topology or settings.
+
+## Functional pre-Unity control
+
+The user ran `VsyncStutterTest.exe` on target 8450. It displayed the top-right G-SYNC indicator and ran smoothly.
+
+The 23:18 post-control capture is unchanged:
+
+```text
+Windows active paths: targets 8449 internal, 8450 TB5/DisplayPort PA, 8448 HDMI PA
+target 8450: VRR possible=1, displayInVrrMode=1
+target 8448: VRR possible=1, displayInVrrMode=1
+DRS timestamps and SHA-256 hashes: identical to the 23:11 baseline
+```
+
+This proves the TB5/DisplayPort-plus-HDMI topology is healthy before Unity. The decisive next transition is `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe` on target 8450 without any intervening settings or topology change.

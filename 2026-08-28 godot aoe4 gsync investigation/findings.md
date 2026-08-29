@@ -133,6 +133,8 @@ The Unity-to-control transition, driver-level recovery, replacement-control vali
 
 That routing baseline is now established. The TB5/DP PA is target 8450 at 119.998 Hz and the HDMI PA is new target 8448 at 59.951 Hz; both plus the internal panel are active directly on the RTX GPU. No DRS data changed. NVAPI unexpectedly advertises the OSD-MediaSync-off HDMI target as VRR-possible and in VRR display mode, unlike the same OSD-off PA on DisplayPort. The physical-route A/B remains valid, but the current arm is not a perfect mixed-VRR-capability match.
 
+The pre-Unity functional control in this topology is healthy: `VsyncStutterTest.exe` shows the G-SYNC indicator and runs smoothly on target 8450. A 23:18 capture confirms all display paths, VRR-mode bits, and DRS hashes remain at baseline. The Unity-to-control transition can now distinguish the dual-TB5/DP route from any two-active-external topology without a preexisting G-SYNC failure.
+
 - smooth TB5+HDMI would isolate the dual-TB5/USB-C display route;
 - poor TB5+HDMI would implicate the NVIDIA/Windows two-external-head path more generally; and
 - two PAs at 60 Hz remains a lower-priority bandwidth/link-allocation test.
