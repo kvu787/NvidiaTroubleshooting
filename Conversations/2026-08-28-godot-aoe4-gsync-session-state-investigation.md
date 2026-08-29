@@ -1684,3 +1684,42 @@ Now perform the decisive Unity transition:
 8. Report both Unity and `VsyncStutterTest.exe` results.
 
 This directly tests whether keeping eDP active as a cloned target is sufficient to stabilize the Fixed Refresh transition while eliminating the hidden third desktop.
+
+---
+
+## User
+
+i did this:
+Keep all display and G-SYNC settings unchanged.
+Open the same Unity project on the primary TB5/DisplayPort PA.
+Observe blinking on open, during use, and on close. Confirm Unity is smooth without G-SYNC.
+Close Unity.
+Immediately run VsyncStutterTest.exe on the primary PA.
+Report its indicator and smoothness, along with the Unity observations.
+
+the unity project opened, ran smoothly, and closed with zero blinks. it didn't show the gsync indicator
+i ran VsyncStutterTest and i ran smoothly and displayed the gsync indicator
+
+## Assistant
+
+This validates the practical workaround at the NVIDIA transition level:
+
+- Unity entered Fixed Refresh, ran smoothly without the G-SYNC indicator, and exited with zero blinks.
+- The immediate neutral control regained smooth G-SYNC and the indicator.
+- The post-transition capture retains the same two-source/three-target clone topology.
+- Targets 8448, 8449, and 8450 all remain in VRR mode 1.
+- DRS timestamps and hashes remain unchanged.
+
+The important conclusion is that eDP does not need its own extended desktop to stabilize the transition. It can share a cloned desktop with HDMI as long as it remains an active target. This gives you two usable external desktop spaces without a hidden third desktop.
+
+Now validate the exact original Godot workflow once:
+
+1. Keep the clone topology, resolution, refresh rates, G-SYNC, and OSD settings unchanged.
+2. Launch Godot 4.6.3 normally through its project manager—not with the direct D3D12 bypass command.
+3. Open `C:\Users\k\Repository\Godot\VsyncStutterTest\Godot`.
+4. Record where the project editor opens and whether either monitor blinks while the project manager starts, the project opens, during use, or on close.
+5. Confirm whether Godot remains smooth without the G-SYNC indicator, then close Godot completely.
+6. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the primary TB5/DisplayPort PA.
+7. Observe its G-SYNC indicator and animation smoothness, close it, and report both results.
+
+This final test includes Godot's native-OpenGL project manager and its DRS save, so it validates the complete workflow that originally triggered the failure.
