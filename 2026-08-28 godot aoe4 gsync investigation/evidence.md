@@ -751,9 +751,47 @@ Two PA278QGVs, one on each Thunderbolt 5/USB-C port:
 
 The current one-external-monitor capture retains the matching `Godot Engine` profile and its Fixed Refresh/VRR-disabled settings. Windows and NVAPI map the two PAs to distinct external DP targets 8450 and 8452 on the same RTX 5070 Ti adapter. They are connector instances 0 and 1, not MST children. The current active target is 8452 at 2560x1440/119.998 Hz; target 8450 is disconnected.
 
-The current NVIDIA driver is 596.49 (`r596_25`), installed at 16:30:31 PDT. The original failure evidence used 616.56. The current smooth arm is therefore version-controlled, but the failing two-external arm should be captured again on 596.49 before claiming conclusive cross-branch reproduction.
+The current NVIDIA driver is 596.49 (`r596_25`), installed at 16:30:31 PDT. The original Godot failure evidence used 616.56. A later Unity Fixed Refresh transition reproduced the same sticky failure on 596.49, closing the driver-branch confounder.
 
 Full command output, PnP timestamps, interpretation, and follow-up matrix are in `topology-ab-evidence.md`. The reusable read-only probes are `display-topology-query.cpp` and `nvapi-vrr-query.cpp`.
+
+## Mixed-MediaSync baseline and Unity transition
+
+At 22:30, before either editor opened, both external PAs and the internal panel were active. NVAPI reported:
+
+```text
+target 8450, MediaSync on:  VRR possible=1, displayInVrrMode=1, max interval=20583 us
+target 8452, MediaSync off: VRR possible=0, displayInVrrMode=0, max interval=0
+target 8449, internal:      VRR possible=1, displayInVrrMode=1, max interval=9750 us
+```
+
+AoE4 then ran normally with the G-SYNC indicator. The 22:36 post-AoE state remained unchanged.
+
+Unity's current matching profile was read back after the subsequent test:
+
+```text
+Profile: Unity 3D
+Application: unity.exe
+VRR requested state: disabled
+G-SYNC application override: fixed refresh
+G-SYNC mode: disabled
+```
+
+The user opened Unity, observed a two-to-three-second monitor blink, observed Unity without G-SYNC, closed it, and immediately tested two controls. AoE4 lacked the indicator and was clearly choppy. `VsyncStutterTest.exe` also lacked the indicator and was clearly choppy.
+
+At 22:43, target 8450 still reported `VRR possible=1` but had changed to `displayInVrrMode=0`. The other targets retained their prior capability/mode state.
+
+The DRS profile databases were last written at 22:11:41 and had identical SHA-256 hashes after the test:
+
+```text
+97110C9B3516B3622B3A9452CF8DF40C0B7788A2BDE9DCA0EA2F308ACEE14D02
+```
+
+Unity therefore did not rewrite DRS during the 22:36-22:43 transition. Activation of its existing Fixed Refresh profile is sufficient to produce the blink and sticky post-exit state.
+
+`VsyncStutterTest.exe` has no full-path or basename DRS association and no matching profile name. Its failure is a neutral demonstration of inherited live/global state, not a per-app override.
+
+Full evidence and interpretation are in `two-external-mixed-mediasync-baseline.md` and `unity-fixed-refresh-transition.md`.
 
 ## Event and crash evidence
 

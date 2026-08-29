@@ -30,9 +30,9 @@ This is more discriminating than the original A/B:
 
 - The internal panel is not required for the failure: case 2 fails without it.
 - Two active displays in total are not sufficient: case 2 has two external displays and fails, while case 3 has one external plus the internal display and succeeds.
-- Two OSD-enabled Adaptive-Sync monitors are probably not required: cases 1 and 2 fail with MediaSync off on one PA. This deduction remains provisional until the failing state is captured and NVAPI verifies that the OSD-off monitor no longer reports VRR possible or reports Adaptive-Sync disabled.
+- Two OSD-enabled Adaptive-Sync monitors are not required: cases 1 and 2 fail with MediaSync off on one PA, and NVAPI verified that target as non-VRR in the failing state.
 - The common tested condition is two active external PA display paths.
-- Unity and Godot show the same topology-dependent editor smoothness result. Therefore the poor editor behavior is not specific to Godot's NVIDIA profile writer or rendering engine. Godot's ordinary project-manager profile save/reload remains separately relevant to the three-second display blank and sticky post-Godot VRR failure.
+- Unity and Godot show the same topology-dependent editor result. Unity's existing Fixed Refresh profile also reproduced the monitor blank and sticky loss of later G-SYNC without writing DRS. Therefore neither the poor editor behavior nor the persistent transition failure is specific to Godot's profile writer or rendering engine.
 
 The requested bad-topology baseline was captured at 22:30 PDT after the MediaSync-off PA was reconnected/power-cycled and before Godot opened. NVAPI identifies target 8450 as VRR-capable (`possible=1`, `displayInVrrMode=1`, maximum interval 20583 us) and target 8452 as non-VRR (`possible=0`, `displayInVrrMode=0`, maximum interval 0). The OSD change therefore reached the driver. Two VRR-enabled external targets are conclusively not required for the reported poor editor behavior.
 
@@ -188,9 +188,9 @@ Leading but not yet proven:
 - the failure requires two active external scanout/display heads, not two VRR-enabled monitors and not merely two active displays in total; and
 - the sticky state occurs during simultaneous reprogramming/hotplug churn across the two external DP targets.
 
-Remaining version confounder:
+Driver-version result:
 
-- rerun and capture the failing two-external arm while 596.49 remains installed. The A/B report arrived after the driver installation and later PnP events show both targets active/reconfiguring, but the existing records do not timestamp the exact user-visible Godot failure tightly enough to prove which driver was loaded for every arm.
+- the original Godot failure was captured on 616.56, and the Unity Fixed Refresh transition reproduced the same sticky failure on 596.49. The exact Godot sequence need not be repeated to establish that the underlying driver/topology defect crosses these two branches.
 
 Lower-probability alternatives:
 
@@ -210,23 +210,23 @@ A single defective TB5/USB-C port is now unlikely because target 8452 was smooth
 | E | two PAs | internal + one PA | either | Isolate active target count from physical connection |
 | F | two PAs | internal + both PAs at 60 Hz | on | Lower-priority bandwidth/link-allocation test |
 
-For each case capture `display-topology-query.cpp` and `nvapi-vrr-query.cpp` before Godot, while Godot is open, and after Godot closes; then test the AoE4 indicator. Do not change DRS between cases.
+Cases A-D are complete. Case E—both cables present but only one external display active in Windows—is the highest-value remaining topology isolation. Use `VsyncStutterTest.exe` as the neutral post-transition control.
 
 ## Completed baseline and next step
 
-The failing two-external mixed-MediaSync state has now been captured before Godot, and NVAPI verified the OSD-off target as non-VRR. Continue without opening Godot:
+The failing two-external mixed-MediaSync state and successful pre-editor AoE4 control are complete. Unity then reproduced the Fixed Refresh blink and sticky failure without writing DRS. Next:
 
-1. launch AoE4 before either editor and record indicator plus subjective/monitor-refresh behavior;
-2. close AoE4 without opening Godot or Unity;
-3. disable one PA in Windows while leaving both physically connected, rerun the probes, and repeat the AoE4 baseline; and
-4. if two active external PAs alone are bad, connect one PA by the laptop's HDMI output and the other by one TB5/USB-C DisplayPort output.
+1. recover G-SYNC and verify target 8450 returns to `displayInVrrMode=1`;
+2. leave both PAs connected but disable the MediaSync-off PA in Windows;
+3. run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`; and
+4. if needed, connect one PA by HDMI and the other by one TB5/USB-C DisplayPort output.
 
 Interpretation:
 
 - If Windows-disabling one PA fixes it, active external scanout-head count is the trigger rather than cable presence.
 - If TB5+HDMI is smooth while two TB5 outputs are poor, the fault is specific to the dual USB-C/DisplayPort routing path.
 - If TB5+HDMI is also poor, the fault is the NVIDIA/Windows two-external-head path more generally.
-- Only after the pre-Godot AoE4 baseline is known should the Fixed Refresh Godot transition be repeated; this separates a topology-only G-SYNC quality problem from Godot's known sticky post-transition problem.
+- Unity has already separated profile activation from Godot's writer: an existing Fixed Refresh profile is sufficient.
 
 ## Authoritative references
 

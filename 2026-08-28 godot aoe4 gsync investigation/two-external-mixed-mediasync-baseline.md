@@ -51,6 +51,12 @@ A read-only post-AoE capture at 22:36 PDT showed the topology and capability sta
 
 This proves two active external heads do not inherently prevent G-SYNC from working in AoE4. The poor Unity/Godot editor behavior is presentation-path/application-class dependent. The next separation is Unity editor followed immediately by AoE4: if AoE4 remains good, Unity's problem is confined to its own windowed/editor presentation path; if AoE4 loses G-SYNC, a non-Godot editor can also poison the later driver state.
 
+## Unity-to-control result
+
+Unity produced a two-to-three-second monitor blink, ran without G-SYNC under its Fixed Refresh profile, and then left both AoE4 and the unprofiled `VsyncStutterTest.exe` without G-SYNC and visibly choppy. Post-Unity NVAPI changed target 8450 from `displayInVrrMode=1` to `0` while leaving `VRR possible=1`.
+
+This takes the second branch above: Unity can poison the later driver state without Godot. DRS file timestamps prove the databases were not written during the transition, so activation of an existing Fixed Refresh profile is sufficient.
+
 ## Raw Windows topology output
 
 ```text

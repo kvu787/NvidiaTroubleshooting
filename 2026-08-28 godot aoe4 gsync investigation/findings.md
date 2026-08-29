@@ -4,23 +4,25 @@ Investigation date: 2026-08-28 PDT
 
 ## Conclusion
 
-Opening the Godot project is not persistently turning off the NVIDIA global G-SYNC setting, and it is not changing the Age of Empires IV profile.
+Opening the Godot project is not persistently turning off the NVIDIA global G-SYNC setting, and it is not changing the later control application's profile.
 
-The failure is a live NVIDIA driver-state problem. The Godot project-manager path starts in native OpenGL and unconditionally saves its NVIDIA DRS profile. When the profile selected for Godot is configured as Fixed Refresh, that save/reload transition blanks both displays for roughly three seconds. On driver 616.56, the VRR presentation path then remains stuck in the fixed-refresh state after Godot exits, even though the stored global setting and AoE4 profile still allow G-SYNC.
+The failure is a live NVIDIA driver-state problem caused by activation/deactivation of a Fixed Refresh application profile in the two-external-head topology. Both Godot and Unity reproduce a two-to-three-second monitor blank when launched under Fixed Refresh, after which the VRR-capable PA remains stuck outside VRR mode even though persistent global G-SYNC remains enabled.
+
+Unity is the decisive control. Its current `Unity 3D` profile explicitly requests VRR disabled and Fixed Refresh. Unity reproduced the blank and left both AoE4 and the unprofiled `VsyncStutterTest.exe` without G-SYNC. The NVIDIA DRS databases were last written about 25 minutes before the Unity test, proving no application-side DRS save/reload was required. Merely activating the already-stored Fixed Refresh profile is sufficient.
 
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
-- No indicator in AoE4 afterward is the defect: the driver does not successfully transition back from the Godot fixed-refresh state.
+- No indicator in a later G-SYNC-allowed application is the defect: the driver does not successfully transition back from the preceding Fixed Refresh application state.
 - The settings UI and DRS database still show G-SYNC enabled because the persistent configuration was not turned off.
 
 A subsequent recovery test confirmed this interpretation: disabling global G-SYNC, applying, enabling it again, and applying restored the G-SYNC indicator in AoE4 without any Godot or AoE4 profile edit.
 
-A later one-profile isolation test made the trigger narrower. The exact-path NVIDIA App profile was deleted, and the remaining basename `Godot Engine` profile was set to Fixed Refresh in NVIDIA Control Panel. Godot still produced the same three-second blank, and AoE4 still failed to activate G-SYNC afterward. Therefore duplicate profiles, exact-path matching, and the NVIDIA App-created profile are not required for the failure. The common condition is a Fixed Refresh Godot profile combined with Godot's project-manager DRS save/reload.
+A later one-profile isolation test made the trigger narrower. The exact-path NVIDIA App profile was deleted, and the remaining basename `Godot Engine` profile was set to Fixed Refresh in NVIDIA Control Panel. Godot still produced the same three-second blank, and AoE4 still failed to activate G-SYNC afterward. Therefore duplicate profiles, exact-path matching, and the NVIDIA App-created profile are not required. The subsequent Unity control narrowed this further: an existing Fixed Refresh profile can trigger the failure without any DRS write.
 
-The best classification is an NVIDIA multi-display VRR/profile-transition bug exposed by Godot's unconditional NVAPI profile save. The original reproduction used driver 616.56. The later topology A/B was reported after driver 596.49 had been installed, and the current smooth one-external arm is confirmed on 596.49 with the Fixed Refresh profile still present. Capturing the live failing two-external arm again will close the remaining driver-version confounder. Godot's behavior remains an important trigger and an avoidable integration problem, but the failure to restore G-SYNC for a later application is a driver/display-path failure.
+The best classification is an NVIDIA multi-display VRR/profile-transition bug. Godot's unconditional NVAPI profile writer exposed the problem but is not necessary for it. The original reproduction used driver 616.56; Unity has now reproduced the failure on driver 596.49. The failure to restore G-SYNC for a later application is therefore a driver/display-path failure across both tested driver branches.
 
-The direct D3D12 bypass has now been runtime-verified from a completely clean Godot/NVIDIA baseline. With both rendering fallbacks disabled, the editor opened without a monitor blank, showed the G-SYNC indicator, and exhibited the user's choppy pointer movement. Afterward, every DRS file remained byte-for-byte identical to the pre-launch baseline, the profile count remained 7957, the exhaustive Godot audit remained clean, and NVIDIA App's private catalog remained free of Godot. The user then launched AoE4 and observed its G-SYNC indicator normally. This proves the direct D3D12 path avoids Godot's NVIDIA profile writer, the display blank associated with it, and the sticky live-VRR failure seen after the ordinary project-manager path. The choppy G-SYNC editor behavior is the tradeoff that Godot's profile-writing workaround was designed to suppress.
+The direct D3D12 bypass has now been runtime-verified from a completely clean Godot/NVIDIA baseline. With both rendering fallbacks disabled, the editor opened without a monitor blank, showed the G-SYNC indicator, and exhibited the user's choppy pointer movement. Afterward, every DRS file remained byte-for-byte identical to the pre-launch baseline, the profile count remained 7957, the exhaustive Godot audit remained clean, and NVIDIA App's private catalog remained free of Godot. The user then launched AoE4 and observed its G-SYNC indicator normally. This proves the direct D3D12 path avoids both Godot's profile writer and Fixed Refresh profile activation; the Unity control shows the latter is the necessary distinction for the blank/sticky failure. The choppy G-SYNC editor behavior is the tradeoff that Godot's profile workaround was designed to suppress.
 
 ### Unresolved primary user goal
 
@@ -37,12 +39,13 @@ The tested approaches split into incompatible partial outcomes:
 | Approach | Godot editor | AoE4 afterward | Side effect | Status |
 |---|---|---|---|---|
 | Ordinary project-manager launch with matching Fixed Refresh profile | G-SYNC disabled | G-SYNC fails to activate | Godot saves/reloads DRS; monitors blank; live VRR becomes stuck | Not acceptable |
+| Unity launch with matching Fixed Refresh profile | G-SYNC disabled | AoE4 and `VsyncStutterTest.exe` fail to activate | No DRS write; monitors blank; live VRR becomes stuck | Proves profile activation alone is unsafe |
 | Clean direct D3D12/no-fallback launch with no Godot profile | G-SYNC active; pointer is choppy | G-SYNC activates normally | No DRS mutation or monitor blank | Safe partial workaround, but does not meet editor requirement |
 | Explicit global G-SYNC off/on in NVIDIA App or NVIDIA Control Panel | Can force desired global state manually | Works after re-enable | Cumbersome and causes a long monitor blank | Recovery/manual toggle, not a per-app solution |
 
 Therefore the direct D3D12 procedure is a verified workaround for profile mutation and the sticky NVIDIA state, but it is not a solution to the core per-application requirement. Calling it a complete workaround would overstate the result.
 
-One potentially useful combination remains untested: create one Fixed Refresh Godot profile, then use only the verified direct D3D12/no-fallback launch so Godot itself never saves DRS. That experiment could determine whether profile activation alone is safe and, if so, might provide the desired per-app behavior. It could also reproduce the sticky failure, so it should be treated as a deliberate future isolation test rather than an established recommendation.
+The previously proposed combination—an existing Fixed Refresh profile with a launch path that does not save DRS—is no longer a plausible safe workaround. Unity has now demonstrated that activation of an existing Fixed Refresh profile alone reproduces the blank and sticky failure.
 
 ## Topology A/B update
 
@@ -64,20 +67,15 @@ OpenGL threaded optimization: disabled
 
 Therefore the smooth arm is not explained by the Fixed Refresh profile being absent. The second external display path is a necessary condition in the user's A/B.
 
-A follow-up matrix narrows this further. Two external PAs behave poorly both with the internal panel active and with it disabled, even when OSD MediaSync is off on one external PA. One MediaSync-enabled external PA plus the internal panel behaves smoothly. The same result occurs in both the Godot editor and Unity editor. Therefore the leading condition is **two active external display heads**, not the internal panel, not merely two active displays in total, probably not two VRR-enabled panels, and not a Godot-specific editor implementation. The VRR-eligibility point still requires an NVAPI capture of the bad MediaSync-off state to prove that the OSD change reached the driver.
+A follow-up matrix narrows this further. Two external PAs behave poorly both with the internal panel active and with it disabled, even when OSD MediaSync is off on one external PA. One MediaSync-enabled external PA plus the internal panel behaves smoothly. The same result occurs in both the Godot editor and Unity editor. Therefore the leading condition is **two active external display heads**, not the internal panel, not merely two active displays in total, not two VRR-enabled panels, and not a Godot-specific editor implementation. NVAPI verified the OSD-off target as non-VRR in the failing topology.
 
-Unity's matching behavior separates two phenomena that were previously entangled:
-
-1. Editor motion/smoothness is broadly poor under the two-external topology, independently of Godot's NVIDIA integration.
-2. Godot's native-OpenGL project-manager path additionally saves/reloads its Fixed Refresh DRS profile, producing the observed monitor blank and, in the failing topology, the sticky loss of AoE4 G-SYNC after Godot exits.
-
-Godot is therefore not the root cause of the general dual-external editor smoothness problem. It remains a specific trigger for the more severe DRS transition failure.
+Unity's matching behavior resolves what was previously entangled. Editor motion/smoothness is broadly topology-dependent, and launching either editor under a Fixed Refresh profile can produce the monitor blank and sticky loss of later G-SYNC. Godot is not the root cause; its profile writer is one way the Fixed Refresh configuration is established, not a required trigger.
 
 The bad-topology baseline subsequently verified the MediaSync distinction in NVAPI before Godot opened. External target 8450 reports VRR possible and a 20583-us maximum frame interval; external target 8452 reports VRR impossible, not in VRR mode, and a zero maximum frame interval. Both external heads are nevertheless active at 2560x1440/119.998 Hz. This proves the poor editor behavior does not require two VRR-enabled external monitors. It requires the second active external head under the tested configurations.
 
 AoE4 then provided a clean pre-editor control in that exact state: without opening Unity or Godot and without toggling G-SYNC, AoE4 displayed the G-SYNC indicator and behaved normally. The post-AoE read-only state was unchanged. Thus two active external heads do not inherently disable or degrade G-SYNC for all applications. The failure is presentation-path/application-class dependent.
 
-The separate Unity NVIDIA-settings audit further shows that Unity has no user G-SYNC/refresh override and no Fixed Refresh rule; it inherits the global G-SYNC `allow` behavior. Unity's poor editor behavior therefore is not explained by a Unity DRS misconfiguration.
+The earlier 14:28 Unity NVIDIA-settings audit correctly showed no user G-SYNC/refresh override at that timestamp. The current profile was configured afterward and now explicitly contains `VRR requested state: disabled`, `G-SYNC: fixed refresh`, and `G-SYNC mode: disabled`.
 
 The latest good-state capture contains internal target 8449 and external target 8450/connector instance 0. The previous good-state capture contained the internal target and external target 8452/connector instance 1. Both external ports therefore work individually; a defective single port is unlikely.
 
@@ -101,11 +99,11 @@ No downstream USB4 device router is present in the current Plug-and-Play tree. T
 The original trigger sequence needs one new condition:
 
 1. both external PA278QGV DisplayPort targets are active;
-2. Godot's native-OpenGL startup saves/reloads DRS while the matching Godot profile is Fixed Refresh;
+2. an application matched to a Fixed Refresh profile starts;
 3. NVIDIA reprograms multiple external display/VRR targets and both monitor device nodes may transiently disappear/re-enumerate; and
-4. the driver does not restore a usable G-SYNC presentation path for a later AoE4 session.
+4. the driver leaves the VRR-capable external target outside VRR mode after the application exits.
 
-With only one external PA target active, the same matching Fixed Refresh profile does not produce the user-visible failure. Godot's unconditional save is therefore a trigger, but it is not independently sufficient on this machine.
+With only one external PA target active, the same Fixed Refresh editor profiles do not produce the user-visible failure. Fixed Refresh profile activation is therefore necessary in the tested transition, but it is not independently sufficient without the two-external-head topology.
 
 Windows' device-management log contains repeated simultaneous `surprise removed ... missing on the bus` events for targets 8450 and 8452 during the dual-monitor testing period. At 19:05:51 only target 8450 was removed; target 8452 remained and is the current working one-external state. These events corroborate real display-target churn. They do not, by themselves, distinguish physical unplugging from a driver modeset/hotplug cycle for every earlier timestamp.
 
@@ -125,10 +123,10 @@ The user completed the central part of that plan: two external PAs still behaved
 
 ### Current highest-value next test
 
-The pre-editor AoE4 control is complete and works normally. Keep the captured topology, open the same Unity editor/project that exhibits poor behavior, observe it, close Unity, and immediately retest AoE4 without changing G-SYNC or opening Godot.
+The Unity-to-AoE control is complete and reproduces the sticky failure without Godot. Recover global G-SYNC once and verify target 8450 returns to `displayInVrrMode=1`. Then leave both PAs physically connected but disable the MediaSync-off PA in Windows and repeat `Unity Fixed Refresh -> VsyncStutterTest.exe`.
 
-- If AoE4 remains normal, Unity's failure is confined to its editor/windowed presentation path and Godot's post-exit stickiness remains specific to Godot's DRS transition.
-- If AoE4 loses G-SYNC after Unity, the persistent transition defect is broader than Godot, even though Godot's DRS save/reload remains one known trigger.
+- If the transition is clean, the number of active external scanout heads is confirmed as the topology condition.
+- If it still fails, the physical presence of the second external target is sufficient even when Windows does not use it for scanout.
 
 Next, leave both PAs physically connected but disable one in Windows. A smooth result would identify the number of active external scanout paths rather than physical connection presence. If two active PAs remain the discriminator, route one PA through the laptop's HDMI output and one through a TB5/USB-C DisplayPort output:
 
@@ -399,9 +397,9 @@ The one-profile repetition shows the same behavior more directly. NVIDIA's activ
 
 The two settings that Godot's source writes were already present in `Godot Engine` from the earlier profile creation. The current nine-setting profile is consistent with NVIDIA Control Panel adding Fixed Refresh to those existing Godot settings, followed by Godot re-saving them. There was no prelaunch raw DRS snapshot in this test, so exact line-for-line semantic identity cannot be claimed for the 15:15:32 write; the source call and coincident database rewrite are established.
 
-### Godot's source contains the triggering save
+### Godot's source contains an unconditional save, but it is not required for the bug
 
-Godot 4.6.3's native Windows OpenGL manager calls `_nvapi_setup_profile()` during `GLManagerNative_Windows::initialize()`.
+Godot 4.6.3's native Windows OpenGL manager calls `_nvapi_setup_profile()` during `GLManagerNative_Windows::initialize()`. This explains how Godot creates/updates its profile, but the Unity control proves this save is not required for the NVIDIA failure.
 
 That routine:
 
@@ -431,17 +429,15 @@ The three-second blank is therefore best understood as display-pipeline/profile 
 
 ## Trigger sequence
 
-1. AoE4 runs with its profile and activates G-SYNC.
-2. AoE4 exits.
-3. Godot starts through the project manager.
-4. The process matches a Godot profile configured as Fixed Refresh. In the latest test this is the sole basename `Godot Engine` profile.
-5. The project manager uses native OpenGL and invokes `_nvapi_setup_profile()`.
-6. Godot saves DRS, causing a profile reload/reapplication.
-7. NVIDIA reconfigures the display/VRR path; both monitors blank.
-8. Godot correctly remains Fixed Refresh, but driver 616.56 fails to restore usable VRR activation after Godot exits.
-9. AoE4 later matches the correct G-SYNC-allowed profile, but the G-SYNC indicator never activates because the live VRR path is still stuck.
+1. Two external PA display heads are active; one may be non-VRR.
+2. A G-SYNC-allowed control application works normally.
+3. An application matched to an NVIDIA Fixed Refresh profile starts.
+4. NVIDIA reconfigures the display/VRR path and the monitors blank for two to three seconds.
+5. The Fixed Refresh application runs without G-SYNC and exits.
+6. The VRR-capable external target remains `VRR possible=1` but becomes stuck at `displayInVrrMode=0`.
+7. An unrelated G-SYNC-allowed or unprofiled application cannot activate G-SYNC.
 
-Steps 4 through 6 are directly established. Step 7 is established by the user's physical observation at the same timestamp. Step 8 is an inference from the enabled stored configuration, the verified global-toggle recovery, and the failed runtime activation; it is the explanation consistent with all recorded state.
+Unity establishes this sequence without a DRS write on driver 596.49. Godot follows the same visible sequence on 616.56 but additionally invokes its profile writer during native-OpenGL startup.
 
 ## Recovery
 
@@ -507,7 +503,7 @@ The AoE4 physical check after the clean bypass succeeded: the top-right G-SYNC i
 ### Other practical options
 
 - After each affected Godot session, use the now-verified global G-SYNC off/on recovery before gaming.
-- Test another NVIDIA driver branch/version. The sticky failure was observed on Game Ready 616.56; no other version was tested here.
+- Report both tested NVIDIA branches. The original Godot reproduction used 616.56, and the Unity control reproduced the same sticky failure on 596.49.
 - For a durable Godot-side fix, build Godot with the NVAPI profile setup removed or changed so it does not save DRS when the profile already has the desired values.
 - Removing only the exact-path profile is now proven insufficient if the remaining basename profile is also set to Fixed Refresh.
 - Removing Fixed Refresh from every profile that can match the Godot executable should avoid this particular transition, but it also restores the previously observed unwanted G-SYNC activation/choppy pointer behavior in the editor. It is therefore a tradeoff, not a complete fix.
@@ -522,7 +518,7 @@ Minimal environment data:
 
 - GeForce RTX 5070 Ti Laptop GPU
 - ASUS ROG Strix G18 G815LR-IS97
-- original Game Ready driver 616.56; current one-external control on 596.49
+- original Game Ready driver 616.56; current Unity reproduction and topology controls on 596.49
 - NVIDIA App 11.0.8.299
 - two ASUS PA278QGV displays reported by NVIDIA App
 - Windows build 26200
@@ -556,9 +552,11 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: the narrower trigger is two active external display heads, not two VRR-enabled monitors; NVAPI verified the second external PA is non-VRR in the bad topology.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
-- High confidence: Godot's DRS save/reload is still a separate trigger for the display blank and sticky post-Godot VRR failure; Unity's matching smoothness result does not absolve that integration behavior.
+- High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.
 - High confidence: AoE4 G-SYNC works normally before either editor in the mixed-MediaSync two-external topology, so that topology does not globally break VRR for all presentation paths.
-- Remaining confounder: capture the two-external failure arm again while driver 596.49 is still installed.
-- Optional remaining isolation: combine a Fixed Refresh Godot profile with the verified direct D3D12/no-save launch to distinguish profile activation alone from the DRS save/reload. This would deliberately reintroduce risk and is not required to validate the workaround.
+- High confidence: after Unity Fixed Refresh, target 8450 remains VRR-capable but changes from `displayInVrrMode=1` to `0`; this is direct API evidence of the sticky live state.
+- High confidence: `VsyncStutterTest.exe` has no DRS association yet loses G-SYNC after the Unity transition, proving the failure propagates through inherited live/global state.
+- High confidence: the same sticky transition occurs on 596.49 with Unity and occurred on 616.56 with Godot.
+- Resolved isolation: activation of an existing Fixed Refresh profile alone is sufficient in the two-external topology; the Unity transition proved this without a DRS write.
 - Separate remaining issue: reproduce the editor-window-close/process-linger behavior with process and verbose shutdown capture if it matters independently.
 - Primary unresolved requirement: find a stable per-application method that disables G-SYNC only for Godot while preserving G-SYNC elsewhere, without global toggling or monitor blanks.
