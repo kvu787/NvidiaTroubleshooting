@@ -229,6 +229,8 @@ The pre-editor control succeeded with the indicator and smooth motion. Internal-
 
 That Unity arm produced severe repeated display blinking twice, but both post-Unity neutral controls retained smooth G-SYNC. Final topology/state and DRS are unchanged, with no logged driver reset. The internal-off symptom is transient modeset instability rather than sticky failure. Next compare the same internal-off topology with HDMI lowered from 120 Hz to 60 Hz.
 
+The internal-off 120/60 baseline is captured. Lowering only HDMI to 59.951 Hz restores a successful primary DP VRR query with `displayInVrrMode=1`; routes and DRS are unchanged. This directly implicates mode/clock/resource allocation. The neutral functional control and Unity transition are pending.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

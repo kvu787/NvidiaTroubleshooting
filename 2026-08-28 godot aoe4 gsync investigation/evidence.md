@@ -839,6 +839,8 @@ Two internal-off Unity transitions produced severe repeated monitor blinking on 
 
 The internal-off effect is therefore transient Fixed Refresh transition instability, not immediate or sticky G-SYNC failure. Internal eDP active suppresses the disruptive modesets. The next arm keeps eDP off and lowers only HDMI from 120 Hz to 60 Hz to distinguish display-engine/clock load from the presence of the eDP path itself.
 
+At 00:26, the internal-off 120-Hz/60-Hz arm was captured before any 3D application. Only targets 8450 DP at 119.998 Hz and 8448 HDMI at 59.951 Hz are active; DRS is unchanged. Both targets now return successful public VRR queries with `displayInVrrMode=1`. Lowering only HDMI therefore cleared the generic primary-target query error seen at internal-off 120/120 Hz, providing direct driver-state evidence for a scanout mode/clock/resource dependency. Functional control and Unity transition remain to be tested.
+
 ## Event and crash evidence
 
 ```text

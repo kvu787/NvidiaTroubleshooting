@@ -50,6 +50,8 @@ The pre-editor neutral control succeeded: `VsyncStutterTest.exe` showed the G-SY
 
 That transition was performed twice. Unity caused severe repeated monitor blinking on open, during use, and on close, including a roughly two-second mid-use blank, but remained smooth without G-SYNC otherwise. Both later `VsyncStutterTest.exe` controls showed smooth G-SYNC. At 00:23, DRS/topology/final state are unchanged and no relevant driver reset was logged. Internal-off DP+HDMI therefore causes transient Fixed Refresh modeset instability, not sticky loss. Lower HDMI to 60 Hz with eDP still off for the next isolation.
 
+The 00:26 internal-off 120/60 capture is complete. DRS and routes are unchanged, but the primary DP public VRR query now succeeds and reports `displayInVrrMode=1`; HDMI also reports mode 1. At 120/120 the primary query returned generic error. This is direct evidence that secondary mode/load affects NVIDIA state. Run a neutral control before the 120/60 Unity transition.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -99,7 +101,7 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
 3. topology, a healthy `VsyncStutterTest.exe` baseline, and the clean Unity transition are complete;
 4. the original Godot workflow and launch-placement isolation are complete; and
-5. the internal-off Unity transition is complete; keep eDP off, lower only HDMI to about 60 Hz, and capture before opening any 3D application.
+5. the internal-off 120/60 baseline is captured; run `VsyncStutterTest.exe` on target 8450 before Unity, then report indicator/smoothness.
 
 Both external PAs work at 119.998 Hz when internal eDP is active, but internal-off Unity transitions blink severely while later G-SYNC still recovers. The immediate investigation is whether reducing the HDMI secondary to 60 Hz stabilizes the two-external-only transition. If not, duplicate/clone mode may keep eDP active without exposing a third usable desktop. Dual-VRR eligibility on the earlier DisplayPort topology, driver-branch specificity, and the need or sufficiency of Godot's DRS write remain resolved. Direct OSD-state detection has not been implemented.
 

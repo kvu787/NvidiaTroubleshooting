@@ -28,6 +28,8 @@ The neutral control is healthy: `VsyncStutterTest.exe` shows the indicator and r
 
 Unity supplies that transition but refines the symptom. With internal eDP off, Unity Fixed Refresh causes severe repeated monitor blanks on open, during use, and on close. Nevertheless, the neutral G-SYNC control restores correctly afterward twice. DRS and final target state remain unchanged, and Windows logs contain no relevant display-driver reset. The internal panel is therefore stabilizing Fixed Refresh modeset transitions; it is not required for eventual G-SYNC recovery in the mixed-route topology.
 
+Lowering only the HDMI secondary from 119.998 Hz to 59.951 Hz while keeping internal eDP off immediately changes the read-only driver state: the primary DP VRR-info query returns successfully with `displayInVrrMode=1` instead of generic error. DRS and physical routes are unchanged. This makes external scanout mode/clock/resource allocation the leading mechanism, pending the functional Unity transition.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -577,7 +579,8 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence from the user's repeated A/B: internal eDP active versus Windows-disconnected is the discriminator within the TB5/DisplayPort-plus-HDMI topology; HDMI MediaSync on/off is not.
 - High confidence: disconnecting internal eDP does not immediately break the neutral G-SYNC control; it starts smooth with the indicator.
 - High confidence: Unity Fixed Refresh with internal eDP off reproduces severe transient blanking but not sticky G-SYNC loss; two later controls recover normally.
-- Unresolved: whether lowering the HDMI secondary to 60 Hz suppresses the blanking with internal eDP still off, distinguishing scanout-resource load from eDP-path presence.
+- High confidence: lowering internal-off HDMI from 120 Hz to 60 Hz makes the primary DP public VRR query succeed again; external mode/load affects driver state before any editor opens.
+- Unresolved: whether the 120-Hz/60-Hz Unity transition also suppresses the visible blanking and yields a usable two-external-only workaround.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.

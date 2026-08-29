@@ -168,3 +168,36 @@ Keep internal eDP disconnected and lower only the HDMI secondary from 119.998 Hz
 
 - If the blinking disappears at a 120-Hz DP primary plus 60-Hz HDMI secondary, scanout clock/resource allocation is the leading cause and a two-external-only workaround exists.
 - If the blinking remains, the active internal eDP path itself is the leading stabilizer; duplicating rather than extending the internal panel becomes the next practical test for preventing hidden-window placement.
+
+## Internal-off 120-Hz/60-Hz baseline
+
+Captured: 2026-08-29 00:26 PDT
+
+The user kept internal eDP Windows-disconnected and changed only the HDMI secondary from 119.998 Hz to 59.951 Hz. No 3D application was opened before capture.
+
+Windows active paths:
+
+| Target | Route | Mode |
+|---|---|---|
+| 8450 primary PA | TB5/USB-C DisplayPort | 2560x1440 at 119.998 Hz |
+| 8448 secondary PA | native HDMI | 2560x1440 at 59.951 Hz |
+
+Internal target 8449 remains physically connected but inactive with zero current lanes. DRS timestamps and hashes are identical to the prior 120/120-Hz baselines.
+
+The read-only NVIDIA state changed materially:
+
+```text
+target 8448 HDMI:
+  VRR query status=0
+  possible=1
+  displayInVrrMode=1
+
+target 8450 TB5/DisplayPort primary:
+  VRR query status=0
+  possible=1
+  displayInVrrMode=1
+```
+
+At internal-off 120/120 Hz, the same primary target returned generic `NVAPI_ERROR` despite functional G-SYNC. Lowering only HDMI to 60 Hz makes the primary VRR query succeed again. This is direct API evidence that external scanout mode/clock/resource allocation affects the NVIDIA topology state, even before Unity opens.
+
+Establish a functional `VsyncStutterTest.exe` control on target 8450, then repeat Unity Fixed Refresh. If transition blinking disappears, 120-Hz primary plus 60-Hz HDMI is a two-external-only workaround and high external scanout load is the leading mechanism.
