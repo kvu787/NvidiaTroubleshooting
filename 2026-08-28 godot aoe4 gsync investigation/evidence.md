@@ -827,6 +827,10 @@ The controlled placement repetition rules out launch display as sufficient. The 
 
 The earlier single blank is therefore a transient cold/first transition after topology/target-state changes, not a repeatable window-placement or DRS-save effect in the current evidence. The stable TB5/DisplayPort-primary-at-120-Hz plus HDMI-secondary-at-60-Hz configuration is a validated practical workaround. Reboot/hotplug recurrence and route versus refresh/load remain untested.
 
+After reboot, the user discovered that the internal panel is required for smooth behavior in the mixed-route two-external configuration. With the internal panel Windows-disconnected, behavior is poor; reconnecting it restores smoothness. HDMI PA MediaSync on versus off did not change that observation. The current 00:11 healthy capture has the internal panel at about 240 Hz and both external PAs at 119.998 Hz, with target 8450 on TB5/DisplayPort and target 8448 on HDMI. All three targets report `displayInVrrMode=1`.
+
+This removes the prior refresh/load confound: HDMI at 120 Hz works while internal eDP is active. It introduces a narrower topology condition. The internal eDP path stabilizes TB5/DP plus HDMI, but did not stabilize the earlier two-TB5/DP configuration. A pre-application capture with the internal panel disconnected is now required to determine whether the topology change itself breaks G-SYNC or only makes the next Fixed Refresh transition unsafe.
+
 ## Event and crash evidence
 
 ```text

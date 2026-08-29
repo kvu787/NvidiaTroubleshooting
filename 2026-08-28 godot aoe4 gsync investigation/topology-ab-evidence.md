@@ -221,6 +221,8 @@ The Godot workflow then preserved correct per-application switching twice. The f
 
 That controlled repetition is complete. Two further Godot launches, including a deliberately persisted internal-panel launch, produced no blank; Godot remained smooth without G-SYNC and the later control retained smooth G-SYNC. Case G is a validated stable-use workaround. The isolated earlier blank is not explained by launch placement or the repeated DRS save and is best classified as an unreproduced first/cold topology transition.
 
+Post-reboot, case G was refined: both external monitors run at 119.998 Hz and remain smooth with internal eDP active, ruling out the earlier 60-Hz secondary as necessary. Windows-disconnecting internal eDP produces poor behavior and reconnecting it restores smoothness; HDMI MediaSync on/off did not change the result. Add an internal-off pre-application capture and neutral-control step before any further editor transition.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

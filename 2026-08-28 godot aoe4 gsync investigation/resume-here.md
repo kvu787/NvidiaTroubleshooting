@@ -14,7 +14,7 @@ Required end state:
 - No long monitor blank.
 - No sticky loss of G-SYNC after Godot exits.
 
-TB5/DisplayPort plus native HDMI is now a validated two-external-monitor workaround in stable use. Godot and Unity run smoothly without G-SYNC under Fixed Refresh, later intended applications regain smooth G-SYNC without a global toggle, and repeated Godot launches do not blank. One isolated first launch after the topology change blanked for two seconds; controlled internal-panel placement did not reproduce it. Reboot/hotplug recurrence remains untested.
+TB5/DisplayPort plus native HDMI preserves correct Fixed Refresh/G-SYNC transitions only while the internal laptop display remains active. After reboot, Windows-disconnecting the internal panel restores poor behavior; reconnecting it restores smoothness. This defeats the user's ideal two-desktop setup because the hidden internal desktop can capture windows.
 
 Unity now proves the sticky failure is not Godot-specific. In the captured two-external mixed-MediaSync topology, AoE4 worked before Unity. Launching Unity under its explicit Fixed Refresh profile caused a two-to-three-second blink; after Unity closed, both AoE4 and unprofiled `VsyncStutterTest.exe` lacked G-SYNC and were choppy. Target 8450 remained `VRR possible=1` but changed from `displayInVrrMode=1` to `0`.
 
@@ -41,6 +41,8 @@ The current `Godot Engine` DRS profile matches `godot_v4.6.3-stable_win64.exe` a
 That Godot validation succeeded on the core switching behavior twice. Both immediate `VsyncStutterTest.exe` controls showed smooth G-SYNC. The first editor opened on the internal panel and caused a two-second blank; the second opened on the primary PA and caused none. At 23:28, primary target 8450 remains `displayInVrrMode=1`; the HDMI target is now outside VRR mode; topology is unchanged. Godot rewrote DRS at 23:24:38 and 23:25:09 but the effective profile is unchanged. The next test should force/persist the editor onto the internal display, then reopen it, to distinguish launch-monitor placement from a one-time cold transition.
 
 The forced-placement repetition produced no blank on either launch. Godot remained smooth without G-SYNC, and the later control remained smooth with G-SYNC. DRS saved again at 23:31:52 and 23:32:20; effective settings remained unchanged. At 23:33, primary target 8450 remains in VRR mode and HDMI target 8448 remains outside it. Window placement and DRS save are not sufficient causes. The earlier blank is a non-reproduced cold/topology-transition event.
+
+After reboot, both external PAs are now 119.998 Hz and HDMI MediaSync is on. With internal eDP active, the user reports smooth behavior and the 00:11 probe shows all three targets at `displayInVrrMode=1`. HDMI at 120 Hz therefore works; the old 60-Hz mode was not required. The user reports poor behavior if internal eDP is Windows-disconnected and smooth behavior when it is reconnected, regardless of HDMI MediaSync on/off. Capture the disconnected state before any application, then run a neutral pre-editor control.
 
 ## New leading result: external-monitor-count A/B
 
@@ -91,9 +93,9 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
 3. topology, a healthy `VsyncStutterTest.exe` baseline, and the clean Unity transition are complete;
 4. the original Godot workflow and launch-placement isolation are complete; and
-5. preserve the current working topology for normal use. If deeper isolation is desired later, test HDMI at 120 Hz if available, or a 120-Hz/60-Hz split over the two TB5/DisplayPort routes after recording a recovery point.
+5. the internal-panel dependency supersedes the earlier stopping point: capture `internal disconnected + TB5/DP 120 Hz + HDMI 120 Hz` before opening an editor, then run `VsyncStutterTest.exe` as the neutral control.
 
-The practical-workaround sequence is complete. Remaining deeper root-cause work would distinguish HDMI routing from secondary refresh/link load and test cold-state recurrence after reboot/hotplug. Dual-VRR eligibility on the earlier DisplayPort topology, driver-branch specificity, and the need or sufficiency of Godot's DRS write have been resolved. Direct OSD-state detection has not been implemented; the HDMI target also demonstrates that user-observed MediaSync state and NVIDIA's VRR classification may diverge.
+The refresh/load question is resolved for the HDMI route: both external PAs work at 119.998 Hz when internal eDP is active. The immediate investigation is now the internal-panel active-path dependency and a possible way to keep eDP active without exposing a third usable desktop. Dual-VRR eligibility on the earlier DisplayPort topology, driver-branch specificity, and the need or sufficiency of Godot's DRS write remain resolved. Direct OSD-state detection has not been implemented.
 
 ## Per-display software possibility
 

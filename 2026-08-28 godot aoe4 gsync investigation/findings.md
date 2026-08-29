@@ -20,6 +20,8 @@ The exact Godot workflow is now validated twice in the working route/mode family
 
 That placement isolation is now complete. Two additional Godot launches, including one deliberately persisted to the internal panel, produced no blank. Godot saved DRS on both and remained smooth without G-SYNC; the later neutral control retained G-SYNC. Window placement and `NvAPI_DRS_SaveSettings()` are therefore each ruled out as sufficient for the isolated first blank. In stable use, the working route/mode family meets the full practical goal. A first transition after reboot, hotplug, or topology reconstruction may still blank and has not been tested.
 
+Post-reboot usage reveals that the workaround depends on the internal panel remaining active. TB5/DisplayPort plus HDMI is smooth with the internal eDP panel active, but poor when Windows disconnects the internal panel; reconnecting it restores smoothness. Both external PAs now run at 119.998 Hz and the HDMI PA's MediaSync on/off state did not change the A/B. Thus the prior 60-Hz secondary was not necessary. The leading condition is a compound active-path topology: HDMI routing avoids the dual-TB5 failure only while the internal eDP scanout path remains active.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -565,14 +567,16 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: both external PA targets being active is a necessary condition in every reported bad arm; the internal panel is neither necessary for failure nor sufficient to cause it.
 - High confidence: the inactive second PA may remain cabled, powered, and physically enumerated without triggering the bug; active scanout, not presence, is required.
 - High confidence: two active external display heads are necessary in the bad arms but not sufficient; TB5/DisplayPort plus HDMI is smooth through the same Unity Fixed Refresh transition.
-- High confidence: the tested bad state has both external PAs active at 119.998 Hz through the laptop's two TB5/USB-C DisplayPort outputs, while the working two-external arm has the secondary at 59.951 Hz over HDMI. Route versus refresh/link load remains unresolved.
+- High confidence: HDMI at 119.998 Hz works with the TB5/DisplayPort PA also at 119.998 Hz while internal eDP is active; the earlier 60-Hz HDMI mode was not necessary.
+- High confidence from the user's repeated A/B: internal eDP active versus Windows-disconnected is the discriminator within the TB5/DisplayPort-plus-HDMI topology; HDMI MediaSync on/off is not.
+- Unresolved: whether disconnecting internal eDP immediately breaks the neutral G-SYNC control or only makes the next Fixed Refresh application transition fail.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.
 - High confidence: Godot's DRS save is also not sufficient for the blank or sticky failure; it saved across four routed-topology launches, only the initial cold/topology transition blanked, and none poisoned later G-SYNC.
 - High confidence: internal-panel launch placement is not sufficient for the blank; a deliberate repeated internal-panel launch did not blank.
-- High confidence: the stable 120-Hz TB5/DisplayPort primary plus 60-Hz HDMI secondary configuration preserves smooth Fixed Refresh Godot and later smooth G-SYNC without manual global toggles.
-- Unresolved: whether the earlier single blank recurs after reboot/hotplug, and whether HDMI routing or the secondary's lower refresh/link load is the decisive difference from the bad topology.
+- High confidence: with internal eDP active, the 120-Hz TB5/DisplayPort primary plus 120-Hz HDMI secondary configuration preserves smooth Fixed Refresh Godot and later smooth G-SYNC without manual global toggles.
+- Unresolved: whether the earlier single blank recurs after another hotplug/topology reconstruction. Reboot did not invalidate the Fixed Refresh profile, but exposed the internal-panel dependency.
 - High confidence: AoE4 G-SYNC works normally before either editor in the mixed-MediaSync two-external topology, so that topology does not globally break VRR for all presentation paths.
 - High confidence: after Unity Fixed Refresh, target 8450 remains VRR-capable but changes from `displayInVrrMode=1` to `0`; this is direct API evidence of the sticky live state.
 - High confidence: `VsyncStutterTest.exe` has no DRS association yet loses G-SYNC after the Unity transition, proving the failure propagates through inherited live/global state.
