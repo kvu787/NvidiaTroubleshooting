@@ -1564,3 +1564,32 @@ Now test the practical clone workaround:
 7. Tell me when ready so I can capture the clone topology before the functional tests. If Windows does not offer that exact duplicate pair or makes an obviously unusable topology, stop and report what it offers instead.
 
 This would keep eDP active while exposing only two logical Windows desktop spaces, addressing the hidden-window problem. It does not literally disconnect or power down the laptop panel.
+
+---
+
+## User
+
+i'm unsure if this duplication topology is available. this is what i see.
+
+![Windows Display Settings offering duplicate pairs 1 and 2 or 1 and 3](<Attachments/2026-08-28-gsync-investigation/windows-display-duplicate-options-1-2-1-3.png>)
+
+## Assistant
+
+Yes—the exact duplication topology is available.
+
+The unchanged left-to-right arrangement in your screenshot maps to the preceding captured source positions:
+
+- display 2 = primary TB5/DisplayPort PA;
+- display 3 = secondary HDMI PA; and
+- display 1 = internal laptop panel.
+
+Choose **Duplicate desktop on 1 and 3**. Do not choose 1 and 2, because that would clone the internal panel with the primary PA.
+
+Then:
+
+1. Click **Apply** and accept **Keep changes** if Windows asks.
+2. Do not adjust refresh rates, G-SYNC, or either monitor's OSD afterward.
+3. Do not open Godot, Unity, `VsyncStutterTest.exe`, or another 3D application.
+4. Tell me when it is ready so I can capture how Windows and NVIDIA represent the clone paths before testing it.
+
+Windows may renumber or visually combine displays after applying the clone; that is expected. The intended end state is display 2 as the separate primary desktop and displays 1+3 sharing the other desktop.
