@@ -904,3 +904,45 @@ Now perform the decisive transition without any intervening change:
 If the control remains healthy, active external scanout-head count is the decisive topology condition. If it fails, the second PA's physical presence is sufficient even while Windows has disconnected it.
 
 Investigation commit: `c55819f`.
+
+---
+
+## User
+
+i did this:
+Keep G-SYNC and display topology unchanged.
+Do not open Godot.
+Open the same Unity editor/project on the active PA.
+Observe any monitor blink and Unity’s behavior.
+Close Unity.
+Immediately run VsyncStutterTest.exe.
+Observe its G-SYNC indicator and smoothness.
+Close it and report both results.
+
+for unity:
+there was no monitor blink. unity seemed to work okay and did not show any gsync.
+
+for vsyncstuttertest:
+runs smoothly and displays the top-right gsync indicator
+
+## Assistant
+
+This is the decisive result:
+
+- With the second PA still connected and powered but disabled in Windows, Unity's Fixed Refresh transition caused no monitor blink.
+- After Unity closed, `VsyncStutterTest.exe` retained the G-SYNC indicator and smooth motion.
+- The post-test display topology and both NVIDIA profile-database hashes remained unchanged.
+
+Therefore the sticky failure is not caused by the second PA merely being connected, Unity profile activation alone, or a new DRS/profile write. In the tested configurations, it requires **two external PA scanout heads active at the same time**.
+
+This also gives us a reliable, if imperfect, workaround: disable the second PA in Windows before opening Unity or Godot. That preserves G-SYNC without the global off/on toggle, but temporarily sacrifices the second desktop.
+
+The next A/B test should distinguish the dual-Thunderbolt/DisplayPort route from a general two-active-external-head problem:
+
+1. Keep the MediaSync-on PA on its current TB5/USB-C DisplayPort route.
+2. Disconnect the other PA from its TB5/USB-C route and connect it to the laptop's HDMI output.
+3. Keep MediaSync off on that second PA and make both external PAs active in Windows. Leave the internal display as it currently is.
+4. Do not open Unity, Godot, or `VsyncStutterTest.exe` yet.
+5. Tell me when that state is ready so I can capture the topology before establishing the healthy control.
+
+The result is recorded in the investigation notes.
