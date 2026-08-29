@@ -735,3 +735,40 @@ The root-cause conclusion is revised:
 The next action is one known recovery cycle: toggle global G-SYNC off/apply, then on/apply, without opening Unity, Godot, or `VsyncStutterTest.exe`, and report when ready. The read-only probe should then verify target 8450 returned to `displayInVrrMode=1` before establishing the neutral `VsyncStutterTest.exe` baseline.
 
 Investigation commit: `d1882d3`.
+
+---
+
+## User
+
+i did the following:
+Toggle global G-SYNC off and apply.
+Toggle it back on and apply.
+Do not open Unity, Godot, or VsyncStutterTest.exe.
+Tell me when ready.
+
+ready
+
+## Assistant
+
+Recovery is verified at the NVIDIA API level:
+
+```text
+target 8450, MediaSync-on PA:
+  VRR possible=1
+  displayInVrrMode=1
+
+target 8452, MediaSync-off PA:
+  VRR possible=0
+  displayInVrrMode=0
+```
+
+Target 8450 has returned from the post-Unity stuck value `displayInVrrMode=0` to the correct value `1`. The global toggle therefore repairs the exact external-display live state that the Fixed Refresh transition corrupts. The explicit applies rewrote DRS at 22:50:13, as expected.
+
+Before changing the Windows display topology, establish the replacement control:
+
+1. Do not change G-SYNC, display connections, MediaSync settings, or open Unity/Godot.
+2. Run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the MediaSync-on PA.
+3. Observe the top-right G-SYNC indicator and animation smoothness.
+4. Close it and report the result.
+
+Investigation commit: `7734775`.
