@@ -20,6 +20,8 @@ Unity now proves the sticky failure is not Godot-specific. In the captured two-e
 
 The DRS databases were last written at 22:11, before the successful 22:36 AoE control and the Unity transition. Unity did not rewrite DRS. Activation of an existing Fixed Refresh profile is sufficient; Godot's DRS save/reload is not required.
 
+The user then performed global G-SYNC off/apply/on/apply. At 22:51, target 8450 returned from `displayInVrrMode=0` to `1`; target 8452 remained non-VRR. This verifies recovery at the exact NVAPI state bit.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -63,13 +65,13 @@ Superseded test plan, retained for history:
 
 If step 4 succeeds, leaving Adaptive-Sync disabled on the secondary PA is the first plausible stable workaround that keeps both monitors connected and avoids per-session global G-SYNC toggling.
 
-The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 control, and Unity-to-control transition. Current next test, in order:
+The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 control, Unity-to-control transition, and driver-level recovery. Current next test, in order:
 
-1. recover global G-SYNC once and verify target 8450 returns to `displayInVrrMode=1`;
+1. run `VsyncStutterTest.exe` once in the recovered two-external state and confirm indicator/smoothness;
 2. leave both PAs physically connected but disable the MediaSync-off PA in Windows;
 3. repeat `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`;
 4. if needed, test one PA over HDMI plus one over a TB5/USB-C DisplayPort output; and
-5. use `VsyncStutterTest.exe` rather than AoE4 as the routine neutral G-SYNC control.
+5. continue using `VsyncStutterTest.exe` rather than AoE4 as the routine neutral G-SYNC control.
 
 This sequence now focuses on active scanout-head count and, if necessary, the dual-TB5 route. OSD/driver capability caching, dual-VRR eligibility, driver-branch specificity, and the need for Godot's DRS write have been resolved.
 

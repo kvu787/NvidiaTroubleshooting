@@ -107,3 +107,17 @@ Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe
 
 - If there is no blink/sticky failure, active external head count is confirmed as the topology condition.
 - If it still fails, physical connection/presence rather than active scanout is sufficient.
+
+## Verified recovery
+
+The user toggled global G-SYNC off/apply and on/apply without launching any test application or editor. At 22:51, NVAPI reported:
+
+```text
+target 8450: VRR possible=1, displayInVrrMode=1
+target 8452: VRR possible=0, displayInVrrMode=0
+target 8449: VRR possible=1, displayInVrrMode=1
+```
+
+Target 8450 therefore returned from the post-Unity stuck state (`displayInVrrMode=0`) to the correct VRR-capable mode (`displayInVrrMode=1`). This maps the known UI recovery directly to the NVAPI state bit.
+
+The off/on applies rewrote the DRS stores at 22:50:13, as expected for explicit settings changes. The next step is a clean `VsyncStutterTest.exe` run in this recovered two-external state before changing the Windows display topology.

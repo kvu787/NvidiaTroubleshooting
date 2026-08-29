@@ -793,6 +793,8 @@ Unity therefore did not rewrite DRS during the 22:36-22:43 transition. Activatio
 
 Full evidence and interpretation are in `two-external-mixed-mediasync-baseline.md` and `unity-fixed-refresh-transition.md`.
 
+The user then performed the known global G-SYNC off/apply/on/apply recovery without opening an editor or control application. At 22:51, target 8450 returned to `displayInVrrMode=1`, while its `VRR possible=1` capability and the other targets' states remained unchanged. The applies rewrote DRS at 22:50:13. This directly correlates the UI recovery with restoration of the external target's VRR display-mode state.
+
 ## Event and crash evidence
 
 ```text

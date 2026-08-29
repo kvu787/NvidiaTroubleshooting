@@ -10,6 +10,8 @@ The failure is a live NVIDIA driver-state problem caused by activation/deactivat
 
 Unity is the decisive control. Its current `Unity 3D` profile explicitly requests VRR disabled and Fixed Refresh. Unity reproduced the blank and left both AoE4 and the unprofiled `VsyncStutterTest.exe` without G-SYNC. The NVIDIA DRS databases were last written about 25 minutes before the Unity test, proving no application-side DRS save/reload was required. Merely activating the already-stored Fixed Refresh profile is sufficient.
 
+The subsequent global G-SYNC off/on recovery restored target 8450 from `displayInVrrMode=0` to `1` while leaving its VRR capability and the display topology unchanged. The UI recovery therefore directly reprograms the exact live state bit that becomes stuck after Fixed Refresh profile activation.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -123,7 +125,7 @@ The user completed the central part of that plan: two external PAs still behaved
 
 ### Current highest-value next test
 
-The Unity-to-AoE control is complete and reproduces the sticky failure without Godot. Recover global G-SYNC once and verify target 8450 returns to `displayInVrrMode=1`. Then leave both PAs physically connected but disable the MediaSync-off PA in Windows and repeat `Unity Fixed Refresh -> VsyncStutterTest.exe`.
+The Unity-to-control transition and driver-level recovery are complete. First run `VsyncStutterTest.exe` once in the recovered two-external state to prove the replacement control activates G-SYNC normally. Then leave both PAs physically connected but disable the MediaSync-off PA in Windows and repeat `Unity Fixed Refresh -> VsyncStutterTest.exe`.
 
 - If the transition is clean, the number of active external scanout heads is confirmed as the topology condition.
 - If it still fails, the physical presence of the second external target is sufficient even when Windows does not use it for scanout.
