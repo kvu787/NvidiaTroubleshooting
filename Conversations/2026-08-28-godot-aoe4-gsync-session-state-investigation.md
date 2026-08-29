@@ -855,3 +855,52 @@ Before Unity:
 If it works, this is a healthy baseline and the Unity transition can proceed. If not, global G-SYNC must be recovered in this topology before Unity is tested.
 
 Investigation commit: `bd4451d`.
+
+---
+
+## User
+
+i did this:
+Do not change G-SYNC or display settings.
+Do not open Unity or Godot.
+Run VsyncStutterTest.exe on the active PA.
+Observe the G-SYNC indicator and animation smoothness.
+Close it and report.
+
+VsyncStutterTest runs smoothly and displays the top-right gsync indicator
+
+## Assistant
+
+This validates a healthy one-active-external baseline even though the public NVAPI VRR-info call returns a generic error in this Windows-disconnected topology.
+
+The 23:01 capture confirms:
+
+```text
+Windows active paths:
+  internal target 8449
+  MediaSync-on external target 8450
+
+Still physically connected but inactive:
+  MediaSync-off target 8452
+
+VsyncStutterTest.exe:
+  G-SYNC indicator present
+  animation smooth
+```
+
+The DRS stores retain their 22:50:13 timestamps and captured hashes, providing a pre-Unity comparison point.
+
+Now perform the decisive transition without any intervening change:
+
+1. Keep G-SYNC and the display topology unchanged.
+2. Do not open Godot.
+3. Open the same Unity editor/project on target 8450.
+4. Observe whether the monitors blink and whether Unity behaves normally without G-SYNC.
+5. Close Unity.
+6. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe`.
+7. Observe its G-SYNC indicator and animation smoothness.
+8. Close it and report both the Unity and `VsyncStutterTest.exe` results.
+
+If the control remains healthy, active external scanout-head count is the decisive topology condition. If it fails, the second PA's physical presence is sufficient even while Windows has disconnected it.
+
+Investigation commit: `c55819f`.
