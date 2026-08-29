@@ -1289,3 +1289,41 @@ Interpretation:
 
 - If the indicator is missing or animation is choppy, Windows-disconnecting internal eDP is sufficient to break the neutral G-SYNC path immediately.
 - If the control remains smooth with the indicator, the two-external-only topology starts healthy and the later Fixed Refresh editor transition is still required to trigger the failure.
+
+---
+
+## User
+
+i did this:
+Keep the internal panel disconnected and change no G-SYNC, refresh-rate, topology, or OSD setting.
+Don’t open Godot or Unity.
+Run C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe on the primary TB5/DisplayPort PA.
+Observe the G-SYNC indicator and animation smoothness.
+Close it and report the result.
+
+vsyncstuttertest runs smoothly and shows the gsync indicator
+
+## Assistant
+
+This proves internal-panel disconnection alone is not sufficient to break G-SYNC. The two-external-only DP+HDMI topology starts healthy:
+
+- `VsyncStutterTest.exe` displays the G-SYNC indicator and runs smoothly;
+- the two active display paths remain unchanged;
+- the NVIDIA profile database remains byte-for-byte unchanged; and
+- the primary target's generic public VRR-query error persists despite functional G-SYNC, confirming it is not a reliable failure indicator in this topology.
+
+The reported poor state must therefore require a later event. Now test the Fixed Refresh transition without Godot's profile writer:
+
+1. Keep the internal panel disconnected and change no G-SYNC, topology, refresh-rate, or OSD setting.
+2. Do not open Godot.
+3. Open the same Unity editor/project on the primary TB5/DisplayPort PA.
+4. Observe whether either monitor blinks and whether Unity behaves smoothly without the G-SYNC indicator.
+5. Close Unity.
+6. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the same PA.
+7. Observe its G-SYNC indicator and animation smoothness.
+8. Close it and report both results.
+
+Interpretation:
+
+- If Unity is followed by missing/choppy G-SYNC, the two-external-only topology is healthy initially but cannot restore the primary after a Fixed Refresh profile transition.
+- If the control remains healthy, the event that produced your earlier poor state was something other than internal disconnection plus Fixed Refresh activation.
