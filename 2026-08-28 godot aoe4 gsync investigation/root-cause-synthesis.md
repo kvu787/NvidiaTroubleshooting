@@ -8,7 +8,7 @@ The evidence supports a layered diagnosis rather than one application bug:
 
 1. **Primary defect — very high confidence:** the NVIDIA Windows display driver sometimes fails to restore live VRR mode on the primary DisplayPort target after a Fixed Refresh application transition. Persistent G-SYNC configuration remains enabled, but the target is left capable of VRR and outside VRR mode.
 2. **Topology-dependent enabling condition — high confidence:** the failure depends on how active scanout targets, source surfaces, connector routes, timings, and likely display-engine resources are allocated on this laptop. It is not explained by monitor count, VRR capability, bandwidth, or refresh rate alone.
-3. **Proximal trigger — very high confidence:** entering and leaving an already stored application profile that requests Fixed Refresh is sufficient in a susceptible topology. Godot and Unity both demonstrate this.
+3. **Proximal trigger - very high confidence:** presenting a window matched to an already stored Fixed Refresh profile on the G-SYNC-capable primary target is sufficient in a susceptible allocation. Godot and Unity demonstrate the broader transition class; the latest Godot placement A/B localizes the current failure to the editor surface entering primary DP.
 4. **Godot integration defects — confirmed contributors, not the primary cause:** Godot's native OpenGL startup writes NVIDIA DRS state and saves it even when the desired values already exist. Its fullscreen-only setting did not reliably suppress editor G-SYNC here, and its basename profile collides with NVIDIA App's exact-path/catalog behavior. Those writes increase transition and profile-management complexity, but Unity reproduces the display failure without them and Godot writes safely in the stable topology.
 5. **NVIDIA App profile-management defects — confirmed but separate:** NVIDIA App's application catalog does not faithfully expose all underlying DRS profiles and can create/adopt them in the wrong order. This explains the disappearing/reappearing and duplicate Godot profile observations, not the later loss of VRR in unrelated applications.
 
@@ -42,6 +42,20 @@ Unity's existing Fixed Refresh profile reproduced the monitor blank and later VR
 
 Godot's DRS save is also not sufficient: repeated Godot starts changed the DRS database in the stable clone topology without causing a recurring blink or later G-SYNC loss.
 
+### The current failure is target-placement dependent
+
+After a healthy neutral control, Godot opened smoothly on the native-HDMI-plus-eDP clone. Moving the running Fixed Refresh editor onto the primary DP PA caused a three-second all-monitor blank. After exit, the neutral control was choppy without the indicator, and target 8452 had changed from `displayInVrrMode=1` to `0`.
+
+The controlled inverse then succeeded: after recovery, Godot opened, remained, and closed entirely on the HDMI clone. The immediate primary-DP neutral control retained smooth G-SYNC, and target 8452 remained in mode `1`. Godot still saved/reloaded DRS and the profile contents were identical.
+
+This proves that, in the current connector-1/source-0 allocation:
+
+- process launch, project open, DRS save, editor use, and exit on HDMI are insufficient;
+- the physical TB5 jack is insufficient, because the same result occurred after moving to the other jack while public connector/head state remained identical; and
+- presenting the Fixed Refresh surface on primary DP is necessary for the reproduced sticky failure.
+
+Earlier placement repetitions were clean in a different volatile allocation. Window placement is therefore not a universal root cause; it is the operation that selects the bad per-target transition when the underlying NVIDIA allocation is susceptible.
+
 ### Active route/resource allocation controls the outcome
 
 The full A/B matrix rules out simple explanations:
@@ -51,10 +65,10 @@ The full A/B matrix rules out simple explanations:
 | One external PA plus internal eDP | Clean |
 | Two PAs on the two TB5/USB-C DisplayPort outputs | Bad with eDP active or inactive |
 | Same two physical PAs, but one Windows-disabled | Clean |
-| Primary TB5/DP PA plus native-HDMI PA, eDP active | Clean at HDMI 60 or 120 Hz |
+| Primary TB5/DP PA plus native-HDMI PA, eDP active | Clean in the earlier allocation at HDMI 60 or 120 Hz; latest allocation fails when Fixed Refresh editor enters primary DP |
 | Primary TB5/DP PA plus HDMI PA, eDP inactive, both 120 Hz | Severe transient blanking; later VRR recovered in the tested sequences |
 | Primary TB5/DP PA at 120 plus HDMI PA near 60, eDP inactive | One transition caused sticky primary-target VRR loss |
-| Primary TB5/DP PA separate; internal eDP cloned with HDMI at 1440p | Repeated Unity and Godot transitions clean in-session |
+| Primary TB5/DP PA separate; internal eDP cloned with HDMI at 1440p | Repeated transitions clean in the earlier allocation; current allocation is clean only while Godot remains on HDMI clone |
 | Same 1440p eDP+HDMI clone after reboot | Sticky-loss prevention persists; first Godot launch blinks once, later launches are clean |
 | Same clone concept but both external PAs on TB5/DisplayPort | G-SYNC issues return; native HDMI restores smooth behavior |
 
@@ -139,7 +153,7 @@ Monitor firmware or link retraining may influence the visible blank duration, bu
 - MST or separate GPU ownership of the two external DP targets.
 - A simple bandwidth, 120-Hz, or high-pixel-clock limit.
 - A GPU crash/TDR.
-- Editor window placement.
+- Physical TB5 jack as the sole selector when only one external DP path is active.
 
 ## Current workaround and remaining uncertainty
 
@@ -148,9 +162,11 @@ The current 2560x1440 topology keeps:
 - the primary TB5/DisplayPort PA as one extended desktop source; and
 - the HDMI PA cloned with the active internal eDP target as the second desktop source.
 
-Across the original session and one reboot, repeated Unity and Godot Fixed Refresh transitions preserved later G-SYNC. The first Godot launch after the tested reboot blinked once; later launches in that boot were clean. This is strong evidence that an active eDP target plus the mixed DP+native-HDMI route stabilizes VRR restoration even when eDP is cloned and not exposed as a third desktop.
+Across the original session and one reboot, repeated Unity and Godot Fixed Refresh transitions preserved later G-SYNC. A later reconstruction of the same visible state was not sufficient: moving Godot from the HDMI clone onto primary DP reproduced sticky loss. The visible topology therefore does not uniquely determine NVIDIA's volatile private allocation.
 
-The same clone concept with both external PAs routed through TB5/DisplayPort remains bad, so clone mode and active eDP are not general solutions. The mixed-route topology remains a workaround around the faulty state transition, not a repair. Its reboot persistence is validated; sleep/hibernate, driver reset/update, monitor power-cycle, and hotplug-order durability remain untested.
+The new operational workaround for the current allocation is to keep Godot entirely on the native-HDMI-plus-eDP clone. One controlled run has succeeded: Godot opened and closed on HDMI, its expected DRS writes occurred, and the immediate primary-DP neutral control retained smooth G-SYNC with target 8452 still in VRR mode. This directly satisfies automatic per-application switching only if using the editor on the HDMI display is acceptable.
+
+The same clone concept with both external PAs routed through TB5/DisplayPort remains bad, so clone mode and active eDP are not general solutions. Mixed routing plus HDMI-only editor placement avoids the current faulty transition; it is not a repair. Same-placement repetition, reboot persistence of the placement rule, sleep/hibernate, driver reset/update, monitor power-cycle, and hotplug-order durability remain untested.
 
 ## References
 

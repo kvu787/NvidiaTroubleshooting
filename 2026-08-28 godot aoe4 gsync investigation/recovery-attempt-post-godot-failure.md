@@ -163,3 +163,28 @@ The strongest next A/B is placement-only:
 4. immediately retest the neutral application on primary DP.
 
 If later G-SYNC remains healthy, crossing a Fixed Refresh editor surface onto the VRR primary is necessary in this current allocation. If failure still occurs, launch/exit processing can poison the DP target even without presenting the editor on it.
+
+## Placement-only success
+
+The user saved Godot's editor placement on the HDMI clone while the system was already failed, recovered global G-SYNC, verified a healthy neutral pre-control, and then reopened Godot. The editor remained entirely on the HDMI clone and was closed there. The immediate primary-DP neutral control was smooth and showed the indicator.
+
+The read-only post-state confirms:
+
+```text
+target 8448, HDMI PA:     possible=1, displayInVrrMode=1
+target 8449, internal:    possible=1, displayInVrrMode=1
+target 8452, primary DP:  possible=1, displayInVrrMode=1
+```
+
+Topology, 120/120/240-Hz target timings, clone membership, and the nine-setting Godot profile are semantically identical to both failure arms. Godot again wrote the DRS databases, this time at 04:06:08 and 04:06:40, yet the effective settings remained unchanged and primary VRR survived.
+
+This is a decisive within-allocation placement A/B:
+
+| Godot presentation | Transition | Later primary G-SYNC |
+| --- | --- | --- |
+| Opens on HDMI clone, then moves onto primary DP | Three-second blank on crossing | Fails; target 8452 mode `0` |
+| Opens, remains, and closes on HDMI clone | No damaging DP transition | Works; target 8452 mode `1` |
+
+In the current connector-1/source-0 allocation, presenting the Fixed Refresh editor on the G-SYNC-capable primary DP target is necessary for the reproduced sticky failure. Process launch, project open, DRS save/reload, use on the HDMI clone, process exit, physical TB5 jack, and the visible topology are each insufficient without that DP presentation step.
+
+Operational workaround for this allocation: persist Godot on the HDMI clone and do not move any part of the editor onto the primary DP display. A second same-placement repetition and a reboot-persistence test would establish durability; the current single success establishes mechanism and immediate viability.

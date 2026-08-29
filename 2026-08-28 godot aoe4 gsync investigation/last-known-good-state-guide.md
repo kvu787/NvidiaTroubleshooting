@@ -171,10 +171,16 @@ Do not proceed until the neutral control is smooth and shows the indicator. A fa
 
 ## Full acceptance test
 
+### Current placement rule
+
+The latest controlled A/B adds a stricter operational requirement for the current connector-1/source-0 allocation: **keep the Godot editor entirely on the native-HDMI-plus-eDP clone**. Moving it onto the primary G-SYNC DP PA caused a three-second blank and left that target outside VRR mode. Opening, using, and closing Godot entirely on HDMI preserved later G-SYNC even though Godot still saved/reloaded DRS.
+
+This placement rule was not required in an earlier stable allocation, which is why older observations include clean primary-to-clone movement. The visible topology does not uniquely select NVIDIA's private allocation. When recovering the current state, persist Godot's placement on HDMI before the global G-SYNC recovery, then do not let any part of the editor cross onto primary DP.
+
 Once the neutral control passes:
 
 1. Launch Godot 4.6.3 normally through its project manager. Do **not** use the direct `--rendering-driver d3d12` bypass for this acceptance test.
-2. Open `C:\Users\k\Repository\Godot\VsyncStutterTest\Godot`.
+2. Open `C:\Users\k\Repository\Godot\VsyncStutterTest\Godot` on the HDMI clone. If it opens on primary DP, stop rather than dragging it across displays; first persist its HDMI placement while VRR is already failed, then recover global G-SYNC and restart the acceptance test.
 3. Confirm:
    - Godot is smooth;
    - the G-SYNC indicator is absent; and
@@ -183,7 +189,7 @@ Once the neutral control passes:
 5. Immediately run `VsyncStutterTest.exe` on the main TB5/DP PA.
 6. Confirm the indicator is present and the animation is smooth.
 7. Close the test.
-8. Launch and close Godot a second time, then repeat the neutral control.
+8. Launch and close Godot a second time on the HDMI clone without crossing onto primary DP, then repeat the neutral control.
 
 After a reboot, one two-second blank on the first ordinary Godot launch was observed in the otherwise working state. Later Godot launches in that boot were clean, and later G-SYNC remained healthy. Classify that isolated cold blank separately from the original sticky failure. The acceptance test fails if blanks keep recurring or if the immediate post-Godot neutral control loses the indicator or becomes choppy.
 
@@ -208,6 +214,7 @@ AoE4 may be used as a secondary confirmation, but `VsyncStutterTest.exe` is fast
 | Neutral control is bad before Godot | Stale global/live VRR state or incorrect route/topology | Verify mixed DP+native-HDMI route and active eDP clone; then perform the global off/on recovery |
 | Godot shows the G-SYNC indicator or mouse motion is choppy | Godot Fixed Refresh override is missing or the wrong profile matched | Restore `Monitor Technology: Fixed Refresh`; verify `0x10A879CF = 4` on the matching profile |
 | Godot is correct, but the immediate neutral control loses G-SYNC | Susceptible NVIDIA Fixed Refresh-to-VRR transition returned | Preserve/capture the state; if target remains VRR-capable but outside VRR mode, re-arm global G-SYNC and test a different connector/source allocation |
+| Godot is harmless on HDMI but crossing onto primary DP causes a long blank and later G-SYNC loss | Current placement-dependent Fixed Refresh transition | Persist and keep Godot entirely on the HDMI clone; do not move it onto primary DP |
 | HDMI PA is letterboxed | Clone source is 2560x1600 | Set the combined internal+HDMI source to 2560x1440 |
 | Windows can disappear onto an unseen laptop desktop | Internal panel is extended rather than cloned | Duplicate internal eDP with the native-HDMI PA |
 | Windows exposes only the two external targets | Internal eDP is disconnected | Re-enable it and clone it with HDMI |
@@ -231,6 +238,7 @@ Before opening an editor, every box should be true:
 - [ ] Global G-SYNC is enabled.
 - [ ] The matching Godot profile says Monitor Technology: Fixed Refresh.
 - [ ] `VsyncStutterTest.exe` is smooth and shows the indicator before opening Godot.
+- [ ] Godot is persisted on the HDMI clone and will not be moved onto primary DP in the current allocation.
 
 ## Why this topology is required
 
