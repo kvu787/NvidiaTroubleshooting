@@ -861,6 +861,8 @@ At 00:54, the neutral clone control succeeded: `VsyncStutterTest.exe` ran smooth
 
 At 00:57, the clone-mode Unity transition succeeded completely. Unity opened, ran smoothly without the G-SYNC indicator, and closed with zero monitor blinks. The immediate neutral control ran smoothly with the indicator. The post-transition capture retains the same three target paths/two sources, all three targets remain in VRR mode 1, and DRS is byte-for-byte unchanged. This proves that active eDP stabilizes the transition even when cloned with HDMI rather than extended as a hidden third desktop. Validate the ordinary Godot project-manager workflow next.
 
+At 01:01, two ordinary Godot project-manager sequences completed in the unchanged clone topology. The first editor opened on the cloned HDMI+eDP desktop, caused one two-second blink, was moved to primary DP, and closed; its immediate neutral control was smooth with the indicator. The second editor opened on primary DP, was smooth without the indicator, and caused no reported blink; its immediate control was also smooth with the indicator. All targets remain in VRR mode 1 and the clone topology is unchanged. Godot saved DRS at 00:59:06 and 00:59:30, changing db1 and db0 hashes respectively, while the selector remained unchanged. A current-driver exhaustive audit finds one `Godot Engine` profile associated with both 4.4.1 and 4.6.3. Exact Godot switching is safe from sticky loss, but a controlled cloned-desktop placement repetition is needed before claiming no-blink operation.
+
 ## Event and crash evidence
 
 ```text

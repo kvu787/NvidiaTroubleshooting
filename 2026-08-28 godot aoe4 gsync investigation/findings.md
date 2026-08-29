@@ -46,6 +46,8 @@ The neutral control in that 1440p clone state succeeds with smooth G-SYNC and th
 
 The Unity transition answers that question affirmatively. Unity Fixed Refresh opens, runs, and closes with zero monitor blinks; the immediate neutral control restores smooth G-SYNC and the indicator. The later capture retains all three targets in VRR mode 1 and unchanged DRS. Therefore the stabilizing condition is not a separate extended eDP desktop: internal eDP may be cloned with HDMI as long as it remains an active target. This is the first tested configuration that combines two usable external desktop spaces, no hidden third desktop, editor Fixed Refresh, later application G-SYNC, and no transition blank. Exact Godot project-manager validation remains pending.
 
+The exact Godot workflow then succeeds twice on the core per-application requirement. Both post-Godot neutral controls regain smooth G-SYNC, all targets remain in VRR mode 1, and the clone topology remains intact despite Godot's two expected DRS saves. The first project editor opened on the clone desktop and caused one two-second blank; the second opened on primary DP and caused none. Therefore the clone workaround solves sticky loss but does not yet prove a universally no-blank Godot workflow. Persisting and relaunching Godot on the clone desktop is the remaining placement-versus-cold-transition isolation.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -604,6 +606,8 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: duplicating internal eDP with the HDMI PA retains three active physical NVIDIA targets but produces only two Windows desktop sources; the primary DP PA remains separate and all targets initially remain in VRR mode 1.
 - High confidence: in the 1440p eDP+HDMI clone topology, Unity Fixed Refresh transitions with zero blinking and the immediate neutral application regains smooth G-SYNC; all targets remain in VRR mode 1 and DRS remains unchanged.
 - High confidence: eDP does not require its own extended desktop source to provide the observed stabilization; remaining active as a cloned target is sufficient for the Unity control.
+- High confidence: ordinary Godot in clone mode does not poison later G-SYNC; two immediate neutral controls succeed and every target remains in VRR mode 1 despite Godot's DRS writes.
+- Unresolved in clone mode: whether the first Godot launch's two-second blank was caused by opening on the cloned source or by a one-time cold/profile transition.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.

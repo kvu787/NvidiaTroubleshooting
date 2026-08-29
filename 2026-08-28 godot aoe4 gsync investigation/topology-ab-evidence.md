@@ -247,6 +247,8 @@ The 1440p clone neutral control succeeds: `VsyncStutterTest.exe` is smooth with 
 
 The Unity Fixed Refresh transition also succeeds completely in the 1440p clone topology. Unity opens, runs smoothly without G-SYNC, and closes with zero blinking; the immediate neutral control is smooth with the indicator. The 00:57 capture retains the two-source/three-target clone arrangement, VRR mode 1 on every target, and unchanged DRS. Active eDP stabilizes the transition even without a separate extended desktop source. Ordinary Godot project-manager validation is the remaining exact-workflow test.
 
+Two ordinary Godot project-manager sequences preserve later smooth G-SYNC in clone mode despite expected DRS saves. The first opened on the clone desktop and caused one two-second blank; the second opened on primary DP and caused none. Both immediate neutral controls succeeded, topology is unchanged, and all targets remain in VRR mode 1. The sticky defect is solved in this arm, while cloned-source placement versus a cold first transition remains to be isolated for the no-blank requirement.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

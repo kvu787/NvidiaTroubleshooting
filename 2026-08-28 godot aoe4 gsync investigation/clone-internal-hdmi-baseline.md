@@ -166,3 +166,59 @@ DRS timestamps and SHA-256 hashes: unchanged
 This is the decisive workaround result. The internal eDP target does not need its own extended desktop source to stabilize the NVIDIA Fixed Refresh transition; it only needs to remain an active scanout target in the tested configuration. Cloning it with HDMI eliminates the unusable hidden third desktop while retaining correct `Fixed Refresh editor -> G-SYNC application` switching and eliminating transition blanks.
 
 Unity isolates the NVIDIA transition, but the exact original workflow still needs one final validation: ordinary Godot 4.6.3 project-manager launch, project open, close, and immediate neutral control in this unchanged clone topology.
+
+## Ordinary Godot project-manager validation
+
+Captured: 2026-08-29 01:01 PDT
+
+First sequence:
+
+- Godot 4.6.3 was launched normally and the project was opened through the project manager;
+- the project editor opened on the cloned HDMI+internal desktop;
+- a two-second monitor blink occurred;
+- the user moved the editor to the primary TB5/DisplayPort PA and closed Godot; and
+- the immediate `VsyncStutterTest.exe` control ran smoothly with the G-SYNC indicator.
+
+Second sequence:
+
+- Godot 4.6.3 was again launched normally and the project was opened;
+- the editor opened on the primary PA;
+- no G-SYNC indicator appeared in Godot and editor use was smooth;
+- no blink was reported; and
+- the second immediate neutral control again ran smoothly with the G-SYNC indicator.
+
+The post-state remains healthy:
+
+```text
+Windows paths: three target paths, two source IDs
+clone source 2: 2560x1440, internal eDP plus HDMI
+separate source 0: 2560x1440, primary TB5/DisplayPort PA
+
+target 8448 HDMI:       displayInVrrMode=1
+target 8449 internal:   displayInVrrMode=1
+target 8450 primary DP: displayInVrrMode=1
+```
+
+Godot performed its expected persistent DRS saves:
+
+```text
+nvdrsdb1.bin last write: 00:59:06
+SHA-256: CE34F421D37411CD98F83251339D14362331EC6BD0502B8013A4958B50B28647
+
+nvdrsdb0.bin last write: 00:59:30
+SHA-256: BE3B9B53B568388C366A02136F1DE18D50C5634AE488D4862ACE72665618DDDF
+
+nvdrssel.bin: unchanged
+SHA-256: 6E340B9CFFB37A989CA544E6BB780A2C78901D3FB33738768511A30617AFA01D
+```
+
+The read-only exhaustive current-driver audit finds one matching `Godot Engine` profile with two application associations:
+
+```text
+godot_v4.4.1-stable_win64.exe
+godot_v4.6.3-stable_win64.exe
+```
+
+Profile enumeration completed without failures. This is the first profile-count audit after moving to driver 596.49, so its total of 7837 profiles must not be compared directly to the earlier 7957-profile 616.56 baseline as evidence of a Godot deletion.
+
+The exact ordinary Godot path therefore preserves correct per-application G-SYNC recovery in clone mode even though Godot saves DRS. The one first-launch blink prevents declaring the no-blank requirement fully solved. A controlled launch-placement repetition is needed: deliberately persist Godot on the cloned HDMI+eDP desktop and relaunch it there to separate clone-source placement from a one-time cold/profile transition.

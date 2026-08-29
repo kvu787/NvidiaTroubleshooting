@@ -121,6 +121,8 @@ The neutral control succeeded at 00:54: `VsyncStutterTest.exe` was smooth with t
 
 The Unity transition succeeded at 00:57. Unity opened, ran smoothly without G-SYNC, and closed with zero blinks; the immediate neutral control was smooth with the indicator. The post-state retains the 1440p eDP+HDMI clone, separate primary DP source, VRR mode 1 on all three targets, and unchanged DRS. Clone mode is a validated practical workaround for the NVIDIA transition. Run the ordinary Godot 4.6.3 project-manager workflow once in this exact topology, then immediately run the neutral control, to validate the original application path including Godot's DRS save.
 
+Two ordinary Godot sequences then preserved later smooth G-SYNC. The first editor opened on the clone desktop and caused one two-second blink; after it was moved to primary and closed, the neutral control succeeded. The second editor opened on primary, was smooth without G-SYNC, caused no reported blink, and the later control also succeeded. All targets remain in VRR mode 1. Godot saved DRS at 00:59:06 and 00:59:30. Persist Godot on the cloned HDMI+eDP desktop and relaunch once more to determine whether clone placement or a one-time cold transition caused the isolated blank.
+
 ## Per-display software possibility
 
 NVCP cannot independently enable only one of the two identical PA278QGVs. NVIDIA documents its display checkbox as applying to every connected display of the selected model.
