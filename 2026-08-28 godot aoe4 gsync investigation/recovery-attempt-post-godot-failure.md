@@ -113,3 +113,26 @@ The `Godot Engine` profile still contains the same nine explicit settings, inclu
 Therefore the global cycle repaired only volatile NVIDIA state on the primary DP target. It did not recover by changing the Windows topology, target timing, Godot policy, application association, or DRS profile contents. This is the strongest same-state before/after proof of the live-state diagnosis so far.
 
 The next step is now narrower than originally phrased: physically move only the primary PA's DP-over-USB-C cable to the other TB5 port, leave native HDMI and every software/OSD setting untouched, and capture the raw post-hotplug topology before normalizing anything Windows may change.
+
+## Other-TB5-port raw capture
+
+The user moved only the primary PA's USB-C/DisplayPort cable to the laptop's other TB5 port. Native HDMI, eDP clone membership, G-SYNC, MediaSync, profiles, refresh rates, and Windows display settings were untouched. No 3D application ran before capture.
+
+The public topology did not change at all:
+
+```text
+primary DP PA: target 8452, connector instance 1, source ID 0
+  2560x1440 at 119.998 Hz
+
+internal eDP: target 8449, source ID 2
+  shared 2560x1440 source, target 2560x1600 at 240 Hz
+
+native-HDMI PA: target 8448 clone path, source ID 2
+  2560x1440 at 119.998 Hz
+```
+
+All targets remained `displayInVrrMode=1`, and the nine-setting Godot profile remained unchanged.
+
+This means the two physical TB5 jacks do not map one-to-one to persistent NVIDIA connector IDs when only one external DP target is active. The driver assigned the moved display back to target 8452/connector instance 1/source 0. Earlier simultaneous dual-TB5 operation still enumerated two logical connectors, but a single-DP hotplug does not let us select connector 0 merely by moving the cable.
+
+The move nevertheless changed the physical jack while preserving every public state field, making the next runtime transition a clean physical-jack A/B. Run a neutral pre-control, one ordinary Godot Fixed Refresh transition, and an immediate neutral post-control without any intervening change. If the failure repeats, physical jack alone is ruled out. If it succeeds, a hidden route difference exists below the public connector/source representation.
