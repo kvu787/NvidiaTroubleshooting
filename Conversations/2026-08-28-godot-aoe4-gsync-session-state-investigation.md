@@ -809,3 +809,49 @@ Next topology isolation:
 5. Report when ready so the read-only probes can verify one external scanout head is active while the second PA remains physically connected.
 
 Investigation commit: `993d6ef`.
+
+---
+
+## User
+
+i did this:
+Keep both PAs connected and powered.
+Open Windows Settings → System → Display.
+Select the MediaSync-off PA.
+Under Multiple displays, choose Disconnect this display.
+Do not physically unplug it.
+Do not open Unity, Godot, or VsyncStutterTest.exe.
+Tell me when ready.
+
+ready
+
+## Assistant
+
+The intended topology arm is established:
+
+```text
+Windows active paths:
+  internal target 8449
+  MediaSync-on PA target 8450
+
+MediaSync-off PA target 8452:
+  active=0
+  connected=1
+  physicallyConnected=1
+```
+
+This is exactly one active external scanout head with the second PA still cabled and powered.
+
+There is one important anomaly: `NvAPI_Disp_GetVRRInfo` returns generic `NVAPI_ERROR` for active target 8450 on two consecutive queries after the Windows topology change. Its Adaptive-Sync capability data still reports the expected 20583-us interval. The API error may be a query limitation/transient topology condition, or the Windows change may already have disturbed G-SYNC.
+
+Before Unity:
+
+1. Do not change G-SYNC or the display topology.
+2. Do not open Unity or Godot.
+3. Run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on target 8450.
+4. Observe the top-right indicator and animation smoothness.
+5. Close it and report the result.
+
+If it works, this is a healthy baseline and the Unity transition can proceed. If not, global G-SYNC must be recovered in this topology before Unity is tested.
+
+Investigation commit: `bd4451d`.
