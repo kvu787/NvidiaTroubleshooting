@@ -795,6 +795,8 @@ Full evidence and interpretation are in `two-external-mixed-mediasync-baseline.m
 
 The user then performed the known global G-SYNC off/apply/on/apply recovery without opening an editor or control application. At 22:51, target 8450 returned to `displayInVrrMode=1`, while its `VRR possible=1` capability and the other targets' states remained unchanged. The applies rewrote DRS at 22:50:13. This directly correlates the UI recovery with restoration of the external target's VRR display-mode state.
 
+The user then ran `VsyncStutterTest.exe`; it showed the G-SYNC indicator and ran smoothly. At 22:55 the post-control state still had target 8450 in VRR mode and all three paths active. This validates the unprofiled executable as the replacement positive/negative control.
+
 ## Event and crash evidence
 
 ```text

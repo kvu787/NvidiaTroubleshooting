@@ -12,6 +12,8 @@ Unity is the decisive control. Its current `Unity 3D` profile explicitly request
 
 The subsequent global G-SYNC off/on recovery restored target 8450 from `displayInVrrMode=0` to `1` while leaving its VRR capability and the display topology unchanged. The UI recovery therefore directly reprograms the exact live state bit that becomes stuck after Fixed Refresh profile activation.
 
+After recovery, unprofiled `VsyncStutterTest.exe` displayed the G-SYNC indicator and ran smoothly; the post-control API state remained correct. It is now a validated replacement for AoE4 in the remaining tests.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -125,7 +127,7 @@ The user completed the central part of that plan: two external PAs still behaved
 
 ### Current highest-value next test
 
-The Unity-to-control transition and driver-level recovery are complete. First run `VsyncStutterTest.exe` once in the recovered two-external state to prove the replacement control activates G-SYNC normally. Then leave both PAs physically connected but disable the MediaSync-off PA in Windows and repeat `Unity Fixed Refresh -> VsyncStutterTest.exe`.
+The Unity-to-control transition, driver-level recovery, and clean `VsyncStutterTest.exe` baseline are complete. Leave both PAs physically connected and powered, but disable the MediaSync-off PA in Windows. After verifying only one external scanout path remains active, repeat `Unity Fixed Refresh -> VsyncStutterTest.exe`.
 
 - If the transition is clean, the number of active external scanout heads is confirmed as the topology condition.
 - If it still fails, the physical presence of the second external target is sufficient even when Windows does not use it for scanout.

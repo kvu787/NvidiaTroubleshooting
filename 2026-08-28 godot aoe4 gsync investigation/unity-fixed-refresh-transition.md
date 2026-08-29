@@ -121,3 +121,9 @@ target 8449: VRR possible=1, displayInVrrMode=1
 Target 8450 therefore returned from the post-Unity stuck state (`displayInVrrMode=0`) to the correct VRR-capable mode (`displayInVrrMode=1`). This maps the known UI recovery directly to the NVAPI state bit.
 
 The off/on applies rewrote the DRS stores at 22:50:13, as expected for explicit settings changes. The next step is a clean `VsyncStutterTest.exe` run in this recovered two-external state before changing the Windows display topology.
+
+## Replacement control validated
+
+The user ran unprofiled `VsyncStutterTest.exe` in the recovered state. It displayed the top-right G-SYNC indicator and ran smoothly. The 22:55 post-control capture remained correct and unchanged: target 8450 was `VRR possible=1`, `displayInVrrMode=1`; target 8452 remained non-VRR; all three display paths remained active.
+
+`VsyncStutterTest.exe` is therefore validated as a positive G-SYNC control, not merely as a failed-state detector. The next topology arm can use it instead of AoE4.
