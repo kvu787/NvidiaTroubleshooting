@@ -1327,3 +1327,37 @@ Interpretation:
 
 - If Unity is followed by missing/choppy G-SYNC, the two-external-only topology is healthy initially but cannot restore the primary after a Fixed Refresh profile transition.
 - If the control remains healthy, the event that produced your earlier poor state was something other than internal disconnection plus Fixed Refresh activation.
+
+---
+
+## User
+
+i opened the unity project and observed significant and disruptive monitor blinking on open, during usage, and on close. however, no gsync indicator was displayed and viewport usage was smooth other than one 2-second blink in the middle of using it.
+
+i ran VsyncStutterTest and it ran smoothly and showed the gsync indicator
+
+again, i opened the unity project and observed significant and disruptive monitor blinking on open, during usage, and on close. however, no gsync indicator was displayed and viewport usage was smooth other than one 2-second blink in the middle of using it.
+
+again, i ran VsyncStutterTest and it ran smoothly and showed the gsync indicator
+
+## Assistant
+
+This precisely reclassifies the internal-panel-off problem:
+
+- The two-external-only topology starts with working G-SYNC.
+- Unity Fixed Refresh causes severe repeated display blinking on open, during use, and on close.
+- Unity itself remains smooth without the G-SYNC indicator, as intended.
+- `VsyncStutterTest.exe` restores smooth G-SYNC correctly afterward—twice.
+- The final display topology, NVIDIA target state, and DRS hashes are unchanged, and Windows logged no relevant display-driver reset.
+
+So internal eDP disconnection does not cause immediate or sticky G-SYNC failure in the DP+HDMI topology. It destabilizes the Fixed Refresh display-mode transition. Keeping eDP active suppresses that blinking.
+
+The next test separates external scanout load from the presence of the eDP path:
+
+1. Keep the internal laptop display disconnected.
+2. Keep the primary TB5/DisplayPort PA at 120 Hz with MediaSync on.
+3. In Windows Advanced Display, change only the HDMI PA from 120 Hz to approximately 60 Hz. Leave its OSD setting unchanged.
+4. Do not open Godot, Unity, `VsyncStutterTest.exe`, or another 3D application afterward.
+5. Tell me when ready so I can capture the internal-off 120-Hz/60-Hz baseline.
+
+If the later Unity transition stops blinking, the leading cause is external scanout clock/resource allocation and this provides a two-external-only workaround. If it still blinks, the active internal eDP path itself is the stabilizer; the next practical test would be duplicating the hidden internal panel with one external display so Windows exposes only two desktop spaces while eDP remains active.
