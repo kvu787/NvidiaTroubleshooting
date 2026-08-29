@@ -50,3 +50,16 @@ The persistent generic error on active target 8450 means the Windows topology ch
 
 - if it shows the indicator and runs smoothly, the control establishes that G-SYNC is healthy despite the query anomaly;
 - if it lacks the indicator or is choppy, the Windows topology change itself disturbed G-SYNC and a global off/on recovery is required in this topology before testing Unity.
+
+## Healthy pre-Unity control
+
+The user ran `VsyncStutterTest.exe` in this topology. It displayed the top-right G-SYNC indicator and ran smoothly. Therefore G-SYNC is healthy despite `NvAPI_Disp_GetVRRInfo` returning a generic error for target 8450.
+
+The 23:01 post-control capture still shows exactly two active Windows paths and target 8452 physically connected but inactive. The DRS stores retain their 22:50:13 timestamps and pre-Unity hashes:
+
+```text
+nvdrsdb0.bin: 163CE7E0C26D5B3C136AC6514464A52A2E1660951D712D9D58D0F97E20050E85
+nvdrsdb1.bin: 929E7C1F106022BF0BCC531D5FE4C6786984DB776B9D6894ED149C5F22FB99DC
+```
+
+This is a valid pre-Unity baseline for the active-head-count test. Next run Unity under its existing Fixed Refresh profile, close it, and immediately run `VsyncStutterTest.exe` without changing G-SYNC or display topology.

@@ -801,6 +801,8 @@ At 22:58, the user left both PAs connected and powered but selected `Disconnect 
 
 Immediately afterward, `NvAPI_Disp_GetVRRInfo` returned generic `NVAPI_ERROR` for active target 8450 on two consecutive queries, although its Adaptive-Sync capability data remained present. The neutral executable must therefore be run before Unity to establish whether G-SYNC survived the Windows topology change.
 
+`VsyncStutterTest.exe` then showed the indicator and ran smoothly, establishing a healthy baseline despite the query error. At 23:01 the topology remained two active paths with target 8452 physically connected/inactive, and the DRS files retained their 22:50:13 timestamps and hashes. The active-head-count Unity transition is ready.
+
 ## Event and crash evidence
 
 ```text

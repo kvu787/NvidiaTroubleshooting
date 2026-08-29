@@ -26,6 +26,8 @@ The user then ran `VsyncStutterTest.exe` in the recovered two-external state. It
 
 At 22:58, the user left both PAs physically connected/powered but used Windows `Disconnect this display` for target 8452. Windows now has only internal target 8449 and external target 8450 active. NVAPI still sees target 8452 as connected and physically connected but inactive, so the active-head-count arm is correctly established. However, the VRR query for active target 8450 now returns generic `NVAPI_ERROR` twice; its Adaptive-Sync capability data remains present. A pre-Unity `VsyncStutterTest.exe` run must validate whether G-SYNC is healthy after the topology change.
 
+That pre-Unity control succeeded: `VsyncStutterTest.exe` showed the indicator and ran smoothly. The 23:01 topology and DRS-hash capture is stable. The generic VRR-query error is therefore not evidence that G-SYNC is broken in this topology.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -71,9 +73,9 @@ If step 4 succeeds, leaving Adaptive-Sync disabled on the secondary PA is the fi
 
 The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 control, Unity-to-control transition, driver-level recovery, and clean `VsyncStutterTest.exe` baseline. Current next test, in order:
 
-1. run `VsyncStutterTest.exe` now, before Unity, and report indicator/smoothness;
-2. if healthy, run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`;
-3. if the pre-Unity control is unhealthy, recover global G-SYNC in this topology, probe again, and repeat the control first;
+1. keep G-SYNC and the display topology unchanged;
+2. run Unity under its current Fixed Refresh profile, observe any monitor blink/Unity behavior, and close it;
+3. immediately run `VsyncStutterTest.exe`, observe indicator/smoothness, and close it;
 4. if needed, test one PA over HDMI plus one over a TB5/USB-C DisplayPort output; and
 5. continue using `VsyncStutterTest.exe` rather than AoE4 as the routine neutral G-SYNC control.
 

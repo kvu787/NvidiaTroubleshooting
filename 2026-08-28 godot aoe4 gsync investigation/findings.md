@@ -127,7 +127,7 @@ The user completed the central part of that plan: two external PAs still behaved
 
 ### Current highest-value next test
 
-The Unity-to-control transition, driver-level recovery, and clean `VsyncStutterTest.exe` baseline are complete. Windows now has only target 8450 plus the internal panel active, while disabled target 8452 remains physically connected. Because the VRR query for active target 8450 returns a generic error after this topology change, run `VsyncStutterTest.exe` once before Unity. If healthy, continue with `Unity Fixed Refresh -> VsyncStutterTest.exe`; if unhealthy, recover global G-SYNC in this topology first.
+The Unity-to-control transition, driver-level recovery, and clean `VsyncStutterTest.exe` baselines are complete. Windows now has only target 8450 plus the internal panel active, while disabled target 8452 remains physically connected. `VsyncStutterTest.exe` works normally in this topology despite a generic public VRR-query error. The next action is the decisive `Unity Fixed Refresh -> VsyncStutterTest.exe` transition with one active external scanout head.
 
 - If the transition is clean, the number of active external scanout heads is confirmed as the topology condition.
 - If it still fails, the physical presence of the second external target is sufficient even when Windows does not use it for scanout.
