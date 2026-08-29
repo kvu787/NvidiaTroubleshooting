@@ -87,3 +87,29 @@ One observable difference from the rebooted working capture is source/head assig
 
 This tests whether the current connector-1/source-0 allocation is the remaining selector. Do not change profiles, refresh rates, OSD MediaSync, or other variables during this A/B.
 
+## Global-cycle recovery baseline
+
+Captured after the user performed the global G-SYNC off/apply/on/apply cycle and then confirmed that `VsyncStutterTest.exe` was smooth with the indicator. No editor was opened.
+
+The live primary target recovered exactly as predicted:
+
+```text
+target 8452, primary external DP PA:
+  before global cycle: possible=1, displayInVrrMode=0
+  after global cycle:  possible=1, displayInVrrMode=1
+```
+
+Targets 8448 and 8449 remained at `displayInVrrMode=1`.
+
+The Windows topology is byte-for-byte equivalent at the semantic level:
+
+```text
+source 0 -> target 8452, external DP connector instance 1, 1440p/119.998 Hz
+source 2 -> internal target 8449 at 1600p/240 Hz plus HDMI PA at 1440p/119.998 Hz
+```
+
+The `Godot Engine` profile still contains the same nine explicit settings, including VRR disabled and G-SYNC Fixed Refresh. The neutral executable remains unprofiled.
+
+Therefore the global cycle repaired only volatile NVIDIA state on the primary DP target. It did not recover by changing the Windows topology, target timing, Godot policy, application association, or DRS profile contents. This is the strongest same-state before/after proof of the live-state diagnosis so far.
+
+The next step is now narrower than originally phrased: physically move only the primary PA's DP-over-USB-C cable to the other TB5 port, leave native HDMI and every software/OSD setting untouched, and capture the raw post-hotplug topology before normalizing anything Windows may change.
