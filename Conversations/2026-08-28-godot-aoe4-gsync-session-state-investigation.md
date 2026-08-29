@@ -599,3 +599,39 @@ Godot's ordinary project-manager path remains separately responsible for saving/
 - display blank and sticky post-editor VRR state: additional Godot DRS transition issue.
 
 Updated `topology-ab-evidence.md`, `findings.md`, and `resume-here.md`. Investigation commit: `ccdc91c`.
+
+---
+
+## User
+
+Connect both external PAs.
+Set one PA’s MediaSync on and the other off.
+Power-cycle or disconnect/reconnect the MediaSync-off PA.
+Do not open Godot yet.
+Tell me when that state is ready.
+
+i've done this. the state is ready.
+
+## Assistant
+
+Captured the pre-Godot state. The result is decisive:
+
+```text
+PA target 8450 / connector 0:
+  VRR possible=1
+  displayInVrrMode=1
+  maximum Adaptive-Sync interval=20583 us
+
+PA target 8452 / connector 1:
+  VRR possible=0
+  displayInVrrMode=0
+  maximum Adaptive-Sync interval=0
+```
+
+Both PAs remain active at 2560x1440/119.998 Hz as separate external DP heads. The internal target 8449 is also active at 2560x1600/240 Hz.
+
+This proves the OSD MediaSync-off change reached NVIDIA. The poor two-external editor behavior cannot require two VRR-enabled external monitors: target 8452 is conclusively non-VRR. The common condition is two active external heads.
+
+The next step is to keep this exact state, avoid Godot and Unity, and launch AoE4 before either editor. Observe the G-SYNC indicator, actual motion smoothness, and—if available—the MediaSync-on monitor's live refresh indication. Close AoE4 and report those observations without making another issue-related change.
+
+Raw and interpreted evidence is saved in `two-external-mixed-mediasync-baseline.md`. Investigation commit: `8a2e9a2`.
