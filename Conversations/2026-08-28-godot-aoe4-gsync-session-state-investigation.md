@@ -450,3 +450,57 @@ No tested configuration currently provides all five required properties:
 I added this distinction to the main findings and evidence, and created `resume-here.md` as the investigation handoff. It records the clean state, proven paths, exact unresolved requirement, the separate shutdown-linger observation, and the most discriminating untested experiment: one Fixed Refresh Godot profile combined with only the direct D3D12/no-save launch. That experiment is marked risky and unproven, not recommended.
 
 The core issue remains open when this investigation is paused.
+
+## User
+
+i've found a clean a/b test that demonstrates these gsync issues vs does not demonstrate these gsync issues.
+
+works smoothly
+one PA278QGV connected to a thunderbolt 5 sport
+
+repros issues
+two PA278QGV connected, one to each thunderbolt 5 port
+
+i am using an asus rog strix g18 G815LR-IS97
+
+investigate
+
+## Assistant
+
+This is the strongest discriminator found so far. The investigation now treats the second external PA278QGV/display head as a necessary condition in the user's clean A/B, with Godot's DRS save remaining the trigger rather than a sufficient cause by itself.
+
+The current smooth one-external state was captured and it still has a matching `Godot Engine` DRS profile for Godot 4.6.3 with:
+
+```text
+VRR requested state: disabled
+G-SYNC application override: fixed refresh
+G-SYNC mode: fullscreen only
+OpenGL threaded optimization: disabled
+```
+
+Therefore the smooth result is not caused by losing the per-app Fixed Refresh override.
+
+Windows and NVIDIA's read-only APIs show:
+
+- the internal 2560x1600/240 Hz panel and the current 2560x1440/119.998 Hz PA278QGV are both owned directly by the RTX 5070 Ti Laptop GPU;
+- the connected PA is Windows target 8452, external DisplayPort connector instance 1;
+- the disconnected second PA is target 8450, external DisplayPort connector instance 0;
+- the PA paths are separate NVIDIA DP connectors, not MST and not different-GPU paths;
+- the current PA uses four-lane HBR2 at 8 bpc; and
+- no downstream USB4 device router is present, so the monitor is using DisplayPort output through a TB5-capable USB-C port rather than a Thunderbolt display tunnel.
+
+The current NVIDIA driver is 596.49 (`r596_25`), installed at 16:30:31 PDT. The original failure capture was on 616.56. The current smooth arm is confirmed on 596.49, but the failing two-external arm should be captured again without changing driver before calling the defect conclusively cross-branch.
+
+The leading hypothesis is now two identical external Adaptive-Sync/G-SYNC-eligible targets. NVIDIA's published mixed-monitor guidance says that multiple monitors may be connected but no more than one should have G-SYNC enabled. NVIDIA's setup help also describes display enablement as applying to all connected displays of a selected model. Earlier evidence reported both identical PA278QGVs enabled.
+
+The highest-value next test is:
+
+1. connect and enable both PAs;
+2. turn Adaptive-Sync off in the secondary PA's OSD only;
+3. recover global G-SYNC once;
+4. verify that only the intended PA remains VRR-capable; and
+5. repeat the ordinary Fixed Refresh Godot to AoE4 sequence.
+
+If that succeeds, the cause is narrowed to two external Adaptive-Sync targets and leaving Adaptive-Sync disabled on the secondary PA is a practical stable workaround. If it still fails, leave both cables connected but disable the secondary display in Windows; that distinguishes two active scanout paths from two VRR-capable displays.
+
+The investigation is recorded in `2026-08-28 godot aoe4 gsync investigation/topology-ab-evidence.md`, and two reusable read-only probes were added: `display-topology-query.cpp` and `nvapi-vrr-query.cpp`.
