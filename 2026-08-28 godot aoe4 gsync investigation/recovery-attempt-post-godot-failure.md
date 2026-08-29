@@ -196,3 +196,31 @@ Without toggling G-SYNC or changing any setting, the user launched Godot again. 
 The post-state again reports `displayInVrrMode=1` on targets 8448, 8449, and 8452. Topology, target timings, clone membership, and all nine Godot profile settings remain unchanged. Godot performed another expected DRS save at 04:09:42; the changed binary hash did not correspond to a semantic profile change or later VRR failure.
 
 The HDMI-only placement workaround is therefore repeatable across two consecutive Godot-to-neutral transitions in the current boot without an intervening recovery. Reboot persistence is the next durability boundary.
+
+## Untouched post-reboot baseline
+
+The user restarted Windows normally with Godot's HDMI placement and all display/G-SYNC/profile settings left unchanged. No 3D application or display setting was opened before capture.
+
+The topology and timings persisted, but Windows/NVIDIA reassigned the volatile source IDs:
+
+```text
+before reboot:
+  source 0 -> DP target 8452
+  source 2 -> eDP target 8449 plus HDMI target 8448 clone
+
+after reboot:
+  source 1 -> DP target 8452
+  source 0 -> eDP target 8449 plus HDMI target 8448 clone
+```
+
+The durable semantic state is unchanged:
+
+- DP PA: 2560x1440 at 119.998 Hz;
+- HDMI PA: 2560x1440 at 119.998 Hz;
+- internal eDP target: 2560x1600 at 240 Hz;
+- shared HDMI+eDP source: 2560x1440;
+- all three targets: `displayInVrrMode=1`;
+- Godot profile: nine settings including VRR disabled and G-SYNC Fixed Refresh; and
+- `VsyncStutterTest.exe`: no DRS association.
+
+This is a healthy pre-application baseline. The source-ID change reinforces that visible Windows source numbers are volatile allocation evidence, not settings the user can or should restore literally. The functional reboot-persistence sequence is now neutral control, Godot kept entirely on HDMI, then immediate neutral control.
