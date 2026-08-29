@@ -1006,3 +1006,41 @@ The distinction is:
 A truly direct software read would require the monitor to expose that exact setting over DDC/CI—probably as a vendor-specific VCP feature—and we have not established that the PA278QGV does. Until then, your OSD observation is authoritative.
 
 This does not require changing the next test. It makes the TB5/DP-plus-HDMI arm especially informative: it tests the different route while preserving the fact that the HDMI monitor is physically set to MediaSync off, even though the driver still classifies it as VRR-capable.
+
+---
+
+## User
+
+i did this:
+Don’t change G-SYNC, topology, refresh rates, or OSD settings.
+Don’t open Unity or Godot.
+Run C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe specifically on the MediaSync-on TB5/DisplayPort PA.
+Observe the G-SYNC indicator and animation smoothness.
+Close it and report the result.
+
+vsyncstuttertest runs smoothly and displays the top-right gsync indicator
+
+## Assistant
+
+The healthy pre-Unity baseline is confirmed:
+
+- `VsyncStutterTest.exe` ran smoothly on the MediaSync-on TB5/DisplayPort PA and displayed the G-SYNC indicator.
+- All three active display paths are unchanged.
+- Target 8450 remains `VRR possible=1` and `displayInVrrMode=1`.
+- The DRS timestamps and SHA-256 hashes are unchanged.
+
+Now perform the decisive routing transition:
+
+1. Do not change G-SYNC, display topology, refresh rates, or either monitor's OSD settings.
+2. Do not open Godot.
+3. Open the same Unity editor/project on the MediaSync-on TB5/DisplayPort PA.
+4. Observe whether either monitor blinks and whether Unity behaves normally without G-SYNC.
+5. Close Unity.
+6. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on that same TB5/DisplayPort PA.
+7. Observe its G-SYNC indicator and animation smoothness.
+8. Close it and report both results.
+
+Interpretation:
+
+- If Unity causes no sticky failure and the control remains smooth, the defect is specific to having both external PAs routed through the two TB5/USB-C DisplayPort outputs.
+- If the sticky failure reproduces, the defect applies more generally to two active external NVIDIA scanout heads, independent of whether the second uses DisplayPort or HDMI.
