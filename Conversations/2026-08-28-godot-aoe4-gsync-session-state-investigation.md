@@ -1789,3 +1789,56 @@ The remaining durability test is reboot persistence:
 5. Tell me when ready so I can capture whether Windows restored the same clone paths and healthy pre-application VRR state.
 
 If the topology survives, we will run one neutral control and then one first-after-reboot Godot transition. That will tell us whether the workaround is durable and whether the isolated cold blink recurs after a true reboot.
+
+---
+
+## User
+
+i will test reboot persistence later.
+
+take into account this entire investigation, and everything in this repo, and explain what may be the root cause(s) of all the issues we've encountered.
+
+## Assistant
+
+The best-supported diagnosis is **a topology-sensitive NVIDIA driver bug in the transition between per-application Fixed Refresh and live G-SYNC/VRR**. Godot exposes and aggravates it, but Godot is not the primary cause.
+
+| Layer | Best explanation | Confidence |
+| --- | --- | --- |
+| Core failure | NVIDIA fails to re-arm VRR on the primary DP target after a Fixed Refresh app exits | Very high |
+| Trigger | Entering/leaving an already stored Fixed Refresh profile | Very high, but only in susceptible topologies |
+| Topology selector | Active-output routing/timings change NVIDIA display-head/resource and Windows presentation-path allocation | High; exact private resource unknown |
+| Godot behavior | Persistent, unconditional native-OpenGL DRS profile setup/save; inadequate fullscreen-only workaround | Confirmed contributor, not core cause |
+| NVIDIA App behavior | Its app catalog does not faithfully represent/adopt every underlying DRS profile | Confirmed separate defect |
+
+The strongest proof is the internal-off DP-120/HDMI-60 Unity test. Before Unity, unprofiled `VsyncStutterTest.exe` worked. After Unity's existing Fixed Refresh profile transition, the primary target was still `VRR possible=1`, but its successfully queried `displayInVrrMode` changed from `1` to `0`; the HDMI target stayed at `1`; DRS and global G-SYNC remained unchanged; and both AoE4 and the unprofiled control lost G-SYNC. Cycling global G-SYNC or reconstructing the display topology restored target mode `1` and functional G-SYNC. So the saved global setting was never turned off—the NVIDIA driver's live per-target state became stuck.
+
+Unity is the decisive causal control. It produced the same class of blink/sticky failure without changing DRS. Conversely, Godot repeatedly saved DRS in the stable clone topology without causing a recurring blink or later G-SYNC loss. Therefore Godot's write is neither necessary nor sufficient. The demonstrated proximal trigger is the runtime Fixed Refresh transition in a susceptible display allocation.
+
+The topology A/Bs show why this looked inconsistent:
+
+- one external PA plus eDP is clean;
+- two active TB5/USB-C DP PAs are bad with eDP on or off;
+- leaving the second PA cabled but Windows-disabled is clean;
+- primary DP plus native HDMI is clean when eDP is active;
+- with eDP inactive, DP-120/HDMI-120 caused severe transient blanks but recovered, while DP-120/HDMI-60 caused sticky VRR loss; and
+- keeping eDP active but cloning it with HDMI is clean in repeated Unity and Godot tests.
+
+Thus two active external heads were necessary in every observed bad arm but were not sufficient. The clone result is especially revealing: eDP does not need its own desktop source; it only needs to remain an active physical target/path. That strongly implicates route-dependent display-engine/head/timing allocation or Windows VidPN reconstruction. Reducing HDMI from 120 to about 60 Hz made the result worse rather than fixing it, so this is not a simple bandwidth or high-refresh overload.
+
+Godot has two real, separate problems here. In the actual 4.6.3 source, native OpenGL initialization calls `_nvapi_setup_profile()`, uses the executable basename, creates/associates a persistent DRS profile, sets threaded optimization and G-SYNC mode to fullscreen-only, then calls `NvAPI_DRS_SaveSettings()` without checking whether those values already match. The project manager defaults to native OpenGL, so it performs this work before spawning a D3D12 project editor. It does **not** write the Fixed Refresh override used in our later tests. Godot's upstream change explicitly says windowed G-SYNC is known to produce unstable editor refresh rates. That matches the direct-D3D12/no-profile result: no DRS mutation or sticky loss, but G-SYNC stayed active in the editor and pointer motion was choppy. See the local [Godot NVIDIA setup code](C:/Users/k/Repository/External/Godot_4-6-3/platform/windows/gl_manager_windows_native.cpp:109), its [unconditional final save](C:/Users/k/Repository/External/Godot_4-6-3/platform/windows/gl_manager_windows_native.cpp:269), the [project-manager OpenGL default](C:/Users/k/Repository/External/Godot_4-6-3/main/main.cpp:2453), and the [originating Godot commit](https://github.com/godotengine/godot/commit/b8edc64379b3c4b5f2e7334468be65fd44a4980c).
+
+The NVIDIA App/profile confusion is another independent defect. DRS can contain an exact-path profile and a basename `Godot Engine` profile simultaneously. NVIDIA App starts from its separate application catalog and exposes one chosen profile per catalog row instead of enumerating that full relationship; its create-before-adopt behavior caused the observed `EXECUTABLE_ALREADY_IN_USE` and `PROFILE_NAME_IN_USE` collisions. Selecting a stale row could recreate an empty profile. That explains why NVApp, NVCP, and NPI appeared to disagree; it cannot explain an unprofiled app losing VRR while DRS stays unchanged.
+
+The two-to-three-second blackouts are most likely disruptive modesets/display-head reprogramming, possibly including link retraining, while the driver changes presentation policy. That exact mechanism is not directly observable. They were not TDRs or GPU crashes: there were no matching display-driver reset, WER, or LiveKernelReport events. Blinking is also not a reliable predictor—some severe repeated blinks recovered, while one blink preceded a sticky failure.
+
+Windows is probably part of the boundary conditions, not necessarily a separate root bug. Windowed VRR depends on swap-chain presentation, and Windows may move a flip-model window among composed, DirectFlip/Independent Flip, and MPO paths; Microsoft documents those hardware-dependent transitions in its [VRR](https://learn.microsoft.com/en-us/windows/win32/direct3ddxgi/variable-refresh-rate-displays) and [flip-model](https://learn.microsoft.com/en-us/windows/win32/direct3ddxgi/for-best-performance--use-dxgi-flip-model) guidance. We cannot currently distinguish a bad NVIDIA head/PLL assignment from a VidPN-commit ordering problem or an NVIDIA/DWM presentation interaction. The persistent per-target state and NVIDIA-controlled recovery make “NVIDIA driver defect at the WDDM/display boundary” the defensible label.
+
+NVIDIA also publishes a support caveat that multiple monitors may be connected but [no more than one should have G-SYNC enabled](https://nvidia.custhelp.com/app/answers/detail/a_id/4766/), while its UI applies display-specific settings to every connected display of the selected model in the [G-SYNC setup guide](https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/Display/To_use_variable_refresh_rates.htm). That may explain general fragility with two identical PAs, but it is not the whole root cause: the issue also reproduced when the secondary PA had MediaSync off and NVAPI reported it non-VRR.
+
+So the concise causal chain is:
+
+> editor/windowed-VRR incompatibility -> Fixed Refresh profile transition -> topology-sensitive NVIDIA display-state restoration bug -> primary target remains outside VRR -> unrelated later apps are choppy until the display state is rebuilt.
+
+The current 2560x1440 eDP+HDMI clone avoids the faulty allocation in repeated in-session tests. It is a workaround around the bug, not a repair. Reboot persistence and the first cold transition after reboot remain the only current durability unknowns.
+
+I recorded the full ranked analysis in [root-cause-synthesis.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/root-cause-synthesis.md) and committed it as `a5c6fae`.
