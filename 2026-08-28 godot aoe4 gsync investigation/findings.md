@@ -42,6 +42,8 @@ The clone baseline realizes that topology exactly. Internal target 8449 and HDMI
 
 The initial 2560x1600 clone source letterboxed the HDMI PA. Changing only the clone source to 2560x1440 gives HDMI a matching native 1440p source and target signal while leaving scaling to the hidden 1600p internal panel. All paths, clone membership, VRR-mode bits, and DRS state remain otherwise unchanged. This 1440p clone is the usable pre-application baseline.
 
+The neutral control in that 1440p clone state succeeds with smooth G-SYNC and the indicator on the separate primary DP PA. The post-control topology, all three VRR-mode bits, and DRS remain unchanged. Clone mode is therefore a viable neutral-use topology; whether active internal eDP still stabilizes a Fixed Refresh editor transition when it shares a source with HDMI remains the decisive test.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.

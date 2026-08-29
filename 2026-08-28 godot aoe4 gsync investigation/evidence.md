@@ -857,6 +857,8 @@ At 00:47, the applied clone baseline is structurally correct. Windows reports th
 
 At 00:50, after observing HDMI letterboxing, the user changed only the duplicated 1|3 resolution to 2560x1440. The shared source ID 2 is now 2560x1440; HDMI remains a native 2560x1440/119.998-Hz target, while hidden internal eDP remains a 2560x1600/approximately-240-Hz target fed by that shared 1440p source. Primary DP remains separate at 2560x1440/119.998 Hz. All three targets remain active, OS-visible, VRR-possible, and in VRR mode 1. DRS remains byte-for-byte unchanged. This revised state is the authoritative pre-application clone baseline.
 
+At 00:54, the neutral clone control succeeded: `VsyncStutterTest.exe` ran smoothly with the G-SYNC indicator on the separate primary DP PA. The later capture still has three target paths, two source IDs, the 1440p eDP+HDMI clone, and the separate 1440p primary DP source. Targets 8448, 8449, and 8450 all remain in VRR mode 1, and DRS remains unchanged. The clone topology itself and the neutral presentation path are healthy; proceed to the Unity Fixed Refresh transition.
+
 ## Event and crash evidence
 
 ```text

@@ -120,3 +120,25 @@ target 8450 primary DP: active=1, osVisible=1, possible=1, displayInVrrMode=1
 DRS timestamps, sizes, and SHA-256 hashes are identical to the earlier clone and recovered-three-display baselines. The resolution change is purely a Windows source-mode/topology adjustment and did not edit persistent NVIDIA settings.
 
 Use this 2560x1440 clone state as the authoritative pre-application baseline for the neutral control and later Unity transition.
+
+## Neutral functional control
+
+Captured: 2026-08-29 00:54 PDT
+
+The user ran `VsyncStutterTest.exe` on the separate primary TB5/DisplayPort PA. It ran smoothly and displayed the G-SYNC indicator.
+
+The post-control capture is identical in every relevant respect to the 00:50 baseline:
+
+```text
+Windows paths: three target paths, two source IDs
+clone source 2: 2560x1440, internal eDP plus HDMI
+separate source 0: 2560x1440, primary TB5/DisplayPort PA
+
+target 8448 HDMI:       displayInVrrMode=1
+target 8449 internal:   displayInVrrMode=1
+target 8450 primary DP: displayInVrrMode=1
+
+DRS timestamps and SHA-256 hashes: unchanged
+```
+
+The 1440p clone mode therefore preserves functional G-SYNC before an editor transition. The decisive next sequence is Unity Fixed Refresh, followed immediately by the same neutral control.

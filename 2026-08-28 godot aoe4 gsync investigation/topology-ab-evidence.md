@@ -243,6 +243,8 @@ The clone baseline succeeds structurally. Internal eDP target 8449 and HDMI targ
 
 The 2560x1600 clone source letterboxed HDMI. Changing only duplicated display 1|3 to 2560x1440 leaves the structural clone result intact and gives HDMI a matching native 1440p source/target pair. Hidden internal eDP continues scanning a 2560x1600 target from the shared 1440p source, primary DP remains separate at 1440p/120 Hz, all NVIDIA targets remain in VRR mode 1, and DRS remains unchanged. Use this revised 1440p clone baseline for functional tests.
 
+The 1440p clone neutral control succeeds: `VsyncStutterTest.exe` is smooth with the G-SYNC indicator on the separate primary DP PA. The 00:54 capture retains the same two source IDs and three target paths; all targets remain in VRR mode 1 and DRS is unchanged. The clone topology is ready for the Unity Fixed Refresh transition.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

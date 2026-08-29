@@ -117,6 +117,8 @@ The 00:47 clone capture is complete and correct. Internal target 8449 and HDMI t
 
 The initial clone source letterboxed HDMI, so the user changed only duplicated display 1|3 to 2560x1440. The 00:50 capture shows source ID 2 now at 2560x1440, matching the HDMI target; hidden internal eDP remains active with a 2560x1600 target signal. Primary DP remains separate at 1440p/120 Hz. All targets remain in VRR mode 1 and DRS is unchanged. This revised state is the authoritative baseline. Run the neutral `VsyncStutterTest.exe` control next, before Unity or Godot.
 
+The neutral control succeeded at 00:54: `VsyncStutterTest.exe` was smooth with the indicator. The post-control clone topology, all targets' VRR mode 1 state, and DRS are unchanged. Run the same Unity Fixed Refresh project next, observe all monitor blinking and Unity behavior, close it, and immediately rerun `VsyncStutterTest.exe` on the primary DP PA.
+
 ## Per-display software possibility
 
 NVCP cannot independently enable only one of the two identical PA278QGVs. NVIDIA documents its display checkbox as applying to every connected display of the selected model.
