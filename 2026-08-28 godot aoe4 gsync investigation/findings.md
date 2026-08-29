@@ -30,6 +30,8 @@ Unity supplies that transition but refines the symptom. With internal eDP off, U
 
 Lowering only the HDMI secondary from 119.998 Hz to 59.951 Hz while keeping internal eDP off immediately changes the read-only driver state: the primary DP VRR-info query returns successfully with `displayInVrrMode=1` instead of generic error. DRS and physical routes are unchanged. This makes external scanout mode/clock/resource allocation the leading mechanism, pending the functional Unity transition.
 
+The 120/60 neutral control is also functionally healthy and leaves both external targets queryable in VRR display mode. The Unity transition can now be compared without a preexisting failure.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.

@@ -201,3 +201,18 @@ target 8450 TB5/DisplayPort primary:
 At internal-off 120/120 Hz, the same primary target returned generic `NVAPI_ERROR` despite functional G-SYNC. Lowering only HDMI to 60 Hz makes the primary VRR query succeed again. This is direct API evidence that external scanout mode/clock/resource allocation affects the NVIDIA topology state, even before Unity opens.
 
 Establish a functional `VsyncStutterTest.exe` control on target 8450, then repeat Unity Fixed Refresh. If transition blinking disappears, 120-Hz primary plus 60-Hz HDMI is a two-external-only workaround and high external scanout load is the leading mechanism.
+
+## Internal-off 120-Hz/60-Hz neutral control
+
+`VsyncStutterTest.exe` displayed the G-SYNC indicator and ran smoothly on primary target 8450.
+
+The 00:29 post-control state is identical to the 00:26 baseline:
+
+```text
+target 8450 DP: VRR query succeeds, displayInVrrMode=1
+target 8448 HDMI: VRR query succeeds, displayInVrrMode=1
+internal 8449: inactive
+DRS timestamps and hashes: unchanged
+```
+
+The arm is ready for a direct Unity Fixed Refresh transition. Observe all blinking on open, during use, and on close, then immediately run the neutral control.

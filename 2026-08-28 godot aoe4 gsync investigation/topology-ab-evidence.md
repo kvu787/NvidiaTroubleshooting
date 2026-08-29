@@ -231,6 +231,8 @@ That Unity arm produced severe repeated display blinking twice, but both post-Un
 
 The internal-off 120/60 baseline is captured. Lowering only HDMI to 59.951 Hz restores a successful primary DP VRR query with `displayInVrrMode=1`; routes and DRS are unchanged. This directly implicates mode/clock/resource allocation. The neutral functional control and Unity transition are pending.
 
+The neutral control succeeded and left both external targets queryable in VRR mode. The 120/60 Unity transition is ready.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

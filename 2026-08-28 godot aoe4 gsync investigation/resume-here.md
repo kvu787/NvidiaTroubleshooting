@@ -52,6 +52,8 @@ That transition was performed twice. Unity caused severe repeated monitor blinki
 
 The 00:26 internal-off 120/60 capture is complete. DRS and routes are unchanged, but the primary DP public VRR query now succeeds and reports `displayInVrrMode=1`; HDMI also reports mode 1. At 120/120 the primary query returned generic error. This is direct evidence that secondary mode/load affects NVIDIA state. Run a neutral control before the 120/60 Unity transition.
 
+The neutral control succeeded with smooth G-SYNC. At 00:29, both external targets remain in VRR display mode and DRS is unchanged. Run Unity Fixed Refresh now, observe all blinking, close it, and immediately run `VsyncStutterTest.exe`.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -101,7 +103,7 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
 3. topology, a healthy `VsyncStutterTest.exe` baseline, and the clean Unity transition are complete;
 4. the original Godot workflow and launch-placement isolation are complete; and
-5. the internal-off 120/60 baseline is captured; run `VsyncStutterTest.exe` on target 8450 before Unity, then report indicator/smoothness.
+5. the internal-off 120/60 neutral control is healthy; run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe` and report blinking plus control behavior.
 
 Both external PAs work at 119.998 Hz when internal eDP is active, but internal-off Unity transitions blink severely while later G-SYNC still recovers. The immediate investigation is whether reducing the HDMI secondary to 60 Hz stabilizes the two-external-only transition. If not, duplicate/clone mode may keep eDP active without exposing a third usable desktop. Dual-VRR eligibility on the earlier DisplayPort topology, driver-branch specificity, and the need or sufficiency of Godot's DRS write remain resolved. Direct OSD-state detection has not been implemented.
 
