@@ -1408,3 +1408,37 @@ First establish the neutral control:
 5. Close it and report the result.
 
 If healthy, we will immediately repeat the Unity Fixed Refresh transition. A no-blink result there would provide the two-external-only workaround you want and strongly identify high external scanout load as the cause.
+
+---
+
+## User
+
+i did this:
+Keep internal eDP disconnected, primary DP at 120 Hz, and HDMI at approximately 60 Hz.
+Change no G-SYNC or OSD setting, and don’t open Godot or Unity.
+Run C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe on the primary TB5/DisplayPort PA.
+Observe its G-SYNC indicator and smoothness.
+Close it and report the result.
+
+VsyncStutterTest ran smoothly and showed the gsync indicator
+
+## Assistant
+
+The internal-off 120/60 Hz arm has a clean functional baseline:
+
+- `VsyncStutterTest.exe` displays the G-SYNC indicator and runs smoothly;
+- both external targets still return successful VRR queries with `displayInVrrMode=1`; and
+- topology and DRS hashes remain unchanged.
+
+Now run the direct Unity comparison:
+
+1. Keep internal eDP disconnected, primary TB5/DisplayPort at 120 Hz, and HDMI at approximately 60 Hz.
+2. Change no G-SYNC or OSD setting and do not open Godot.
+3. Open the same Unity editor/project on the primary TB5/DisplayPort PA.
+4. Observe carefully whether either monitor blinks on open, during editor use, or on close. Confirm whether Unity remains smooth without the G-SYNC indicator.
+5. Close Unity.
+6. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the same PA.
+7. Observe its G-SYNC indicator and smoothness.
+8. Close it and report both results.
+
+This is the decisive load test: no disruptive blinking would validate a two-external-only 120/60 workaround and strongly implicate high aggregate external scanout load. Continued blinking would mean the active internal eDP path itself provides the missing stabilization.
