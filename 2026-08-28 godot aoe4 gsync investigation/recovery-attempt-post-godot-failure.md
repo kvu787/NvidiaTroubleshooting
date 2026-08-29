@@ -224,3 +224,24 @@ The durable semantic state is unchanged:
 - `VsyncStutterTest.exe`: no DRS association.
 
 This is a healthy pre-application baseline. The source-ID change reinforces that visible Windows source numbers are volatile allocation evidence, not settings the user can or should restore literally. The functional reboot-persistence sequence is now neutral control, Godot kept entirely on HDMI, then immediate neutral control.
+
+## Post-reboot functional success
+
+The pre-Godot neutral control was smooth with the G-SYNC indicator. Godot then opened on the HDMI clone, remained entirely there, ran smoothly without a blink and without the indicator, and closed there. The immediate primary-DP neutral control was again smooth with the indicator.
+
+The post-test capture confirms:
+
+```text
+target 8448, HDMI PA:     possible=1, displayInVrrMode=1
+target 8449, internal:    possible=1, displayInVrrMode=1
+target 8452, primary DP:  possible=1, displayInVrrMode=1
+```
+
+The post-reboot source assignment, target timings, and clone membership remained unchanged. Godot performed expected DRS writes at 04:12:55 and 04:14:59, while its effective nine-setting profile remained identical.
+
+The HDMI-only placement workaround is now validated across:
+
+- two consecutive transitions in one boot without an intervening G-SYNC recovery; and
+- the first controlled transition after a normal reboot, also without a global G-SYNC recovery.
+
+This supersedes the earlier status that reboot persistence was pending. Sleep, hibernate, driver update/reset, and monitor power/hotplug durability remain separate untested boundaries.

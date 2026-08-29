@@ -164,9 +164,9 @@ The current 2560x1440 topology keeps:
 
 Across the original session and one reboot, repeated Unity and Godot Fixed Refresh transitions preserved later G-SYNC. A later reconstruction of the same visible state was not sufficient: moving Godot from the HDMI clone onto primary DP reproduced sticky loss. The visible topology therefore does not uniquely determine NVIDIA's volatile private allocation.
 
-The new operational workaround for the current allocation is to keep Godot entirely on the native-HDMI-plus-eDP clone. Two consecutive controlled runs have succeeded without an intervening recovery: Godot opened and closed on HDMI, its expected DRS writes occurred, and each immediate primary-DP neutral control retained smooth G-SYNC with target 8452 still in VRR mode. This directly satisfies automatic per-application switching only if using the editor on the HDMI display is acceptable.
+The new operational workaround for the current allocation is to keep Godot entirely on the native-HDMI-plus-eDP clone. Two consecutive controlled runs succeeded without an intervening recovery, and a third controlled run succeeded after a normal reboot without a global G-SYNC cycle: Godot opened and closed on HDMI, its expected DRS writes occurred, and each immediate primary-DP neutral control retained smooth G-SYNC with target 8452 still in VRR mode. This directly satisfies automatic per-application switching only if using the editor on the HDMI display is acceptable.
 
-The same clone concept with both external PAs routed through TB5/DisplayPort remains bad, so clone mode and active eDP are not general solutions. Mixed routing plus HDMI-only editor placement avoids the current faulty transition; it is not a repair. Same-placement repetition, reboot persistence of the placement rule, sleep/hibernate, driver reset/update, monitor power-cycle, and hotplug-order durability remain untested.
+The same clone concept with both external PAs routed through TB5/DisplayPort remains bad, so clone mode and active eDP are not general solutions. Mixed routing plus HDMI-only editor placement avoids the current faulty transition; it is not a repair. Same-placement repetition and one normal reboot are validated. Sleep/hibernate, driver reset/update, monitor power-cycle, and hotplug-order durability remain untested.
 
 ## References
 
