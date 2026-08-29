@@ -2128,3 +2128,42 @@ The next small durability check is:
 If this second consecutive cycle succeeds, the placement workaround is repeatable within the current boot. The later durability test is one reboot with the placement left saved, followed by the same sequence.
 
 I updated the [recovery guide](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/last-known-good-state-guide.md), [failed-state/placement evidence](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), and [root-cause synthesis](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/root-cause-synthesis.md). Evidence commit: `2b7c7f4`.
+
+---
+
+## User
+
+i did this:
+Don’t toggle G-SYNC or change any settings.
+Launch Godot again and confirm it opens on HDMI.
+Keep it there, use it briefly, and close it there.
+Immediately run VsyncStutterTest.exe on primary DP.
+Report its indicator and smoothness.
+
+everything works smoothly.
+godot editor ran smoothly without blinks and without gsync indicator.
+VsyncStutterTest ran smoothly with gsync indicator.
+
+## Assistant
+
+Confirmed by the final driver capture. This second consecutive cycle preserved:
+
+- target 8452 at `displayInVrrMode=1`;
+- HDMI and eDP targets at mode `1`;
+- the same DP-plus-HDMI/eDP-clone topology and 120/120/240-Hz target timings; and
+- the same nine-setting Godot Fixed Refresh profile.
+
+Godot performed another DRS save at 04:09:42, but later G-SYNC remained healthy. The placement workaround is therefore repeatable within this boot without an intervening global reset:
+
+> Keep Godot entirely on the native-HDMI-plus-eDP clone; do not move any part of the editor onto primary DP.
+
+The next durability boundary is reboot persistence. When convenient:
+
+1. Leave Godot's HDMI placement and every display/G-SYNC/profile setting saved exactly as they are.
+2. Restart Windows normally. Do not perform the EC reset for this test.
+3. After signing in, do not open Godot, Unity, `VsyncStutterTest.exe`, or another 3D application, and do not change display settings.
+4. Tell me when ready so I can capture the pre-application topology, timings, profile, and live VRR state.
+
+After that capture, the sequence will be neutral control -> Godot kept entirely on HDMI -> immediate neutral control. This will distinguish a persistent operational workaround from a same-boot-only allocation.
+
+The repeated success is recorded in the [placement evidence](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), [recovery guide](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/last-known-good-state-guide.md), and [root-cause synthesis](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/root-cause-synthesis.md). Evidence commit: `4418885`.
