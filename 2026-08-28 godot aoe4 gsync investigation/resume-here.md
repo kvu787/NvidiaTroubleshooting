@@ -24,6 +24,8 @@ The user then performed global G-SYNC off/apply/on/apply. At 22:51, target 8450 
 
 The user then ran `VsyncStutterTest.exe` in the recovered two-external state. It showed the G-SYNC indicator and ran smoothly. The 22:55 post-control capture remained correct, validating this unprofiled executable as the routine control.
 
+At 22:58, the user left both PAs physically connected/powered but used Windows `Disconnect this display` for target 8452. Windows now has only internal target 8449 and external target 8450 active. NVAPI still sees target 8452 as connected and physically connected but inactive, so the active-head-count arm is correctly established. However, the VRR query for active target 8450 now returns generic `NVAPI_ERROR` twice; its Adaptive-Sync capability data remains present. A pre-Unity `VsyncStutterTest.exe` run must validate whether G-SYNC is healthy after the topology change.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -69,9 +71,9 @@ If step 4 succeeds, leaving Adaptive-Sync disabled on the secondary PA is the fi
 
 The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 control, Unity-to-control transition, driver-level recovery, and clean `VsyncStutterTest.exe` baseline. Current next test, in order:
 
-1. leave both PAs physically connected and powered but select the MediaSync-off PA in Windows Display Settings and choose `Disconnect this display`;
-2. before opening an application, capture Windows/NVAPI state and verify only one external scanout path is active while the second target remains physically connected;
-3. repeat `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`;
+1. run `VsyncStutterTest.exe` now, before Unity, and report indicator/smoothness;
+2. if healthy, run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`;
+3. if the pre-Unity control is unhealthy, recover global G-SYNC in this topology, probe again, and repeat the control first;
 4. if needed, test one PA over HDMI plus one over a TB5/USB-C DisplayPort output; and
 5. continue using `VsyncStutterTest.exe` rather than AoE4 as the routine neutral G-SYNC control.
 
@@ -175,3 +177,4 @@ During the direct D3D12 test, closing the editor window did not return the comma
 - `topology-ab-evidence.md`: new physical-topology evidence and revised hypothesis.
 - `two-external-mixed-mediasync-baseline.md`: pre-editor capability capture and working AoE4 control.
 - `unity-fixed-refresh-transition.md`: decisive Unity Fixed Refresh transition, post-state, and DRS timestamp evidence.
+- `windows-disconnected-second-pa-baseline.md`: one-active-external/two-physically-connected topology and VRR-query anomaly.

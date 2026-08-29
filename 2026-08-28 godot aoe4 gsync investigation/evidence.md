@@ -797,6 +797,10 @@ The user then performed the known global G-SYNC off/apply/on/apply recovery with
 
 The user then ran `VsyncStutterTest.exe`; it showed the G-SYNC indicator and ran smoothly. At 22:55 the post-control state still had target 8450 in VRR mode and all three paths active. This validates the unprofiled executable as the replacement positive/negative control.
 
+At 22:58, the user left both PAs connected and powered but selected `Disconnect this display` for MediaSync-off target 8452 in Windows. Windows then reported only internal target 8449 and external target 8450 as active paths. NVAPI still reported target 8452 as `connected=1`, `physicallyConnected=1`, but `active=0`, proving the intended active-head-count arm was established.
+
+Immediately afterward, `NvAPI_Disp_GetVRRInfo` returned generic `NVAPI_ERROR` for active target 8450 on two consecutive queries, although its Adaptive-Sync capability data remained present. The neutral executable must therefore be run before Unity to establish whether G-SYNC survived the Windows topology change.
+
 ## Event and crash evidence
 
 ```text
