@@ -64,7 +64,14 @@ OpenGL threaded optimization: disabled
 
 Therefore the smooth arm is not explained by the Fixed Refresh profile being absent. The second external display path is a necessary condition in the user's A/B.
 
-A follow-up matrix narrows this further. Two external PAs behave poorly both with the internal panel active and with it disabled, even when OSD MediaSync is off on one external PA. One MediaSync-enabled external PA plus the internal panel behaves smoothly. Therefore the leading condition is **two active external display heads**, not the internal panel, not merely two active displays in total, and probably not two VRR-enabled panels. The last point still requires an NVAPI capture of the bad MediaSync-off state to prove that the OSD change reached the driver.
+A follow-up matrix narrows this further. Two external PAs behave poorly both with the internal panel active and with it disabled, even when OSD MediaSync is off on one external PA. One MediaSync-enabled external PA plus the internal panel behaves smoothly. The same result occurs in both the Godot editor and Unity editor. Therefore the leading condition is **two active external display heads**, not the internal panel, not merely two active displays in total, probably not two VRR-enabled panels, and not a Godot-specific editor implementation. The VRR-eligibility point still requires an NVAPI capture of the bad MediaSync-off state to prove that the OSD change reached the driver.
+
+Unity's matching behavior separates two phenomena that were previously entangled:
+
+1. Editor motion/smoothness is broadly poor under the two-external topology, independently of Godot's NVIDIA integration.
+2. Godot's native-OpenGL project-manager path additionally saves/reloads its Fixed Refresh DRS profile, producing the observed monitor blank and, in the failing topology, the sticky loss of AoE4 G-SYNC after Godot exits.
+
+Godot is therefore not the root cause of the general dual-external editor smoothness problem. It remains a specific trigger for the more severe DRS transition failure.
 
 The latest good-state capture contains internal target 8449 and external target 8450/connector instance 0. The previous good-state capture contained the internal target and external target 8452/connector instance 1. Both external ports therefore work individually; a defective single port is unlikely.
 
@@ -539,6 +546,8 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: both external PA targets being active is a necessary condition in every reported bad arm; the internal panel is neither necessary for failure nor sufficient to cause it.
 - Medium-high confidence: the narrower trigger is two active external display heads, not two VRR-enabled monitors. Confirm the latter by capturing NVAPI after the OSD-off PA is power-cycled/reconnected.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
+- High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
+- High confidence: Godot's DRS save/reload is still a separate trigger for the display blank and sticky post-Godot VRR failure; Unity's matching smoothness result does not absolve that integration behavior.
 - Remaining confounder: capture the two-external failure arm again while driver 596.49 is still installed.
 - Optional remaining isolation: combine a Fixed Refresh Godot profile with the verified direct D3D12/no-save launch to distinguish profile activation alone from the DRS save/reload. This would deliberately reintroduce risk and is not required to validate the workaround.
 - Separate remaining issue: reproduce the editor-window-close/process-linger behavior with process and verbose shutdown capture if it matters independently.

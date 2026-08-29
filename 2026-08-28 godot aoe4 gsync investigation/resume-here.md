@@ -38,7 +38,9 @@ Windows/NVAPI topology:
 
 Current NVIDIA driver: 596.49 (`r596_25`), installed at 16:30:31 PDT. The original investigation used 616.56. The current smooth arm is confirmed on 596.49; capture the failing two-external arm on the same driver before calling this conclusively cross-branch.
 
-Follow-up results now point more narrowly to two active external display heads. Two external PAs are poor with the internal panel either active or disabled and with one PA's OSD MediaSync off. One external PA plus the internal panel is smooth. Thus the internal panel, total active-display count, and probably dual-VRR eligibility are not the trigger. The OSD result remains provisional until NVAPI captures the MediaSync-off PA in the failing topology.
+Follow-up results now point more narrowly to two active external display heads. Two external PAs are poor with the internal panel either active or disabled and with one PA's OSD MediaSync off. One external PA plus the internal panel is smooth. This exact topology-dependent result occurs in both Unity editor and Godot editor. Thus the internal panel, total active-display count, probably dual-VRR eligibility, and a Godot-specific editor implementation are not the trigger. The OSD result remains provisional until NVAPI captures the MediaSync-off PA in the failing topology.
+
+Treat editor smoothness and Godot's DRS transition as separate issues. Unity establishes that poor editor behavior exists without Godot's profile writer. Godot additionally performs the Fixed Refresh profile save/reload associated with the monitor blank and sticky failure to restore AoE4 G-SYNC.
 
 The current smooth capture uses external target 8450/connector 0; the earlier smooth capture used target 8452/connector 1. Each external port works individually, making a single bad port unlikely.
 

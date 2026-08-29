@@ -18,13 +18,13 @@ This is interpreted as the same Godot/AoE4 sequence documented in `findings.md`,
 
 ## Follow-up MediaSync/internal-panel matrix
 
-The user then reported three additional configurations. This table interprets cases 1 and 2 as two external PAs, one with OSD MediaSync on and one with it off, and case 3 as one external PA with MediaSync on. Correct this interpretation if that is not what was physically connected.
+The user then reported and explicitly clarified three additional configurations. Cases 1 and 2 have two external PAs, one with OSD MediaSync on and one with it off. Case 3 has one external PA with MediaSync on.
 
-| Case | Active external PAs | OSD MediaSync | Internal panel | Result |
-|---|---:|---|---|---|
-| 1 | 2 | one on, one off | connected/active | poor |
-| 2 | 2 | one on, one off | disconnected/disabled | poor |
-| 3 | 1 | on | connected/active | smooth |
+| Case | Active external PAs | OSD MediaSync | Internal panel | Godot editor | Unity editor |
+|---|---:|---|---|---|---|
+| 1 | 2 | one on, one off | connected/active | poor | poor |
+| 2 | 2 | one on, one off | disconnected/disabled | poor | poor |
+| 3 | 1 | on | connected/active | smooth | smooth |
 
 This is more discriminating than the original A/B:
 
@@ -32,6 +32,7 @@ This is more discriminating than the original A/B:
 - Two active displays in total are not sufficient: case 2 has two external displays and fails, while case 3 has one external plus the internal display and succeeds.
 - Two OSD-enabled Adaptive-Sync monitors are probably not required: cases 1 and 2 fail with MediaSync off on one PA. This deduction remains provisional until the failing state is captured and NVAPI verifies that the OSD-off monitor no longer reports VRR possible or reports Adaptive-Sync disabled.
 - The common tested condition is two active external PA display paths.
+- Unity and Godot show the same topology-dependent editor smoothness result. Therefore the poor editor behavior is not specific to Godot's NVIDIA profile writer or rendering engine. Godot's ordinary project-manager profile save/reload remains separately relevant to the three-second display blank and sticky post-Godot VRR failure.
 
 At 19:59 PDT, after case 3, the read-only probes showed the internal target 8449 plus external target 8450/connector instance 0. Both were in VRR-capable display modes; neither had an active VRR request at the idle desktop. The earlier smooth capture used external target 8452/connector instance 1. Thus each external connector has now appeared in a smooth one-external configuration, which makes a single defective port unlikely.
 
