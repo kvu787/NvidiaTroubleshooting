@@ -772,3 +772,40 @@ Before changing the Windows display topology, establish the replacement control:
 4. Close it and report the result.
 
 Investigation commit: `7734775`.
+
+---
+
+## User
+
+i did this:
+Now establish the replacement control:
+1. Do not change G-SYNC, displays, or MediaSync settings.
+2. Do not open Unity or Godot.
+3. Run:
+C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe
+4. Observe the G-SYNC indicator and animation smoothness.
+5. Close it and report the result.
+
+VsyncStutterTest runs smoothly and displays the top-right gsync indicator
+
+## Assistant
+
+The replacement control is validated. `VsyncStutterTest.exe` has no NVIDIA profile, and in the recovered two-external topology it displayed the G-SYNC indicator and ran smoothly.
+
+The 22:55 post-control capture remained correct:
+
+```text
+target 8450: VRR possible=1, displayInVrrMode=1
+target 8452: VRR possible=0, displayInVrrMode=0
+active Windows display paths: 3
+```
+
+Next topology isolation:
+
+1. Keep both PA cables connected and both monitors powered.
+2. In Windows Settings -> System -> Display, identify and select the MediaSync-off PA.
+3. Under Multiple displays, choose `Disconnect this display` for that PA. Do not unplug it.
+4. Do not open Unity, Godot, or `VsyncStutterTest.exe` yet.
+5. Report when ready so the read-only probes can verify one external scanout head is active while the second PA remains physically connected.
+
+Investigation commit: `993d6ef`.
