@@ -1887,3 +1887,32 @@ If you later want to isolate the remaining cold blink, the clean next A/B is ano
 - neither blinks -> the cold event depends on another topology/startup condition.
 
 I recorded the complete capture and revised interpretation in [post-reboot-clone-route-validation.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/post-reboot-clone-route-validation.md) and updated the canonical synthesis. The evidence commit is `ce4d28c`.
+
+---
+
+## User
+
+it seems like i've gotten into a bad state again somehow. provide a comprehensive guide for the "last known good state".
+
+## Assistant
+
+I created the comprehensive [last-known-good recovery guide](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/last-known-good-state-guide.md).
+
+The current state is measurably different from the proven one in two important ways:
+
+- the internal eDP target is now running at **60 Hz**, not approximately **240 Hz**; and
+- the matching `Godot Engine` profile has lost its explicit **Fixed Refresh** override (`0x10A879CF = 4`) and is inheriting global G-SYNC `Allow` instead.
+
+The shortest deterministic recovery sequence is:
+
+1. Close all editors, games, and 3D tests.
+2. Keep one PA on one TB5/USB-C DisplayPort output and move/keep the other on native HDMI. Never use both TB5/DP outputs for this workaround.
+3. Temporarily extend all three displays. Set the DP PA to 2560x1440/120 Hz, HDMI PA to 2560x1440/120 Hz, and internal panel to 2560x1600/approximately 240 Hz.
+4. Make the TB5/DP PA the main display. Clone the internal panel with the native-HDMI PA, using a 2560x1440 clone source. The TB5/DP PA remains a separate extended desktop.
+5. In NVIDIA Control Panel, set the matching Godot 4.6.3 / `Godot Engine` profile's **Monitor Technology** to **Fixed Refresh**, apply, and close NVCP. Do the same for Unity only if it will be used.
+6. Before opening an editor, run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the main DP PA. It must be smooth and show the indicator. If it is not, perform the verified global G-SYNC off/apply/on/apply recovery once, then retest.
+7. Open Godot normally. It should be smooth without the indicator. Close it and immediately rerun `VsyncStutterTest.exe`; the test must again be smooth with the indicator.
+
+The expected working topology is three active physical targets but only two Windows desktop sources: the DP PA by itself, plus the HDMI PA cloned with active eDP. After a reboot, one two-second blank on the first Godot launch was observed; repeated blanks or post-Godot loss of G-SYNC are failures, not that benign cold-launch quirk.
+
+The guide includes exact target modes, DRS values, a full validation matrix, symptom-based diagnosis, and a compact checklist. It is committed in `0829c5d`.
