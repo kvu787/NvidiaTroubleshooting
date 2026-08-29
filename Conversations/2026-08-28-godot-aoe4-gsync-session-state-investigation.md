@@ -1528,3 +1528,39 @@ Now verify functional recovery:
 5. Close it and report the result.
 
 If it works, the next practical test is Windows duplicate mode: mirror the hidden internal panel with the HDMI PA. That keeps the eDP path active while exposing only two Windows desktop spaces, directly addressing the “lost windows on the hidden laptop screen” problem—although the physical internal panel would technically remain active.
+
+---
+
+## User
+
+i did this:
+Keep the current three-display state unchanged: internal active and both external PAs at 120 Hz.
+Don’t open Godot or Unity, and don’t toggle G-SYNC.
+Run C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe on the primary PA.
+Observe its G-SYNC indicator and smoothness.
+Close it and report the result.
+
+VsyncStutterTest ran smoothly and displayed the gsync indicator
+
+## Assistant
+
+Functional recovery is confirmed, not just inferred from the API state:
+
+- `VsyncStutterTest.exe` ran smoothly with the G-SYNC indicator;
+- primary target 8450 remains at `displayInVrrMode=1`;
+- all three active display targets report VRR mode 1; and
+- DRS timestamps and hashes are unchanged.
+
+So Windows display-topology/mode reconstruction restored working G-SYNC without toggling the global setting. The caveat remains that reconnecting eDP also returned HDMI from about 60 Hz to 120 Hz, so this does not isolate eDP activation from the wider mode reconstruction.
+
+Now test the practical clone workaround:
+
+1. Keep global G-SYNC and both monitors’ OSD settings unchanged.
+2. Open Windows Settings → System → Display and use **Identify** so you can distinguish the internal panel, primary TB5/DisplayPort PA, and secondary HDMI PA.
+3. Duplicate the **internal laptop display with the secondary HDMI PA**. Do not duplicate the primary TB5/DisplayPort PA.
+4. Leave the primary TB5/DisplayPort PA as the main, separately extended display.
+5. Let Windows choose the clone pair’s common mode for now; do not manually correct refresh rates afterward.
+6. Do not open Godot, Unity, `VsyncStutterTest.exe`, or another 3D application.
+7. Tell me when ready so I can capture the clone topology before the functional tests. If Windows does not offer that exact duplicate pair or makes an obviously unusable topology, stop and report what it offers instead.
+
+This would keep eDP active while exposing only two logical Windows desktop spaces, addressing the hidden-window problem. It does not literally disconnect or power down the laptop panel.
