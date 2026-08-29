@@ -1758,3 +1758,34 @@ Do this:
 7. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the primary TB5/DisplayPort PA and report its indicator and smoothness.
 
 If the deliberately persisted clone-desktop launch is clean, the initial blink is another one-time cold/topology transition rather than a recurring limitation of this workaround.
+
+---
+
+## User
+
+i did several of the primary to hdmi+laptop display and vice versa transitions. i could not repro any blinks, and godot editor ran smoothly without the gsync indicator in all cases.
+
+i launched vsyncstuttertest and it ran smoothly and displayed the gsync indicator
+
+## Assistant
+
+This completes the current-session validation. The 2560x1440 eDP+HDMI clone now meets the full practical workflow:
+
+- Windows exposes only two usable desktop spaces.
+- Godot and Unity run smoothly under Fixed Refresh without the G-SYNC indicator.
+- Repeated primary-to-clone and clone-to-primary Godot placements produce no monitor blink.
+- `VsyncStutterTest.exe` automatically regains smooth G-SYNC afterward.
+- The final capture retains the same two-source/three-target clone topology and VRR mode 1 on every target.
+- Godot continues making its expected DRS saves, but the selector and one-profile/two-application association remain stable and later G-SYNC is not poisoned.
+
+The earlier isolated two-second blink is therefore not caused by editor placement. It is best classified as a non-reproduced cold/topology transition immediately after creating the clone state.
+
+The remaining durability test is reboot persistence:
+
+1. Leave the current clone topology configured.
+2. Save other work and restart Windows normally.
+3. After signing in, do not change display, resolution, refresh-rate, G-SYNC, or OSD settings.
+4. Do not open Godot, Unity, `VsyncStutterTest.exe`, or another 3D application.
+5. Tell me when ready so I can capture whether Windows restored the same clone paths and healthy pre-application VRR state.
+
+If the topology survives, we will run one neutral control and then one first-after-reboot Godot transition. That will tell us whether the workaround is durable and whether the isolated cold blink recurs after a true reboot.
