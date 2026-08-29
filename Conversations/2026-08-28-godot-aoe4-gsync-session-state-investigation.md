@@ -1996,3 +1996,43 @@ Now change only the connector allocation:
 I will capture the raw post-hotplug target ID, connector instance, Windows source/head assignment, topology, timings, and VRR state before we normalize anything. That cleanly tests whether the current connector-1/source-0 allocation is the remaining selector.
 
 The recovery baseline is recorded in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), commit `1a3a142`.
+
+---
+
+## User
+
+i did this:
+Don’t open any 3D application.
+Don’t change G-SYNC, MediaSync, NVIDIA profiles, refresh rates, or Windows display settings.
+Leave the secondary PA connected to native HDMI.
+Move only the primary PA’s USB-C/DisplayPort cable to the laptop’s other TB5 port.
+Let the displays settle. Don’t correct any Windows topology changes yet.
+Tell me when ready.
+
+ready.
+
+## Assistant
+
+The physical move caused **no observable Windows or NVIDIA topology change**:
+
+- primary DP PA remains target 8452, connector instance 1, source ID 0, 1440p/120 Hz;
+- eDP+HDMI remain cloned on source ID 2, with eDP at 240 Hz and HDMI at 120 Hz;
+- every target remains `displayInVrrMode=1`; and
+- the Godot Fixed Refresh profile is unchanged.
+
+With only one external DP target active, NVIDIA therefore appears to assign the display back to the same logical connector/head regardless of which TB5 jack is used. There is nothing to normalize.
+
+This gives us a clean physical-jack A/B despite the identical public state. Keep everything exactly as it is and perform:
+
+1. Run `VsyncStutterTest.exe` on the main DP PA.
+2. If it is not smooth with the indicator, stop and report that result without opening Godot.
+3. If it passes, close it.
+4. Launch Godot 4.6.3 normally through the project manager and open `C:\Users\k\Repository\Godot\VsyncStutterTest\Godot`.
+5. Record any monitor blink and confirm whether Godot is smooth without the G-SYNC indicator.
+6. Close Godot completely.
+7. Immediately run `VsyncStutterTest.exe` again on the main DP PA.
+8. Report its indicator and smoothness, plus the Godot observations.
+
+If the failure repeats, physical TB5 jack alone is ruled out. If this arm succeeds, a hidden physical-route difference exists below the connector/source information exposed by Windows and NVAPI.
+
+The raw post-hotplug capture is recorded in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), commit `7e34e05`.
