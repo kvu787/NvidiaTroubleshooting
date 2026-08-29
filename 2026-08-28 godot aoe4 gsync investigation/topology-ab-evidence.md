@@ -34,6 +34,8 @@ This is more discriminating than the original A/B:
 - The common tested condition is two active external PA display paths.
 - Unity and Godot show the same topology-dependent editor smoothness result. Therefore the poor editor behavior is not specific to Godot's NVIDIA profile writer or rendering engine. Godot's ordinary project-manager profile save/reload remains separately relevant to the three-second display blank and sticky post-Godot VRR failure.
 
+The requested bad-topology baseline was captured at 22:30 PDT after the MediaSync-off PA was reconnected/power-cycled and before Godot opened. NVAPI identifies target 8450 as VRR-capable (`possible=1`, `displayInVrrMode=1`, maximum interval 20583 us) and target 8452 as non-VRR (`possible=0`, `displayInVrrMode=0`, maximum interval 0). The OSD change therefore reached the driver. Two VRR-enabled external targets are conclusively not required for the reported poor editor behavior.
+
 At 19:59 PDT, after case 3, the read-only probes showed the internal target 8449 plus external target 8450/connector instance 0. Both were in VRR-capable display modes; neither had an active VRR request at the idle desktop. The earlier smooth capture used external target 8452/connector instance 1. Thus each external connector has now appeared in a smooth one-external configuration, which makes a single defective port unlikely.
 
 ## Earlier one-external-monitor state
@@ -208,13 +210,13 @@ A single defective TB5/USB-C port is now unlikely because target 8452 was smooth
 
 For each case capture `display-topology-query.cpp` and `nvapi-vrr-query.cpp` before Godot, while Godot is open, and after Godot closes; then test the AoE4 indicator. Do not change DRS between cases.
 
-## Revised next step
+## Completed baseline and next step
 
-The next capture should be the failing two-external state with one PA's MediaSync off. After changing the OSD setting, power-cycle or reconnect that PA so the display capability is re-enumerated, but do not launch Godot yet. Then:
+The failing two-external mixed-MediaSync state has now been captured before Godot, and NVAPI verified the OSD-off target as non-VRR. Continue without opening Godot:
 
-1. run both read-only probes and verify whether the OSD-off display reports `VRR possible=0` or `Adaptive-Sync disabled=1`;
-2. recover G-SYNC once, launch AoE4 before Godot, and record indicator plus subjective/monitor-refresh behavior;
-3. disable one PA in Windows while leaving both physically connected, rerun the probes, and repeat the baseline; and
+1. launch AoE4 before either editor and record indicator plus subjective/monitor-refresh behavior;
+2. close AoE4 without opening Godot or Unity;
+3. disable one PA in Windows while leaving both physically connected, rerun the probes, and repeat the AoE4 baseline; and
 4. if two active external PAs alone are bad, connect one PA by the laptop's HDMI output and the other by one TB5/USB-C DisplayPort output.
 
 Interpretation:

@@ -73,6 +73,8 @@ Unity's matching behavior separates two phenomena that were previously entangled
 
 Godot is therefore not the root cause of the general dual-external editor smoothness problem. It remains a specific trigger for the more severe DRS transition failure.
 
+The bad-topology baseline subsequently verified the MediaSync distinction in NVAPI before Godot opened. External target 8450 reports VRR possible and a 20583-us maximum frame interval; external target 8452 reports VRR impossible, not in VRR mode, and a zero maximum frame interval. Both external heads are nevertheless active at 2560x1440/119.998 Hz. This proves the poor editor behavior does not require two VRR-enabled external monitors. It requires the second active external head under the tested configurations.
+
 The latest good-state capture contains internal target 8449 and external target 8450/connector instance 0. The previous good-state capture contained the internal target and external target 8452/connector instance 1. Both external ports therefore work individually; a defective single port is unlikely.
 
 ### What Windows and NVAPI show in the one-external arm
@@ -119,7 +121,7 @@ The user completed the central part of that plan: two external PAs still behaved
 
 ### Current highest-value next test
 
-Return to the failing two-external state with one PA's MediaSync off, power-cycle or reconnect the OSD-off PA so its capabilities are re-enumerated, and capture both read-only probes **before opening Godot**. First verify whether NVAPI actually reports VRR unavailable/disabled on that display. Then test AoE4 from a freshly recovered G-SYNC state before Godot; this separates poor dual-external behavior from the known Godot-induced sticky transition.
+The mixed-MediaSync bad-topology baseline is complete and proves target 8452 is non-VRR. Without opening Godot or Unity, test AoE4 in the captured state and record indicator, motion smoothness, and monitor refresh behavior. This separates a topology-only G-SYNC problem from the known Godot-induced sticky transition.
 
 Next, leave both PAs physically connected but disable one in Windows. A smooth result would identify the number of active external scanout paths rather than physical connection presence. If two active PAs remain the discriminator, route one PA through the laptop's HDMI output and one through a TB5/USB-C DisplayPort output:
 
@@ -544,7 +546,7 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: the two PA monitor identities are separate NVIDIA DisplayPort connector targets 8450 and 8452 on the same RTX adapter, not MST children or different-GPU paths.
 - High confidence: the current one-external state has the internal panel plus one PA active; this is not a generic single-display configuration.
 - High confidence: both external PA targets being active is a necessary condition in every reported bad arm; the internal panel is neither necessary for failure nor sufficient to cause it.
-- Medium-high confidence: the narrower trigger is two active external display heads, not two VRR-enabled monitors. Confirm the latter by capturing NVAPI after the OSD-off PA is power-cycled/reconnected.
+- High confidence: the narrower trigger is two active external display heads, not two VRR-enabled monitors; NVAPI verified the second external PA is non-VRR in the bad topology.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is still a separate trigger for the display blank and sticky post-Godot VRR failure; Unity's matching smoothness result does not absolve that integration behavior.
