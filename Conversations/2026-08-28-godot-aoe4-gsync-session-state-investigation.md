@@ -1442,3 +1442,51 @@ Now run the direct Unity comparison:
 8. Close it and report both results.
 
 This is the decisive load test: no disruptive blinking would validate a two-external-only 120/60 workaround and strongly implicate high aggregate external scanout load. Continued blinking would mean the active internal eDP path itself provides the missing stabilization.
+
+---
+
+## User
+
+i opened the unity project and observed a monitor blink on open. however, no gsync indicator was displayed and viewport usage was smooth. then i closed it.
+
+i ran VsyncStutterTest and it ran choppy and didn't show the gsync indicator
+
+again, i opened the unity project, observed zero monitor blinks, no gsync indicator, smooth usage, and closed it
+
+again, i ran VsyncStutterTest and it ran choppy and didn't show the gsync indicator
+
+## Assistant
+
+This is the damaging sticky failure, captured directly:
+
+```text
+Before Unity:
+  primary target 8450 displayInVrrMode=1
+  VsyncStutterTest smooth with G-SYNC indicator
+
+After Unity:
+  primary target 8450 displayInVrrMode=0
+  VsyncStutterTest choppy without indicator
+
+Unchanged:
+  HDMI target 8448 remains displayInVrrMode=1
+  display topology
+  DRS timestamps and hashes
+```
+
+Lowering HDMI to 60 Hz is therefore not a workaround. It changes the failure mode:
+
+- Internal off, DP 120 + HDMI 120: severe repeated transient blinking, but later G-SYNC recovers.
+- Internal off, DP 120 + HDMI 60: one initial blink, then primary G-SYNC becomes stuck off.
+- Internal on, DP 120 + HDMI 120: clean transitions and correct later G-SYNC.
+
+This disproves a simple “too much display bandwidth” threshold. The active internal eDP path is the only tested condition that prevents both forms of failure in the mixed DP+HDMI topology. External refresh allocation changes how the driver fails, not whether the two-external-only transition path is fragile.
+
+Now test topology-only recovery before using the global G-SYNC toggle:
+
+1. Leave both external monitors connected. Keep the primary DP PA at 120 Hz and HDMI PA at approximately 60 Hz.
+2. Do not toggle G-SYNC and do not open Godot, Unity, or `VsyncStutterTest.exe`.
+3. In Windows Display Settings, reconnect/extend the internal laptop display.
+4. Tell me when ready so I can capture whether target 8450 returns from `displayInVrrMode=0` to `1` solely from restoring the eDP path.
+
+If it recovers, reconnecting eDP is a topology-level recovery mechanism and the next practical experiment is Windows duplicate/clone mode: keep eDP active but mirror it with one external display so Windows exposes only two desktop spaces. That would address hidden windows, though the internal panel would technically remain active.
