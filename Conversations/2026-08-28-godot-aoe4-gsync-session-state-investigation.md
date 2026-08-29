@@ -2087,3 +2087,44 @@ The next placement-only A/B is:
 If this succeeds, crossing the Fixed Refresh editor onto the VRR primary is necessary in the current allocation and keeping the editor on HDMI is a potential operational workaround. If it fails, Godot launch/exit can poison the DP target even without placing a window on it.
 
 The transition capture is recorded in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), and the EC-reset research is in [asus-g815lr-ec-reset-note.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/asus-g815lr-ec-reset-note.md). Evidence commit: `f3b090a`.
+
+---
+
+## User
+
+i did this:
+While VRR is already failed, reopen Godot, move it to the HDMI clone, and close it there to save its placement.
+Cycle global G-SYNC off/apply/on/apply.
+Verify the neutral control works, then close it.
+Reopen Godot.
+If it opens on HDMI, keep it entirely there and close it there.
+Immediately test VsyncStutterTest.exe on primary DP.
+
+And it succeeded.
+
+## Assistant
+
+Confirmed by the post-test driver capture. Primary DP target 8452 remained `displayInVrrMode=1`; HDMI and eDP also remained at `1`. The topology, 120/120/240-Hz target timings, clone membership, and Godot's nine-setting Fixed Refresh profile are unchanged.
+
+Godot still rewrote DRS at 04:06:08 and 04:06:40, yet later G-SYNC survived. That gives us a decisive within-allocation A/B:
+
+| Godot behavior | Result afterward |
+| --- | --- |
+| Opens on HDMI, then moves onto primary DP | Three-second blank; target 8452 becomes mode `0`; later G-SYNC fails |
+| Opens, stays, and closes entirely on HDMI | No damaging transition; target 8452 stays mode `1`; later G-SYNC works |
+
+So the current operational workaround is now precise: **keep the Godot editor entirely on the native-HDMI-plus-eDP clone and never move any part of it onto the primary G-SYNC DP display.** Godot's process launch, project open, DRS save/reload, use on HDMI, and exit are all insufficient to cause the failure by themselves.
+
+Do not perform the EC reset now; we have found a narrower working behavior and an EC reset would change many lower-level variables.
+
+The next small durability check is:
+
+1. Do not toggle G-SYNC or change any display/profile setting.
+2. Launch Godot again; confirm it opens on the HDMI clone.
+3. Keep it entirely there, use it briefly, and close it there.
+4. Immediately run `VsyncStutterTest.exe` on primary DP.
+5. Report its indicator and smoothness.
+
+If this second consecutive cycle succeeds, the placement workaround is repeatable within the current boot. The later durability test is one reboot with the placement left saved, followed by the same sequence.
+
+I updated the [recovery guide](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/last-known-good-state-guide.md), [failed-state/placement evidence](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), and [root-cause synthesis](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/root-cause-synthesis.md). Evidence commit: `2b7c7f4`.
