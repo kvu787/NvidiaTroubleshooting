@@ -2167,3 +2167,41 @@ The next durability boundary is reboot persistence. When convenient:
 After that capture, the sequence will be neutral control -> Godot kept entirely on HDMI -> immediate neutral control. This will distinguish a persistent operational workaround from a same-boot-only allocation.
 
 The repeated success is recorded in the [placement evidence](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), [recovery guide](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/last-known-good-state-guide.md), and [root-cause synthesis](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/root-cause-synthesis.md). Evidence commit: `4418885`.
+
+---
+
+## User
+
+i did this:
+Leave Godot’s HDMI placement and all settings unchanged.
+Restart Windows normally—don’t perform the EC reset.
+After signing in, don’t open any 3D application or change display settings.
+Tell me when ready so I can capture the pre-application state.
+
+ready
+
+## Assistant
+
+The untouched post-reboot state is healthy:
+
+- primary DP target 8452 is `displayInVrrMode=1`;
+- HDMI and eDP targets are also mode `1`;
+- DP/HDMI/eDP target timings remain 120/120/240 Hz;
+- the 1440p HDMI+eDP clone persisted;
+- the Godot profile still explicitly requests Fixed Refresh; and
+- `VsyncStutterTest.exe` remains unprofiled.
+
+The reboot did change volatile Windows source assignment: DP moved from source ID 0 to source ID 1, while the clone moved from source ID 2 to source ID 0. Do not try to correct those numbers; they are evidence of driver allocation, not user-facing settings. The current allocation is healthy and resembles the earlier rebooted working family.
+
+Now run the reboot-persistence sequence without changing anything:
+
+1. Run `VsyncStutterTest.exe` on primary DP.
+2. If it is not smooth with the indicator, stop and report without opening Godot.
+3. If it passes, close it.
+4. Launch Godot normally and open the project.
+5. If Godot does not open on the HDMI clone, stop and report without moving it.
+6. If it opens on HDMI, keep it entirely there, use it briefly, and close it there.
+7. Immediately run `VsyncStutterTest.exe` on primary DP.
+8. Report its indicator and smoothness, along with any Godot blink and the editor's behavior.
+
+If this succeeds, the HDMI-only placement workaround has survived a reboot without a global G-SYNC recovery cycle. The pre-application baseline is recorded in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), commit `7375fd9`.
