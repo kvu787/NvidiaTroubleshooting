@@ -1490,3 +1490,41 @@ Now test topology-only recovery before using the global G-SYNC toggle:
 4. Tell me when ready so I can capture whether target 8450 returns from `displayInVrrMode=0` to `1` solely from restoring the eDP path.
 
 If it recovers, reconnecting eDP is a topology-level recovery mechanism and the next practical experiment is Windows duplicate/clone mode: keep eDP active but mirror it with one external display so Windows exposes only two desktop spaces. That would address hidden windows, though the internal panel would technically remain active.
+
+---
+
+## User
+
+i did this:
+Leave both external monitors connected, with primary DP at 120 Hz and HDMI at approximately 60 Hz.
+Don’t toggle G-SYNC or open Godot, Unity, or VsyncStutterTest.exe.
+In Windows Display Settings, reconnect/extend the internal laptop display.
+Tell me when ready so I can check whether target 8450 returns from displayInVrrMode=0 to 1 solely by restoring eDP.
+
+ready.
+
+## Assistant
+
+The primary target recovered at the API level without a global G-SYNC toggle:
+
+```text
+target 8450 primary TB5/DisplayPort:
+  before reconnect: displayInVrrMode=0
+  after reconnect:  displayInVrrMode=1
+
+target 8448 HDMI: displayInVrrMode=1
+target 8449 internal eDP: active, displayInVrrMode=1
+DRS timestamps and hashes: unchanged
+```
+
+One confound matters: when Windows extended the internal panel, it automatically changed the HDMI PA from approximately 60 Hz back to 119.998 Hz. Therefore the result proves that display-topology/mode reconstruction recovers the stuck primary without toggling G-SYNC, but not that activating eDP alone was solely responsible.
+
+Now verify functional recovery:
+
+1. Keep the current three-display state unchanged: internal active, primary DP at 120 Hz, HDMI at 120 Hz.
+2. Do not open Godot or Unity and do not toggle G-SYNC.
+3. Run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the primary TB5/DisplayPort PA.
+4. Observe its G-SYNC indicator and smoothness.
+5. Close it and report the result.
+
+If it works, the next practical test is Windows duplicate mode: mirror the hidden internal panel with the HDMI PA. That keeps the eDP path active while exposing only two Windows desktop spaces, directly addressing the “lost windows on the hidden laptop screen” problem—although the physical internal panel would technically remain active.
