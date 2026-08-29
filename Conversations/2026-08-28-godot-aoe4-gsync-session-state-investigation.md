@@ -1627,3 +1627,32 @@ Now establish the neutral control:
 5. Close it and report the result. Also report whether the cloned HDMI desktop looks visually usable or is distorted, cropped, or letterboxed.
 
 If the neutral control succeeds, the decisive next step is the Unity Fixed Refresh transition in this clone topology.
+
+---
+
+## User
+
+the hdmi monitor was letterboxed, so i changed the 1|3 resolution to 2560*1440. i haven't done anything else. record state before we proceed.
+
+## Assistant
+
+The revised pre-application state is recorded and healthy:
+
+- The cloned 1|3 source is now 2560x1440.
+- The HDMI PA receives a matching native 2560x1440 signal at 120 Hz.
+- The hidden internal panel remains physically active with its 2560x1600 target signal, fed by the shared 1440p source.
+- The primary TB5/DisplayPort PA remains a separate 2560x1440/120-Hz source.
+- All three NVIDIA targets remain active, OS-visible, VRR-capable, and in VRR mode 1.
+- DRS timestamps and SHA-256 hashes remain unchanged.
+
+This 2560x1440 clone state supersedes the earlier 2560x1600 clone source as our authoritative baseline.
+
+Now run the neutral control:
+
+1. Keep the clone topology, G-SYNC, refresh rates, resolution, and OSD settings unchanged.
+2. Do not open Godot or Unity.
+3. Run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the separate primary TB5/DisplayPort PA.
+4. Observe the G-SYNC indicator and animation smoothness.
+5. Close it and report the result.
+
+If it succeeds, the next test is `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe` in this exact clone topology.
