@@ -36,6 +36,8 @@ This is more discriminating than the original A/B:
 
 The requested bad-topology baseline was captured at 22:30 PDT after the MediaSync-off PA was reconnected/power-cycled and before Godot opened. NVAPI identifies target 8450 as VRR-capable (`possible=1`, `displayInVrrMode=1`, maximum interval 20583 us) and target 8452 as non-VRR (`possible=0`, `displayInVrrMode=0`, maximum interval 0). The OSD change therefore reached the driver. Two VRR-enabled external targets are conclusively not required for the reported poor editor behavior.
 
+AoE4 was then tested before either editor, without toggling G-SYNC. It showed the G-SYNC indicator and behaved normally. The 22:36 post-AoE probes showed unchanged topology/capabilities. Therefore two active external heads do not globally break G-SYNC; they interact poorly with the tested editor presentation paths and/or later application transitions.
+
 At 19:59 PDT, after case 3, the read-only probes showed the internal target 8449 plus external target 8450/connector instance 0. Both were in VRR-capable display modes; neither had an active VRR request at the idle desktop. The earlier smooth capture used external target 8452/connector instance 1. Thus each external connector has now appeared in a smooth one-external configuration, which makes a single defective port unlikely.
 
 ## Earlier one-external-monitor state

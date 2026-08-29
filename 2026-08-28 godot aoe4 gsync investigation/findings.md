@@ -75,6 +75,10 @@ Godot is therefore not the root cause of the general dual-external editor smooth
 
 The bad-topology baseline subsequently verified the MediaSync distinction in NVAPI before Godot opened. External target 8450 reports VRR possible and a 20583-us maximum frame interval; external target 8452 reports VRR impossible, not in VRR mode, and a zero maximum frame interval. Both external heads are nevertheless active at 2560x1440/119.998 Hz. This proves the poor editor behavior does not require two VRR-enabled external monitors. It requires the second active external head under the tested configurations.
 
+AoE4 then provided a clean pre-editor control in that exact state: without opening Unity or Godot and without toggling G-SYNC, AoE4 displayed the G-SYNC indicator and behaved normally. The post-AoE read-only state was unchanged. Thus two active external heads do not inherently disable or degrade G-SYNC for all applications. The failure is presentation-path/application-class dependent.
+
+The separate Unity NVIDIA-settings audit further shows that Unity has no user G-SYNC/refresh override and no Fixed Refresh rule; it inherits the global G-SYNC `allow` behavior. Unity's poor editor behavior therefore is not explained by a Unity DRS misconfiguration.
+
 The latest good-state capture contains internal target 8449 and external target 8450/connector instance 0. The previous good-state capture contained the internal target and external target 8452/connector instance 1. Both external ports therefore work individually; a defective single port is unlikely.
 
 ### What Windows and NVAPI show in the one-external arm
@@ -121,7 +125,10 @@ The user completed the central part of that plan: two external PAs still behaved
 
 ### Current highest-value next test
 
-The mixed-MediaSync bad-topology baseline is complete and proves target 8452 is non-VRR. Without opening Godot or Unity, test AoE4 in the captured state and record indicator, motion smoothness, and monitor refresh behavior. This separates a topology-only G-SYNC problem from the known Godot-induced sticky transition.
+The pre-editor AoE4 control is complete and works normally. Keep the captured topology, open the same Unity editor/project that exhibits poor behavior, observe it, close Unity, and immediately retest AoE4 without changing G-SYNC or opening Godot.
+
+- If AoE4 remains normal, Unity's failure is confined to its editor/windowed presentation path and Godot's post-exit stickiness remains specific to Godot's DRS transition.
+- If AoE4 loses G-SYNC after Unity, the persistent transition defect is broader than Godot, even though Godot's DRS save/reload remains one known trigger.
 
 Next, leave both PAs physically connected but disable one in Windows. A smooth result would identify the number of active external scanout paths rather than physical connection presence. If two active PAs remain the discriminator, route one PA through the laptop's HDMI output and one through a TB5/USB-C DisplayPort output:
 
@@ -550,6 +557,7 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is still a separate trigger for the display blank and sticky post-Godot VRR failure; Unity's matching smoothness result does not absolve that integration behavior.
+- High confidence: AoE4 G-SYNC works normally before either editor in the mixed-MediaSync two-external topology, so that topology does not globally break VRR for all presentation paths.
 - Remaining confounder: capture the two-external failure arm again while driver 596.49 is still installed.
 - Optional remaining isolation: combine a Fixed Refresh Godot profile with the verified direct D3D12/no-save launch to distinguish profile activation alone from the DRS save/reload. This would deliberately reintroduce risk and is not required to validate the workaround.
 - Separate remaining issue: reproduce the editor-window-close/process-linger behavior with process and verbose shutdown capture if it matters independently.

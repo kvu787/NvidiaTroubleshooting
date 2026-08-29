@@ -44,6 +44,8 @@ Treat editor smoothness and Godot's DRS transition as separate issues. Unity est
 
 The 22:30 pre-Godot baseline closes the OSD-verification caveat: target 8450 is VRR-capable, while the MediaSync-off target 8452 reports `VRR possible=0`, `displayInVrrMode=0`, and a zero Adaptive-Sync interval. Both remain active external heads. Dual external VRR capability is therefore ruled out as a necessary condition.
 
+AoE4 works normally in this exact state before either editor opens: the indicator appears and G-SYNC behaves as expected. A 22:36 post-AoE capture is unchanged. Therefore dual external heads do not globally break G-SYNC. The current separation is editor/windowed presentation behavior versus persistent state poisoning after an editor exits.
+
 The current smooth capture uses external target 8450/connector 0; the earlier smooth capture used target 8452/connector 1. Each external port works individually, making a single bad port unlikely.
 
 Superseded test plan, retained for history:
@@ -57,13 +59,14 @@ Superseded test plan, retained for history:
 
 If step 4 succeeds, leaving Adaptive-Sync disabled on the secondary PA is the first plausible stable workaround that keeps both monitors connected and avoids per-session global G-SYNC toggling.
 
-The user completed that MediaSync test and the pre-Godot NVAPI capture. Target 8452 is verified non-VRR while both external heads remain active. Current next test, in order:
+The user completed that MediaSync test, pre-editor NVAPI capture, and working AoE4 control. Current next test, in order:
 
-1. do not open Godot or Unity;
-2. test AoE4 in the captured two-external mixed-MediaSync state, recording indicator, smoothness, and monitor refresh behavior;
-3. leave both PAs connected but disable one in Windows and repeat the baseline;
-4. if two active external heads remain the condition, test one PA over HDMI plus one over a TB5/USB-C DisplayPort output; and
-5. only then repeat the ordinary Fixed Refresh Godot transition.
+1. keep the exact display state and do not open Godot;
+2. open the same Unity editor/project that exhibits poor behavior, observe it, and close Unity;
+3. immediately retest AoE4 without toggling G-SYNC;
+4. if AoE4 remains normal, leave both PAs connected but disable one in Windows and repeat Unity to isolate active-head count;
+5. if needed, test one PA over HDMI plus one over a TB5/USB-C DisplayPort output; and
+6. only then repeat the ordinary Fixed Refresh Godot transition.
 
 This sequence distinguishes OSD/driver capability caching, active scanout-head count, the dual-TB5 route, any-two-external NVIDIA behavior, and Godot's extra transition. It is more useful than another global G-SYNC toggle or profile edit.
 

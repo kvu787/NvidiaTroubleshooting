@@ -38,6 +38,19 @@ This closes the earlier MediaSync-verification caveat. The user's poor Unity/God
 
 Combined with the user's case 2, which remains poor with the internal panel disabled, the strongest common condition is two active external display heads. The remaining immediate question is whether AoE4 is already poor in this pre-Godot/pre-Unity state or becomes poor only after an editor/profile transition.
 
+## AoE4 pre-editor control
+
+The user launched AoE4 on the MediaSync-on PA without opening Godot or Unity and without toggling G-SYNC. AoE4 showed the top-right G-SYNC indicator and G-SYNC appeared to work normally. The user then closed AoE4.
+
+A read-only post-AoE capture at 22:36 PDT showed the topology and capability state unchanged:
+
+- three active paths: PA targets 8450 and 8452 plus internal target 8449;
+- target 8450 remained VRR-capable and in a VRR-capable display mode;
+- target 8452 remained non-VRR and outside VRR mode; and
+- no VRR request remained active at the idle desktop after AoE4 closed.
+
+This proves two active external heads do not inherently prevent G-SYNC from working in AoE4. The poor Unity/Godot editor behavior is presentation-path/application-class dependent. The next separation is Unity editor followed immediately by AoE4: if AoE4 remains good, Unity's problem is confined to its own windowed/editor presentation path; if AoE4 loses G-SYNC, a non-Godot editor can also poison the later driver state.
+
 ## Raw Windows topology output
 
 ```text
