@@ -251,12 +251,29 @@ Two ordinary Godot project-manager sequences preserve later smooth G-SYNC in clo
 
 Several controlled primary-to-clone and clone-to-primary Godot repetitions then produced zero blinks. Godot remained smooth without G-SYNC, the later neutral control retained smooth G-SYNC, every target remains in VRR mode 1, and the clone structure is unchanged. Placement is ruled out as sufficient; the isolated first blank is a cold/topology transition. This clone is a complete current-session workaround. Reboot persistence is the remaining durability test.
 
-Interpretation:
+Historical interpretation before the final clone/route A/B:
 
-- Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.
-- TB5+HDMI at the current 120-Hz/60-Hz split is smooth while two 120-Hz TB5 outputs are poor, isolating a route/mode family but not route alone.
-- Later, test HDMI at 120 Hz if exposed, or both TB5/DisplayPort PAs at 60 Hz, to separate connector route from refresh/link load.
-- Unity has already separated profile activation from Godot's writer: an existing Fixed Refresh profile is sufficient.
+- Windows-disabling one PA fixed it; active external scanout-head count was confirmed as necessary in the observed bad arms rather than cable presence.
+- TB5+HDMI was initially confounded with a 60-Hz secondary; later 120-Hz HDMI, clone, and reboot tests supersede that confound.
+- Unity separated profile activation from Godot's writer: an existing Fixed Refresh profile is conditionally sufficient in susceptible topologies.
+
+## Post-reboot clone and route A/B
+
+The 2560x1440 internal-eDP-plus-native-HDMI clone persisted across the tested reboot and continued to prevent sticky loss of later G-SYNC. The first Godot launch after that reboot caused one blink; successive launches in the same boot were clean.
+
+The user then retained the general clone concept but routed both external PAs through the two TB5/USB-C DisplayPort outputs. The G-SYNC problems returned. Moving one PA back to native HDMI restored smooth behavior.
+
+This resolves the leading operational discriminator more strongly:
+
+- two Windows desktop sources are not sufficient;
+- three active targets are not sufficient;
+- cloned/active internal eDP is not sufficient;
+- clone mode itself is not sufficient; and
+- the mixed external route is essential in the tested workaround family.
+
+The defensible mechanism statement is that native HDMI selects a stable NVIDIA target/transmitter/head/timing allocation, whereas two simultaneous external TB5/DisplayPort paths select the susceptible allocation. The public evidence does not prove a specific transmitter, PLL, Type-C mux, or protocol defect.
+
+Full post-reboot topology, VRR, DRS, and black-screen-live-dump evidence is in `post-reboot-clone-route-validation.md`.
 
 ## Authoritative references
 

@@ -2,7 +2,7 @@
 
 Investigation date: 2026-08-28 PDT
 
-> **Current canonical diagnosis:** See `root-cause-synthesis.md`. This file is a chronological evidence narrative and retains some superseded interim conclusions, including the earlier “Unresolved primary user goal” section. The current 2560x1440 internal-eDP-plus-HDMI clone topology has satisfied the full workflow repeatedly within one session; reboot persistence remains untested.
+> **Current canonical diagnosis:** See `root-cause-synthesis.md`. This file is a chronological evidence narrative and retains some superseded interim conclusions, including the earlier "Unresolved primary user goal" section. The 2560x1440 internal-eDP-plus-native-HDMI clone is now validated across one reboot for correct per-application switching; the first Godot launch after that reboot blinked once and later launches were clean.
 
 ## Conclusion
 
@@ -65,6 +65,12 @@ A later one-profile isolation test made the trigger narrower. The exact-path NVI
 The best classification is an NVIDIA multi-display VRR/profile-transition bug specific to the tested dual external DisplayPort-over-USB-C, high-refresh state. Godot's unconditional NVAPI profile writer exposed the problem but is not necessary for it. The original reproduction used driver 616.56; Unity reproduced the failure on driver 596.49. The failure to restore G-SYNC for a later application is therefore a driver/display-path failure across both tested driver branches.
 
 The direct D3D12 bypass has now been runtime-verified from a completely clean Godot/NVIDIA baseline. With both rendering fallbacks disabled, the editor opened without a monitor blank, showed the G-SYNC indicator, and exhibited the user's choppy pointer movement. Afterward, every DRS file remained byte-for-byte identical to the pre-launch baseline, the profile count remained 7957, the exhaustive Godot audit remained clean, and NVIDIA App's private catalog remained free of Godot. The user then launched AoE4 and observed its G-SYNC indicator normally. This proves the direct D3D12 path avoids both Godot's profile writer and Fixed Refresh profile activation; the Unity control shows the latter is the necessary distinction for the blank/sticky failure. The choppy G-SYNC editor behavior is the tradeoff that Godot's profile workaround was designed to suppress.
+
+The clone reboot test is now complete. Windows restored the 1440p internal-eDP-plus-native-HDMI clone and correct later G-SYNC behavior. The first Godot 4.6.3 launch after the tested reboot produced one monitor blink, while subsequent launches in that boot were smooth and blink-free. The workaround therefore prevents sticky loss across the tested reboot but does not meet a literal zero-blank requirement.
+
+The route isolation is also stronger. Replacing native HDMI with the second TB5/USB-C DisplayPort route while retaining the general clone arrangement brings the G-SYNC issues back; returning one external PA to HDMI restores smooth behavior. Active eDP and clone mode are not sufficient. The stable allocation specifically requires the tested mixed TB5/DisplayPort-plus-native-HDMI route family.
+
+At 01:28, Windows Error Reporting surfaced a backlog of `0x1A8` DXGKRNL and `0x1B8` miniport black-screen live dumps, including groups created around 01:26 and 01:28. These are live diagnostics rather than fatal bugchecks or conventional TDRs. Parameter 1 is `1`, officially mapped to the black-screen hotkey; user or utility invocation remains to be clarified. This supersedes the earlier blanket statement that no LiveKernelReports existed, without changing the primary live-VRR-state diagnosis.
 
 ### Unresolved primary user goal
 

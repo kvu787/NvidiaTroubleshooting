@@ -1,4 +1,4 @@
-# Resume point: validated clone workaround; reboot durability pending
+# Resume point: mixed-route clone is reboot-validated; one cold blink remains
 
 For the current ranked causal explanation across all three investigation directories, read `root-cause-synthesis.md` first.
 
@@ -6,7 +6,9 @@ Last updated: 2026-08-29 PDT
 
 ## Status
 
-The core user goal is satisfied in repeated use within the current Windows session. Reboot persistence remains untested.
+The core per-application goal is satisfied across the tested reboot. Windows restored the 2560x1440 internal-eDP-plus-native-HDMI clone with the TB5/DisplayPort PA separate, and later G-SYNC remains healthy after Godot. The first Godot 4.6.3 launch after that reboot caused one monitor blink; subsequent Godot launches in the same boot were clean.
+
+The same clone concept is not sufficient with both external PAs routed through the two TB5/USB-C DisplayPort outputs: the G-SYNC problems return. Moving one PA back to native HDMI restores smooth behavior. Connector route/resource allocation is therefore a stronger discriminator than clone mode or active eDP alone.
 
 Required end state:
 

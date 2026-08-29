@@ -269,4 +269,4 @@ Within the current Windows session, the 1440p eDP+HDMI clone is a validated prac
 - no sticky VRR loss; and
 - no recurring transition blank in repeated use.
 
-The remaining durability test is reboot persistence: verify that Windows restores the same clone topology and that the first neutral and Godot transitions after sign-in remain healthy.
+The reboot durability test is complete. Windows restored the same mixed-route clone and later G-SYNC remained healthy. The first Godot launch after reboot produced one monitor blink; subsequent launches in that boot were clean. The same clone concept failed when both external PAs were routed through TB5/DisplayPort, and moving one back to native HDMI restored smooth behavior. Full post-reboot evidence is in `post-reboot-clone-route-validation.md`.

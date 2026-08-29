@@ -1,6 +1,6 @@
 # Root-cause synthesis
 
-Investigation state: 2026-08-29 PDT. Reboot persistence of the current clone workaround remains untested.
+Investigation state: 2026-08-29 PDT. Reboot persistence of the mixed TB5/DisplayPort-plus-native-HDMI clone workaround is validated for one reboot. The first Godot launch after that reboot blinked once; subsequent launches in that boot were clean.
 
 ## Bottom line
 
@@ -55,26 +55,27 @@ The full A/B matrix rules out simple explanations:
 | Primary TB5/DP PA plus HDMI PA, eDP inactive, both 120 Hz | Severe transient blanking; later VRR recovered in the tested sequences |
 | Primary TB5/DP PA at 120 plus HDMI PA near 60, eDP inactive | One transition caused sticky primary-target VRR loss |
 | Primary TB5/DP PA separate; internal eDP cloned with HDMI at 1440p | Repeated Unity and Godot transitions clean in-session |
+| Same 1440p eDP+HDMI clone after reboot | Sticky-loss prevention persists; first Godot launch blinks once, later launches are clean |
+| Same clone concept but both external PAs on TB5/DisplayPort | G-SYNC issues return; native HDMI restores smooth behavior |
 
 Important deductions:
 
 - A second cable or powered monitor is insufficient; it must be an active Windows scanout target.
 - Two active external heads are necessary in the observed bad arms but not sufficient, because DP+HDMI with active eDP is clean.
-- Active eDP changes the allocation even when it is not a separate desktop: cloning eDP with HDMI remains stable. The important fact is the active physical target/path, not an extra Windows workspace.
+- Active eDP changes the allocation even when it is not a separate desktop: cloning eDP with HDMI remains stable. The important fact is the active physical target/path, not an extra Windows workspace. Active/cloned eDP is not sufficient in the dual-TB5/DisplayPort route.
 - Changing HDMI from 120 to about 60 Hz changed the failure from transient blanking to sticky loss. Lower load made the outcome worse, which refutes a simple pixel-bandwidth or “too much refresh rate” threshold.
 - Both TB5/USB-C ports work with one PA, and both external targets are separate NVIDIA DisplayPort connectors rather than an MST branch. A single bad port and MST are unlikely.
 - MediaSync off on the second PA did not prevent the issue, and NVAPI confirmed that target was not VRR-capable in that test. Two simultaneously VRR-enabled external monitors are not required.
 
-This pattern is most consistent with a route- and mode-dependent state-machine/resource-allocation defect inside the NVIDIA/WDDM display stack.
+This pattern is most consistent with a route- and mode-dependent state-machine/resource-allocation defect inside the NVIDIA/WDDM display stack. The post-reboot clone A/B makes the connector family the strongest operational discriminator: two simultaneous external TB5/DisplayPort paths remain susceptible, while moving one PA to native HDMI selects a stable allocation.
 
 ## Why the monitors blank
 
 The two-to-three-second all-monitor blank is best understood as a failed or disruptive modeset/reprogramming episode while the driver changes presentation/VRR policy. It resembles link retraining or display-head reconstruction, but the investigation cannot prove the exact operation.
 
-It is not evidence of a GPU crash:
+Windows Error Reporting later surfaced `0x1A8` DXGKRNL and `0x1B8` miniport black-screen live dumps from several investigation periods. These are live diagnostics rather than fatal bugchecks or conventional TDRs. Their signatures record source parameter `1`, which Microsoft maps to the black-screen hotkey; whether a user or utility invoked that path is awaiting confirmation. They corroborate display-stack black-screen diagnostics but do not identify the failing NVIDIA resource.
 
-- no TDR, display-driver reset, WER crash, or LiveKernelReport accompanied the events; and
-- some sticky failures occurred after one blank, while some severe repeated blanks recovered normally.
+Some sticky failures occurred after one blank, while some severe repeated blanks recovered normally. The post-reboot mixed-route clone now adds a case where the first Godot launch blinked once, later G-SYNC remained healthy, and later launches did not blink.
 
 Therefore blinking is a symptom of the transition, not a reliable predictor of whether VRR will remain poisoned.
 
@@ -147,9 +148,9 @@ The current 2560x1440 topology keeps:
 - the primary TB5/DisplayPort PA as one extended desktop source; and
 - the HDMI PA cloned with the active internal eDP target as the second desktop source.
 
-In the current session, repeated Unity and Godot Fixed Refresh transitions were smooth, no recurring blank was reproduced, and `VsyncStutterTest.exe` immediately regained G-SYNC. This is strong evidence that an active eDP target stabilizes the mixed DP+HDMI allocation even when it is cloned and not exposed as a third desktop.
+Across the original session and one reboot, repeated Unity and Godot Fixed Refresh transitions preserved later G-SYNC. The first Godot launch after the tested reboot blinked once; later launches in that boot were clean. This is strong evidence that an active eDP target plus the mixed DP+native-HDMI route stabilizes VRR restoration even when eDP is cloned and not exposed as a third desktop.
 
-It remains a workaround around the faulty state transition, not a repair of it. Reboot persistence and the first post-reboot cold transition remain untested.
+The same clone concept with both external PAs routed through TB5/DisplayPort remains bad, so clone mode and active eDP are not general solutions. The mixed-route topology remains a workaround around the faulty state transition, not a repair. Its reboot persistence is validated; sleep/hibernate, driver reset/update, monitor power-cycle, and hotplug-order durability remain untested.
 
 ## References
 
@@ -161,6 +162,7 @@ Local evidence:
 - `unity-fixed-refresh-transition.md`
 - `post-reboot-internal-panel-ab.md`
 - `clone-internal-hdmi-baseline.md`
+- `post-reboot-clone-route-validation.md`
 - `../2026-08-28 gsync investigation/bugs-and-workarounds.md`
 - `../2026-08-28 gsync investigation/two-godot-profiles-ui-explanation.md`
 - `../2026-08-28 unity investigation/findings.md`

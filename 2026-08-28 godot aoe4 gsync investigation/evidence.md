@@ -865,6 +865,14 @@ At 01:01, two ordinary Godot project-manager sequences completed in the unchange
 
 At 01:06, several controlled primary-to-clone and clone-to-primary Godot placement transitions produced no blink. Godot was smooth without the indicator in every case, and the later neutral control was smooth with the indicator. The post-state retains the same two-source/three-target clone and VRR mode 1 on every target. Godot saved DRS again at 01:04:51 and 01:05:02; the selector and exhaustive one-profile/two-application Godot audit remain stable. Placement is ruled out as sufficient for the earlier isolated blank. The 1440p clone meets the full workflow requirements in the current session; reboot persistence remains to be tested.
 
+After reboot, the user reports that the 1440p internal-eDP-plus-native-HDMI clone continues to preserve smooth behavior and later G-SYNC. The first ordinary Godot 4.6.3 editor launch after the tested reboot caused one monitor blink; successive Godot open/close cycles in that boot were smooth and blink-free. This is consistent with a cold per-boot transition but needs another reboot to establish recurrence; the observed blink did not predict sticky VRR loss.
+
+The user also retained the general clone concept while routing both external PAs through the two TB5/USB-C DisplayPort outputs. The G-SYNC problems returned. Moving one PA back to native HDMI restored smooth behavior. This strengthens connector route/resource allocation from a confounded workaround characteristic to the leading operational discriminator. Active eDP, clone mode, and two Windows source spaces are not independently sufficient.
+
+The 01:35 read-only capture confirms that Windows restored the intended mixed-route topology: three active RTX targets, two Windows sources, internal target 8449 cloned with native-HDMI target 8448 at a 2560x1440 source, and external DP target 8452 separate at 2560x1440/119.998 Hz. The `Godot Engine` DRS profile remains associated with 4.4.1 and 4.6.3, with no enumeration failures. Full values and hashes are in `post-reboot-clone-route-validation.md`.
+
+At approximately 01:28, WER surfaced multiple queued black-screen live diagnostics. The latest groups were created around 01:26 and 01:28 and include `0x1A8 VIDEO_DXGKRNL_BLACK_SCREEN_LIVEDUMP` plus two `0x1B8 VIDEO_MINIPORT_BLACK_SCREEN_LIVEDUMP` records. WER parameter 1 is `1`, documented as the black-screen-hotkey source; whether the user or a utility invoked it remains unresolved. These live dumps are not fatal bugchecks or conventional TDR codes. Their later discovery supersedes the earlier negative LiveKernelReport statement, but exact action-to-dump correlation is unavailable.
+
 ## Event and crash evidence
 
 ```text
