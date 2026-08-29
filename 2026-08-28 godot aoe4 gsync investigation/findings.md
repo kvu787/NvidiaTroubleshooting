@@ -22,6 +22,8 @@ That placement isolation is now complete. Two additional Godot launches, includi
 
 Post-reboot usage reveals that the workaround depends on the internal panel remaining active. TB5/DisplayPort plus HDMI is smooth with the internal eDP panel active, but poor when Windows disconnects the internal panel; reconnecting it restores smoothness. Both external PAs now run at 119.998 Hz and the HDMI PA's MediaSync on/off state did not change the A/B. Thus the prior 60-Hz secondary was not necessary. The leading condition is a compound active-path topology: HDMI routing avoids the dual-TB5 failure only while the internal eDP scanout path remains active.
 
+The clean internal-off pre-application capture confirms only the two external 120-Hz paths are active and DRS is unchanged. HDMI remains in NVIDIA VRR display mode, while the primary DP target's public VRR query returns a generic error. That error is not diagnostic by itself because it occurred in an earlier working Windows-disconnected topology. The neutral control, not the query error, must determine whether disconnect alone is sufficient.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.

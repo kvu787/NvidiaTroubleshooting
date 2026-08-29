@@ -831,6 +831,8 @@ After reboot, the user discovered that the internal panel is required for smooth
 
 This removes the prior refresh/load confound: HDMI at 120 Hz works while internal eDP is active. It introduces a narrower topology condition. The internal eDP path stabilizes TB5/DP plus HDMI, but did not stabilize the earlier two-TB5/DP configuration. A pre-application capture with the internal panel disconnected is now required to determine whether the topology change itself breaks G-SYNC or only makes the next Fixed Refresh transition unsafe.
 
+At 00:14, the clean internal-off arm was captured before any 3D application. Windows has only 120-Hz targets 8450 TB5/DisplayPort and 8448 HDMI active. Internal target 8449 remains physically connected but inactive with zero current lanes. DRS is byte-for-byte unchanged. HDMI target 8448 still reports `displayInVrrMode=1`; the primary DP target's VRR-info call returns generic `NVAPI_ERROR` while its Adaptive-Sync and link queries succeed. Because that API error previously coexisted with working G-SYNC, a pre-editor `VsyncStutterTest.exe` control is required.
+
 ## Event and crash evidence
 
 ```text

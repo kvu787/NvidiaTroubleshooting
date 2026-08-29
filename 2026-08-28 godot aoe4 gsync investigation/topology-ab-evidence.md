@@ -223,6 +223,8 @@ That controlled repetition is complete. Two further Godot launches, including a 
 
 Post-reboot, case G was refined: both external monitors run at 119.998 Hz and remain smooth with internal eDP active, ruling out the earlier 60-Hz secondary as necessary. Windows-disconnecting internal eDP produces poor behavior and reconnecting it restores smoothness; HDMI MediaSync on/off did not change the result. Add an internal-off pre-application capture and neutral-control step before any further editor transition.
 
+The internal-off pre-application capture is complete: only targets 8450 DP and 8448 HDMI are active at 119.998 Hz, internal 8449 remains physically connected/inactive, and DRS is unchanged. The primary DP public VRR query returns generic error, but that error is known to coexist with a healthy functional control. The pre-editor `VsyncStutterTest.exe` result is pending.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.
