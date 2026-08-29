@@ -1842,3 +1842,48 @@ So the concise causal chain is:
 The current 2560x1440 eDP+HDMI clone avoids the faulty allocation in repeated in-session tests. It is a workaround around the bug, not a repair. Reboot persistence and the first cold transition after reboot remain the only current durability unknowns.
 
 I recorded the full ranked analysis in [root-cause-synthesis.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/root-cause-synthesis.md) and committed it as `a5c6fae`.
+
+---
+
+## User
+
+i rebooted and things continue to work smoothly, except that godot 4.6.3 editor needs a one-time monitor blink. after that blink and before another reboot, successive open/close of godot editor work smoothly without blinks.
+
+i also tried the two external monitor + laptop display cloned w/ one external monitor config but with both external monitor connected to tb5 instead of one of them connected to hdmi. that resurfaced the gsync issues, so i switched one external monitor to hdmi and it returned to smooth usage.
+
+## Assistant
+
+Recorded. This changes the workaround from “successful in one session” to **successful across the tested reboot**, and it makes physical connector routing the strongest operational discriminator.
+
+The live capture confirms Windows restored the intended working topology:
+
+- three active physical NVIDIA targets but only two Windows desktop sources;
+- internal eDP cloned with the native-HDMI PA at a 2560x1440 source; and
+- the other PA separate over one TB5/DisplayPort output at 119.998 Hz.
+
+The Godot profile structure also remains stable. The later Godot DRS writes occurred at 01:29 and 01:30, with the same one `Godot Engine` profile and its 4.4.1/4.6.3 associations.
+
+The implications are now:
+
+1. **The mixed-route clone is reboot-durable for preventing sticky G-SYNC loss.** We have validated one reboot. The first Godot launch after that reboot blinked once; later launches in that boot were clean and later G-SYNC remained healthy.
+2. **The blink and the sticky failure are distinct outcomes.** A disruptive cold transition can blank the monitors without leaving the primary target poisoned afterward.
+3. **Clone mode and active eDP are not sufficient.** The same general clone arrangement still fails when both external heads use the two TB5/USB-C DisplayPort paths.
+4. **Native HDMI is the stabilizing route in the tested family.** Moving one PA to HDMI does more than reconstruct the topology once: the resulting allocation remains stable through repeated application transitions and a reboot.
+5. **The root-cause model is now more specifically route-sensitive.** The likely defect is in NVIDIA's handling of two simultaneous external DP-over-USB-C paths during Fixed Refresh/VRR transitions. Native HDMI moves one target onto a different transmitter/head/timing allocation. Public APIs cannot tell us whether the private failing object is a DP transmitter, PLL, Type-C mux state, or per-head VRR bookkeeping, so “HDMI protocol itself fixes it” would be too strong.
+
+One new diagnostic caveat appeared. Windows Error Reporting surfaced black-screen live dumps created around 01:26 and 01:28:
+
+- `0x1A8 VIDEO_DXGKRNL_BLACK_SCREEN_LIVEDUMP`; and
+- `0x1B8 VIDEO_MINIPORT_BLACK_SCREEN_LIVEDUMP`.
+
+Microsoft documents these as live diagnostics, not fatal bugchecks or conventional TDRs. Their parameter 1 is `1`, which Microsoft maps to the black-screen hotkey source. The latest dump groups also precede the Godot DRS writes at 01:29/01:30, so they do not implicate those later Godot saves and may instead align with the dual-TB5/topology-switch tests. See Microsoft's [`0x1A8`](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/bug-check-0x1a8--video-dxgkrnl-black-screen-livedump) and [`0x1B8`](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/bug-check-0x1b8--video-miniport-black-screen-livedump) documentation.
+
+I need one clarification: **did you press `Win+Ctrl+Shift+B`, or use an ASUS/NVIDIA shortcut that might invoke it, at any point during these tests?** If not, the reported hotkey source itself becomes another anomaly to investigate.
+
+If you later want to isolate the remaining cold blink, the clean next A/B is another reboot followed by **Unity first, before Godot**:
+
+- Unity also blinks once -> general first Fixed Refresh transition after boot;
+- Unity is clean, then Godot blinks -> Godot native-OpenGL/profile-save initialization is involved; or
+- neither blinks -> the cold event depends on another topology/startup condition.
+
+I recorded the complete capture and revised interpretation in [post-reboot-clone-route-validation.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/post-reboot-clone-route-validation.md) and updated the canonical synthesis. The evidence commit is `ce4d28c`.
