@@ -737,6 +737,24 @@ Global G-SYNC off/on:
 
 This is a user-facing usability requirement, not a contradiction in the technical findings. The D3D12 bypass is successful within its narrower scope, but the desired stable per-application G-SYNC policy has not been achieved.
 
+## External-monitor topology A/B
+
+The user later reported a clean physical-topology discriminator on an ASUS ROG Strix G18 `G815LR-IS97`:
+
+```text
+One PA278QGV on one Thunderbolt 5/USB-C port:
+  smooth; the documented G-SYNC problem is absent
+
+Two PA278QGVs, one on each Thunderbolt 5/USB-C port:
+  the documented G-SYNC problem reproduces
+```
+
+The current one-external-monitor capture retains the matching `Godot Engine` profile and its Fixed Refresh/VRR-disabled settings. Windows and NVAPI map the two PAs to distinct external DP targets 8450 and 8452 on the same RTX 5070 Ti adapter. They are connector instances 0 and 1, not MST children. The current active target is 8452 at 2560x1440/119.998 Hz; target 8450 is disconnected.
+
+The current NVIDIA driver is 596.49 (`r596_25`), installed at 16:30:31 PDT. The original failure evidence used 616.56. The current smooth arm is therefore version-controlled, but the failing two-external arm should be captured again on 596.49 before claiming conclusive cross-branch reproduction.
+
+Full command output, PnP timestamps, interpretation, and follow-up matrix are in `topology-ab-evidence.md`. The reusable read-only probes are `display-topology-query.cpp` and `nvapi-vrr-query.cpp`.
+
 ## Event and crash evidence
 
 ```text

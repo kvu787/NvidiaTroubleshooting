@@ -18,7 +18,7 @@ A subsequent recovery test confirmed this interpretation: disabling global G-SYN
 
 A later one-profile isolation test made the trigger narrower. The exact-path NVIDIA App profile was deleted, and the remaining basename `Godot Engine` profile was set to Fixed Refresh in NVIDIA Control Panel. Godot still produced the same three-second blank, and AoE4 still failed to activate G-SYNC afterward. Therefore duplicate profiles, exact-path matching, and the NVIDIA App-created profile are not required for the failure. The common condition is a Fixed Refresh Godot profile combined with Godot's project-manager DRS save/reload.
 
-The best classification is an NVIDIA 616.56 per-application VRR/profile-transition bug exposed by Godot's unconditional NVAPI profile save. Godot's behavior is an important trigger and an avoidable integration problem, but the failure to restore G-SYNC for a later application is a driver failure.
+The best classification is an NVIDIA multi-display VRR/profile-transition bug exposed by Godot's unconditional NVAPI profile save. The original reproduction used driver 616.56. The later topology A/B was reported after driver 596.49 had been installed, and the current smooth one-external arm is confirmed on 596.49 with the Fixed Refresh profile still present. Capturing the live failing two-external arm again will close the remaining driver-version confounder. Godot's behavior remains an important trigger and an avoidable integration problem, but the failure to restore G-SYNC for a later application is a driver/display-path failure.
 
 The direct D3D12 bypass has now been runtime-verified from a completely clean Godot/NVIDIA baseline. With both rendering fallbacks disabled, the editor opened without a monitor blank, showed the G-SYNC indicator, and exhibited the user's choppy pointer movement. Afterward, every DRS file remained byte-for-byte identical to the pre-launch baseline, the profile count remained 7957, the exhaustive Godot audit remained clean, and NVIDIA App's private catalog remained free of Godot. The user then launched AoE4 and observed its G-SYNC indicator normally. This proves the direct D3D12 path avoids Godot's NVIDIA profile writer, the display blank associated with it, and the sticky live-VRR failure seen after the ordinary project-manager path. The choppy G-SYNC editor behavior is the tradeoff that Godot's profile-writing workaround was designed to suppress.
 
@@ -43,6 +43,78 @@ The tested approaches split into incompatible partial outcomes:
 Therefore the direct D3D12 procedure is a verified workaround for profile mutation and the sticky NVIDIA state, but it is not a solution to the core per-application requirement. Calling it a complete workaround would overstate the result.
 
 One potentially useful combination remains untested: create one Fixed Refresh Godot profile, then use only the verified direct D3D12/no-fallback launch so Godot itself never saves DRS. That experiment could determine whether profile activation alone is safe and, if so, might provide the desired per-app behavior. It could also reproduce the sticky failure, so it should be treated as a deliberate future isolation test rather than an established recommendation.
+
+## Topology A/B update
+
+The user found a clean physical-topology discriminator on an ASUS ROG Strix G18 `G815LR-IS97`:
+
+| Active external PA278QGV topology | Result |
+|---|---|
+| One PA278QGV connected to one Thunderbolt 5/USB-C port | Smooth; the G-SYNC issue does not reproduce |
+| Two PA278QGVs, one connected to each Thunderbolt 5/USB-C port | The documented G-SYNC issue reproduces |
+
+The current one-external-monitor arm is particularly strong because it still has the same relevant per-application condition. A live DRS query reports a matching `Godot Engine` profile associated with `godot_v4.6.3-stable_win64.exe` and containing:
+
+```text
+VRR requested state: disabled
+G-SYNC application override: fixed refresh
+G-SYNC mode: fullscreen only
+OpenGL threaded optimization: disabled
+```
+
+Therefore the smooth arm is not explained by the Fixed Refresh profile being absent. The second external display path is a necessary condition in the user's A/B.
+
+### What Windows and NVAPI show in the one-external arm
+
+The current active paths are:
+
+| Display | Windows target | Connector | Mode | Owner |
+|---|---:|---:|---|---|
+| Internal `NE180QDM-NZC` | 8449 | embedded DP instance 0 | 2560x1600 at 240 Hz | RTX 5070 Ti Laptop GPU |
+| Connected `PA278QGV` | 8452 | external DP instance 1 | 2560x1440 at 119.998 Hz | RTX 5070 Ti Laptop GPU |
+
+The other PA278QGV is the recently disconnected Windows target 8450, external DP connector instance 0. Both monitor device nodes have the RTX 5070 Ti as their parent. Microsoft documents `connectorInstance` as a connector identity unique within an adapter, so 8450 and 8452 are two distinct external DP targets on the same NVIDIA adapter, not one MST branch and not displays owned by different GPUs. The NVAPI result for the active PA also reports `dynamicMst=0` and `mstRoot=0`.
+
+The active PA link is DisplayPort 1.4/HBR2, four lanes, 8 bits per component. The internal panel and the active PA both report VRR possible and their display modes are VRR-capable. The PA's adaptive-sync minimum corresponds to about 48.6 Hz, matching ASUS's published 48–120 Hz range.
+
+No downstream USB4 device router is present in the current Plug-and-Play tree. The laptop has one Intel USB4 host/root router, while the monitor enumerates as an NVIDIA DisplayPort target. Thus “connected to a Thunderbolt 5 port” describes the physical USB-C receptacle; the current monitor path behaves as DisplayPort output/Alt Mode rather than as a monitor behind a Thunderbolt device router. Thunderbolt tunnel bandwidth is not the leading explanation.
+
+### Revised causal model
+
+The original trigger sequence needs one new condition:
+
+1. both external PA278QGV DisplayPort targets are active;
+2. both are eligible for Adaptive-Sync/G-SYNC behavior;
+3. Godot's native-OpenGL startup saves/reloads DRS while the matching Godot profile is Fixed Refresh;
+4. NVIDIA reprograms multiple display/VRR targets and both external monitor device nodes may transiently disappear/re-enumerate; and
+5. the driver does not restore a usable G-SYNC presentation path for a later AoE4 session.
+
+With only one external PA target active, the same matching Fixed Refresh profile does not produce the user-visible failure. Godot's unconditional save is therefore a trigger, but it is not independently sufficient on this machine.
+
+Windows' device-management log contains repeated simultaneous `surprise removed ... missing on the bus` events for targets 8450 and 8452 during the dual-monitor testing period. At 19:05:51 only target 8450 was removed; target 8452 remained and is the current working one-external state. These events corroborate real display-target churn. They do not, by themselves, distinguish physical unplugging from a driver modeset/hotplug cycle for every earlier timestamp.
+
+The Intel external-display event channel also logged repeated errors during the connection/reconfiguration period. Because Windows attributes scanout to the NVIDIA adapter while the physical Type-C ports are provided through the Intel platform display/USB4 complex, a cross-driver port-mux/hotplug interaction remains plausible. The Intel event parameters are undocumented, so the error records are supporting evidence, not a decoded root cause.
+
+### Highest-value next test
+
+Keep both PA278QGVs physically connected and active, but turn Adaptive-Sync off in the OSD of the secondary PA only. Recover global G-SYNC once, verify that NVAPI reports VRR possible on only the intended PA, and repeat the ordinary Godot → AoE4 sequence.
+
+- If this is smooth, the necessary condition is two external Adaptive-Sync targets. This also yields a practical two-monitor workaround: leave Adaptive-Sync disabled on the secondary display.
+- If it still fails, disable the secondary only in Windows while leaving it physically connected. A smooth result would identify the number of active external scanout paths rather than VRR capability itself.
+- Test each Thunderbolt 5/USB-C port with exactly one PA. If both single-port cases are smooth and only the dual-port case fails, neither port is individually defective.
+
+This order is more discriminating than lowering resolution or refresh rate. The current PA already uses its own four-lane HBR2 link, both laptop ports are explicitly advertised by ASUS as supporting DisplayPort and G-SYNC, and the two monitors are separate NVIDIA targets. A bandwidth test is still useful later: run both PAs at 60 Hz. It is lower priority.
+
+NVIDIA's public support article for mixed-monitor VRR says multiple monitors may be connected but no more than one should have G-SYNC enabled. NVIDIA's setup help also describes its display enablement as applying to every connected display of the selected model. Both PAs have the same model/EDID, and the earlier NVIDIA App capture reported G-SYNC enabled on both. Those documents make dual enabled PA278QGVs the leading hypothesis, although the older support article is not proof of the exact 2026 driver defect.
+
+Primary references:
+
+- [ASUS G815LR-IS97 specifications: two Thunderbolt 5 ports with DisplayPort and G-SYNC support](https://rog.asus.com/us/laptops/rog-strix/rog-strix-g18-2025/spec/?config=90NR0LC1-M00460)
+- [ASUS PA278QGV: DisplayPort 1.4, Adaptive-Sync, and 48–120 Hz VRR](https://www.asus.com/us/displays-desktops/monitors/proart/proart-display-pa278qv-gen2-pa278qgv/)
+- [NVIDIA: mixed-monitor VRR supports no more than one G-SYNC-enabled display](https://nvidia.custhelp.com/app/answers/detail/a_id/4766/~/does-variable-refresh-rate-work-across-mixed-monitor-configurations%3F)
+- [NVIDIA G-SYNC setup help](https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nvdsp/To_use_variable_refresh_rates.htm)
+- [Microsoft `DISPLAYCONFIG_TARGET_DEVICE_NAME` connector identity](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_device_name)
+- [NVIDIA's official open-source NVAPI SDK](https://github.com/NVIDIA/nvapi)
 
 ## Decisive evidence
 
@@ -397,12 +469,13 @@ The AoE4 physical check after the clean bypass succeeded: the top-right G-SYNC i
 
 ### NVIDIA
 
-Primary defect: after a Fixed Refresh application and a DRS reload/profile transition, a later G-SYNC-allowed application does not activate G-SYNC even though NVIDIA's persistent global and application-profile state remain enabled. The initial reproduction additionally confirmed the live API and both display flags remained enabled.
+Primary defect: with both external PA278QGV display targets active, a Fixed Refresh application plus a DRS reload/profile transition leaves a later G-SYNC-allowed application unable to activate G-SYNC even though NVIDIA's persistent global and application-profile state remain enabled. The initial reproduction additionally confirmed the live API and both display flags remained enabled. The same Fixed Refresh Godot profile behaves smoothly when only one external PA target is active.
 
 Minimal environment data:
 
 - GeForce RTX 5070 Ti Laptop GPU
-- Game Ready driver 616.56
+- ASUS ROG Strix G18 G815LR-IS97
+- original Game Ready driver 616.56; current one-external control on 596.49
 - NVIDIA App 11.0.8.299
 - two ASUS PA278QGV displays reported by NVIDIA App
 - Windows build 26200
@@ -429,7 +502,12 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: the direct D3D12/no-profile launch avoids the dual-monitor blank and permits G-SYNC to activate in the editor.
 - High confidence: active editor G-SYNC correlates with the user's choppy pointer movement, reproducing the behavior Godot's NVIDIA profile workaround targets.
 - High confidence: AoE4 G-SYNC remains usable after the direct D3D12 editor session; the bypass avoids the sticky live-VRR failure.
-- Medium-high confidence: Godot's DRS reload while any matching Godot profile is Fixed Refresh creates that sticky state.
+- High confidence: the smooth one-external arm still has the matching Fixed Refresh/VRR-disabled Godot profile.
+- High confidence: the two PA monitor identities are separate NVIDIA DisplayPort connector targets 8450 and 8452 on the same RTX adapter, not MST children or different-GPU paths.
+- High confidence: the current one-external state has the internal panel plus one PA active; this is not a generic single-display configuration.
+- Medium-high confidence: both external PA targets being active is a necessary condition for the user's reproduced sticky state.
+- Leading hypothesis: two identical external Adaptive-Sync targets are the narrower trigger. Test with secondary-monitor Adaptive-Sync disabled in its OSD.
+- Remaining confounder: capture the two-external failure arm again while driver 596.49 is still installed.
 - Optional remaining isolation: combine a Fixed Refresh Godot profile with the verified direct D3D12/no-save launch to distinguish profile activation alone from the DRS save/reload. This would deliberately reintroduce risk and is not required to validate the workaround.
 - Separate remaining issue: reproduce the editor-window-close/process-linger behavior with process and verbose shutdown capture if it matters independently.
 - Primary unresolved requirement: find a stable per-application method that disables G-SYNC only for Godot while preserving G-SYNC elsewhere, without global toggling or monitor blanks.

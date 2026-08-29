@@ -1,6 +1,6 @@
 # Resume point: unresolved per-application Godot G-SYNC control
 
-Paused: 2026-08-28 16:19 PDT
+Last updated: 2026-08-28 PDT
 
 ## Status
 
@@ -14,7 +14,42 @@ Required end state:
 - No long monitor blank.
 - No sticky loss of G-SYNC after Godot exits.
 
-No tested configuration meets all five requirements.
+No tested two-external-monitor configuration meets all five requirements. A new physical-topology A/B shows that the same Fixed Refresh Godot profile works smoothly when only one PA278QGV is connected.
+
+## New leading result: external-monitor-count A/B
+
+Machine: ASUS ROG Strix G18 `G815LR-IS97`.
+
+```text
+One PA278QGV on one Thunderbolt 5/USB-C port: smooth; issue absent
+Two PA278QGVs, one on each Thunderbolt 5/USB-C port: issue reproduces
+```
+
+The current one-external state still contains a matching `Godot Engine` profile with `G-SYNC: Fixed Refresh` and `VRR requested state: disabled`. Therefore the success is not caused by removing the Godot override.
+
+Windows/NVAPI topology:
+
+- the internal panel and current PA are both active and directly owned by the RTX 5070 Ti;
+- current PA: target 8452, external DisplayPort connector instance 1, 2560x1440 at 119.998 Hz;
+- disconnected second PA: target 8450, external DisplayPort connector instance 0;
+- both PA targets are distinct NVIDIA DP connectors, not MST and not different GPUs;
+- the active PA is on a four-lane HBR2/8-bpc link; and
+- no downstream USB4 device router is present, so the current monitor path is DisplayPort output through the TB5-capable USB-C port rather than a Thunderbolt display tunnel.
+
+Current NVIDIA driver: 596.49 (`r596_25`), installed at 16:30:31 PDT. The original investigation used 616.56. The current smooth arm is confirmed on 596.49; capture the failing two-external arm on the same driver before calling this conclusively cross-branch.
+
+Leading hypothesis: two identical PA278QGV Adaptive-Sync targets are active. NVIDIA's published mixed-monitor guidance says no more than one display should have G-SYNC enabled, while NVIDIA's setup help applies enablement to all connected displays of a selected model. Earlier evidence reported both PAs enabled.
+
+Next test, in order:
+
+1. connect and enable both PAs;
+2. turn Adaptive-Sync off in the secondary PA's OSD only;
+3. recover global G-SYNC once and confirm via `nvapi-vrr-query.cpp` that only the intended PA is VRR-possible;
+4. repeat the ordinary Fixed Refresh Godot → AoE4 sequence;
+5. if it still fails, leave both connected but disable the secondary in Windows and repeat; and
+6. separately verify that each physical TB5/USB-C port works smoothly with exactly one PA.
+
+If step 4 succeeds, leaving Adaptive-Sync disabled on the secondary PA is the first plausible stable workaround that keeps both monitors connected and avoids per-session global G-SYNC toggling.
 
 ## What is established
 
@@ -76,7 +111,7 @@ AoE4 activated G-SYNC normally after that editor session.
 
 The Godot project worktree contains a semantic-neutral editor rewrite of `project.godot`: CRLF became LF and the two fallback keys changed textual order. Preserve or review this user/project-owned change when resuming.
 
-## Most discriminating untested experiment
+## Earlier untested experiment
 
 Potential future test, only if the user accepts the known risk:
 
@@ -87,7 +122,7 @@ Potential future test, only if the user accepts the known risk:
 5. close Godot and immediately test the AoE4 G-SYNC indicator; and
 6. compare every DRS hash and association with the baseline.
 
-This separates Fixed Refresh profile activation from Godot's native-OpenGL DRS save/reload. A success might yield the desired per-app behavior. A failure would show that activating Fixed Refresh alone is enough to wedge VRR on driver 616.56.
+This previously separated Fixed Refresh profile activation from Godot's native-OpenGL DRS save/reload. The new topology A/B is more discriminating and should be done first.
 
 Do not treat this experiment as a recommendation or proven workaround. It deliberately reintroduces the condition associated with the failure.
 
@@ -103,3 +138,6 @@ During the direct D3D12 test, closing the editor window did not return the comma
 - `direct-d3d12-postlaunch-state.txt`: byte-for-byte post-launch comparison and AoE4 validation.
 - `nvidia-app-row-selection-post-state.txt`: NVIDIA App orphan-profile creation behavior.
 - `drs-substring-audit.cpp`: read-only exhaustive DRS audit source.
+- `display-topology-query.cpp`: read-only Windows display-path/connector query.
+- `nvapi-vrr-query.cpp`: read-only NVIDIA per-display VRR and DisplayPort query.
+- `topology-ab-evidence.md`: new physical-topology evidence and revised hypothesis.
