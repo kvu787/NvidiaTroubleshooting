@@ -1723,3 +1723,38 @@ Now validate the exact original Godot workflow once:
 7. Observe its G-SYNC indicator and animation smoothness, close it, and report both results.
 
 This final test includes Godot's native-OpenGL project manager and its DRS save, so it validates the complete workflow that originally triggered the failure.
+
+---
+
+## User
+
+i launched godot 4.6.3 and then opened the project. the godot editor with the project launched on the hdmi+laptop display instead of the tb5 pa primary display. it did a 2 second monitor blink. i moved the godot editor window to the primary tb5 pa monitor. i then closed godot
+
+then i launched vsyncstuttertest and it ran smoothly and displayed the gsync indicator, and i closed it
+
+for a second time, i launched godot 4.6.3 and then opened the project. the godot editor with the project launched on the primary monitor. it didn't show the gsync indicator and usage was smooth.
+
+then for a second time i launched vsyncstuttertest and it ran smoothly and displayed the gsync indicator, and i closed it
+
+## Assistant
+
+The exact Godot workflow is safe from the original sticky failure in clone mode:
+
+- both immediate post-Godot controls regained smooth G-SYNC and the indicator;
+- the clone topology is unchanged;
+- all three targets remain in VRR mode 1; and
+- Godot performed its expected DRS saves at 00:59:06 and 00:59:30 without poisoning later G-SYNC.
+
+The remaining issue is the single two-second blink. It occurred when the first editor opened on the cloned HDMI+eDP desktop; the second launch on primary DP was clean. We need one controlled placement repetition before deciding whether clone placement causes the blank or whether it was only a first/cold transition.
+
+Do this:
+
+1. Keep the clone topology and every display, G-SYNC, refresh-rate, resolution, and OSD setting unchanged.
+2. Launch Godot normally and open the project. Record whether this setup launch blinks.
+3. Move the project editor to the cloned HDMI+laptop desktop and close Godot there, allowing it to save that placement.
+4. Launch Godot normally and open the same project again.
+5. Report where the editor opens and whether either monitor blinks during project-manager startup, project opening, use, or close. Confirm Godot remains smooth without the G-SYNC indicator.
+6. Close Godot.
+7. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the primary TB5/DisplayPort PA and report its indicator and smoothness.
+
+If the deliberately persisted clone-desktop launch is clean, the initial blink is another one-time cold/topology transition rather than a recurring limitation of this workaround.
