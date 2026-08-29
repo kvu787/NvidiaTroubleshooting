@@ -2,7 +2,7 @@
 
 Last updated: 2026-08-29 PDT
 
-This is the authoritative recovery procedure for the last configuration that survived a reboot and repeatedly produced all of the desired application behavior:
+This is the authoritative description and best-known recovery procedure for the last configuration that survived a reboot and repeatedly produced all of the desired application behavior:
 
 - two usable external desktop spaces, with no hidden third desktop that can capture windows;
 - Godot 4.6.3 and Unity running smoothly at Fixed Refresh without the G-SYNC indicator;
@@ -10,18 +10,29 @@ This is the authoritative recovery procedure for the last configuration that sur
 - no recurring monitor blank within the same boot; and
 - no manual global G-SYNC toggle during normal application switching.
 
-It is a workaround for a route-sensitive NVIDIA driver/display-state defect. It is not proof that the underlying bug has been repaired.
+It is a workaround for a route-sensitive NVIDIA driver/display-state defect. It is not proof that the underlying bug has been repaired, and a later controlled recovery attempt reproduced the sticky failure even after restoring every recorded persistent setting and timing. Treat this as the best known state, not a deterministic cure.
 
 ## Important current-state finding
 
-The read-only capture taken after the user reported being in a bad state again found **two concrete deviations** from the last-known-good state:
+The first read-only capture taken after the user reported being in a bad state again found **two concrete deviations** from the last-known-good state:
 
 1. The physical cabling and clone membership are still correct, but the internal eDP panel's target signal is now `2560x1600 at 60 Hz`, rather than the known-good approximately `240 Hz`.
 2. The `Godot Engine` DRS profile still matches `godot_v4.6.3-stable_win64.exe`, but its explicit G-SYNC application override `0x10A879CF = 4` (`Fixed Refresh`) is gone. It now inherits the global value `0` (`Allow`).
 
 The current Unity profile has also lost its explicit Fixed Refresh override. That matters only if Unity is used as an editor/control in the recovery test.
 
-These are real configuration changes, not merely an unreliable G-SYNC indicator. Restore both before judging whether the physical-topology workaround has failed.
+These were real configuration changes, not merely an unreliable G-SYNC indicator. The recovery attempt restored both, then passed the pre-Godot neutral control. After Godot exited, however, `VsyncStutterTest.exe` lost G-SYNC again.
+
+The failed-state capture then proved:
+
+- the DP PA was 2560x1440 at 119.998 Hz;
+- the internal eDP target was back to 2560x1600 at 240 Hz;
+- internal eDP and native HDMI shared a 2560x1440 clone source;
+- the Godot profile explicitly contained `0x1094F1F7 = 0` and `0x10A879CF = 4`;
+- `VsyncStutterTest.exe` remained unassociated in DRS; but
+- the primary DP target 8452 was `VRR possible=1` and `displayInVrrMode=0`, while HDMI target 8448 and eDP target 8449 remained at `displayInVrrMode=1`.
+
+This is a clean recurrence of the NVIDIA live per-target restoration failure inside the nominal workaround. The topology remains useful because it produced long stable runs and survived one reboot, but it is not independently sufficient.
 
 ## The exact last-known-good configuration
 
@@ -71,9 +82,9 @@ The relevant known-good Godot DRS values were:
 
 Do not use DRS database hashes or the total profile count as a restore target. Godot legitimately saves the database during native-OpenGL initialization, NVIDIA updates predefined profiles, and the binary hashes change even when the effective behavior remains correct.
 
-## Deterministic rebuild procedure
+## Controlled rebuild procedure
 
-Perform the steps in this order. The ordering prevents a stale live VRR state from obscuring a topology or profile error.
+Perform the steps in this order. The ordering prevents a stale live VRR state from obscuring a topology or profile error, but it cannot guarantee that the driver will choose the same private display-head allocation as the earlier working run.
 
 ### 1. Quiesce 3D applications
 
@@ -176,6 +187,8 @@ Once the neutral control passes:
 
 After a reboot, one two-second blank on the first ordinary Godot launch was observed in the otherwise working state. Later Godot launches in that boot were clean, and later G-SYNC remained healthy. Classify that isolated cold blank separately from the original sticky failure. The acceptance test fails if blanks keep recurring or if the immediate post-Godot neutral control loses the indicator or becomes choppy.
 
+That exact post-Godot failure occurred in the 03:45 recovery attempt despite the correct visible topology, timings, and DRS values. If it recurs, do not keep launching Godot. Preserve the failed state for capture, then use the global G-SYNC off/apply/on/apply cycle to restore the neutral control before changing one topology variable at a time.
+
 Expected matrix:
 
 | Stage | G-SYNC indicator | Motion | Blink expectation |
@@ -194,7 +207,7 @@ AoE4 may be used as a secondary confirmation, but `VsyncStutterTest.exe` is fast
 | --- | --- | --- |
 | Neutral control is bad before Godot | Stale global/live VRR state or incorrect route/topology | Verify mixed DP+native-HDMI route and active eDP clone; then perform the global off/on recovery |
 | Godot shows the G-SYNC indicator or mouse motion is choppy | Godot Fixed Refresh override is missing or the wrong profile matched | Restore `Monitor Technology: Fixed Refresh`; verify `0x10A879CF = 4` on the matching profile |
-| Godot is correct, but the immediate neutral control loses G-SYNC | Susceptible NVIDIA Fixed Refresh-to-VRR transition returned | Confirm the second PA is not on TB5/DP, internal eDP remains active, and internal target is not at 60 Hz; rebuild topology and re-arm G-SYNC |
+| Godot is correct, but the immediate neutral control loses G-SYNC | Susceptible NVIDIA Fixed Refresh-to-VRR transition returned | Preserve/capture the state; if target remains VRR-capable but outside VRR mode, re-arm global G-SYNC and test a different connector/source allocation |
 | HDMI PA is letterboxed | Clone source is 2560x1600 | Set the combined internal+HDMI source to 2560x1440 |
 | Windows can disappear onto an unseen laptop desktop | Internal panel is extended rather than cloned | Duplicate internal eDP with the native-HDMI PA |
 | Windows exposes only the two external targets | Internal eDP is disconnected | Re-enable it and clone it with HDMI |
@@ -223,7 +236,7 @@ Before opening an editor, every box should be true:
 
 The evidence supports a topology-sensitive NVIDIA driver bug during a per-application `Fixed Refresh -> global G-SYNC` transition. In susceptible topologies, the primary DP target remains VRR-capable but is not restored to live VRR mode after the editor exits. Unity reproduced the failure without writing DRS, proving that Godot's profile writer is not the primary cause. Conversely, Godot repeatedly wrote DRS in the stable mixed-route clone topology without poisoning later G-SYNC.
 
-The mixed route and active eDP clone appear to select a stable NVIDIA display-head/transmitter/timing allocation. Public APIs cannot identify whether the private failing resource is a DP transmitter, PLL, Type-C mux/retimer state, VidPN commit, or per-head VRR bookkeeping. Therefore the operational rule is deliberately narrow: **one external PA on TB5/DP, the other on native HDMI, and active eDP cloned with HDMI at the proven timings**.
+The mixed route and active eDP clone can select a stable NVIDIA display-head/transmitter/timing allocation, but the failed recovery proves that the visible topology does not uniquely determine the driver's private allocation. Public APIs cannot identify whether the private failing resource is a DP transmitter, PLL, Type-C mux/retimer state, VidPN commit, source/head assignment, or per-head VRR bookkeeping. The best operational starting point remains deliberately narrow: **one external PA on TB5/DP, the other on native HDMI, and active eDP cloned with HDMI at the proven timings**.
 
 Primary evidence:
 
@@ -231,4 +244,3 @@ Primary evidence:
 - `post-reboot-clone-route-validation.md`
 - `root-cause-synthesis.md`
 - `topology-ab-evidence.md`
-
