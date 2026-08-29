@@ -1044,3 +1044,47 @@ Interpretation:
 
 - If Unity causes no sticky failure and the control remains smooth, the defect is specific to having both external PAs routed through the two TB5/USB-C DisplayPort outputs.
 - If the sticky failure reproduces, the defect applies more generally to two active external NVIDIA scanout heads, independent of whether the second uses DisplayPort or HDMI.
+
+---
+
+## User
+
+i did this:
+Don’t change G-SYNC, topology, refresh rates, or OSD settings.
+Don’t open Godot.
+Open the same Unity editor/project on the MediaSync-on TB5/DisplayPort PA.
+Observe whether either monitor blinks and whether Unity behaves normally without G-SYNC.
+Close Unity.
+Immediately run C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe on that same PA.
+Observe its G-SYNC indicator and smoothness.
+Close it and report both results.
+
+for unity:
+there was no monitor blink. unity seemed to work okay and did not show any gsync.
+
+for vsyncstuttertest:
+runs smoothly and displays the top-right gsync indicator
+
+## Assistant
+
+This is decisive on one point: two active external scanout heads are not sufficient.
+
+- With both PAs active through the two TB5/USB-C DisplayPort outputs, Unity Fixed Refresh causes the monitor blank and sticky loss of later G-SYNC.
+- With the primary PA on TB5/DisplayPort and the second PA on native HDMI, the same Unity transition causes no blank and `VsyncStutterTest.exe` retains G-SYNC and smooth motion.
+- The 23:20 post-transition capture confirms target 8450 remains `displayInVrrMode=1`, all three paths are unchanged, and the DRS database is byte-for-byte unchanged.
+
+The successful arm does have one important confound: moving the secondary to HDMI also changed it from 119.998 Hz to 59.951 Hz and created a different NVIDIA target/mode state. Therefore we have isolated a route/mode family, but we have not yet proved whether the decisive variable is HDMI versus the second TB5/DisplayPort route, the lower secondary refresh/link load, or another route-associated state difference.
+
+This still gives us the first viable two-monitor workaround candidate: keep the G-SYNC/MediaSync-on PA at 119.998 Hz on TB5/DisplayPort and the fixed-refresh PA at 59.951 Hz on native HDMI. It is validated with Unity; the final practical step is to validate the original Godot workflow. A later HDMI-at-120-Hz or dual-TB5-at-60-Hz test can separate route from refresh/load.
+
+The current `Godot Engine` profile still matches `godot_v4.6.3-stable_win64.exe` and explicitly requests VRR disabled plus Fixed Refresh, so this will be a real per-application test:
+
+1. Do not change G-SYNC, display topology, refresh rates, or OSD settings.
+2. Launch Godot 4.6.3 exactly as in the original reproduction—do not use the explicit `--rendering-driver d3d12` bypass—and open `C:\Users\k\Repository\Godot\VsyncStutterTest\Godot` on the TB5/DisplayPort PA.
+3. Observe whether either monitor blinks, whether the G-SYNC indicator is absent in Godot, and whether editor motion behaves acceptably.
+4. Close Godot.
+5. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the same PA.
+6. Observe its G-SYNC indicator and animation smoothness.
+7. Close it and report both results.
+
+If this matches Unity, the HDMI routing is a complete practical workaround for the original Godot problem while keeping both external monitors active.
