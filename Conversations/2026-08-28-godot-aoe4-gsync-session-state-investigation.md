@@ -2036,3 +2036,54 @@ This gives us a clean physical-jack A/B despite the identical public state. Keep
 If the failure repeats, physical TB5 jack alone is ruled out. If this arm succeeds, a hidden physical-route difference exists below the connector/source information exposed by Windows and NVAPI.
 
 The raw post-hotplug capture is recorded in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), commit `7e34e05`.
+
+---
+
+## User
+
+i ran VsyncStutterTest and it behaved well.
+i launched the godot project and it launched on the secondary hdmi monitor smoothly without blinking. however, when i moved it to the primary monitor it did a 3 second blink. usage was fine and no gsync indicator. i then closed it.
+i ran VsyncStutterTest and it was choppy and didn't display the gsync indicator.
+
+on a side note, does the 2025 Asus ROG Strix G18 G815LR-IS97 have any sort of "EC Reset" like the legion 9i has in which you hold the power button down for about 30 seconds?
+
+## Assistant
+
+The alternate TB5 jack reproduced the same failure, so the physical jack alone is ruled out. The post-failure capture again shows primary target 8452 changing from `displayInVrrMode=1` to `0`, with topology and the Godot profile unchanged.
+
+The important new localization is **where the transition occurred**:
+
+- Godot opened and ran harmlessly on the HDMI+eDP clone.
+- Moving its Fixed Refresh window onto the G-SYNC-capable DP target caused the three-second blank.
+- That DP target then remained outside VRR mode after Godot exited.
+
+The strongest current hypothesis is therefore not merely “Godot process launch.” It is the driver applying Fixed Refresh when the editor surface enters the primary VRR target, then failing to restore that target afterward.
+
+Yes, the G815LR has the ASUS equivalent of an EC reset. ASUS calls it an **EC reset / RTC reset / hard reset**, and its default notebook procedure uses **40 seconds**, not Lenovo's approximately 30 seconds. ASUS says some models use a 20-second design signaled by rapid power-LED flashing after about 15 seconds, but I found no G815LR-specific official instruction replacing the general 40-second procedure. [ASUS EC-reset instructions](https://www.asus.com/us/support/faq/1050239/)
+
+The procedure is:
+
+1. Save work and shut Windows down completely.
+2. Disconnect all external devices, including both monitors and USB devices.
+3. Leave/connect the ASUS AC power adapter.
+4. Hold the power button continuously for 40 seconds.
+5. Release it and power the laptop on normally.
+
+The next boot may perform full memory training and remain at the ROG logo or show no display for several minutes. Keep AC connected and do not force it off; ASUS says newer systems can require roughly 5-10 minutes. [ASUS post-reset boot guidance](https://www.asus.com/us/support/faq/1042613/)
+
+I also verified this machine is `ROG Strix G18 G815LR_G815LR` on BIOS `G815LR.338`; ASUS currently lists 338 for the G815LR, so this is not an obvious old-BIOS case. [G815LR BIOS support page](https://www.asus.com/us/supportonly/g815lr/helpdesk_bios/)
+
+I would **not perform the EC reset yet**. It is a reasonable later experiment because the EC may participate in USB-C/TB power, mux, or retimer initialization, but the required shutdown also resets the NVIDIA driver. We could not attribute any improvement specifically to the EC. The global G-SYNC cycle already repairs the failed target immediately, which points more directly to NVIDIA's volatile display state.
+
+The next placement-only A/B is:
+
+1. While the system is still in the captured failed state, reopen the Godot project, move it to the HDMI clone, and close it there so Godot saves that placement. Further blinking is not diagnostically important because VRR is already failed.
+2. Toggle global G-SYNC off/apply/on/apply.
+3. Run the neutral control on primary DP and confirm smooth G-SYNC, then close it.
+4. Reopen Godot. If it does not open on the HDMI clone, stop and report without moving it.
+5. If it opens on HDMI, keep it entirely there, use it briefly, and close it there. Do not move it onto primary DP.
+6. Immediately run the neutral control on primary DP and report its indicator and smoothness.
+
+If this succeeds, crossing the Fixed Refresh editor onto the VRR primary is necessary in the current allocation and keeping the editor on HDMI is a potential operational workaround. If it fails, Godot launch/exit can poison the DP target even without placing a window on it.
+
+The transition capture is recorded in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), and the EC-reset research is in [asus-g815lr-ec-reset-note.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/asus-g815lr-ec-reset-note.md). Evidence commit: `f3b090a`.
