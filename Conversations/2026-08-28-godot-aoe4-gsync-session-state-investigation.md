@@ -524,3 +524,46 @@ This remains an untested runtime path on this machine. NVIDIA does not document 
 The sensible software experiment, if requested, is a separate utility that is read-only by default, targets the exact connector/Windows target/NVAPI display ID, snapshots the original state, requires an explicit enable or disable command, verifies the result, and supports rollback.
 
 Recorded in the investigation as commit `1683794`.
+
+---
+
+## User
+
+i tried these configurations:
+1. PA278QGVs with osd mediasync on, PA278QGVs with osd mediasync off, laptop display connected, gsync on
+2. PA278QGVs with osd mediasync on, PA278QGVs with osd mediasync off, laptop display disconnected, gsync on
+3. PA278QGVs with osd mediasync on, laptop display connected, gsync on
+
+1 and 2 had poor behavior. only 3 seemed to behave well.
+
+this is extremely frustrating because having gsync work smoothly is a very valuable feature and having two external monitors connected is also a very valuable feature.
+
+is there a clear explanation for what's going on?
+what is the next step in the investigation?
+
+## Assistant
+
+There is now a clear trigger-level explanation, but not yet a proven internal root cause.
+
+Assuming cases 1 and 2 mean two external PAs, one with MediaSync on and one off, while case 3 means one external PA with MediaSync on:
+
+- The internal panel is not the cause: case 2 fails without it.
+- Total active-display count is not the cause: case 2 has two active external displays and fails, while case 3 has two active displays (internal plus external) and succeeds.
+- A single defective USB-C/DP port is unlikely. The latest good-state probe used external target 8450/connector 0; the earlier good-state capture used target 8452/connector 1. Each port works when it is the only external output.
+- The shared condition in every bad arm is two active external display heads.
+- Two VRR-enabled monitors are probably not required because one PA had MediaSync off, but this is not proven until the failing topology is captured and NVAPI confirms the OSD-off state reached the driver.
+
+The most accurate functional model is therefore a dual-external-head NVIDIA/display-routing problem. If the poor state happens only after ordinary Godot startup, Godot's Fixed Refresh DRS save/reload is the trigger and the dual-external topology is the condition that makes the NVIDIA VRR transition stick. If AoE4 is already poor before Godot, then the topology itself breaks G-SYNC and Godot is a separate aggravating transition. The current observations do not yet distinguish those two versions.
+
+The immediate next test is:
+
+1. Return to two active external PAs, one MediaSync on and one off.
+2. Power-cycle or reconnect the MediaSync-off PA so its advertised capability is re-enumerated.
+3. Do not open Godot. Capture the read-only Windows/NVAPI probes first and verify whether that PA reports `VRR possible=0` or `Adaptive-Sync disabled=1`.
+4. Recover G-SYNC once and test AoE4 before Godot, recording separately whether the indicator appears, whether motion is smooth, and whether the monitor's refresh indication varies.
+5. Leave both cables connected but disable one PA in Windows and repeat. A good result isolates active external scanout-head count.
+6. If two active external PAs remain the discriminator, connect one over HDMI and the other over one TB5/USB-C DisplayPort output. Smooth TB5+HDMI isolates the dual-TB5 route; poor TB5+HDMI implicates any two-external-head NVIDIA path.
+
+Testing both PAs at 60 Hz is useful afterward, but lower priority. It distinguishes link/clock pressure only after the routing question is answered.
+
+The findings and next-test protocol were recorded as commit `56a2203`.
