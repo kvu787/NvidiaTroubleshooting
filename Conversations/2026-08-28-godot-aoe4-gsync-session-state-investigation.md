@@ -1181,3 +1181,67 @@ Godot profile:
 ```
 
 I recommend preserving this configuration for normal work. No further test is needed to validate the workaround. If you later want to isolate the underlying cause more precisely, the least disruptive next test is raising the HDMI monitor to 120 Hz if Windows offers it. Otherwise, the closest comparison is primary 120 Hz plus secondary 60 Hz over the two TB5/DisplayPort routes—but that risks restoring the sticky failure and requiring the global G-SYNC recovery toggle.
+
+---
+
+## User
+
+since the last prompt, i've restarted my laptop and tried to get back to normal usage.
+
+however, it seems there is another wrinkle: if i disconnect the laptop's built-in display via "windows 11 > settings > system > display", i get the poor gsync behavior again. when i reconnect the laptop's built-in display, things work smoothly again.
+
+this is not ideal because my ideal setup is just the two external monitors while the laptop is tucked away into the back of my desk and the laptop display is not really seeable. i explicitly want the laptop display to be disconnected so i don't accidentally "lose" windows over there.
+
+i also tried mediasync on and off on the hdmi connected pa monitor, and that didn't seem to affect anything.
+
+so currently, this is the setup:
+
+laptop internal display:
+  connected
+  240 hz
+Primary PA278QGV:
+  TB5/USB-C DisplayPort
+  120 hz
+  MediaSync on
+
+Secondary PA278QGV:
+  native HDMI
+  120 hz
+  MediaSync on
+
+Global G-SYNC:
+  on
+
+Godot profile:
+  VRR disabled
+  G-SYNC Fixed Refresh
+
+let's continue the investigation
+
+## Assistant
+
+The healthy post-reboot baseline is captured:
+
+```text
+internal target 8449: active, about 240 Hz, displayInVrrMode=1
+TB5/DisplayPort PA target 8450: active, 119.998 Hz, displayInVrrMode=1
+HDMI PA target 8448: active, 119.998 Hz, displayInVrrMode=1
+```
+
+All three paths are directly owned by the RTX GPU, and the Godot profile remains VRR disabled plus Fixed Refresh.
+
+This establishes two important points:
+
+- HDMI at 120 Hz is smooth while the internal panel is active, so the earlier 60 Hz HDMI mode was not necessary.
+- Within the TB5/DisplayPort-plus-HDMI topology, internal eDP active versus Windows-disconnected is now the apparent discriminator. HDMI MediaSync on/off is not.
+
+We still need to separate whether disconnecting the internal panel immediately breaks the neutral G-SYNC path or merely makes the next Fixed Refresh editor transition unsafe.
+
+Please establish the capture arm:
+
+1. Keep both external PAs at 120 Hz and leave all G-SYNC and OSD settings unchanged.
+2. In Windows Settings, select the internal laptop display and choose `Disconnect this display`.
+3. Do not open Godot, Unity, `VsyncStutterTest.exe`, or another 3D application afterward.
+4. Tell me when ready so I can capture the two-external-only topology before the neutral control.
+
+After that capture, we will run `VsyncStutterTest.exe` before opening any editor. That will tell us whether the Windows topology change itself is sufficient or whether the failure still requires the Fixed Refresh transition.
