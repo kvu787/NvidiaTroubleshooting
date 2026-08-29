@@ -216,3 +216,49 @@ DRS timestamps and hashes: unchanged
 ```
 
 The arm is ready for a direct Unity Fixed Refresh transition. Observe all blinking on open, during use, and on close, then immediately run the neutral control.
+
+## Internal-off 120-Hz/60-Hz Unity transition
+
+First sequence:
+
+- Unity produced one monitor blink on open;
+- Unity showed no G-SYNC indicator and viewport use was smooth;
+- after Unity closed, `VsyncStutterTest.exe` was choppy and showed no G-SYNC indicator.
+
+Second sequence, without recovery:
+
+- Unity produced no monitor blink;
+- Unity again showed no G-SYNC indicator and remained smooth;
+- after Unity closed, `VsyncStutterTest.exe` remained choppy without the indicator.
+
+The 00:33 post-test capture records the exact sticky state:
+
+```text
+target 8450 primary TB5/DisplayPort:
+  possible=1
+  displayInVrrMode=0
+  pre-Unity value was 1
+
+target 8448 HDMI:
+  possible=1
+  displayInVrrMode=1
+  unchanged
+
+internal target 8449:
+  inactive
+
+DRS timestamps and hashes:
+  unchanged from before Unity
+```
+
+This reproduces the damaging live-state failure without Godot and without any DRS write. The second Unity launch occurs after the primary is already stuck outside VRR mode, explaining why it does not need another visible transition blank and why the later control remains failed.
+
+Lowering HDMI to 60 Hz does not provide a workaround. Instead, external mode changes alter how the driver fails:
+
+- internal off, DP 120 + HDMI 120: severe repeated transient blanking, but later G-SYNC recovers;
+- internal off, DP 120 + HDMI 60: one initial blank, then primary target 8450 remains stuck at `displayInVrrMode=0` and later G-SYNC fails; and
+- internal on, DP 120 + HDMI 120: clean Fixed Refresh transitions and later G-SYNC.
+
+This is not a simple “too much scanout bandwidth” threshold. Active internal eDP is the only tested state that prevents both failure forms in the mixed-route topology. External mode/resource allocation affects the manifestation, not whether the underlying transition path is fragile.
+
+The next action is recovery by reconnecting internal eDP without toggling global G-SYNC. This tests whether the active-path topology change alone restores target 8450 to VRR mode and prepares the practical duplicate/clone experiment.

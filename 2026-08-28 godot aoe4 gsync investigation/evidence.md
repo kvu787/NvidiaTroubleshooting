@@ -843,6 +843,10 @@ At 00:26, the internal-off 120-Hz/60-Hz arm was captured before any 3D applicati
 
 The 120/60 pre-Unity neutral control displayed the indicator and ran smoothly. At 00:29, both external targets remain queryable in VRR display mode and DRS/topology are unchanged. This is a clean baseline for the direct Unity transition comparison.
 
+At 120/60 with internal eDP off, the first Unity run caused one open blink; the later neutral control then became choppy without the indicator. A second Unity run did not blink, but the second neutral control remained failed. At 00:33, primary target 8450 is still VRR-capable but changed from `displayInVrrMode=1` to `0`; HDMI target 8448 remains at `1`; DRS is byte-for-byte unchanged.
+
+Thus lowering HDMI does not solve the issue. It converts the 120/120 arm's repeated transient blanking with eventual recovery into the original sticky primary-target failure. Active internal eDP, not low aggregate scanout load, is the only tested stabilizer for clean Fixed Refresh transitions in DP+HDMI. Reconnect internal eDP without toggling G-SYNC to test topology-only recovery.
+
 ## Event and crash evidence
 
 ```text

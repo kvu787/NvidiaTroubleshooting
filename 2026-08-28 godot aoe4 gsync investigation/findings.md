@@ -32,6 +32,8 @@ Lowering only the HDMI secondary from 119.998 Hz to 59.951 Hz while keeping inte
 
 The 120/60 neutral control is also functionally healthy and leaves both external targets queryable in VRR display mode. The Unity transition can now be compared without a preexisting failure.
 
+That Unity transition produces the damaging sticky failure. After one initial blink, `VsyncStutterTest.exe` loses its indicator and becomes choppy; a second Unity/control sequence remains failed. Primary target 8450 changes from `displayInVrrMode=1` to `0`, HDMI remains at `1`, and DRS is unchanged. Lowering HDMI therefore changes the failure from repeated transient blanking at 120/120 to persistent VRR loss at 120/60. It is not a workaround and disproves a simple high-load threshold model.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -582,7 +584,9 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: disconnecting internal eDP does not immediately break the neutral G-SYNC control; it starts smooth with the indicator.
 - High confidence: Unity Fixed Refresh with internal eDP off reproduces severe transient blanking but not sticky G-SYNC loss; two later controls recover normally.
 - High confidence: lowering internal-off HDMI from 120 Hz to 60 Hz makes the primary DP public VRR query succeed again; external mode/load affects driver state before any editor opens.
-- Unresolved: whether the 120-Hz/60-Hz Unity transition also suppresses the visible blanking and yields a usable two-external-only workaround.
+- High confidence: internal-off 120/60 Unity changes primary target 8450 from VRR mode 1 to 0 without a DRS write, and later G-SYNC fails.
+- High confidence: the bug is not a simple high aggregate scanout-load threshold; 120/120 produces transient repeated blanks with recovery, while 120/60 produces sticky loss.
+- Leading conclusion: active internal eDP is the only tested stabilizer that prevents both manifestations in the DP+HDMI topology.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.

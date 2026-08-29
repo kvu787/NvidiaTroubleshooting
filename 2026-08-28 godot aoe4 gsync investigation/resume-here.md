@@ -54,6 +54,8 @@ The 00:26 internal-off 120/60 capture is complete. DRS and routes are unchanged,
 
 The neutral control succeeded with smooth G-SYNC. At 00:29, both external targets remain in VRR display mode and DRS is unchanged. Run Unity Fixed Refresh now, observe all blinking, close it, and immediately run `VsyncStutterTest.exe`.
 
+The 120/60 Unity transition reproduced sticky failure. The first Unity run blinked once; the later control was choppy without the indicator. A second Unity run did not blink, but its later control remained failed. At 00:33, primary target 8450 changed from `displayInVrrMode=1` to `0`; HDMI remains at 1 and DRS is unchanged. Low HDMI refresh is not a workaround. Internal-off 120/120 yields transient repeated blanks with recovery, while 120/60 yields sticky loss. Reconnect internal eDP without toggling G-SYNC and capture whether topology alone restores target 8450.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -103,9 +105,9 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
 3. topology, a healthy `VsyncStutterTest.exe` baseline, and the clean Unity transition are complete;
 4. the original Godot workflow and launch-placement isolation are complete; and
-5. the internal-off 120/60 neutral control is healthy; run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe` and report blinking plus control behavior.
+5. the 120/60 Unity arm is failed and target 8450 is stuck outside VRR mode; reconnect internal eDP without toggling G-SYNC or opening another 3D application, then capture recovery.
 
-Both external PAs work at 119.998 Hz when internal eDP is active, but internal-off Unity transitions blink severely while later G-SYNC still recovers. The immediate investigation is whether reducing the HDMI secondary to 60 Hz stabilizes the two-external-only transition. If not, duplicate/clone mode may keep eDP active without exposing a third usable desktop. Dual-VRR eligibility on the earlier DisplayPort topology, driver-branch specificity, and the need or sufficiency of Godot's DRS write remain resolved. Direct OSD-state detection has not been implemented.
+Both external PAs work at 119.998 Hz when internal eDP is active. With eDP off, 120/120 Unity causes severe transient blanking but later G-SYNC recovers, while 120/60 Unity causes sticky primary-VRR loss. The immediate action is topology-only recovery by reconnecting eDP. If confirmed, duplicate/clone mode may keep eDP active without exposing a third usable desktop, although it does not satisfy a literal requirement that the panel be disconnected. Dual-VRR eligibility, driver-branch specificity, and the need or sufficiency of Godot's DRS write remain resolved. Direct OSD-state detection has not been implemented.
 
 ## Per-display software possibility
 
