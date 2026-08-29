@@ -175,7 +175,7 @@ Do not proceed until the neutral control is smooth and shows the indicator. A fa
 
 The latest controlled A/B adds a stricter operational requirement for the current connector-1/source-0 allocation: **keep the Godot editor entirely on the native-HDMI-plus-eDP clone**. Moving it onto the primary G-SYNC DP PA caused a three-second blank and left that target outside VRR mode. Opening, using, and closing Godot entirely on HDMI preserved later G-SYNC even though Godot still saved/reloaded DRS.
 
-This placement rule was not required in an earlier stable allocation, which is why older observations include clean primary-to-clone movement. The visible topology does not uniquely select NVIDIA's private allocation. When recovering the current state, persist Godot's placement on HDMI before the global G-SYNC recovery, then do not let any part of the editor cross onto primary DP.
+This placement rule was not required in an earlier stable allocation, which is why older observations include clean primary-to-clone movement. The visible topology does not uniquely select NVIDIA's private allocation. When recovering the current state, persist Godot's placement on HDMI before the global G-SYNC recovery, then do not let any part of the editor cross onto primary DP. Two consecutive HDMI-only Godot-to-neutral transitions have now succeeded in the same boot without an intervening G-SYNC reset.
 
 Once the neutral control passes:
 

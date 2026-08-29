@@ -188,3 +188,11 @@ This is a decisive within-allocation placement A/B:
 In the current connector-1/source-0 allocation, presenting the Fixed Refresh editor on the G-SYNC-capable primary DP target is necessary for the reproduced sticky failure. Process launch, project open, DRS save/reload, use on the HDMI clone, process exit, physical TB5 jack, and the visible topology are each insufficient without that DP presentation step.
 
 Operational workaround for this allocation: persist Godot on the HDMI clone and do not move any part of the editor onto the primary DP display. A second same-placement repetition and a reboot-persistence test would establish durability; the current single success establishes mechanism and immediate viability.
+
+## Second consecutive HDMI-only cycle
+
+Without toggling G-SYNC or changing any setting, the user launched Godot again. It opened on the HDMI clone, ran smoothly without a blink and without the G-SYNC indicator, remained entirely on that display, and closed there. The immediate primary-DP neutral control was smooth with the indicator.
+
+The post-state again reports `displayInVrrMode=1` on targets 8448, 8449, and 8452. Topology, target timings, clone membership, and all nine Godot profile settings remain unchanged. Godot performed another expected DRS save at 04:09:42; the changed binary hash did not correspond to a semantic profile change or later VRR failure.
+
+The HDMI-only placement workaround is therefore repeatable across two consecutive Godot-to-neutral transitions in the current boot without an intervening recovery. Reboot persistence is the next durability boundary.
