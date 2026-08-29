@@ -1361,3 +1361,50 @@ The next test separates external scanout load from the presence of the eDP path:
 5. Tell me when ready so I can capture the internal-off 120-Hz/60-Hz baseline.
 
 If the later Unity transition stops blinking, the leading cause is external scanout clock/resource allocation and this provides a two-external-only workaround. If it still blinks, the active internal eDP path itself is the stabilizer; the next practical test would be duplicating the hidden internal panel with one external display so Windows exposes only two desktop spaces while eDP remains active.
+
+---
+
+## User
+
+i did this:
+Keep the internal laptop display disconnected.
+Keep the primary TB5/DisplayPort PA at 120 Hz with MediaSync on.
+Change only the HDMI PA from 120 Hz to approximately 60 Hz in Windows Advanced Display. Leave its OSD unchanged.
+Don’t open Godot, Unity, VsyncStutterTest.exe, or another 3D application afterward.
+Tell me when ready so I can capture the internal-off 120/60 Hz baseline.
+
+ready.
+
+## Assistant
+
+The internal-off 120/60 Hz baseline is captured:
+
+```text
+target 8450 primary PA:
+  TB5/DisplayPort, 119.998 Hz
+  VRR query succeeds
+  displayInVrrMode=1
+
+target 8448 secondary PA:
+  HDMI, 59.951 Hz
+  VRR query succeeds
+  displayInVrrMode=1
+
+internal target 8449:
+  physically connected but inactive
+
+DRS:
+  timestamps and hashes unchanged
+```
+
+This produced an immediate, meaningful change: at internal-off 120/120 Hz, the primary target's public VRR query returned generic error; after lowering only HDMI to 60 Hz, the same query succeeds and reports the primary in VRR display mode. That directly implicates external mode/clock/resource allocation, although the visible transition still needs testing.
+
+First establish the neutral control:
+
+1. Keep internal eDP disconnected, primary DP at 120 Hz, and HDMI at approximately 60 Hz.
+2. Change no G-SYNC or OSD setting and do not open Godot or Unity.
+3. Run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the primary TB5/DisplayPort PA.
+4. Observe its G-SYNC indicator and animation smoothness.
+5. Close it and report the result.
+
+If healthy, we will immediately repeat the Unity Fixed Refresh transition. A no-blink result there would provide the two-external-only workaround you want and strongly identify high external scanout load as the cause.
