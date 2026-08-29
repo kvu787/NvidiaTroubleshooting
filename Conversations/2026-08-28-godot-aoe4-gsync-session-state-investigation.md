@@ -504,3 +504,23 @@ The highest-value next test is:
 If that succeeds, the cause is narrowed to two external Adaptive-Sync targets and leaving Adaptive-Sync disabled on the secondary PA is a practical stable workaround. If it still fails, leave both cables connected but disable the secondary display in Windows; that distinguishes two active scanout paths from two VRR-capable displays.
 
 The investigation is recorded in `2026-08-28 godot aoe4 gsync investigation/topology-ab-evidence.md`, and two reusable read-only probes were added: `display-topology-query.cpp` and `nvapi-vrr-query.cpp`.
+
+---
+
+## User
+
+is it possible to enable gsync on certain monitors but not on others via software? i can't seem to do this in nvcp.
+
+## Assistant
+
+Yes at NVIDIA's lower-level software interface, but not through NVCP for this pair of identical PA278QGVs.
+
+NVIDIA documents the NVCP checkbox as applying settings to all connected displays of a selected model. Both monitors identify as PA278QGV, so NVCP addresses the model, not one physical connector/serial-number instance. That explains why the UI cannot express the split.
+
+NVIDIA's public NVAPI has a per-display call, `NvAPI_DISP_SetAdaptiveSyncData(displayId, ...)`. Its input includes `bDisableAdaptiveSync`, documented as controlling whether Adaptive Sync is disabled on that display. The two PAs have distinct display IDs, so a guarded custom utility can request disabled on one and enabled on the other without editing Godot/AoE4 application profiles.
+
+This remains an untested runtime path on this machine. NVIDIA does not document it as a persistent replacement for NVCP; a hotplug, reboot, driver restart, or modeset may reset it, and applying it may itself cause a brief display blank. No setter was run. The per-monitor OSD toggle is still the safest persistent control.
+
+The sensible software experiment, if requested, is a separate utility that is read-only by default, targets the exact connector/Windows target/NVAPI display ID, snapshots the original state, requires an explicit enable or disable command, verifies the result, and supports rollback.
+
+Recorded in the investigation as commit `1683794`.
