@@ -803,6 +803,10 @@ Immediately afterward, `NvAPI_Disp_GetVRRInfo` returned generic `NVAPI_ERROR` fo
 
 `VsyncStutterTest.exe` then showed the indicator and ran smoothly, establishing a healthy baseline despite the query error. At 23:01 the topology remained two active paths with target 8452 physically connected/inactive, and the DRS files retained their 22:50:13 timestamps and hashes. The active-head-count Unity transition is ready.
 
+Unity was then launched under Fixed Refresh in this one-active-external topology. There was no monitor blink; Unity behaved acceptably without G-SYNC. After Unity closed, `VsyncStutterTest.exe` still showed the indicator and ran smoothly. At 23:07, target 8452 remained physically connected/inactive, the two active paths were unchanged, and both DRS timestamps/hashes matched the pre-Unity capture.
+
+This proves two **active** external scanout heads are required. Physical connection or NVIDIA enumeration of the second PA is not sufficient.
+
 ## Event and crash evidence
 
 ```text

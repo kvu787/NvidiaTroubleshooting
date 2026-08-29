@@ -63,3 +63,26 @@ nvdrsdb1.bin: 929E7C1F106022BF0BCC531D5FE4C6786984DB776B9D6894ED149C5F22FB99DC
 ```
 
 This is a valid pre-Unity baseline for the active-head-count test. Next run Unity under its existing Fixed Refresh profile, close it, and immediately run `VsyncStutterTest.exe` without changing G-SYNC or display topology.
+
+## Unity transition result
+
+With target 8452 still physically connected but inactive in Windows, the user:
+
+1. opened the same Unity editor/project under its Fixed Refresh profile;
+2. observed no monitor blink;
+3. observed Unity behaving acceptably without G-SYNC;
+4. closed Unity; and
+5. immediately ran `VsyncStutterTest.exe`, which displayed the G-SYNC indicator and ran smoothly.
+
+The 23:07 post-test capture remained unchanged:
+
+```text
+Windows active paths: target 8449 internal + target 8450 external
+target 8452: active=0, connected=1, physicallyConnected=1
+DRS timestamps: 22:50:13
+DRS hashes: identical to the 23:01 pre-Unity capture
+```
+
+This is the decisive active-head-count result. The second PA's cable, power, EDID presence, and NVIDIA physical enumeration are not sufficient for the bug. The Fixed Refresh transition requires **two external targets active for scanout** to produce the monitor blink and sticky loss of later G-SYNC.
+
+The generic VRR-info query error for target 8450 persists in this topology, but both pre- and post-Unity functional controls prove G-SYNC works. Treat the error as an NVAPI/query anomaly specific to this Windows-disconnected layout, not as a failed VRR state.

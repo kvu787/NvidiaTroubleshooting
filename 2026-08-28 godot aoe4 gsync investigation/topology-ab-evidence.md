@@ -207,23 +207,18 @@ A single defective TB5/USB-C port is now unlikely because target 8452 was smooth
 | B | one PA on port 2 | internal + PA | on | Rule out a bad individual port |
 | C | two PAs | internal + both PAs | on | Existing failure control |
 | D | two PAs | internal + both PAs | off | Isolate dual-VRR from dual-display topology |
-| E | two PAs | internal + one PA | either | Isolate active target count from physical connection |
+| E | two PAs | internal + one PA | off on inactive PA | Smooth; proves active external target count, not physical presence |
 | F | two PAs | internal + both PAs at 60 Hz | on | Lower-priority bandwidth/link-allocation test |
 
-Cases A-D are complete. Case E—both cables present but only one external display active in Windows—is the highest-value remaining topology isolation. Use `VsyncStutterTest.exe` as the neutral post-transition control.
+Cases A-E are complete. Case E left both cables connected and monitors powered, but disabled the MediaSync-off PA in Windows. Unity Fixed Refresh caused no blink and the post-Unity `VsyncStutterTest.exe` control retained G-SYNC. This proves two active external scanout heads are required.
 
 ## Completed baseline and next step
 
-The failing two-external mixed-MediaSync state and successful pre-editor AoE4 control are complete. Unity then reproduced the Fixed Refresh blink and sticky failure without writing DRS. Next:
-
-1. recover G-SYNC and verify target 8450 returns to `displayInVrrMode=1`;
-2. leave both PAs connected but disable the MediaSync-off PA in Windows;
-3. run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`; and
-4. if needed, connect one PA by HDMI and the other by one TB5/USB-C DisplayPort output.
+The active-head-count isolation is complete. Next, make both external PAs active again but route one through HDMI and the MediaSync-on PA through one TB5/USB-C DisplayPort output. Establish a healthy `VsyncStutterTest.exe` baseline, then run `Unity Fixed Refresh -> VsyncStutterTest.exe`.
 
 Interpretation:
 
-- If Windows-disabling one PA fixes it, active external scanout-head count is the trigger rather than cable presence.
+- Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.
 - If TB5+HDMI is smooth while two TB5 outputs are poor, the fault is specific to the dual USB-C/DisplayPort routing path.
 - If TB5+HDMI is also poor, the fault is the NVIDIA/Windows two-external-head path more generally.
 - Unity has already separated profile activation from Godot's writer: an existing Fixed Refresh profile is sufficient.

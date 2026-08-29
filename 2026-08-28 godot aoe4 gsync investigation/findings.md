@@ -14,6 +14,8 @@ The subsequent global G-SYNC off/on recovery restored target 8450 from `displayI
 
 After recovery, unprofiled `VsyncStutterTest.exe` displayed the G-SYNC indicator and ran smoothly; the post-control API state remained correct. It is now a validated replacement for AoE4 in the remaining tests.
 
+The active-head-count isolation is decisive. With both PA cables connected and both monitors powered, but MediaSync-off target 8452 disabled in Windows, Unity Fixed Refresh caused no monitor blink and did not poison the later `VsyncStutterTest.exe` control. DRS remained unchanged. Therefore two active external scanout heads are necessary; mere physical connection, EDID presence, or NVIDIA enumeration of the second PA is not sufficient.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -127,12 +129,7 @@ The user completed the central part of that plan: two external PAs still behaved
 
 ### Current highest-value next test
 
-The Unity-to-control transition, driver-level recovery, and clean `VsyncStutterTest.exe` baselines are complete. Windows now has only target 8450 plus the internal panel active, while disabled target 8452 remains physically connected. `VsyncStutterTest.exe` works normally in this topology despite a generic public VRR-query error. The next action is the decisive `Unity Fixed Refresh -> VsyncStutterTest.exe` transition with one active external scanout head.
-
-- If the transition is clean, the number of active external scanout heads is confirmed as the topology condition.
-- If it still fails, the physical presence of the second external target is sufficient even when Windows does not use it for scanout.
-
-Next, leave both PAs physically connected but disable one in Windows. A smooth result would identify the number of active external scanout paths rather than physical connection presence. If two active PAs remain the discriminator, route one PA through the laptop's HDMI output and one through a TB5/USB-C DisplayPort output:
+The Unity-to-control transition, driver-level recovery, replacement-control validation, and active-head-count isolation are complete. The highest-value remaining test is two active external PAs with different physical routes: MediaSync-on PA via TB5/DisplayPort and the second PA via HDMI. This distinguishes the dual-TB5/DP route from any-two-active-external behavior.
 
 - smooth TB5+HDMI would isolate the dual-TB5/USB-C display route;
 - poor TB5+HDMI would implicate the NVIDIA/Windows two-external-head path more generally; and
@@ -553,6 +550,7 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: the two PA monitor identities are separate NVIDIA DisplayPort connector targets 8450 and 8452 on the same RTX adapter, not MST children or different-GPU paths.
 - High confidence: the current one-external state has the internal panel plus one PA active; this is not a generic single-display configuration.
 - High confidence: both external PA targets being active is a necessary condition in every reported bad arm; the internal panel is neither necessary for failure nor sufficient to cause it.
+- High confidence: the inactive second PA may remain cabled, powered, and physically enumerated without triggering the bug; active scanout, not presence, is required.
 - High confidence: the narrower trigger is two active external display heads, not two VRR-enabled monitors; NVAPI verified the second external PA is non-VRR in the bad topology.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.

@@ -28,6 +28,8 @@ At 22:58, the user left both PAs physically connected/powered but used Windows `
 
 That pre-Unity control succeeded: `VsyncStutterTest.exe` showed the indicator and ran smoothly. The 23:01 topology and DRS-hash capture is stable. The generic VRR-query error is therefore not evidence that G-SYNC is broken in this topology.
 
+The Unity transition also succeeded cleanly in this topology: there was no monitor blink, Unity ran without G-SYNC as intended, and post-Unity `VsyncStutterTest.exe` still showed the indicator and ran smoothly. The 23:07 topology and DRS hashes remained unchanged. Two active external scanout heads are therefore required; the second PA's physical connection/power/enumeration is not sufficient.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -73,11 +75,11 @@ If step 4 succeeds, leaving Adaptive-Sync disabled on the secondary PA is the fi
 
 The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 control, Unity-to-control transition, driver-level recovery, and clean `VsyncStutterTest.exe` baseline. Current next test, in order:
 
-1. keep G-SYNC and the display topology unchanged;
-2. run Unity under its current Fixed Refresh profile, observe any monitor blink/Unity behavior, and close it;
-3. immediately run `VsyncStutterTest.exe`, observe indicator/smoothness, and close it;
-4. if needed, test one PA over HDMI plus one over a TB5/USB-C DisplayPort output; and
-5. continue using `VsyncStutterTest.exe` rather than AoE4 as the routine neutral G-SYNC control.
+1. keep the MediaSync-on PA on one TB5/USB-C DisplayPort output;
+2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
+3. capture topology and establish a healthy `VsyncStutterTest.exe` baseline;
+4. run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe`; and
+5. continue using `VsyncStutterTest.exe` as the routine neutral G-SYNC control.
 
 This sequence now focuses on active scanout-head count and, if necessary, the dual-TB5 route. OSD/driver capability caching, dual-VRR eligibility, driver-branch specificity, and the need for Godot's DRS write have been resolved.
 
