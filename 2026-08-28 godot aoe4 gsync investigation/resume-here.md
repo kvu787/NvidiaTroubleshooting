@@ -115,6 +115,8 @@ Windows offers the exact clone pair. The unchanged left-to-right layout maps dis
 
 The 00:47 clone capture is complete and correct. Internal target 8449 and HDMI target 8448 share source ID 2 and one desktop position; primary DP target 8450 remains separate on source ID 0. All three physical NVIDIA targets remain active, OS-visible, VRR-possible, and in VRR mode 1. DRS is unchanged. Windows selected a 2560x1600 shared source while HDMI transmits 2560x1440. Run the neutral `VsyncStutterTest.exe` control on the primary PA next, before opening Unity or Godot.
 
+The initial clone source letterboxed HDMI, so the user changed only duplicated display 1|3 to 2560x1440. The 00:50 capture shows source ID 2 now at 2560x1440, matching the HDMI target; hidden internal eDP remains active with a 2560x1600 target signal. Primary DP remains separate at 1440p/120 Hz. All targets remain in VRR mode 1 and DRS is unchanged. This revised state is the authoritative baseline. Run the neutral `VsyncStutterTest.exe` control next, before Unity or Godot.
+
 ## Per-display software possibility
 
 NVCP cannot independently enable only one of the two identical PA278QGVs. NVIDIA documents its display checkbox as applying to every connected display of the selected model.

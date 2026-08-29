@@ -855,6 +855,8 @@ Windows Display Settings then exposed both clone choices for selected display 1.
 
 At 00:47, the applied clone baseline is structurally correct. Windows reports three active target paths but only two source IDs: internal target 8449 and HDMI target 8448 share source ID 2, `\\.\DISPLAY3`, source mode 2560x1600 at `(2560,0)`; primary DP target 8450 remains alone on source ID 0, `\\.\DISPLAY1`, 2560x1440 at `(0,0)`. The HDMI target signal remains 2560x1440 at 119.998 Hz while the shared source is 2560x1600. NVAPI reports all three targets active, OS-visible, VRR-possible, and in VRR display mode. DRS timestamps and hashes remain unchanged. Full output and interpretation are in `clone-internal-hdmi-baseline.md`.
 
+At 00:50, after observing HDMI letterboxing, the user changed only the duplicated 1|3 resolution to 2560x1440. The shared source ID 2 is now 2560x1440; HDMI remains a native 2560x1440/119.998-Hz target, while hidden internal eDP remains a 2560x1600/approximately-240-Hz target fed by that shared 1440p source. Primary DP remains separate at 2560x1440/119.998 Hz. All three targets remain active, OS-visible, VRR-possible, and in VRR mode 1. DRS remains byte-for-byte unchanged. This revised state is the authoritative pre-application clone baseline.
+
 ## Event and crash evidence
 
 ```text

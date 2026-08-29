@@ -40,6 +40,8 @@ The subsequent neutral control confirms that this is a complete functional recov
 
 The clone baseline realizes that topology exactly. Internal target 8449 and HDMI target 8448 share one Windows source ID and desktop position, while primary DP target 8450 remains a separate source. NVIDIA still sees all three physical targets active and in VRR mode 1, and DRS is unchanged. Thus clone mode removes the hidden third desktop without removing the eDP scanout path that appears to stabilize Fixed Refresh transitions. Functional G-SYNC and Unity transition tests remain pending. Windows uses a 2560x1600 clone source while sending 2560x1440 to HDMI, so visual scaling usability must also be evaluated.
 
+The initial 2560x1600 clone source letterboxed the HDMI PA. Changing only the clone source to 2560x1440 gives HDMI a matching native 1440p source and target signal while leaving scaling to the hidden 1600p internal panel. All paths, clone membership, VRR-mode bits, and DRS state remain otherwise unchanged. This 1440p clone is the usable pre-application baseline.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.

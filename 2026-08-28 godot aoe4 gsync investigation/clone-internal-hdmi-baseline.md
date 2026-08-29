@@ -84,3 +84,39 @@ nvdrssel.bin
 The requested clone topology exists and its pre-application state is healthy. It preserves the active internal scanout path while eliminating the hidden third desktop source. No persistent NVIDIA setting changed.
 
 Run `VsyncStutterTest.exe` on the separate primary TB5/DisplayPort PA before opening Unity or Godot. If that neutral control remains smooth with the indicator, repeat the Unity Fixed Refresh transition and immediately retest the neutral application.
+
+## Revised native-HDMI clone source
+
+Captured: 2026-08-29 00:50 PDT
+
+The HDMI PA was letterboxed with the automatically selected 2560x1600 clone source. The user changed only the duplicated 1|3 desktop resolution to 2560x1440 and opened no 3D application before this capture.
+
+The clone relationship and paths remain unchanged, but the shared source mode is now native to the HDMI PA:
+
+```text
+source id 0, \\.\DISPLAY1, source mode 2560x1440 at (0,0)
+  -> target 8450, primary external DisplayPort PA
+  -> target signal 2560x1440 at 119.998 Hz
+
+source id 2, \\.\DISPLAY3, source mode 2560x1440 at (2560,0)
+  -> target 8449, internal embedded DisplayPort
+  -> target signal 2560x1600 at approximately 240 Hz
+
+source id 2, \\.\DISPLAY3, same source mode 2560x1440 at (2560,0)
+  -> target 8448 physical HDMI PA
+  -> target signal 2560x1440 at 119.998 Hz
+```
+
+The HDMI copy now has a matching 2560x1440 source and target signal. Any aspect-ratio accommodation is moved to the hidden 2560x1600 internal panel, which remains an active scanout target.
+
+NVAPI remains healthy and unchanged in the relevant state:
+
+```text
+target 8448 HDMI:       active=1, osVisible=1, possible=1, displayInVrrMode=1
+target 8449 internal:   active=1, osVisible=1, possible=1, displayInVrrMode=1
+target 8450 primary DP: active=1, osVisible=1, possible=1, displayInVrrMode=1
+```
+
+DRS timestamps, sizes, and SHA-256 hashes are identical to the earlier clone and recovered-three-display baselines. The resolution change is purely a Windows source-mode/topology adjustment and did not edit persistent NVIDIA settings.
+
+Use this 2560x1440 clone state as the authoritative pre-application baseline for the neutral control and later Unity transition.

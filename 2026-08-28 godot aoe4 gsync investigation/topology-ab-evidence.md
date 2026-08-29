@@ -241,6 +241,8 @@ The 00:38 functional control completed successfully: `VsyncStutterTest.exe` ran 
 
 The clone baseline succeeds structurally. Internal eDP target 8449 and HDMI target 8448 now share Windows source ID 2, `\\.\DISPLAY3`, and desktop position `(2560,0)`, while primary DP target 8450 remains separate on source ID 0 at `(0,0)`. NVIDIA reports all three targets active, OS-visible, VRR-possible, and in VRR mode 1. DRS is unchanged. This preserves active eDP while exposing only two desktop sources. The clone source is 2560x1600 and the HDMI target signal is 2560x1440 at 119.998 Hz, so scaling usability and the neutral G-SYNC control must be checked before the editor transition.
 
+The 2560x1600 clone source letterboxed HDMI. Changing only duplicated display 1|3 to 2560x1440 leaves the structural clone result intact and gives HDMI a matching native 1440p source/target pair. Hidden internal eDP continues scanning a 2560x1600 target from the shared 1440p source, primary DP remains separate at 1440p/120 Hz, all NVIDIA targets remain in VRR mode 1, and DRS remains unchanged. Use this revised 1440p clone baseline for functional tests.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.
