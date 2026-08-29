@@ -946,3 +946,40 @@ The next A/B test should distinguish the dual-Thunderbolt/DisplayPort route from
 5. Tell me when that state is ready so I can capture the topology before establishing the healthy control.
 
 The result is recorded in the investigation notes.
+
+---
+
+## User
+
+i did the following:
+Keep the MediaSync-on PA on TB5/DisplayPort.
+Move the other PA from TB5/DisplayPort to the laptop’s HDMI output.
+Keep its MediaSync off and make both PAs active in Windows.
+Don’t open Unity, Godot, or VsyncStutterTest.exe yet.
+Tell me when ready so I can capture the new topology first.
+
+ready
+
+## Assistant
+
+The capture is complete. The intended physical routing is confirmed:
+
+```text
+target 8450: PA278QGV, TB5/DisplayPort, 119.998 Hz, active
+target 8448: PA278QGV, native HDMI, 59.951 Hz, active
+target 8449: internal panel, active
+```
+
+All three paths are directly owned by the RTX 5070 Ti Laptop GPU. The NVIDIA DRS timestamps and SHA-256 hashes are unchanged, so the cable move did not edit any application profile.
+
+There is one important discrepancy: although MediaSync remains off in the HDMI PA's OSD, NVIDIA reports HDMI target 8448 as `VRR possible=1`, `displayInVrrMode=1`, with a 20583-us Adaptive-Sync interval. The same OSD-off PA previously reported non-VRR when connected by DisplayPort. I am treating this as an observed HDMI/input or driver-state difference, not as evidence that you changed the OSD setting.
+
+Now establish the pre-Unity functional control:
+
+1. Do not change G-SYNC, display topology, refresh rates, or either PA's OSD settings.
+2. Do not open Unity or Godot.
+3. Run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` specifically on the MediaSync-on TB5/DisplayPort PA (target 8450), not the HDMI PA.
+4. Observe the top-right G-SYNC indicator and animation smoothness.
+5. Close it and report the result.
+
+If this control works, we can perform the Unity transition immediately. If it does not, the HDMI hotplug/modeset disturbed G-SYNC before Unity and we must recover the baseline first.
