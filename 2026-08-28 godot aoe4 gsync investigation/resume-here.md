@@ -1,10 +1,10 @@
-# Resume point: unresolved per-application Godot G-SYNC control
+# Resume point: validated clone workaround; reboot durability pending
 
 Last updated: 2026-08-29 PDT
 
 ## Status
 
-The core user goal is unresolved.
+The core user goal is satisfied in repeated use within the current Windows session. Reboot persistence remains untested.
 
 Required end state:
 
@@ -122,6 +122,8 @@ The neutral control succeeded at 00:54: `VsyncStutterTest.exe` was smooth with t
 The Unity transition succeeded at 00:57. Unity opened, ran smoothly without G-SYNC, and closed with zero blinks; the immediate neutral control was smooth with the indicator. The post-state retains the 1440p eDP+HDMI clone, separate primary DP source, VRR mode 1 on all three targets, and unchanged DRS. Clone mode is a validated practical workaround for the NVIDIA transition. Run the ordinary Godot 4.6.3 project-manager workflow once in this exact topology, then immediately run the neutral control, to validate the original application path including Godot's DRS save.
 
 Two ordinary Godot sequences then preserved later smooth G-SYNC. The first editor opened on the clone desktop and caused one two-second blink; after it was moved to primary and closed, the neutral control succeeded. The second editor opened on primary, was smooth without G-SYNC, caused no reported blink, and the later control also succeeded. All targets remain in VRR mode 1. Godot saved DRS at 00:59:06 and 00:59:30. Persist Godot on the cloned HDMI+eDP desktop and relaunch once more to determine whether clone placement or a one-time cold transition caused the isolated blank.
+
+Several controlled primary-to-clone and clone-to-primary repetitions then produced zero blinks. Godot remained smooth without the indicator, and the final neutral control was smooth with the indicator. All targets remain in VRR mode 1; further Godot DRS saves changed db hashes as expected but did not change the selector or profile associations. Placement is ruled out. The isolated first blank is a cold/topology transition. The immediate next step is a reboot with the clone state left configured, followed by a pre-application capture before changing any setting or opening a 3D application.
 
 ## Per-display software possibility
 

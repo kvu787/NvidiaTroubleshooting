@@ -863,6 +863,8 @@ At 00:57, the clone-mode Unity transition succeeded completely. Unity opened, ra
 
 At 01:01, two ordinary Godot project-manager sequences completed in the unchanged clone topology. The first editor opened on the cloned HDMI+eDP desktop, caused one two-second blink, was moved to primary DP, and closed; its immediate neutral control was smooth with the indicator. The second editor opened on primary DP, was smooth without the indicator, and caused no reported blink; its immediate control was also smooth with the indicator. All targets remain in VRR mode 1 and the clone topology is unchanged. Godot saved DRS at 00:59:06 and 00:59:30, changing db1 and db0 hashes respectively, while the selector remained unchanged. A current-driver exhaustive audit finds one `Godot Engine` profile associated with both 4.4.1 and 4.6.3. Exact Godot switching is safe from sticky loss, but a controlled cloned-desktop placement repetition is needed before claiming no-blink operation.
 
+At 01:06, several controlled primary-to-clone and clone-to-primary Godot placement transitions produced no blink. Godot was smooth without the indicator in every case, and the later neutral control was smooth with the indicator. The post-state retains the same two-source/three-target clone and VRR mode 1 on every target. Godot saved DRS again at 01:04:51 and 01:05:02; the selector and exhaustive one-profile/two-application Godot audit remain stable. Placement is ruled out as sufficient for the earlier isolated blank. The 1440p clone meets the full workflow requirements in the current session; reboot persistence remains to be tested.
+
 ## Event and crash evidence
 
 ```text

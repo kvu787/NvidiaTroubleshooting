@@ -249,6 +249,8 @@ The Unity Fixed Refresh transition also succeeds completely in the 1440p clone t
 
 Two ordinary Godot project-manager sequences preserve later smooth G-SYNC in clone mode despite expected DRS saves. The first opened on the clone desktop and caused one two-second blank; the second opened on primary DP and caused none. Both immediate neutral controls succeeded, topology is unchanged, and all targets remain in VRR mode 1. The sticky defect is solved in this arm, while cloned-source placement versus a cold first transition remains to be isolated for the no-blank requirement.
 
+Several controlled primary-to-clone and clone-to-primary Godot repetitions then produced zero blinks. Godot remained smooth without G-SYNC, the later neutral control retained smooth G-SYNC, every target remains in VRR mode 1, and the clone structure is unchanged. Placement is ruled out as sufficient; the isolated first blank is a cold/topology transition. This clone is a complete current-session workaround. Reboot persistence is the remaining durability test.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

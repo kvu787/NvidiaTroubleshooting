@@ -222,3 +222,51 @@ godot_v4.6.3-stable_win64.exe
 Profile enumeration completed without failures. This is the first profile-count audit after moving to driver 596.49, so its total of 7837 profiles must not be compared directly to the earlier 7957-profile 616.56 baseline as evidence of a Godot deletion.
 
 The exact ordinary Godot path therefore preserves correct per-application G-SYNC recovery in clone mode even though Godot saves DRS. The one first-launch blink prevents declaring the no-blank requirement fully solved. A controlled launch-placement repetition is needed: deliberately persist Godot on the cloned HDMI+eDP desktop and relaunch it there to separate clone-source placement from a one-time cold/profile transition.
+
+## Controlled placement repetition
+
+Captured: 2026-08-29 01:06 PDT
+
+The user performed several Godot editor transitions from the primary DP desktop to the cloned HDMI+internal desktop and in the reverse direction. No launch, use, movement, or close reproduced a monitor blink. Godot remained smooth without the G-SYNC indicator in every case.
+
+The later `VsyncStutterTest.exe` control ran smoothly and displayed the G-SYNC indicator.
+
+The final capture remains healthy and structurally unchanged:
+
+```text
+Windows paths: three target paths, two source IDs
+clone source 2: 2560x1440, internal eDP plus HDMI
+separate source 0: 2560x1440, primary TB5/DisplayPort PA
+
+target 8448 HDMI:       displayInVrrMode=1
+target 8449 internal:   displayInVrrMode=1
+target 8450 primary DP: displayInVrrMode=1
+```
+
+Repeated Godot starts produced expected DRS saves:
+
+```text
+nvdrsdb1.bin last write: 01:04:51
+SHA-256: 4622776696821BFB108C6A90A4F0D044AC2229911203CAAEA9444A3C7E0F9CB4
+
+nvdrsdb0.bin last write: 01:05:02
+SHA-256: AA4CAB5DE724169EAF2C40779B0CDE6A15D962D20A7058050BC2DC262CE7751E
+
+nvdrssel.bin: unchanged
+SHA-256: 6E340B9CFFB37A989CA544E6BB780A2C78901D3FB33738768511A30617AFA01D
+```
+
+The exhaustive audit remains stable at one `Godot Engine` profile associated with the 4.4.1 and 4.6.3 executables, with no profile or application enumeration failures.
+
+This rules out primary-versus-clone editor placement and movement direction as sufficient causes of the earlier isolated blink. The blink is best classified as an unreproduced cold/topology/profile-transition event immediately after constructing the clone state.
+
+Within the current Windows session, the 1440p eDP+HDMI clone is a validated practical solution to the complete user-facing requirement:
+
+- two usable external desktop spaces and no hidden third desktop;
+- Godot and Unity run smoothly under Fixed Refresh without a G-SYNC indicator;
+- later applications activate smooth G-SYNC automatically;
+- no manual global G-SYNC toggle;
+- no sticky VRR loss; and
+- no recurring transition blank in repeated use.
+
+The remaining durability test is reboot persistence: verify that Windows restores the same clone topology and that the first neutral and Godot transitions after sign-in remain healthy.
