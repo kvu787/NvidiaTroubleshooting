@@ -983,3 +983,26 @@ Now establish the pre-Unity functional control:
 5. Close it and report the result.
 
 If this control works, we can perform the Unity transition immediately. If it does not, the HDMI hotplug/modeset disturbed G-SYNC before Unity and we must recover the baseline first.
+
+---
+
+## User
+
+before we do this, i have a question. are you able to detect if a PA278QGV has mediasync off, or are you simply assuming that?
+on side note, i confirmed that the osd on the hdmi-connected PA278QGV still shows mediasync=off.
+
+## Assistant
+
+No—the current probes cannot directly read the PA278QGV's OSD MediaSync setting. The “MediaSync off” label came from your reported OSD setting. I was detecting NVIDIA's driver-side VRR state and, in a few notes, described that corroboration too strongly as if NVAPI had verified the OSD itself. I have corrected that language.
+
+The distinction is:
+
+- **Monitor fact:** you directly confirmed the HDMI-connected PA's OSD says `MediaSync=off`.
+- **NVIDIA fact:** the driver currently reports that same HDMI target as `VRR possible=1`, `displayInVrrMode=1`, and `bDisableAdaptiveSync=0`.
+- **Earlier DisplayPort fact:** after you confirmed MediaSync off on the DP-connected PA, NVIDIA reported that target as `VRR possible=0`, `displayInVrrMode=0`, and a zero Adaptive-Sync interval.
+
+`NvAPI_Disp_GetVRRInfo` is NVIDIA's assessment of the display target. `NvAPI_DISP_GetAdaptiveSyncData` returns NVIDIA's per-display Adaptive-Sync state; its fields are associated with an NVIDIA setter and are not documented as reading the physical OSD. So the HDMI result is a real disagreement between the monitor's OSD state and NVIDIA's current classification, not evidence that MediaSync is actually on.
+
+A truly direct software read would require the monitor to expose that exact setting over DDC/CI—probably as a vendor-specific VCP feature—and we have not established that the PA278QGV does. Until then, your OSD observation is authoritative.
+
+This does not require changing the next test. It makes the TB5/DP-plus-HDMI arm especially informative: it tests the different route while preserving the fact that the HDMI monitor is physically set to MediaSync off, even though the driver still classifies it as VRR-capable.
