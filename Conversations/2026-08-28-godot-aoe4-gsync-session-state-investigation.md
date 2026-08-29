@@ -1964,3 +1964,35 @@ For now, do only this:
 I will then capture whether target 8452 returned to `displayInVrrMode=1`. After that, the clean next A/B is moving the DP PA to the other TB5 port while leaving HDMI, eDP clone membership, refresh rates, profiles, and MediaSync unchanged.
 
 The full failed-state evidence is in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), and the corrected guide is in [last-known-good-state-guide.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/last-known-good-state-guide.md). Evidence commit: `5dac1a8`.
+
+---
+
+## User
+
+i did this:
+Toggle global G-SYNC off and apply.
+Toggle it back on and apply.
+Do not open Godot or Unity.
+Run VsyncStutterTest.exe on the main DP PA.
+Confirm it is smooth with the indicator, close it, and tell me when ready.
+
+VsyncStutterTest runs smoothly and shows the gsync indicator. ready.
+
+## Assistant
+
+Confirmed at the driver level. Primary DP target 8452 changed from `displayInVrrMode=0` to `1`. The Windows topology, refresh timings, clone relationship, and all nine Godot profile settings remained unchanged.
+
+That proves the global off/on cycle repaired only volatile NVIDIA state; it did not fix the problem by editing a profile or rebuilding the topology.
+
+Now change only the connector allocation:
+
+1. Do not open Godot, Unity, `VsyncStutterTest.exe`, or another 3D application.
+2. Do not change G-SYNC, MediaSync, NVIDIA profiles, refresh rates, or Windows display settings.
+3. Leave the secondary PA connected to native HDMI.
+4. Physically move only the primary PA's USB-C/DisplayPort cable from its current TB5 port to the laptop's other TB5 port.
+5. Let the displays settle. Even if Windows changes the layout, main-display choice, clone relationship, or refresh rate, do not correct it yet.
+6. Tell me when ready.
+
+I will capture the raw post-hotplug target ID, connector instance, Windows source/head assignment, topology, timings, and VRR state before we normalize anything. That cleanly tests whether the current connector-1/source-0 allocation is the remaining selector.
+
+The recovery baseline is recorded in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), commit `1a3a142`.
