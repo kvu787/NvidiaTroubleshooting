@@ -1245,3 +1245,47 @@ Please establish the capture arm:
 4. Tell me when ready so I can capture the two-external-only topology before the neutral control.
 
 After that capture, we will run `VsyncStutterTest.exe` before opening any editor. That will tell us whether the Windows topology change itself is sufficient or whether the failure still requires the Fixed Refresh transition.
+
+---
+
+## User
+
+i did this:
+Keep both external PAs at 120 Hz and leave G-SYNC and OSD settings unchanged.
+In Windows Display Settings, select the internal laptop display and choose Disconnect this display.
+Don’t open Godot, Unity, VsyncStutterTest.exe, or another 3D application afterward.
+Tell me when ready so I can capture the two-external-only topology.
+
+ready
+
+## Assistant
+
+The two-external-only capture is complete:
+
+```text
+Windows active paths:
+  target 8450: TB5/DisplayPort PA, 119.998 Hz
+  target 8448: HDMI PA, 119.998 Hz
+
+Internal target 8449:
+  physically connected but inactive
+  zero active DisplayPort lanes
+
+DRS:
+  timestamps and hashes unchanged from the healthy three-display baseline
+```
+
+NVIDIA still reports HDMI target 8448 in VRR display mode. The public VRR-info query for primary DP target 8450 now returns generic `NVAPI_ERROR`, while its Adaptive-Sync and link queries remain healthy. We observed this same query error in an earlier topology where the functional G-SYNC control worked, so it does not establish failure by itself.
+
+Now run the decisive pre-editor control:
+
+1. Keep the internal panel disconnected and change no G-SYNC, refresh-rate, topology, or OSD setting.
+2. Do not open Godot or Unity.
+3. Run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the primary TB5/DisplayPort PA.
+4. Observe the top-right G-SYNC indicator and animation smoothness.
+5. Close it and report the result.
+
+Interpretation:
+
+- If the indicator is missing or animation is choppy, Windows-disconnecting internal eDP is sufficient to break the neutral G-SYNC path immediately.
+- If the control remains smooth with the indicator, the two-external-only topology starts healthy and the later Fixed Refresh editor transition is still required to trigger the failure.
