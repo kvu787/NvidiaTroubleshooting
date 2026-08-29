@@ -127,3 +127,44 @@ DRS timestamps and hashes: unchanged
 This proves Windows-disconnecting the internal panel does **not** immediately break G-SYNC. The generic primary-target query error is a topology/query anomaly rather than a functional failure indicator.
 
 The user's reported poor state therefore requires a later event. The clean next test is Unity under its already-stored Fixed Refresh profile, followed immediately by `VsyncStutterTest.exe`. Unity avoids Godot's DRS save and isolates the application-profile transition in the two-external-only DP+HDMI topology.
+
+## Internal-off Unity transition
+
+The user performed the Unity-to-control sequence twice without changing topology or settings.
+
+On each Unity run:
+
+- the monitors blinked significantly and disruptively during open, use, and close;
+- one roughly two-second blank occurred during editor use;
+- Unity showed no G-SYNC indicator, as intended by its Fixed Refresh profile; and
+- viewport behavior was smooth aside from the display blanks.
+
+After each Unity run, `VsyncStutterTest.exe` displayed the G-SYNC indicator and ran smoothly.
+
+The 00:23 post-test capture is unchanged:
+
+```text
+active paths: 8450 TB5/DisplayPort + 8448 HDMI, both 119.998 Hz
+internal 8449: physically connected, inactive
+HDMI 8448: displayInVrrMode=1
+primary 8450: public VRR query generic error; functional G-SYNC proven healthy
+DRS timestamps and hashes: identical to pre-Unity baseline
+```
+
+Windows System/Application logs contain no relevant display-driver reset, `nvlddmkm`, Dxg, DWM, or application error during the transition. The only warning in the time window is an unrelated DistributedCOM permission event. The severe blanking is therefore a transient display modeset/link-state reprogramming problem, not a logged GPU-driver reset or persistent configuration failure.
+
+This revises the user's “poor G-SYNC” observation precisely. In the internal-off DP+HDMI topology:
+
+- neutral G-SYNC works before Unity;
+- Fixed Refresh Unity triggers severe repeated monitor blanks;
+- neutral G-SYNC restores correctly afterward; and
+- there is no sticky G-SYNC loss in the two repeated controls.
+
+Internal eDP active versus inactive controls transition stability, not the eventual ability of the primary PA to use G-SYNC.
+
+## Next isolation
+
+Keep internal eDP disconnected and lower only the HDMI secondary from 119.998 Hz to about 60 Hz. Capture that topology before any 3D application, then repeat the neutral control and Unity transition. This distinguishes high external scanout clock/resource load from a requirement for an active internal eDP path.
+
+- If the blinking disappears at a 120-Hz DP primary plus 60-Hz HDMI secondary, scanout clock/resource allocation is the leading cause and a two-external-only workaround exists.
+- If the blinking remains, the active internal eDP path itself is the leading stabilizer; duplicating rather than extending the internal panel becomes the next practical test for preventing hidden-window placement.

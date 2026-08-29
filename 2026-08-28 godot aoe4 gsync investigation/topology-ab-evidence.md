@@ -227,6 +227,8 @@ The internal-off pre-application capture is complete: only targets 8450 DP and 8
 
 The pre-editor control succeeded with the indicator and smooth motion. Internal-panel disconnection alone is not sufficient. The next arm is the same two-external-only topology through `Unity Fixed Refresh -> VsyncStutterTest.exe`, which isolates profile activation without a DRS write.
 
+That Unity arm produced severe repeated display blinking twice, but both post-Unity neutral controls retained smooth G-SYNC. Final topology/state and DRS are unchanged, with no logged driver reset. The internal-off symptom is transient modeset instability rather than sticky failure. Next compare the same internal-off topology with HDMI lowered from 120 Hz to 60 Hz.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

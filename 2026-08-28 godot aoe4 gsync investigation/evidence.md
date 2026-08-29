@@ -835,6 +835,10 @@ At 00:14, the clean internal-off arm was captured before any 3D application. Win
 
 That pre-editor control displayed the G-SYNC indicator and ran smoothly. At 00:16, topology, HDMI VRR state, DRS timestamps, and DRS hashes remain unchanged; the primary public VRR query still returns generic error despite functional G-SYNC. Thus disconnecting internal eDP alone is not sufficient. A later application/profile transition or other event is required. Unity Fixed Refresh is the next no-DRS-write isolation.
 
+Two internal-off Unity transitions produced severe repeated monitor blinking on open, during use, and on close, including a roughly two-second mid-use blank. Unity otherwise ran smoothly without G-SYNC as intended. Both immediate `VsyncStutterTest.exe` controls retained the G-SYNC indicator and smooth motion. At 00:23, topology, HDMI VRR mode, and DRS hashes are unchanged. No relevant driver-reset/display/compositor error was logged.
+
+The internal-off effect is therefore transient Fixed Refresh transition instability, not immediate or sticky G-SYNC failure. Internal eDP active suppresses the disruptive modesets. The next arm keeps eDP off and lowers only HDMI from 120 Hz to 60 Hz to distinguish display-engine/clock load from the presence of the eDP path itself.
+
 ## Event and crash evidence
 
 ```text
