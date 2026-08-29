@@ -24,6 +24,8 @@ Post-reboot usage reveals that the workaround depends on the internal panel rema
 
 The clean internal-off pre-application capture confirms only the two external 120-Hz paths are active and DRS is unchanged. HDMI remains in NVIDIA VRR display mode, while the primary DP target's public VRR query returns a generic error. That error is not diagnostic by itself because it occurred in an earlier working Windows-disconnected topology. The neutral control, not the query error, must determine whether disconnect alone is sufficient.
 
+The neutral control is healthy: `VsyncStutterTest.exe` shows the indicator and runs smoothly before any editor in the internal-off DP+HDMI topology. The 00:16 state and DRS hashes are unchanged. Therefore internal eDP disconnection alone is not sufficient; the user-observed poor state requires a later presentation/profile transition or another intervening event.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -571,7 +573,8 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - High confidence: two active external display heads are necessary in the bad arms but not sufficient; TB5/DisplayPort plus HDMI is smooth through the same Unity Fixed Refresh transition.
 - High confidence: HDMI at 119.998 Hz works with the TB5/DisplayPort PA also at 119.998 Hz while internal eDP is active; the earlier 60-Hz HDMI mode was not necessary.
 - High confidence from the user's repeated A/B: internal eDP active versus Windows-disconnected is the discriminator within the TB5/DisplayPort-plus-HDMI topology; HDMI MediaSync on/off is not.
-- Unresolved: whether disconnecting internal eDP immediately breaks the neutral G-SYNC control or only makes the next Fixed Refresh application transition fail.
+- High confidence: disconnecting internal eDP does not immediately break the neutral G-SYNC control; it starts smooth with the indicator.
+- Unresolved: whether a subsequent Unity Fixed Refresh transition reproduces the sticky failure in the two-external-only DP+HDMI topology.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.

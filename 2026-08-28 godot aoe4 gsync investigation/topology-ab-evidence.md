@@ -225,6 +225,8 @@ Post-reboot, case G was refined: both external monitors run at 119.998 Hz and re
 
 The internal-off pre-application capture is complete: only targets 8450 DP and 8448 HDMI are active at 119.998 Hz, internal 8449 remains physically connected/inactive, and DRS is unchanged. The primary DP public VRR query returns generic error, but that error is known to coexist with a healthy functional control. The pre-editor `VsyncStutterTest.exe` result is pending.
 
+The pre-editor control succeeded with the indicator and smooth motion. Internal-panel disconnection alone is not sufficient. The next arm is the same two-external-only topology through `Unity Fixed Refresh -> VsyncStutterTest.exe`, which isolates profile activation without a DRS write.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.

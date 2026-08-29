@@ -46,6 +46,8 @@ After reboot, both external PAs are now 119.998 Hz and HDMI MediaSync is on. Wit
 
 The 00:14 disconnected capture is complete. Windows has only 120-Hz external targets 8450 TB5/DisplayPort and 8448 HDMI active; internal target 8449 is physically connected but inactive with zero lanes. DRS matches the 00:11 baseline. HDMI remains in VRR display mode, while the primary DP VRR-info query returns generic `NVAPI_ERROR`. This error previously occurred in a functional topology, so run `VsyncStutterTest.exe` now before any editor.
 
+The pre-editor neutral control succeeded: `VsyncStutterTest.exe` showed the G-SYNC indicator and ran smoothly. At 00:16, topology and DRS remain unchanged; the public primary VRR query still errors despite working G-SYNC. Internal disconnection alone is not sufficient. Run `Unity Fixed Refresh -> close Unity -> VsyncStutterTest.exe` next without changing anything.
+
 ## New leading result: external-monitor-count A/B
 
 Machine: ASUS ROG Strix G18 `G815LR-IS97`.
@@ -95,7 +97,7 @@ The user completed the MediaSync test, pre-editor NVAPI capture, working AoE4 co
 2. move the second PA from the other TB5/USB-C output to the laptop HDMI output and make it active in Windows;
 3. topology, a healthy `VsyncStutterTest.exe` baseline, and the clean Unity transition are complete;
 4. the original Godot workflow and launch-placement isolation are complete; and
-5. the internal-off capture is complete; run `VsyncStutterTest.exe` on target 8450 before opening an editor and report indicator/smoothness.
+5. the internal-off neutral control is healthy; run Unity under Fixed Refresh, close it, then immediately run `VsyncStutterTest.exe` on target 8450.
 
 The refresh/load question is resolved for the HDMI route: both external PAs work at 119.998 Hz when internal eDP is active. The immediate investigation is now the internal-panel active-path dependency and a possible way to keep eDP active without exposing a third usable desktop. Dual-VRR eligibility on the earlier DisplayPort topology, driver-branch specificity, and the need or sufficiency of Godot's DRS write remain resolved. Direct OSD-state detection has not been implemented.
 

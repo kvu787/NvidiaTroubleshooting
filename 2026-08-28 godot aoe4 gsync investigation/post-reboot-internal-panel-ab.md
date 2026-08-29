@@ -109,3 +109,21 @@ The primary-target generic VRR-query error is not sufficient evidence of broken 
 DRS timestamps and hashes are identical to the 00:11 healthy three-display capture. The topology change did not edit persistent application profiles.
 
 Next, run `VsyncStutterTest.exe` on target 8450 before opening any editor. A poor result means internal-panel disconnection alone is sufficient; a healthy result means the two-external-only topology merely makes a later Fixed Refresh transition unsafe.
+
+## Two-external-only neutral control
+
+The user ran `VsyncStutterTest.exe` on primary target 8450 before opening any editor. It displayed the G-SYNC indicator and ran smoothly.
+
+The 00:16 post-control capture is unchanged:
+
+```text
+Windows active paths: 8450 TB5/DisplayPort PA + 8448 HDMI PA
+internal 8449: physically connected, inactive
+HDMI 8448: displayInVrrMode=1
+primary DP 8450: public VRR query still returns generic NVAPI_ERROR
+DRS timestamps and hashes: unchanged
+```
+
+This proves Windows-disconnecting the internal panel does **not** immediately break G-SYNC. The generic primary-target query error is a topology/query anomaly rather than a functional failure indicator.
+
+The user's reported poor state therefore requires a later event. The clean next test is Unity under its already-stored Fixed Refresh profile, followed immediately by `VsyncStutterTest.exe`. Unity avoids Godot's DRS save and isolates the application-profile transition in the two-external-only DP+HDMI topology.

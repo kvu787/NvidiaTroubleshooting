@@ -833,6 +833,8 @@ This removes the prior refresh/load confound: HDMI at 120 Hz works while interna
 
 At 00:14, the clean internal-off arm was captured before any 3D application. Windows has only 120-Hz targets 8450 TB5/DisplayPort and 8448 HDMI active. Internal target 8449 remains physically connected but inactive with zero current lanes. DRS is byte-for-byte unchanged. HDMI target 8448 still reports `displayInVrrMode=1`; the primary DP target's VRR-info call returns generic `NVAPI_ERROR` while its Adaptive-Sync and link queries succeed. Because that API error previously coexisted with working G-SYNC, a pre-editor `VsyncStutterTest.exe` control is required.
 
+That pre-editor control displayed the G-SYNC indicator and ran smoothly. At 00:16, topology, HDMI VRR state, DRS timestamps, and DRS hashes remain unchanged; the primary public VRR query still returns generic error despite functional G-SYNC. Thus disconnecting internal eDP alone is not sufficient. A later application/profile transition or other event is required. Unity Fixed Refresh is the next no-DRS-write isolation.
+
 ## Event and crash evidence
 
 ```text
