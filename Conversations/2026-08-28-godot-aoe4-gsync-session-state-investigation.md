@@ -1088,3 +1088,48 @@ The current `Godot Engine` profile still matches `godot_v4.6.3-stable_win64.exe`
 7. Close it and report both results.
 
 If this matches Unity, the HDMI routing is a complete practical workaround for the original Godot problem while keeping both external monitors active.
+
+---
+
+## User
+
+i launched godot 4.6.3 and then opened the project. the godot editor with the project launched on the laptop display instead of the tb5 pa primary display. it did a 2 second monitor blink. i moved the godot editor window to the primary tb5 pa monitor. i then closed godot
+
+then i launched vsyncstuttertest and it ran smoothly and displayed the gsync indicator, and i closed it
+
+for a second time, i launched godot 4.6.3 and then opened the project. the godot editor with the project launched on the primary monitor. it didn't show the gsync indicator and usage was smooth.
+
+then for a second time i launched vsyncstuttertest and it ran smoothly and displayed the gsync indicator, and i closed it
+
+## Assistant
+
+This validates the practical per-application behavior:
+
+- Godot runs smoothly without G-SYNC.
+- `VsyncStutterTest.exe` regains smooth G-SYNC immediately afterward without a global toggle.
+- That transition succeeded twice, and primary target 8450 remains `displayInVrrMode=1`.
+
+The first two-second blank remains, but it is no longer tied to sticky G-SYNC loss. The two Godot runs also reveal an important confound:
+
+- first run: project editor launched on the internal laptop display and blanked;
+- second run: project editor launched on the primary TB5/DisplayPort PA and did not blank.
+
+Godot rewrote the DRS databases on both launches—at 23:24:38 and 23:25:09—while the effective profile remained VRR disabled plus Fixed Refresh. Therefore Godot's unconditional profile save is not sufficient to cause the blank: the second save did not blank, and neither save poisoned later G-SYNC.
+
+The next test should isolate window placement from a one-time cold transition:
+
+1. Keep G-SYNC, topology, refresh rates, and OSD settings unchanged.
+2. Launch Godot and open the same project. Record whether this setup launch blinks.
+3. Move the project-editor window to the internal laptop display and close Godot there, so Godot can persist that placement.
+4. Launch Godot and open the same project again.
+5. Report which display the editor opens on and whether either monitor blinks. Confirm that Godot remains smooth without the G-SYNC indicator.
+6. Close Godot.
+7. Immediately run `C:\Users\k\Repository\Godot\VsyncStutterTest\MyBuildOutput\VsyncStutterTest.exe` on the primary TB5/DisplayPort PA.
+8. Report its indicator and smoothness, then close it.
+
+Interpretation:
+
+- If the deliberately internal-panel launch blinks again, editor launch-display placement is the remaining trigger.
+- If it does not blink, the earlier blank was a one-time cold transition after the topology/profile-state change.
+
+The current HDMI arrangement is already a strong workaround for the damaging part of the bug: it preserves both monitors and correct per-application G-SYNC switching. The remaining question is whether its first-launch blank can also be eliminated reliably.
