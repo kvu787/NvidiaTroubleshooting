@@ -567,3 +567,35 @@ The immediate next test is:
 Testing both PAs at 60 Hz is useful afterward, but lower priority. It distinguishes link/clock pressure only after the routing question is answered.
 
 The findings and next-test protocol were recorded as commit `56a2203`.
+
+---
+
+## User
+
+let me clarify my configurations:
+
+1. one PA278QGV with osd mediasync on, another PA278QGV with osd mediasync off, laptop display connected, gsync on
+2. one PA278QGV with osd mediasync on, another PA278QGV with osd mediasync off, laptop display disconnected, gsync on
+3. one PA278QGV with osd mediasync on, laptop display connected, gsync on
+1 and 2 had poor behavior. only 3 seemed to behave well.
+
+add a note that unity editor also shows poor behavior (in addition to the existing godot editor poor behavior) for 1 and 2, but works smoothly for 3.
+
+## Assistant
+
+Recorded the configurations exactly as clarified:
+
+| Case | External displays | Internal panel | Godot | Unity |
+|---|---|---|---|---|
+| 1 | PA MediaSync on + PA MediaSync off | connected | poor | poor |
+| 2 | PA MediaSync on + PA MediaSync off | disconnected | poor | poor |
+| 3 | one PA MediaSync on | connected | smooth | smooth |
+
+The Unity result is an important causal split. The topology-dependent editor smoothness problem is not specific to Godot's rendering engine or NVIDIA profile writer. Two active external display heads are the common condition for poor behavior in both editors.
+
+Godot's ordinary project-manager path remains separately responsible for saving/reloading its Fixed Refresh DRS profile. That behavior is still associated with the three-second monitor blank and sticky failure to restore AoE4 G-SYNC. In other words:
+
+- dual-external editor smoothness problem: broader NVIDIA/Windows/display-routing issue, reproduced by Unity and Godot;
+- display blank and sticky post-editor VRR state: additional Godot DRS transition issue.
+
+Updated `topology-ab-evidence.md`, `findings.md`, and `resume-here.md`. Investigation commit: `ccdc91c`.
