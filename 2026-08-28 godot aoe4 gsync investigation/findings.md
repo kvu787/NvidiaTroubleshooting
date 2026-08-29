@@ -107,12 +107,28 @@ This order is more discriminating than lowering resolution or refresh rate. The 
 
 NVIDIA's public support article for mixed-monitor VRR says multiple monitors may be connected but no more than one should have G-SYNC enabled. NVIDIA's setup help also describes its display enablement as applying to every connected display of the selected model. Both PAs have the same model/EDID, and the earlier NVIDIA App capture reported G-SYNC enabled on both. Those documents make dual enabled PA278QGVs the leading hypothesis, although the older support article is not proof of the exact 2026 driver defect.
 
+### Per-display software control
+
+NVIDIA Control Panel cannot express the desired split for the two identical PA278QGVs. Its own setup help says the checkbox applies G-SYNC settings to **all connected displays of a particular model**, so selecting either PA278QGV addresses the model rather than one serial-number/connector instance. The NVIDIA App presents the same practical limitation.
+
+There is nevertheless a lower-level, untested software path. NVIDIA's public NVAPI exposes `NvAPI_DISP_SetAdaptiveSyncData(displayId, ...)`; its input structure contains `bDisableAdaptiveSync`, documented as indicating whether Adaptive Sync is disabled **on the display**. The two PAs have distinct Windows targets and NVAPI display IDs, so a purpose-built tool should be able to request Adaptive-Sync disabled for one PA while leaving the other enabled.
+
+Important limits:
+
+- This is a per-display Adaptive-Sync runtime API, not a documented persistent replacement for the NVIDIA Control Panel G-SYNC configuration.
+- Persistence across a reboot, driver restart, hotplug, and display modeset is unknown and must be measured.
+- Calling the setter may itself cause a modeset or monitor blank.
+- No setter has been called during this investigation. `nvapi-vrr-query.cpp` remains strictly read-only.
+
+The monitor OSD remains the safest persistent per-monitor control. If a software experiment is requested later, first build a guarded tool whose default operation is read-only, identifies a target by connector/Windows target/NVAPI display ID, records the original value, requires an explicit enable/disable command, verifies the result, and provides rollback.
+
 Primary references:
 
 - [ASUS G815LR-IS97 specifications: two Thunderbolt 5 ports with DisplayPort and G-SYNC support](https://rog.asus.com/us/laptops/rog-strix/rog-strix-g18-2025/spec/?config=90NR0LC1-M00460)
 - [ASUS PA278QGV: DisplayPort 1.4, Adaptive-Sync, and 48–120 Hz VRR](https://www.asus.com/us/displays-desktops/monitors/proart/proart-display-pa278qv-gen2-pa278qgv/)
 - [NVIDIA: mixed-monitor VRR supports no more than one G-SYNC-enabled display](https://nvidia.custhelp.com/app/answers/detail/a_id/4766/~/does-variable-refresh-rate-work-across-mixed-monitor-configurations%3F)
 - [NVIDIA G-SYNC setup help](https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nvdsp/To_use_variable_refresh_rates.htm)
+- [NVIDIA NVAPI reference: per-display Adaptive-Sync get/set data](https://docs.nvidia.com/nvapi/nvapi_8h.html)
 - [Microsoft `DISPLAYCONFIG_TARGET_DEVICE_NAME` connector identity](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_device_name)
 - [NVIDIA's official open-source NVAPI SDK](https://github.com/NVIDIA/nvapi)
 

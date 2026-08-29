@@ -51,6 +51,14 @@ Next test, in order:
 
 If step 4 succeeds, leaving Adaptive-Sync disabled on the secondary PA is the first plausible stable workaround that keeps both monitors connected and avoids per-session global G-SYNC toggling.
 
+## Per-display software possibility
+
+NVCP cannot independently enable only one of the two identical PA278QGVs. NVIDIA documents its display checkbox as applying to every connected display of the selected model.
+
+NVIDIA's public NVAPI does expose a lower-level per-display setter: `NvAPI_DISP_SetAdaptiveSyncData(displayId, ...)`, with a `bDisableAdaptiveSync` input documented as applying to the display. Because the two PAs have distinct display IDs, a guarded custom utility may be able to disable Adaptive-Sync on only the secondary PA. This path has not been tested and is not documented as persistent across reboot, hotplug, driver restart, or modeset; it may also blank a display while applying. The monitor OSD remains the safest persistent control.
+
+If this is pursued, do not extend the existing read-only probe in a way that makes accidental writes easy. Build a separate tool that defaults to status-only, requires an exact display target plus an explicit enable/disable verb, captures the prior state, verifies the post-state, and supports rollback. No NVAPI setter has been called so far.
+
 ## What is established
 
 ### Unsafe/failed path
