@@ -38,6 +38,8 @@ Reconnecting/extending internal eDP recovers target 8450 from mode 0 to 1 withou
 
 The subsequent neutral control confirms that this is a complete functional recovery, not merely an API-bit change. `VsyncStutterTest.exe` runs smoothly with the indicator, target 8450 remains in VRR mode 1, all three active targets report VRR mode 1, and DRS remains unchanged. The next workaround experiment is to duplicate the hidden internal panel with the HDMI PA while leaving the primary TB5/DisplayPort PA extended separately. That should retain an active eDP path without exposing a third Windows desktop, although it does not literally disconnect or power down the internal panel.
 
+The clone baseline realizes that topology exactly. Internal target 8449 and HDMI target 8448 share one Windows source ID and desktop position, while primary DP target 8450 remains a separate source. NVIDIA still sees all three physical targets active and in VRR mode 1, and DRS is unchanged. Thus clone mode removes the hidden third desktop without removing the eDP scanout path that appears to stabilize Fixed Refresh transitions. Functional G-SYNC and Unity transition tests remain pending. Windows uses a 2560x1600 clone source while sending 2560x1440 to HDMI, so visual scaling usability must also be evaluated.
+
 This explains the apparently contradictory observations:
 
 - No indicator in the Godot editor is expected from whichever matching Godot profile is configured as Fixed Refresh.
@@ -593,6 +595,7 @@ Godot's basename-wide profile creation can conflict or combine with per-applicat
 - Leading conclusion: active internal eDP is the only tested stabilizer that prevents both manifestations in the DP+HDMI topology.
 - High confidence: Windows display reconstruction by reconnecting eDP restores the stuck primary to VRR mode without toggling global G-SYNC; HDMI refresh also changes during that operation.
 - High confidence: the reconstruction recovery is functional, not merely an NVAPI-state change; the later neutral control is smooth with the indicator and target 8450 remains in VRR mode 1.
+- High confidence: duplicating internal eDP with the HDMI PA retains three active physical NVIDIA targets but produces only two Windows desktop sources; the primary DP PA remains separate and all targets initially remain in VRR mode 1.
 - High confidence: each external connector works smoothly as the lone external target, so a single defective port is unlikely.
 - High confidence: Unity and Godot editors share the same poor-two-external/smooth-one-external result, so general editor smoothness is not a Godot-specific defect.
 - High confidence: Godot's DRS save/reload is not required for the blank or sticky failure; Unity reproduced both while the DRS database remained unchanged.

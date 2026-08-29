@@ -853,6 +853,8 @@ At 00:38, the neutral control functionally confirmed recovery: `VsyncStutterTest
 
 Windows Display Settings then exposed both clone choices for selected display 1. The unchanged left-to-right layout maps display 2 to the primary TB5/DisplayPort PA, display 3 to the HDMI PA, and display 1 to internal eDP. `Duplicate desktop on 1 and 3` is therefore the intended clone topology; it should be applied before any further 3D application and captured as a new baseline.
 
+At 00:47, the applied clone baseline is structurally correct. Windows reports three active target paths but only two source IDs: internal target 8449 and HDMI target 8448 share source ID 2, `\\.\DISPLAY3`, source mode 2560x1600 at `(2560,0)`; primary DP target 8450 remains alone on source ID 0, `\\.\DISPLAY1`, 2560x1440 at `(0,0)`. The HDMI target signal remains 2560x1440 at 119.998 Hz while the shared source is 2560x1600. NVAPI reports all three targets active, OS-visible, VRR-possible, and in VRR display mode. DRS timestamps and hashes remain unchanged. Full output and interpretation are in `clone-internal-hdmi-baseline.md`.
+
 ## Event and crash evidence
 
 ```text

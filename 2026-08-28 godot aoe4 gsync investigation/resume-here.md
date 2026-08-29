@@ -113,6 +113,8 @@ Both external PAs work at 119.998 Hz when internal eDP is active. With eDP off, 
 
 Windows offers the exact clone pair. The unchanged left-to-right layout maps display 2 to the primary TB5/DisplayPort PA, display 3 to the HDMI PA, and display 1 to internal eDP. Select `Duplicate desktop on 1 and 3`, apply it, and open no 3D application afterward. Capture the resulting source/target paths before functional testing.
 
+The 00:47 clone capture is complete and correct. Internal target 8449 and HDMI target 8448 share source ID 2 and one desktop position; primary DP target 8450 remains separate on source ID 0. All three physical NVIDIA targets remain active, OS-visible, VRR-possible, and in VRR mode 1. DRS is unchanged. Windows selected a 2560x1600 shared source while HDMI transmits 2560x1440. Run the neutral `VsyncStutterTest.exe` control on the primary PA next, before opening Unity or Godot.
+
 ## Per-display software possibility
 
 NVCP cannot independently enable only one of the two identical PA278QGVs. NVIDIA documents its display checkbox as applying to every connected display of the selected model.

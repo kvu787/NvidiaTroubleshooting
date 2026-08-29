@@ -239,6 +239,8 @@ Reconnecting/extending eDP restored primary target 8450 from mode 0 to 1 without
 
 The 00:38 functional control completed successfully: `VsyncStutterTest.exe` ran smoothly with the G-SYNC indicator on target 8450. All three targets remained in VRR mode 1 and DRS remained unchanged. Topology/mode reconstruction is therefore a confirmed functional recovery path. Duplicate internal eDP with the HDMI PA next, leaving primary TB5/DisplayPort extended separately, to test whether an active eDP path can coexist with only two usable Windows desktop spaces.
 
+The clone baseline succeeds structurally. Internal eDP target 8449 and HDMI target 8448 now share Windows source ID 2, `\\.\DISPLAY3`, and desktop position `(2560,0)`, while primary DP target 8450 remains separate on source ID 0 at `(0,0)`. NVIDIA reports all three targets active, OS-visible, VRR-possible, and in VRR mode 1. DRS is unchanged. This preserves active eDP while exposing only two desktop sources. The clone source is 2560x1600 and the HDMI target signal is 2560x1440 at 119.998 Hz, so scaling usability and the neutral G-SYNC control must be checked before the editor transition.
+
 Interpretation:
 
 - Windows-disabling one PA fixed it; active external scanout-head count is confirmed as the trigger rather than cable presence.
