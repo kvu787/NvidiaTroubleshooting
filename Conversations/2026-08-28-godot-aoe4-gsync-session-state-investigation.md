@@ -2205,3 +2205,48 @@ Now run the reboot-persistence sequence without changing anything:
 8. Report its indicator and smoothness, along with any Godot blink and the editor's behavior.
 
 If this succeeds, the HDMI-only placement workaround has survived a reboot without a global G-SYNC recovery cycle. The pre-application baseline is recorded in [recovery-attempt-post-godot-failure.md](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), commit `7375fd9`.
+
+---
+
+## User
+
+i did this:
+Run VsyncStutterTest.exe on primary DP.
+If it fails, stop without opening Godot.
+Otherwise close it.
+Launch Godot normally and open the project.
+If it doesn’t open on HDMI, stop without moving it.
+If it opens on HDMI, keep it entirely there and close it there.
+Immediately rerun VsyncStutterTest.exe on primary DP.
+Report both applications’ behavior and any blinking.
+
+everything works smoothly.
+godot editor ran smoothly without blinks and without gsync indicator.
+VsyncStutterTest ran smoothly with gsync indicator.
+
+## Assistant
+
+The post-test capture confirms that the workaround survived reboot cleanly:
+
+- primary DP target 8452 remained `displayInVrrMode=1`;
+- HDMI and eDP targets remained in mode `1`;
+- the post-reboot source assignment, clone membership, and 120/120/240-Hz timings remained unchanged;
+- Godot stayed Fixed Refresh and ran without the indicator; and
+- Godot's expected DRS writes occurred without harming later G-SYNC.
+
+The validated operational rule is now:
+
+> Keep Godot entirely on the native-HDMI-plus-eDP clone. Do not move any part of the editor onto the primary G-SYNC DP display.
+
+This has succeeded for two consecutive same-boot cycles and the first controlled cycle after a normal reboot, with no intervening global recovery. No EC reset is warranted for normal use.
+
+If Godot accidentally enters primary DP and later G-SYNC fails:
+
+1. move/save Godot back on HDMI while the state is already failed;
+2. close Godot;
+3. cycle global G-SYNC off/apply/on/apply; and
+4. keep later Godot sessions on HDMI.
+
+The remaining untested durability boundaries are sleep, hibernate, NVIDIA driver update/reset, and monitor power/hotplug. They do not need to be tested unless one becomes relevant to normal use.
+
+I updated the [recovery guide](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/last-known-good-state-guide.md), [placement evidence](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/recovery-attempt-post-godot-failure.md), and [root-cause synthesis](C:/Users/k/Repository/NvidiaTroubleshooting/2026-08-28%20godot%20aoe4%20gsync%20investigation/root-cause-synthesis.md). Evidence commit: `b945267`.
